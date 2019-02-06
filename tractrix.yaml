@@ -1,0 +1,49 @@
+inspecode:
+
+  astyle:       # supports: C C++ Objective-C C# Java
+    auto-fix: true
+    thresholds:
+      num-issues: 1000
+
+  cpd:          # supports: C C++ C# Go Java JavaScript Objective-C PHP Python Ruby Scala Swift
+    thresholds:
+      num-issues: 1000
+
+  checkstyle:   # supports: Java
+    thresholds:
+      num-issues: 1000
+
+  grep:         # supports: All Languages
+    thresholds:
+      num-issues: 1000
+
+  infer:        # supports: C C++ Java
+    thresholds:
+      num-issues: 1000
+
+  jscpd:        # supports: C C++ C# CoffeeScript CSS Go HTML Java JavaScript Kotlin Objective-C PHP Python Ruby Scala Swift TypeScript
+    thresholds:
+      num-issues: 1000
+
+  ktlint:       # supports: Kotlin
+    auto-fix: true
+    thresholds:
+      num-issues: 1000
+
+  misspell:     # supports: All Languages
+    auto-fix: true
+    thresholds:
+      num-issues: 1000
+
+  pmd:          # supports: Java JavaScript
+    auto-fix: true
+    thresholds:
+      num-issues: 1000
+
+  uncrustify:   # supports: C C++ C# Objective-C Java
+    thresholds:
+      num-issues: 1000
+
+  unused:       # supports: C C++ C# Go HTML Java JavaScript Objective-C PHP Python Ruby Shell
+    thresholds:
+      num-issues: 1000
