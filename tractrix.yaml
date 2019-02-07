@@ -29,10 +29,14 @@ inspecode:
   #    num-issues: 1000
 
   cpd:          # supports: C C++ C# Go Java JavaScript Objective-C PHP Python Ruby Scala Swift
-    options:
-      --minimum-tokens: 100
+  - options:
+      --minimum-tokens: 200   # default=100 ??
     thresholds:
-      num-issues: 1000
+      num-issues: 2632    # when `--minimum-tokens: 100`
+  - options:
+      --minimum-tokens: 300   # default=100 ??
+    thresholds:
+      num-issues: 2632    # when `--minimum-tokens: 100`
 
   grep:         # supports: All Languages
     options:
@@ -60,9 +64,15 @@ inspecode:
     - "build.gradle.kts"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 1000
+      num-issues: 34
   - input:
     - "/[c-i]*"
+    - "!/core/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 1000
+  - input:
+    - "/core/"
     - "!/core/descriptors*/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
@@ -71,64 +81,96 @@ inspecode:
     - "/core/descriptors*/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 1000
+      num-issues: 511
   - input:
     - "/[jk]*/"
     - "!/j2k/"
     - "!/js/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 1000
+      num-issues: 499
   - input:
     - "/j2k/[a-s]*/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 1000
+      num-issues: 746
   - input:
     - "/j2k/[t-z]*/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 1000
+      num-issues: 384
   - input:
     - "/js/"
+    - "!js/js.translator/src/"
     - "!/js/js.translator/testData/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 1000
+      num-issues: 580
   - input:
-    - "/js/js.translator/testData/"
+    - "js/js.translator/src/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 1000
+      num-issues: 542
+  - input:
+    - "/js/js.translator/testData/"
+    - "!js/js.translator/testData/box/expression/"
+    - "!js/js.translator/testData/box/inline/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 931
+  - input:
+    - "js/js.translator/testData/box/expression/"
+    - "js/js.translator/testData/box/inline/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 846
   - input:
     - "/l*/"
     - "!/libraries/stdlib/"
     - "!/libraries/tools/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 1000
+      num-issues: 186
   - input:
     - "/libraries/stdlib/"
     - "!/libraries/stdlib/common/src/generated/"    # (1115 ... too many)
+    - "!/libraries/stdlib/js/src/"
+    - "!/libraries/stdlib/jvm/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 1000
+      num-issues: 918
+  - input:
+    - "/libraries/stdlib/js/src/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 969
+  - input:
+    - "/libraries/stdlib/jvm/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 452
   - input:
     - "/libraries/tools/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 1000
+      num-issues: 709
   - input:
     - "/[p-z]*/"
+    - "!/plugins/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 106
+  - input:
+    - "/plugins/"
     - "!/plugins/android-extensions/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 1000
+      num-issues: 904
   - input:
     - "/plugins/android-extensions/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 1000
+      num-issues: 880
 
   misspell:     # supports: All Languages
     auto-fix: true
@@ -141,28 +183,29 @@ inspecode:
     - "/js/js.translator/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 1000
+      num-issues: 855
   - input:
     - "/idea/"
-    auto-fix: false     # TODO: change to `true`
-    thresholds:
-      num-issues: 302
-  - input:
     - "/js/js.translator/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 1000
+      num-issues: 582
 
   uncrustify:   # supports: C C++ C# Objective-C Java
   - input:
     - "!/compiler/"
     - "!/idea/"
     thresholds:
-      num-issues: 1000
+      num-issues: 0   # SKIPPED: excluded all analyzable files by input/ignore patterns
   - input:
     - "/compiler/"
+    - "!/compiler/testData/"
     thresholds:
-      num-issues: 1000
+      num-issues: 736
+  - input:
+    - "/compiler/testData/"
+    thresholds:
+      num-issues: 574
   - input:
     - "/idea/"
     - "!/idea/testData/"
@@ -172,7 +215,7 @@ inspecode:
     - "/idea/testData/"
     - "!/idea/testData/refactoring/"
     thresholds:
-      num-issues: 635
+      num-issues: 658
   - input:
     - "/idea/testData/refactoring/"
     thresholds:
