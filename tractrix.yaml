@@ -12,33 +12,25 @@ inspecode:
     thresholds:
       num-issues: 397
 
-  checkstyle:   # supports: Java
-  - ignore:
-    - "/compiler/"
-    - "/idea/"
-    thresholds:
-      num-issues: 1000
-  - input:
-    - "/compiler/"
-    thresholds:
-      num-issues: 1000
-  - input:
-    - "/idea/"
-    thresholds:
-      num-issues: 1000
+  #### too many issues detected by checkstyle.
+  #checkstyle:   # supports: Java
+  #- ignore:
+  #  - "/compiler/"
+  #  - "/idea/"
+  #  thresholds:
+  #    num-issues: 1000
+  #- input:
+  #  - "/compiler/"
+  #  thresholds:
+  #    num-issues: 1000
+  #- input:
+  #  - "/idea/"
+  #  thresholds:
+  #    num-issues: 1000
 
   cpd:          # supports: C C++ C# Go Java JavaScript Objective-C PHP Python Ruby Scala Swift
-  - ignore:
-    - "/compiler/"
-    - "/idea/"
-    thresholds:
-      num-issues: 1000
-  - input:
-    - "/compiler/"
-    thresholds:
-      num-issues: 1000
-  - input:
-    - "/idea/"
+    options:
+      --minimum-tokens: 100
     thresholds:
       num-issues: 1000
 
@@ -46,9 +38,9 @@ inspecode:
     options:
       --extended-regexp:
       --regexp:
-      - "(BUG|FIXME|HACK|XXX):"   # excludes "TODO:" (1615 issues)
+      - "(BUG|FIXME|HACK|XXX):"   # excludes "TODO:" (too many)
     thresholds:
-      num-issues: 9
+      num-issues: 10
 
   #### Infer finished with errors.
   ####    FAILURE: Build failed with an exception.
@@ -63,19 +55,77 @@ inspecode:
   #    num-issues: 1000
 
   ktlint:       # supports: Kotlin
-  - ignore:
-    - "/compiler/"
-    - "/idea/"
+  - input:
+    - "/[ab]/*"
+    - "build.gradle.kts"
     auto-fix: false     # TODO: change to `true`
     thresholds:
       num-issues: 1000
   - input:
-    - "/compiler/"
+    - "/[c-i]*"
+    - "!/core/descriptors*/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
       num-issues: 1000
   - input:
-    - "/idea/"
+    - "/core/descriptors*/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 1000
+  - input:
+    - "/[jk]*/"
+    - "!/j2k/"
+    - "!/js/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 1000
+  - input:
+    - "/j2k/[a-s]*/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 1000
+  - input:
+    - "/j2k/[t-z]*/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 1000
+  - input:
+    - "/js/"
+    - "!/js/js.translator/testData/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 1000
+  - input:
+    - "/js/js.translator/testData/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 1000
+  - input:
+    - "/l*/"
+    - "!/libraries/stdlib/"
+    - "!/libraries/tools/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 1000
+  - input:
+    - "/libraries/stdlib/"
+    - "!/libraries/stdlib/common/src/generated/"    # (1115 ... too many)
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 1000
+  - input:
+    - "/libraries/tools/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 1000
+  - input:
+    - "/[p-z]*/"
+    - "!/plugins/android-extensions/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 1000
+  - input:
+    - "/plugins/android-extensions/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
       num-issues: 1000
@@ -83,24 +133,30 @@ inspecode:
   misspell:     # supports: All Languages
     auto-fix: true
     thresholds:
-      num-issues: 1000
+      num-issues: 99
 
   pmd:          # supports: Java JavaScript
   - ignore:
     - "/idea/"
-    auto-fix: true
+    - "/js/js.translator/"
+    auto-fix: false     # TODO: change to `true`
     thresholds:
       num-issues: 1000
   - input:
     - "/idea/"
-    auto-fix: true
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 302
+  - input:
+    - "/js/js.translator/"
+    auto-fix: false     # TODO: change to `true`
     thresholds:
       num-issues: 1000
 
   uncrustify:   # supports: C C++ C# Objective-C Java
-  - ignore:
-    - "/compiler/"
-    - "/idea/"
+  - input:
+    - "!/compiler/"
+    - "!/idea/"
     thresholds:
       num-issues: 1000
   - input:
@@ -109,8 +165,18 @@ inspecode:
       num-issues: 1000
   - input:
     - "/idea/"
+    - "!/idea/testData/"
     thresholds:
-      num-issues: 1000
+      num-issues: 496
+  - input:
+    - "/idea/testData/"
+    - "!/idea/testData/refactoring/"
+    thresholds:
+      num-issues: 635
+  - input:
+    - "/idea/testData/refactoring/"
+    thresholds:
+      num-issues: 906
 
   #### Unused finished with errors.
   ####    Unused: analyzing unused: <stdin>: hGetContents: invalid argument (invalid byte sequence)
