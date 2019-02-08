@@ -30,13 +30,9 @@ inspecode:
 
   cpd:          # supports: C C++ C# Go Java JavaScript Objective-C PHP Python Ruby Scala Swift
   - options:
-      --minimum-tokens: 200   # default=100 ??
+      --minimum-tokens: 300
     thresholds:
-      num-issues: 2632    # when `--minimum-tokens: 100`
-  - options:
-      --minimum-tokens: 300   # default=100 ??
-    thresholds:
-      num-issues: 2632    # when `--minimum-tokens: 100`
+      num-issues: 728
 
   grep:         # supports: All Languages
     options:
@@ -66,22 +62,33 @@ inspecode:
     thresholds:
       num-issues: 34
   - input:
-    - "/[c-i]*"
+    - "/c*"
+    - "!/compiler/"
     - "!/core/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 1000
+      num-issues: 1000  # Timed-Out
+  - input:
+    - "/compiler/"
+    - "!/compiler/testData/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 0     # Timed-Out
+  - input:
+    - "/compiler/testData/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 0     # Timed-Out
   - input:
     - "/core/"
-    - "!/core/descriptors*/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 1000
+      num-issues: 710
   - input:
-    - "/core/descriptors*/"
+    - "/[defghi]*"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 511
+      num-issues: 1000  # Timed-Out
   - input:
     - "/[jk]*/"
     - "!/j2k/"
@@ -98,7 +105,7 @@ inspecode:
     - "/j2k/[t-z]*/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 384
+      num-issues: 348
   - input:
     - "/js/"
     - "!js/js.translator/src/"
@@ -107,23 +114,25 @@ inspecode:
     thresholds:
       num-issues: 580
   - input:
-    - "js/js.translator/src/"
+    - "/js/js.translator/src/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
       num-issues: 542
   - input:
     - "/js/js.translator/testData/"
-    - "!js/js.translator/testData/box/expression/"
-    - "!js/js.translator/testData/box/inline/"
+    - "!/js/js.translator/testData/box/examples/"
+    - "!/js/js.translator/testData/box/expression/"
+    - "!/js/js.translator/testData/box/inline/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 931
+      num-issues: 968
   - input:
-    - "js/js.translator/testData/box/expression/"
-    - "js/js.translator/testData/box/inline/"
+    - "/js/js.translator/testData/box/examples/"
+    - "/js/js.translator/testData/box/expression/"
+    - "/js/js.translator/testData/box/inline/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 846
+      num-issues: 882
   - input:
     - "/l*/"
     - "!/libraries/stdlib/"
