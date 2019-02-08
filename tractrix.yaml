@@ -69,23 +69,69 @@ inspecode:
     thresholds:
       num-issues: 1000  # Timed-Out
   - input:
-    - "/compiler/"
-    - "!/compiler/testData/"
+    - "/compiler/[a-c]*/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 0     # Timed-Out
+      num-issues: 949
+  - input:
+    - "/compiler/[d-i]*/"
+    - "!/compiler/frontend*/"
+    - "!/compiler/ir/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 688
+  - input:
+    - "/compiler/frontend*/"
+    - "!/compiler/frontend/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 504
+  - input:
+    - "/compiler/frontend/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 732
+  - input:
+    - "/compiler/ir/[a-h]*/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 932
+  - input:
+    - "/compiler/ir/[i-z]*/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 404
+  - input:
+    - "/compiler/[j-s]*/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 953
+  - input:
+    - "/compiler/[t-z]*/"
+    - "!/compiler/testData/"
+    - "!/compiler/tests-*/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 298
   - input:
     - "/compiler/testData/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
-      num-issues: 0     # Timed-Out
+      num-issues: 1000  # Timed-Out ##### TODO: split into tasks
+  - input:
+    - "/compiler/tests-*/"
+    auto-fix: false     # TODO: change to `true`
+    thresholds:
+      num-issues: 767
+      #    263 /compiler/tests-common/
+      #    259 /compiler/tests/
   - input:
     - "/core/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
       num-issues: 710
   - input:
-    - "/[defghi]*"
+    - "/[d-i]*"
     auto-fix: false     # TODO: change to `true`
     thresholds:
       num-issues: 1000  # Timed-Out
@@ -142,7 +188,7 @@ inspecode:
       num-issues: 186
   - input:
     - "/libraries/stdlib/"
-    - "!/libraries/stdlib/common/src/generated/"    # (1115 ... too many)
+    - "!/libraries/stdlib/common/src/generated/"  # (1115 ... too many in single directory)
     - "!/libraries/stdlib/js/src/"
     - "!/libraries/stdlib/jvm/"
     auto-fix: false     # TODO: change to `true`
@@ -164,7 +210,7 @@ inspecode:
     thresholds:
       num-issues: 709
   - input:
-    - "/[p-z]*/"
+    - "/[m-z]*/"
     - "!/plugins/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
@@ -228,7 +274,7 @@ inspecode:
   - input:
     - "/idea/testData/refactoring/"
     thresholds:
-      num-issues: 906
+      num-issues: 883
 
   #### Unused finished with errors.
   ####    Unused: analyzing unused: <stdin>: hGetContents: invalid argument (invalid byte sequence)
