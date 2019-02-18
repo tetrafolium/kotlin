@@ -1,5 +1,9 @@
 inspecode:
 
+  experimental:
+  - input:
+    - "/compiler/testData/"   # to avoid `Matrics` task timed-out
+
   astyle:       # supports: C C++ Objective-C C# Java
   - ignore:
     - "/compiler/"
@@ -113,11 +117,11 @@ inspecode:
     auto-fix: false     # TODO: change to `true`
     thresholds:
       num-issues: 298
-  - input:
-    - "/compiler/testData/"
-    auto-fix: false     # TODO: change to `true`
-    thresholds:
-      num-issues: 1000  # Timed-Out ##### TODO: split into tasks
+  #- input:
+  #  - "/compiler/testData/"
+  #  auto-fix: false     # TODO: change to `true`
+  #  thresholds:
+  #    num-issues: 1000  # 22095 issues
   - input:
     - "/compiler/tests-*/"
     auto-fix: false     # TODO: change to `true`
