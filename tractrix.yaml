@@ -1,7 +1,7 @@
 inspecode:
 
   experimental:
-    input:
+    ignore:
     - "/compiler/testData/"   # to avoid `Matrics` task timed-out
 
   astyle:       # supports: C C++ Objective-C C# Java
