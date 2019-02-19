@@ -1,7 +1,7 @@
 inspecode:
 
   experimental:
-  - input:
+    input:
     - "/compiler/testData/"   # to avoid `Matrics` task timed-out
 
   astyle:       # supports: C C++ Objective-C C# Java
@@ -234,7 +234,7 @@ inspecode:
   misspell:     # supports: All Languages
     auto-fix: true
     thresholds:
-      num-issues: 99
+      num-issues: 46  # excluded 53 issues under "compiler/testData/"
 
   pmd:          # supports: Java JavaScript
   - ignore:
