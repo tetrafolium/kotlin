@@ -234,7 +234,7 @@ inspecode:
   misspell:     # supports: All Languages
     auto-fix: true
     thresholds:
-      num-issues: 46  # excluded 53 issues under "compiler/testData/"
+      num-issues: 47
 
   pmd:          # supports: Java JavaScript
   - ignore:
