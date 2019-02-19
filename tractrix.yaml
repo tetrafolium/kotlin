@@ -112,16 +112,10 @@ inspecode:
       num-issues: 953
   - input:
     - "/compiler/[t-z]*/"
-    - "!/compiler/testData/"
     - "!/compiler/tests-*/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
       num-issues: 298
-  #- input:
-  #  - "/compiler/testData/"
-  #  auto-fix: false     # TODO: change to `true`
-  #  thresholds:
-  #    num-issues: 1000  # 22095 issues
   - input:
     - "/compiler/tests-*/"
     auto-fix: false     # TODO: change to `true`
@@ -159,7 +153,6 @@ inspecode:
   - input:
     - "/js/"
     - "!js/js.translator/src/"
-    - "!/js/js.translator/testData/"
     auto-fix: false     # TODO: change to `true`
     thresholds:
       num-issues: 580
@@ -168,21 +161,6 @@ inspecode:
     auto-fix: false     # TODO: change to `true`
     thresholds:
       num-issues: 542
-  - input:
-    - "/js/js.translator/testData/"
-    - "!/js/js.translator/testData/box/examples/"
-    - "!/js/js.translator/testData/box/expression/"
-    - "!/js/js.translator/testData/box/inline/"
-    auto-fix: false     # TODO: change to `true`
-    thresholds:
-      num-issues: 968
-  - input:
-    - "/js/js.translator/testData/box/examples/"
-    - "/js/js.translator/testData/box/expression/"
-    - "/js/js.translator/testData/box/inline/"
-    auto-fix: false     # TODO: change to `true`
-    thresholds:
-      num-issues: 882
   - input:
     - "/l*/"
     - "!/libraries/stdlib/"
@@ -258,27 +236,12 @@ inspecode:
       num-issues: 0   # SKIPPED: excluded all analyzable files by input/ignore patterns
   - input:
     - "/compiler/"
-    - "!/compiler/testData/"
     thresholds:
       num-issues: 736
   - input:
-    - "/compiler/testData/"
-    thresholds:
-      num-issues: 574
-  - input:
     - "/idea/"
-    - "!/idea/testData/"
     thresholds:
       num-issues: 496
-  - input:
-    - "/idea/testData/"
-    - "!/idea/testData/refactoring/"
-    thresholds:
-      num-issues: 658
-  - input:
-    - "/idea/testData/refactoring/"
-    thresholds:
-      num-issues: 883
 
   #### Unused finished with errors.
   ####    Unused: analyzing unused: <stdin>: hGetContents: invalid argument (invalid byte sequence)
