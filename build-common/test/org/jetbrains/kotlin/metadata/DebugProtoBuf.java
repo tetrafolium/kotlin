@@ -34708,7 +34708,7 @@ public final class DebugProtoBuf {
             "sion_requirement\030\037 \003(\005\022Y\n\031version_requir" +
             "ement_table\030  \001(\01326.org.jetbrains.kotlin" +
             ".metadata.VersionRequirementTable\"x\n\004Kin" +
-            "d\022\t\n\005CLASS\020\000\022\r\n\tINTERFACE\020\001\022\016\n\nENUM_CLAS" +
+            "d\022\t\n\005CLASS\020\000\022\r\n\tINTERFACE\020\001\022\016\n\nENUM_CLASS" +
             "S\020\002\022\016\n\nENUM_ENTRY\020\003\022\024\n\020ANNOTATION_CLASS\020",
             "\004\022\n\n\006OBJECT\020\005\022\024\n\020COMPANION_OBJECT\020\006*\006\010d\020" +
             "\270\224\001\"\335\002\n\007Package\0229\n\010function\030\003 \003(\0132\'.org." +

@@ -71,7 +71,7 @@ class CoroutineTransformer(
                 newStateMachineForLambda(node, element)
             }
             isSuspendFunction(node) -> newStateMachineForNamedFunction(node, element)
-            else -> error("no need to generate state maching for ${node.name}")
+            else -> error("no need to generate state machine for ${node.name}")
         }
     }
 

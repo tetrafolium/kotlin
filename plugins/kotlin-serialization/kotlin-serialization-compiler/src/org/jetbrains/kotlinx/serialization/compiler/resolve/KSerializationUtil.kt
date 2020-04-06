@@ -137,7 +137,7 @@ internal fun checkSerializerNullability(classType: KotlinType, serializerType: K
     return serializerType
 }
 
-// returns only user-overriden Serializer
+// returns only user-overridden Serializer
 val KotlinType.overridenSerializer: KotlinType?
     get() = (this.toClassDescriptor?.serializableWith)?.let { checkSerializerNullability(this, it) }
 
