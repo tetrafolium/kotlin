@@ -34,9 +34,9 @@ public class WhenByEnumsMapping {
     private final int fieldNumber;
 
     public WhenByEnumsMapping(
-            @NotNull ClassDescriptor enumClassDescriptor,
-            @NotNull String outerClassInternalNameForExpression,
-            int fieldNumber
+        @NotNull ClassDescriptor enumClassDescriptor,
+        @NotNull String outerClassInternalNameForExpression,
+        int fieldNumber
     ) {
         this.enumClassDescriptor = enumClassDescriptor;
         this.outerClassInternalNameForExpression = outerClassInternalNameForExpression;

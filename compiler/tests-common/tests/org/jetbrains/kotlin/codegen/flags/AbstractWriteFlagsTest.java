@@ -52,7 +52,7 @@ public abstract class AbstractWriteFlagsTest extends CodegenTestCase {
 
     @Override
     protected void doMultiFileTest(
-            @NotNull File wholeFile, @NotNull List<TestFile> files, @Nullable File javaFilesDir
+        @NotNull File wholeFile, @NotNull List<TestFile> files, @Nullable File javaFilesDir
     ) throws Exception {
         compile(files, null);
 
@@ -64,7 +64,7 @@ public abstract class AbstractWriteFlagsTest extends CodegenTestCase {
             for (OutputFile outputFile : classFileFactory.asList()) {
                 String filePath = outputFile.getRelativePath();
                 if (testedObject.isFullContainingClassName && filePath.equals(testedObject.containingClass + ".class") ||
-                    !testedObject.isFullContainingClassName && filePath.startsWith(testedObject.containingClass)) {
+                        !testedObject.isFullContainingClassName && filePath.startsWith(testedObject.containingClass)) {
                     className = filePath;
                 }
             }
@@ -113,7 +113,7 @@ public abstract class AbstractWriteFlagsTest extends CodegenTestCase {
             }
             else {
                 throw new IllegalArgumentException(
-                        "TESTED_OBJECTS instruction must contain one (for class) or two (for function and property) values");
+                    "TESTED_OBJECTS instruction must contain one (for class) or two (for function and property) values");
             }
 
             testObject.kind = findStringWithPrefixes(testData, "// TESTED_OBJECT_KIND: ");
@@ -142,15 +142,15 @@ public abstract class AbstractWriteFlagsTest extends CodegenTestCase {
 
     private static TestClassVisitor getClassVisitor(String visitorKind, String testedObjectName, boolean allowSynthetic) {
         switch (visitorKind) {
-            case "class":
-                return new ClassFlagsVisitor();
-            case "function":
-                return new FunctionFlagsVisitor(testedObjectName, allowSynthetic);
-            case "property":
-                return new PropertyFlagsVisitor(testedObjectName);
-            case "innerClass":
-                return new InnerClassFlagsVisitor(testedObjectName);
-                default:
+        case "class":
+            return new ClassFlagsVisitor();
+        case "function":
+            return new FunctionFlagsVisitor(testedObjectName, allowSynthetic);
+        case "property":
+            return new PropertyFlagsVisitor(testedObjectName);
+        case "innerClass":
+            return new InnerClassFlagsVisitor(testedObjectName);
+        default:
         }
 
         throw new IllegalArgumentException("Value of TESTED_OBJECT_KIND is incorrect: " + visitorKind);

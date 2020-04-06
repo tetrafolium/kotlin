@@ -29,10 +29,10 @@ import org.jetbrains.org.objectweb.asm.Type;
 public abstract class IntrinsicMethod {
     @NotNull
     public Callable toCallable(
-            @NotNull FunctionDescriptor fd,
-            boolean isSuper,
-            @NotNull ResolvedCall resolvedCall,
-            @NotNull ExpressionCodegen codegen
+        @NotNull FunctionDescriptor fd,
+        boolean isSuper,
+        @NotNull ResolvedCall resolvedCall,
+        @NotNull ExpressionCodegen codegen
     ) {
         return toCallable(codegen.getState().getTypeMapper().mapToCallableMethod(fd, false), isSuper, resolvedCall);
     }

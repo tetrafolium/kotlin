@@ -50,7 +50,7 @@ import static org.jetbrains.kotlin.resolve.BindingContext.*;
 public class DebugInfoUtil {
     private static final TokenSet MAY_BE_UNRESOLVED = TokenSet.create(IN_KEYWORD, NOT_IN);
     private static final TokenSet EXCLUDED = TokenSet.create(
-            COLON, AS_KEYWORD, AS_SAFE, IS_KEYWORD, NOT_IS, OROR, ANDAND, EQ, EQEQEQ, EXCLEQEQEQ, ELVIS, EXCLEXCL);
+                COLON, AS_KEYWORD, AS_SAFE, IS_KEYWORD, NOT_IS, OROR, ANDAND, EQ, EQEQEQ, EXCLEQEQEQ, ELVIS, EXCLEXCL);
 
     public abstract static class DebugInfoReporter {
 
@@ -68,9 +68,9 @@ public class DebugInfoUtil {
     }
 
     public static void markDebugAnnotations(
-            @NotNull PsiElement root,
-            @NotNull BindingContext bindingContext,
-            @NotNull DebugInfoReporter debugInfoReporter
+        @NotNull PsiElement root,
+        @NotNull BindingContext bindingContext,
+        @NotNull DebugInfoReporter debugInfoReporter
     ) {
         Map<KtReferenceExpression, DiagnosticFactory<?>> markedWithErrorElements = new HashMap<>();
         for (Diagnostic diagnostic : bindingContext.getDiagnostics()) {
@@ -79,7 +79,7 @@ public class DebugInfoUtil {
                 markedWithErrorElements.put((KtReferenceExpression) diagnostic.getPsiElement(), factory);
             }
             else if (factory == Errors.SUPER_IS_NOT_AN_EXPRESSION
-                    || factory == Errors.SUPER_NOT_AVAILABLE) {
+                     || factory == Errors.SUPER_NOT_AVAILABLE) {
                 KtSuperExpression superExpression = (KtSuperExpression) diagnostic.getPsiElement();
                 markedWithErrorElements.put(superExpression.getInstanceReference(), factory);
             }
@@ -88,7 +88,7 @@ public class DebugInfoUtil {
             }
             else if (factory == Errors.UNSUPPORTED) {
                 for (KtReferenceExpression reference : PsiTreeUtil.findChildrenOfType(diagnostic.getPsiElement(),
-                                                                                      KtReferenceExpression.class)) {
+                        KtReferenceExpression.class)) {
                     markedWithErrorElements.put(reference, factory);
                 }
             }
@@ -137,7 +137,7 @@ public class DebugInfoUtil {
             @Override
             public void visitReferenceExpression(@NotNull KtReferenceExpression expression) {
                 super.visitReferenceExpression(expression);
-                if (!BindingContextUtils.isExpressionWithValidReference(expression, bindingContext)){
+                if (!BindingContextUtils.isExpressionWithValidReference(expression, bindingContext)) {
                     return;
                 }
                 IElementType referencedNameElementType = null;
@@ -151,7 +151,7 @@ public class DebugInfoUtil {
                         }
                     }
                     if (elementType == KtNodeTypes.LABEL ||
-                        nameExpression.getReferencedNameElementType() == KtTokens.THIS_KEYWORD) {
+                            nameExpression.getReferencedNameElementType() == KtTokens.THIS_KEYWORD) {
                         return;
                     }
                 }
@@ -173,7 +173,7 @@ public class DebugInfoUtil {
                 }
                 if (target == null) {
                     Collection<? extends DeclarationDescriptor> declarationDescriptors =
-                            bindingContext.get(AMBIGUOUS_REFERENCE_TARGET, expression);
+                        bindingContext.get(AMBIGUOUS_REFERENCE_TARGET, expression);
                     if (declarationDescriptors != null) {
                         target = "[" + declarationDescriptors.size() + " descriptors]";
                     }
@@ -192,14 +192,14 @@ public class DebugInfoUtil {
                 boolean resolved = target != null;
                 boolean markedWithError = markedWithErrorElements.containsKey(expression);
                 if (expression instanceof KtArrayAccessExpression &&
-                    markedWithErrorElements.containsKey(((KtArrayAccessExpression) expression).getArrayExpression())) {
+                        markedWithErrorElements.containsKey(((KtArrayAccessExpression) expression).getArrayExpression())) {
                     // if 'foo' in 'foo[i]' is unresolved it means 'foo[i]' is unresolved (otherwise 'foo[i]' is marked as 'missing unresolved')
                     markedWithError = true;
                 }
                 KotlinType expressionType = bindingContext.getType(expression);
                 DiagnosticFactory<?> factory = markedWithErrorElements.get(expression);
                 if (declarationDescriptor != null &&
-                    (ErrorUtils.isError(declarationDescriptor) || ErrorUtils.containsErrorType(expressionType))) {
+                        (ErrorUtils.isError(declarationDescriptor) || ErrorUtils.containsErrorType(expressionType))) {
                     if (factory != Errors.EXPRESSION_EXPECTED_PACKAGE_FOUND) {
                         debugInfoReporter.reportElementWithErrorType(expression);
                     }

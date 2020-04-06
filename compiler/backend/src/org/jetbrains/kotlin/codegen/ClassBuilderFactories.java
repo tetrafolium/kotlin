@@ -54,7 +54,7 @@ public class ClassBuilderFactories {
             throw new IllegalStateException();
         }
     };
-    
+
     public static ClassBuilderFactory TEST = new TestClassBuilderFactory();
 
     public static class TestClassBuilderFactory implements ClassBuilderFactory {
@@ -92,7 +92,7 @@ public class ClassBuilderFactories {
 
         }
     }
-    
+
     @NotNull
     public static ClassBuilderFactory BINARIES = new ClassBuilderFactory() {
         @NotNull

@@ -42,16 +42,16 @@ public class OptimizationClassBuilder extends DelegatingClassBuilder {
     @NotNull
     @Override
     public MethodVisitor newMethod(
-            @NotNull JvmDeclarationOrigin origin,
-            int access,
-            @NotNull String name,
-            @NotNull String desc,
-            @Nullable String signature,
-            @Nullable String[] exceptions
+        @NotNull JvmDeclarationOrigin origin,
+        int access,
+        @NotNull String name,
+        @NotNull String desc,
+        @Nullable String signature,
+        @Nullable String[] exceptions
     ) {
         return new OptimizationMethodVisitor(
-                super.newMethod(origin, access, name, desc, signature, exceptions),
-                generationState, access, name, desc, signature, exceptions
-        );
+                   super.newMethod(origin, access, name, desc, signature, exceptions),
+                   generationState, access, name, desc, signature, exceptions
+               );
     }
 }

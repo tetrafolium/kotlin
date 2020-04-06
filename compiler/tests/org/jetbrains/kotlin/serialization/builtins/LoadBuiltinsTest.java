@@ -60,22 +60,22 @@ public class LoadBuiltinsTest extends KotlinTestWithEnvironment {
         PackageFragmentProvider packageFragmentProvider = createBuiltInsPackageFragmentProvider();
 
         List<KtFile> files = KotlinTestUtils.loadToJetFiles(getEnvironment(), ContainerUtil.concat(
-                allFilesUnder("core/builtins/native"),
-                allFilesUnder("core/builtins/src")
-        ));
+                                 allFilesUnder("core/builtins/native"),
+                                 allFilesUnder("core/builtins/src")
+                             ));
 
         ModuleDescriptor module =
-                LazyResolveTestUtilsKt.createResolveSessionForFiles(getEnvironment().getProject(), files, false).getModuleDescriptor();
+            LazyResolveTestUtilsKt.createResolveSessionForFiles(getEnvironment().getProject(), files, false).getModuleDescriptor();
 
         for (FqName packageFqName : CollectionsKt.listOf(BUILT_INS_PACKAGE_FQ_NAME, COLLECTIONS_PACKAGE_FQ_NAME, RANGES_PACKAGE_FQ_NAME)) {
             PackageFragmentDescriptor fromLazyResolve =
-                    CollectionsKt.single(module.getPackage(packageFqName).getFragments());
+                CollectionsKt.single(module.getPackage(packageFqName).getFragments());
             if (fromLazyResolve instanceof LazyPackageDescriptor) {
                 PackageFragmentDescriptor deserialized =
-                        CollectionsKt.single(packageFragmentProvider.getPackageFragments(packageFqName));
+                    CollectionsKt.single(packageFragmentProvider.getPackageFragments(packageFqName));
                 RecursiveDescriptorComparator.validateAndCompareDescriptors(
-                        fromLazyResolve, deserialized, AbstractBuiltInsWithJDKMembersTest.createComparatorConfiguration(),
-                        new File("compiler/testData/builtin-classes/default/" + packageFqName.asString().replace('.', '-') + ".txt")
+                    fromLazyResolve, deserialized, AbstractBuiltInsWithJDKMembersTest.createComparatorConfiguration(),
+                    new File("compiler/testData/builtin-classes/default/" + packageFqName.asString().replace('.', '-') + ".txt")
                 );
             }
         }
@@ -85,14 +85,14 @@ public class LoadBuiltinsTest extends KotlinTestWithEnvironment {
     private static PackageFragmentProvider createBuiltInsPackageFragmentProvider() {
         LockBasedStorageManager storageManager = new LockBasedStorageManager("LoadBuiltinsTest");
         ModuleDescriptorImpl builtInsModule =
-                new ModuleDescriptorImpl(KotlinBuiltIns.BUILTINS_MODULE_NAME, storageManager, DefaultBuiltIns.getInstance());
+            new ModuleDescriptorImpl(KotlinBuiltIns.BUILTINS_MODULE_NAME, storageManager, DefaultBuiltIns.getInstance());
 
         PackageFragmentProvider packageFragmentProvider = new BuiltInsLoaderImpl().createBuiltInPackageFragmentProvider(
-                storageManager, builtInsModule, BUILT_INS_PACKAGE_FQ_NAMES,
-                Collections.singletonList(new BuiltInFictitiousFunctionClassFactory(storageManager, builtInsModule)),
-                PlatformDependentDeclarationFilter.All.INSTANCE,
-                AdditionalClassPartsProvider.None.INSTANCE,
-                ForTestCompileRuntime.runtimeJarClassLoader()::getResourceAsStream
+            storageManager, builtInsModule, BUILT_INS_PACKAGE_FQ_NAMES,
+            Collections.singletonList(new BuiltInFictitiousFunctionClassFactory(storageManager, builtInsModule)),
+            PlatformDependentDeclarationFilter.All.INSTANCE,
+            AdditionalClassPartsProvider.None.INSTANCE,
+            ForTestCompileRuntime.runtimeJarClassLoader()::getResourceAsStream
         );
 
         builtInsModule.initialize(packageFragmentProvider);

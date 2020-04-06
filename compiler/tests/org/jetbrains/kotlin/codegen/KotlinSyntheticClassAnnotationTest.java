@@ -42,72 +42,72 @@ public class KotlinSyntheticClassAnnotationTest extends CodegenTestCase {
 
     public void testTraitImpl() {
         doTestKotlinSyntheticClass(
-                "interface A { fun foo() = 42 }",
-                JvmAbi.DEFAULT_IMPLS_SUFFIX
+            "interface A { fun foo() = 42 }",
+            JvmAbi.DEFAULT_IMPLS_SUFFIX
         );
     }
 
     public void testSamWrapper() {
         doTestKotlinSyntheticClass(
-                "val f = {}\nval foo = Thread(f)",
-                "$sam"
+            "val f = {}\nval foo = Thread(f)",
+            "$sam"
         );
     }
 
     public void testSamLambda() {
         doTestKotlinSyntheticClass(
-                "val foo = Thread { }",
-                "$1"
+            "val foo = Thread { }",
+            "$1"
         );
     }
 
     public void testCallableReferenceWrapper() {
         doTestKotlinSyntheticClass(
-                "val f = String::get",
-                "$1"
+            "val f = String::get",
+            "$1"
         );
     }
 
     public void testLocalFunction() {
         doTestKotlinSyntheticClass(
-                "fun foo() { fun bar() {} }",
-                "$1"
+            "fun foo() { fun bar() {} }",
+            "$1"
         );
     }
 
     public void testAnonymousFunction() {
         doTestKotlinSyntheticClass(
-                "val f = {}",
-                "$1"
+            "val f = {}",
+            "$1"
         );
     }
 
     public void testLocalClass() {
         doTestKotlinClass(
-                "fun foo() { class Local }",
-                "Local"
+            "fun foo() { class Local }",
+            "Local"
         );
     }
 
     public void testInnerClassOfLocalClass() {
         doTestKotlinClass(
-                "fun foo() { class Local { inner class Inner } }",
-                "Inner"
+            "fun foo() { class Local { inner class Inner } }",
+            "Inner"
         );
     }
 
     public void testAnonymousObject() {
         doTestKotlinClass(
-                "val o = object {}",
-                "$1"
+            "val o = object {}",
+            "$1"
         );
     }
 
     public void testWhenMappings() {
         doTestKotlinSyntheticClass(
-                "enum class E { A }\n" +
-                "val x = when (E.A) { E.A -> 1; else -> 0; }",
-                "WhenMappings"
+            "enum class E { A }\n" +
+            "val x = when (E.A) { E.A -> 1; else -> 0; }",
+            "WhenMappings"
         );
     }
 

@@ -41,7 +41,7 @@ import static org.jetbrains.kotlin.KtNodeTypes.PROPERTY_DELEGATE;
 import static org.jetbrains.kotlin.lexer.KtTokens.EQ;
 
 public class KtProperty extends KtTypeParameterListOwnerStub<KotlinPropertyStub>
-        implements KtVariableDeclaration, PsiModifiableCodeBlock {
+    implements KtVariableDeclaration, PsiModifiableCodeBlock {
 
     private static final Logger LOG = Logger.getInstance(KtProperty.class);
 
@@ -254,7 +254,7 @@ public class KtProperty extends KtTypeParameterListOwnerStub<KotlinPropertyStub>
 
         return AstLoadingFilter.forceAllowTreeLoading(this.getContainingFile(), () ->
                 PsiTreeUtil.getNextSiblingOfType(findChildByType(EQ), KtExpression.class)
-        );
+                                                     );
     }
 
     public boolean hasDelegateExpressionOrInitializer() {
@@ -272,10 +272,10 @@ public class KtProperty extends KtTypeParameterListOwnerStub<KotlinPropertyStub>
             else {
                 PsiElement nextSibling = oldInitializer.getNextSibling();
                 PsiElement last =
-                        nextSibling != null
-                        && nextSibling.getNode() != null
-                        && nextSibling.getNode().getElementType() == KtTokens.SEMICOLON
-                        ? nextSibling : oldInitializer;
+                    nextSibling != null
+                    && nextSibling.getNode() != null
+                    && nextSibling.getNode().getElementType() == KtTokens.SEMICOLON
+                    ? nextSibling : oldInitializer;
 
                 deleteChildRange(findChildByType(EQ), last);
                 return null;

@@ -27,9 +27,9 @@ import java.util.Collection;
 public class RecursiveDescriptorProcessor {
 
     public static <D> boolean process(
-            @NotNull DeclarationDescriptor descriptor,
-            D data,
-            @NotNull DeclarationDescriptorVisitor<Boolean, D> visitor
+        @NotNull DeclarationDescriptor descriptor,
+        D data,
+        @NotNull DeclarationDescriptorVisitor<Boolean, D> visitor
     ) {
         return descriptor.accept(new RecursiveVisitor<>(visitor), data);
     }

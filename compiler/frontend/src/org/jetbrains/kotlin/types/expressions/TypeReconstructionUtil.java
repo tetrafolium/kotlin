@@ -34,11 +34,11 @@ import static org.jetbrains.kotlin.diagnostics.Errors.NO_TYPE_ARGUMENTS_ON_RHS;
 public class TypeReconstructionUtil {
     @NotNull
     public static KotlinType reconstructBareType(
-            @NotNull KtTypeReference right,
-            @NotNull PossiblyBareType possiblyBareTarget,
-            @Nullable KotlinType subjectType,
-            @NotNull BindingTrace trace,
-            @NotNull KotlinBuiltIns builtIns
+        @NotNull KtTypeReference right,
+        @NotNull PossiblyBareType possiblyBareTarget,
+        @Nullable KotlinType subjectType,
+        @NotNull BindingTrace trace,
+        @NotNull KotlinBuiltIns builtIns
     ) {
         if (subjectType == null) {
             // Recovery: let's reconstruct as if we were casting from Any, to get some type there
@@ -48,8 +48,8 @@ public class TypeReconstructionUtil {
         if (!reconstructionResult.isAllArgumentsInferred()) {
             TypeConstructor typeConstructor = possiblyBareTarget.getBareTypeConstructor();
             trace.report(NO_TYPE_ARGUMENTS_ON_RHS.on(right,
-                                                     typeConstructor.getParameters().size(),
-                                                     allStarProjectionsString(typeConstructor)));
+                         typeConstructor.getParameters().size(),
+                         allStarProjectionsString(typeConstructor)));
         }
 
         KotlinType targetType = reconstructionResult.getResultingType();

@@ -23,11 +23,11 @@ import org.jetbrains.kotlin.psi.*;
 /*package*/ interface ExpressionTypingInternals extends ExpressionTypingFacade {
     @NotNull
     KotlinTypeInfo checkInExpression(
-            @NotNull KtElement callElement,
-            @NotNull KtSimpleNameExpression operationSign,
-            @NotNull ValueArgument leftArgument,
-            @Nullable KtExpression right,
-            @NotNull ExpressionTypingContext context
+        @NotNull KtElement callElement,
+        @NotNull KtSimpleNameExpression operationSign,
+        @NotNull ValueArgument leftArgument,
+        @Nullable KtExpression right,
+        @NotNull ExpressionTypingContext context
     );
 
     void checkStatementType(@NotNull KtExpression expression, ExpressionTypingContext context);

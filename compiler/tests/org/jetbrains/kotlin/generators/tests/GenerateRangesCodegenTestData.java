@@ -33,7 +33,7 @@ public class GenerateRangesCodegenTestData {
     private static final File AS_LITERAL_DIR = new File(TEST_DATA_DIR, "literal");
     private static final File AS_EXPRESSION_DIR = new File(TEST_DATA_DIR, "expression");
     private static final File[] SOURCE_TEST_FILES = {
-            new File("libraries/stdlib/test/ranges/RangeIterationTest.kt"),
+        new File("libraries/stdlib/test/ranges/RangeIterationTest.kt"),
     };
 
     private static final Pattern TEST_FUN_PATTERN = Pattern.compile("@Test fun (\\w+)\\(\\) \\{.+?}", Pattern.DOTALL);
@@ -41,25 +41,25 @@ public class GenerateRangesCodegenTestData {
 
     // $LIST.size() check is needed in order for tests not to run forever
     private static final String LITERAL_TEMPLATE = "    val $LIST = ArrayList<$TYPE>()\n" +
-                                                   "    for (i in $RANGE_EXPR) {\n" +
-                                                   "        $LIST.add(i)\n" +
-                                                   "        if ($LIST.size > 23) break\n" +
-                                                   "    }\n" +
-                                                   "    if ($LIST != listOf<$TYPE>($LIST_ELEMENTS)) {\n" +
-                                                   "        return \"Wrong elements for $RANGE_EXPR_ESCAPED: $$LIST\"\n" +
-                                                   "    }\n" +
-                                                   "\n";
+            "    for (i in $RANGE_EXPR) {\n" +
+            "        $LIST.add(i)\n" +
+            "        if ($LIST.size > 23) break\n" +
+            "    }\n" +
+            "    if ($LIST != listOf<$TYPE>($LIST_ELEMENTS)) {\n" +
+            "        return \"Wrong elements for $RANGE_EXPR_ESCAPED: $$LIST\"\n" +
+            "    }\n" +
+            "\n";
 
     private static final String EXPRESSION_TEMPLATE = "    val $LIST = ArrayList<$TYPE>()\n" +
-                                                      "    val $RANGE = $RANGE_EXPR\n" +
-                                                      "    for (i in $RANGE) {\n" +
-                                                      "        $LIST.add(i)\n" +
-                                                      "        if ($LIST.size > 23) break\n" +
-                                                      "    }\n" +
-                                                      "    if ($LIST != listOf<$TYPE>($LIST_ELEMENTS)) {\n" +
-                                                      "        return \"Wrong elements for $RANGE_EXPR_ESCAPED: $$LIST\"\n" +
-                                                      "    }\n" +
-                                                      "\n";
+            "    val $RANGE = $RANGE_EXPR\n" +
+            "    for (i in $RANGE) {\n" +
+            "        $LIST.add(i)\n" +
+            "        if ($LIST.size > 23) break\n" +
+            "    }\n" +
+            "    if ($LIST != listOf<$TYPE>($LIST_ELEMENTS)) {\n" +
+            "        return \"Wrong elements for $RANGE_EXPR_ESCAPED: $$LIST\"\n" +
+            "    }\n" +
+            "\n";
 
     private static final List<String> INTEGER_PRIMITIVES = Arrays.asList("Int", "Byte", "Short", "Long", "Char", "UInt", "UByte", "UShort", "ULong");
 
@@ -110,13 +110,13 @@ public class GenerateRangesCodegenTestData {
 
     private static String renderTemplate(String template, int number, String elementType, String rangeExpression, String expectedListElements) {
         return template
-                .replace("$RANGE_EXPR_ESCAPED", StringUtil.escapeStringCharacters(rangeExpression))
-                .replace("$RANGE_EXPR", rangeExpression)
-                .replace("$LIST_ELEMENTS", expectedListElements)
-                .replace("$LIST", "list" + number)
-                .replace("$RANGE", "range" + number)
-                .replace("$TYPE", elementType)
-                .replace("\n", LineSeparator.getSystemLineSeparator().getSeparatorString());
+               .replace("$RANGE_EXPR_ESCAPED", StringUtil.escapeStringCharacters(rangeExpression))
+               .replace("$RANGE_EXPR", rangeExpression)
+               .replace("$LIST_ELEMENTS", expectedListElements)
+               .replace("$LIST", "list" + number)
+               .replace("$RANGE", "range" + number)
+               .replace("$TYPE", elementType)
+               .replace("\n", LineSeparator.getSystemLineSeparator().getSeparatorString());
     }
 
     private static final List<String> WHITELISTED_FOR_JVM_IR_BACKEND = Collections.singletonList("overflowZeroDownToMaxValue.kt");

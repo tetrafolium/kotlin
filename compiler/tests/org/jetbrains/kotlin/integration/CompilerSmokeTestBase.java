@@ -42,8 +42,8 @@ public abstract class CompilerSmokeTestBase extends KotlinIntegrationTestBase {
 
         javaArgs.add("-cp");
         javaArgs.add(StringsKt.join(Arrays.asList(
-                getCompilerLib().getAbsolutePath() + File.separator + "kotlin-compiler.jar"
-        ), File.pathSeparator));
+                                        getCompilerLib().getAbsolutePath() + File.separator + "kotlin-compiler.jar"
+                                    ), File.pathSeparator));
         javaArgs.add("org.jetbrains.kotlin.cli.jvm.K2JVMCompiler");
 
         Collections.addAll(javaArgs, arguments);

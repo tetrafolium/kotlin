@@ -94,8 +94,8 @@ public class PseudocodeUtil {
 
     @Nullable
     public static VariableDescriptor extractVariableDescriptorFromReference(
-            @NotNull Instruction instruction,
-            @NotNull BindingContext bindingContext
+        @NotNull Instruction instruction,
+        @NotNull BindingContext bindingContext
     ) {
         if (instruction instanceof AccessValueInstruction) {
             KtElement element = ((AccessValueInstruction) instruction).getElement();
@@ -112,8 +112,8 @@ public class PseudocodeUtil {
 
     @Nullable
     public static VariableDescriptor extractVariableDescriptorIfAny(
-            @NotNull Instruction instruction,
-            @NotNull BindingContext bindingContext
+        @NotNull Instruction instruction,
+        @NotNull BindingContext bindingContext
     ) {
         if (instruction instanceof VariableDeclarationInstruction) {
             KtDeclaration declaration = ((VariableDeclarationInstruction) instruction).getVariableDeclarationElement();
@@ -134,8 +134,8 @@ public class PseudocodeUtil {
     // When deal with constructed object (not this) treat it like it's fully initialized
     // Otherwise (this or access with empty receiver) access instruction should be handled as usual
     public static boolean isThisOrNoDispatchReceiver(
-            @NotNull AccessValueInstruction instruction,
-            @NotNull BindingContext bindingContext
+        @NotNull AccessValueInstruction instruction,
+        @NotNull BindingContext bindingContext
     ) {
         if (instruction.getReceiverValues().isEmpty()) {
             return true;
@@ -143,7 +143,7 @@ public class PseudocodeUtil {
         AccessTarget accessTarget = instruction.getTarget();
         if (accessTarget instanceof AccessTarget.BlackBox) return false;
         assert accessTarget instanceof AccessTarget.Call :
-                "AccessTarget.Declaration has no receivers and it's not BlackBox, so it should be Call";
+        "AccessTarget.Declaration has no receivers and it's not BlackBox, so it should be Call";
 
         ResolvedCall<?> accessResolvedCall = ((AccessTarget.Call) accessTarget).getResolvedCall();
         return ResolvedCallUtilKt.hasThisOrNoDispatchReceiver(accessResolvedCall, bindingContext);

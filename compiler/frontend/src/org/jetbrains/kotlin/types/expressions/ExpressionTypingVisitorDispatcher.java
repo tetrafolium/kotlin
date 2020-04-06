@@ -36,7 +36,7 @@ import org.jetbrains.kotlin.utils.KotlinExceptionWithAttachments;
 import static org.jetbrains.kotlin.diagnostics.Errors.TYPECHECKER_HAS_RUN_INTO_RECURSIVE_PROBLEM;
 
 public abstract class ExpressionTypingVisitorDispatcher extends KtVisitor<KotlinTypeInfo, ExpressionTypingContext>
-        implements ExpressionTypingInternals {
+    implements ExpressionTypingInternals {
 
     public static final PerformanceCounter typeInfoPerfCounter = PerformanceCounter.Companion.create("Type info", true);
 
@@ -60,13 +60,13 @@ public abstract class ExpressionTypingVisitorDispatcher extends KtVisitor<Kotlin
         private final ExpressionTypingVisitorForStatements visitorForBlock;
 
         public ForBlock(
-                @NotNull ExpressionTypingComponents components,
-                @NotNull AnnotationChecker annotationChecker,
-                @NotNull LexicalWritableScope writableScope
+            @NotNull ExpressionTypingComponents components,
+            @NotNull AnnotationChecker annotationChecker,
+            @NotNull LexicalWritableScope writableScope
         ) {
             super(components, annotationChecker);
             this.visitorForBlock = new ExpressionTypingVisitorForStatements(
-                    this, writableScope, basic, controlStructures, patterns, functions
+                this, writableScope, basic, controlStructures, patterns, functions
             );
         }
 
@@ -85,8 +85,8 @@ public abstract class ExpressionTypingVisitorDispatcher extends KtVisitor<Kotlin
     protected final DeclarationsCheckerBuilder declarationsCheckerBuilder;
 
     private ExpressionTypingVisitorDispatcher(
-            @NotNull ExpressionTypingComponents components,
-            @NotNull AnnotationChecker annotationChecker
+        @NotNull ExpressionTypingComponents components,
+        @NotNull AnnotationChecker annotationChecker
     ) {
         this.components = components;
         this.annotationChecker = annotationChecker;
@@ -106,11 +106,11 @@ public abstract class ExpressionTypingVisitorDispatcher extends KtVisitor<Kotlin
     @NotNull
     @Override
     public KotlinTypeInfo checkInExpression(
-            @NotNull KtElement callElement,
-            @NotNull KtSimpleNameExpression operationSign,
-            @NotNull ValueArgument leftArgument,
-            @Nullable KtExpression right,
-            @NotNull ExpressionTypingContext context
+        @NotNull KtElement callElement,
+        @NotNull KtSimpleNameExpression operationSign,
+        @NotNull ValueArgument leftArgument,
+        @Nullable KtExpression right,
+        @NotNull ExpressionTypingContext context
     ) {
         return basic.checkInExpression(callElement, operationSign, leftArgument, right, context);
     }
@@ -123,8 +123,8 @@ public abstract class ExpressionTypingVisitorDispatcher extends KtVisitor<Kotlin
             return typeInfo;
         }
         return typeInfo
-                .replaceType(ErrorUtils.createErrorType("Type for " + expression.getText()))
-                .replaceDataFlowInfo(context.dataFlowInfo);
+               .replaceType(ErrorUtils.createErrorType("Type for " + expression.getText()))
+               .replaceDataFlowInfo(context.dataFlowInfo);
     }
 
     @Override
@@ -148,8 +148,8 @@ public abstract class ExpressionTypingVisitorDispatcher extends KtVisitor<Kotlin
 
     protected ExpressionTypingVisitorForStatements createStatementVisitor(ExpressionTypingContext context) {
         return new ExpressionTypingVisitorForStatements(this,
-                                                        ExpressionTypingUtils.newWritableScopeImpl(context, LexicalScopeKind.CODE_BLOCK, components.overloadChecker),
-                                                        basic, controlStructures, patterns, functions);
+                ExpressionTypingUtils.newWritableScopeImpl(context, LexicalScopeKind.CODE_BLOCK, components.overloadChecker),
+                basic, controlStructures, patterns, functions);
     }
 
     @Override
@@ -211,9 +211,9 @@ public abstract class ExpressionTypingVisitorDispatcher extends KtVisitor<Kotlin
                 context.trace.report(Errors.EXCEPTION_FROM_ANALYZER.on(expression, e));
                 logOrThrowException(expression, e);
                 return TypeInfoFactoryKt.createTypeInfo(
-                        ErrorUtils.createErrorType(e.getClass().getSimpleName() + " from analyzer"),
-                        context
-                );
+                           ErrorUtils.createErrorType(e.getClass().getSimpleName() + " from analyzer"),
+                           context
+                       );
             }
         });
     }
@@ -231,8 +231,8 @@ public abstract class ExpressionTypingVisitorDispatcher extends KtVisitor<Kotlin
         try {
             // This trows AssertionError in CLI and reports the error in the IDE
             LOG.error(
-                    new KotlinExceptionWithAttachments("Exception while analyzing expression at " + PsiDiagnosticUtils.atLocation(expression), e)
-                        .withAttachment("expression.kt", expression.getText())
+                new KotlinExceptionWithAttachments("Exception while analyzing expression at " + PsiDiagnosticUtils.atLocation(expression), e)
+                .withAttachment("expression.kt", expression.getText())
             );
         }
         catch (AssertionError errorFromLogger) {

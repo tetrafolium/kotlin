@@ -28,7 +28,7 @@ public abstract class AbstractDeclarationProviderFactory implements DeclarationP
 
     public AbstractDeclarationProviderFactory(@NotNull StorageManager storageManager) {
         this.packageDeclarationProviders =
-                storageManager.createMemoizedFunctionWithNullableValues(this::createPackageMemberDeclarationProvider);
+            storageManager.createMemoizedFunctionWithNullableValues(this::createPackageMemberDeclarationProvider);
     }
 
     @Nullable

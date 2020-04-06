@@ -52,17 +52,17 @@ public class JvmSignatureWriter extends JvmDescriptorTypeWriter<Type> {
 
     public void writeAsmType(@NotNull Type asmType) {
         switch (asmType.getSort()) {
-            case Type.OBJECT:
-                writeClassBegin(asmType);
-                writeClassEnd();
-                return;
-            case Type.ARRAY:
-                writeArrayType();
-                writeAsmType(AsmUtil.correctElementType(asmType));
-                writeArrayEnd();
-                return;
-            default:
-                writeJvmTypeAsIs(asmType);
+        case Type.OBJECT:
+            writeClassBegin(asmType);
+            writeClassEnd();
+            return;
+        case Type.ARRAY:
+            writeArrayType();
+            writeAsmType(AsmUtil.correctElementType(asmType));
+            writeArrayEnd();
+            return;
+        default:
+            writeJvmTypeAsIs(asmType);
         }
     }
 

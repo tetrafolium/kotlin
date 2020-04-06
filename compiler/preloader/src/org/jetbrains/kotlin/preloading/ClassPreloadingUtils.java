@@ -40,11 +40,11 @@ public class ClassPreloadingUtils {
      * @throws IOException on from reading the jar
      */
     public static ClassLoader preloadClasses(
-            Collection<File> jarFiles,
-            int classCountEstimation,
-            ClassLoader parentClassLoader,
-            ClassCondition classesToLoadByParent,
-            ClassHandler handler
+        Collection<File> jarFiles,
+        int classCountEstimation,
+        ClassLoader parentClassLoader,
+        ClassCondition classesToLoadByParent,
+        ClassHandler handler
     ) throws IOException {
         Map<String, Object> entries = loadAllClassesFromJars(jarFiles, classCountEstimation, handler);
 
@@ -65,7 +65,7 @@ public class ClassPreloadingUtils {
     }
 
     public static ClassLoader preloadClasses(
-            Collection<File> jarFiles, int classCountEstimation, ClassLoader parentClassLoader, ClassCondition classesToLoadByParent
+        Collection<File> jarFiles, int classCountEstimation, ClassLoader parentClassLoader, ClassCondition classesToLoadByParent
     ) throws IOException {
         return preloadClasses(jarFiles, classCountEstimation, parentClassLoader, classesToLoadByParent, null);
     }
@@ -112,9 +112,9 @@ public class ClassPreloadingUtils {
      * or a non-empty ArrayList of ResourceData if there's many
      */
     private static Map<String, Object> loadAllClassesFromJars(
-            Collection<File> jarFiles,
-            int classNumberEstimate,
-            ClassHandler handler
+        Collection<File> jarFiles,
+        int classNumberEstimate,
+        ClassHandler handler
     ) throws IOException {
         // 0.75 is HashMap.DEFAULT_LOAD_FACTOR
         Map<String, Object> resources = new HashMap<String, Object>((int) (classNumberEstimate / 0.75));
@@ -161,7 +161,7 @@ public class ClassPreloadingUtils {
                     }
                     else {
                         assert previous instanceof ArrayList :
-                                "Resource map should contain ResourceData or ArrayList<ResourceData>: " + name;
+                        "Resource map should contain ResourceData or ArrayList<ResourceData>: " + name;
                         ((ArrayList<ResourceData>) previous).add(resourceData);
                     }
                 }

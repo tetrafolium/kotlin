@@ -527,8 +527,8 @@ public class KotlinTypeCheckerTest extends KotlinTestWithEnvironment {
         KotlinType typeNode1 = makeType(subtype);
         KotlinType typeNode2 = makeType(supertype);
         boolean result = KotlinTypeChecker.DEFAULT.isSubtypeOf(
-                typeNode1,
-                typeNode2);
+                             typeNode1,
+                             typeNode2);
         String modifier = expected ? "not " : "";
         assertTrue(typeNode1 + " is " + modifier + "a subtype of " + typeNode2, result == expected);
     }
@@ -544,13 +544,13 @@ public class KotlinTypeCheckerTest extends KotlinTestWithEnvironment {
     private void assertType(String contextType, String expression, String expectedType) {
         KotlinType thisType = makeType(contextType);
         ReceiverParameterDescriptorImpl receiverParameterDescriptor = new ReceiverParameterDescriptorImpl(
-                scopeWithImports.getOwnerDescriptor(),
-                new TransientReceiver(thisType),
-                Annotations.Companion.getEMPTY()
+            scopeWithImports.getOwnerDescriptor(),
+            new TransientReceiver(thisType),
+            Annotations.Companion.getEMPTY()
         );
 
         LexicalScope scope = new LexicalScopeImpl(scopeWithImports, scopeWithImports.getOwnerDescriptor(), false,
-                                                  receiverParameterDescriptor, LexicalScopeKind.SYNTHETIC);
+                receiverParameterDescriptor, LexicalScopeKind.SYNTHETIC);
         assertType(scope, expression, expectedType);
     }
 

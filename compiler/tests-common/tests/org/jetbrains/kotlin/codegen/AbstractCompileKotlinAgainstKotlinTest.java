@@ -84,9 +84,9 @@ public abstract class AbstractCompileKotlinAgainstKotlinTest extends CodegenTest
     @NotNull
     private URLClassLoader createGeneratedClassLoader() throws Exception {
         return new URLClassLoader(
-                new URL[]{ bDir.toURI().toURL(), aDir.toURI().toURL() },
-                ForTestCompileRuntime.runtimeAndReflectJarClassLoader()
-        );
+                   new URL[] { bDir.toURI().toURL(), aDir.toURI().toURL() },
+                   ForTestCompileRuntime.runtimeAndReflectJarClassLoader()
+               );
     }
 
     @NotNull
@@ -95,18 +95,18 @@ public abstract class AbstractCompileKotlinAgainstKotlinTest extends CodegenTest
         CompilerConfiguration configuration = createConfiguration(
                 ConfigurationKind.ALL, getJdkKind(files), Collections.singletonList(KotlinTestUtils.getAnnotationsJar()),
                 Collections.emptyList(), Collections.singletonList(testFile)
-        );
+                                              );
 
         configuration.put(CommonConfigurationKeys.MODULE_NAME, "a");
 
         KotlinCoreEnvironment environment = KotlinCoreEnvironment.createForTests(
-                compileDisposable, configuration, EnvironmentConfigFiles.JVM_CONFIG_FILES);
+                                                compileDisposable, configuration, EnvironmentConfigFiles.JVM_CONFIG_FILES);
 
         List<TestFile> filesToCompile =
-                files.size() == 2
-                ? Collections.singletonList(testFile)
-                // A-file and CoroutineUtil.kt
-                : Arrays.asList(testFile, files.get(2));
+            files.size() == 2
+            ? Collections.singletonList(testFile)
+            // A-file and CoroutineUtil.kt
+            : Arrays.asList(testFile, files.get(2));
 
         return compileKotlin(filesToCompile, aDir, environment, compileDisposable);
     }
@@ -117,14 +117,14 @@ public abstract class AbstractCompileKotlinAgainstKotlinTest extends CodegenTest
         CompilerConfiguration configuration = createConfiguration(
                 ConfigurationKind.ALL, getJdkKind(files), Lists.newArrayList(KotlinTestUtils.getAnnotationsJar(), aDir),
                 Collections.emptyList(), Lists.newArrayList(testFile, new TestFile("header", commonHeader))
-        );
+                                              );
 
         configuration.put(CommonConfigurationKeys.MODULE_NAME, "b");
 
         Disposable compileDisposable = createDisposable("compileB");
         KotlinCoreEnvironment environment = KotlinCoreEnvironment.createForTests(
-                compileDisposable, configuration, EnvironmentConfigFiles.JVM_CONFIG_FILES
-        );
+                                                compileDisposable, configuration, EnvironmentConfigFiles.JVM_CONFIG_FILES
+                                            );
 
         return compileKotlin(Collections.singletonList(testFile), bDir, environment, compileDisposable);
     }
@@ -137,18 +137,18 @@ public abstract class AbstractCompileKotlinAgainstKotlinTest extends CodegenTest
 
     @NotNull
     private ClassFileFactory compileKotlin(
-            @NotNull List<TestFile> files,
-            @NotNull File outputDir,
-            @NotNull KotlinCoreEnvironment environment,
-            @NotNull Disposable disposable
+        @NotNull List<TestFile> files,
+        @NotNull File outputDir,
+        @NotNull KotlinCoreEnvironment environment,
+        @NotNull Disposable disposable
     ) {
 
         List<KtFile> ktFiles =
-                files.stream().map(file -> KotlinTestUtils.createFile(file.name, file.content, environment.getProject()))
-                        .collect(Collectors.toList());
+            files.stream().map(file -> KotlinTestUtils.createFile(file.name, file.content, environment.getProject()))
+            .collect(Collectors.toList());
 
         ModuleVisibilityManager.SERVICE.getInstance(environment.getProject()).addModule(
-                new ModuleBuilder("module for test", tmpdir.getAbsolutePath(), "test")
+            new ModuleBuilder("module for test", tmpdir.getAbsolutePath(), "test")
         );
 
         ClassFileFactory outputFiles = GenerationUtils.compileFilesTo(ktFiles, environment, outputDir);

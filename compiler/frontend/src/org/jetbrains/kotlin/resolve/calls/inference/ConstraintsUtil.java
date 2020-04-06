@@ -84,23 +84,23 @@ public class ConstraintsUtil {
     }
 
     public static boolean checkUpperBoundIsSatisfied(
-            @NotNull ConstraintSystem constraintSystem,
-            @NotNull TypeParameterDescriptor typeParameter,
-            @NotNull Call call,
-            boolean substituteOtherTypeParametersInBound
+        @NotNull ConstraintSystem constraintSystem,
+        @NotNull TypeParameterDescriptor typeParameter,
+        @NotNull Call call,
+        boolean substituteOtherTypeParametersInBound
     ) {
         TypeVariable typeVariable = ConstraintSystemUtilsKt.descriptorToVariable(
-                constraintSystem, TypeVariableKt.toHandle(call), typeParameter
-        );
+                                        constraintSystem, TypeVariableKt.toHandle(call), typeParameter
+                                    );
         KotlinType type = constraintSystem.getTypeBounds(typeVariable).getValue();
         if (type == null) return true;
 
         List<TypeParameterDescriptor> typeParametersUsedInSystem =
-                CollectionsKt.map(constraintSystem.getTypeVariables(), TypeVariable::getOriginalTypeParameter);
+            CollectionsKt.map(constraintSystem.getTypeVariables(), TypeVariable::getOriginalTypeParameter);
 
         for (KotlinType upperBound : typeParameter.getUpperBounds()) {
             if (!substituteOtherTypeParametersInBound &&
-                TypeUtils.dependsOnTypeParameters(upperBound, typeParametersUsedInSystem)) {
+                    TypeUtils.dependsOnTypeParameters(upperBound, typeParametersUsedInSystem)) {
                 continue;
             }
             KotlinType substitutedUpperBound = constraintSystem.getResultingSubstitutor().substitute(upperBound, Variance.INVARIANT);

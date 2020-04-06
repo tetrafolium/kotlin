@@ -34,14 +34,14 @@ public class VarArgTest extends CodegenTestCase {
         loadText("fun test(vararg ts: String) = ts");
         Method main = generateFunction();
         String[] args = {"mama", "papa"};
-        assertTrue(args == main.invoke(null, new Object[]{ args } ));
+        assertTrue(args == main.invoke(null, new Object[] { args } ));
     }
 
     public void testIntArray() throws InvocationTargetException, IllegalAccessException {
         loadText("fun test(vararg ts: Int) = ts");
         Method main = generateFunction();
         int[] args = {3, 4};
-        assertTrue(args == main.invoke(null, new Object[]{ args }));
+        assertTrue(args == main.invoke(null, new Object[] { args }));
     }
 
     public void testIntArrayKotlinNoArgs() throws InvocationTargetException, IllegalAccessException {

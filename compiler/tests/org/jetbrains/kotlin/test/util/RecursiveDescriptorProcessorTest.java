@@ -143,7 +143,7 @@ public class RecursiveDescriptorProcessorTest extends KotlinTestWithEnvironment 
 
             @Override
             public Boolean visitConstructorDescriptor(
-                    ConstructorDescriptor constructorDescriptor, Void data
+                ConstructorDescriptor constructorDescriptor, Void data
             ) {
                 add(constructorDescriptor.getContainingDeclaration().getName() + ".<init>()", constructorDescriptor);
                 return true;
@@ -163,7 +163,7 @@ public class RecursiveDescriptorProcessorTest extends KotlinTestWithEnvironment 
 
             @Override
             public Boolean visitValueParameterDescriptor(
-                    ValueParameterDescriptor descriptor, Void data
+                ValueParameterDescriptor descriptor, Void data
             ) {
                 add(descriptor);
                 return true;
@@ -171,7 +171,7 @@ public class RecursiveDescriptorProcessorTest extends KotlinTestWithEnvironment 
 
             @Override
             public Boolean visitPropertyGetterDescriptor(
-                    PropertyGetterDescriptor descriptor, Void data
+                PropertyGetterDescriptor descriptor, Void data
             ) {
                 addCallable(descriptor);
                 return true;
@@ -179,7 +179,7 @@ public class RecursiveDescriptorProcessorTest extends KotlinTestWithEnvironment 
 
             @Override
             public Boolean visitPropertySetterDescriptor(
-                    PropertySetterDescriptor descriptor, Void data
+                PropertySetterDescriptor descriptor, Void data
             ) {
                 addCallable(descriptor);
                 return true;
@@ -187,7 +187,7 @@ public class RecursiveDescriptorProcessorTest extends KotlinTestWithEnvironment 
 
             @Override
             public Boolean visitReceiverParameterDescriptor(
-                    ReceiverParameterDescriptor descriptor, Void data
+                ReceiverParameterDescriptor descriptor, Void data
             ) {
                 add(descriptor.getContainingDeclaration().getName() + ".this", descriptor);
                 return true;

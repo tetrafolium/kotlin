@@ -36,13 +36,13 @@ public class CapturedParamInfo extends ParameterInfo {
     }
 
     public CapturedParamInfo(
-            @NotNull CapturedParamDesc desc,
-            @NotNull String newFieldName,
-            boolean skipped,
-            int index,
-            @Nullable StackValue remapIndex,
-            boolean skipInConstructor,
-            int declarationIndex
+        @NotNull CapturedParamDesc desc,
+        @NotNull String newFieldName,
+        boolean skipped,
+        int index,
+        @Nullable StackValue remapIndex,
+        boolean skipInConstructor,
+        int declarationIndex
     ) {
         super(desc.getType(), skipped, index, remapIndex, declarationIndex);
         this.desc = desc;
@@ -63,7 +63,7 @@ public class CapturedParamInfo extends ParameterInfo {
     @NotNull
     public CapturedParamInfo cloneWithNewDeclarationIndex(int newDeclarationIndex) {
         CapturedParamInfo result = new CapturedParamInfo(
-                desc, newFieldName, isSkipped, getIndex(), getRemapValue(), skipInConstructor, newDeclarationIndex
+            desc, newFieldName, isSkipped, getIndex(), getRemapValue(), skipInConstructor, newDeclarationIndex
         );
         result.setLambda(getLambda());
         result.setSynthetic(synthetic);

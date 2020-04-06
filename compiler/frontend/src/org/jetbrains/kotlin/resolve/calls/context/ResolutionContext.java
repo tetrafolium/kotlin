@@ -74,21 +74,21 @@ public abstract class ResolutionContext<Context extends ResolutionContext<Contex
     public static final Function1<KtExpression, KtExpression> DEFAULT_EXPRESSION_CONTEXT_PROVIDER = expression -> null;
 
     protected ResolutionContext(
-            @NotNull BindingTrace trace,
-            @NotNull LexicalScope scope,
-            @NotNull KotlinType expectedType,
-            @NotNull DataFlowInfo dataFlowInfo,
-            @NotNull ContextDependency contextDependency,
-            @NotNull ResolutionResultsCache resolutionResultsCache,
-            @NotNull StatementFilter statementFilter,
-            boolean isAnnotationContext,
-            boolean isDebuggerContext,
-            boolean collectAllCandidates,
-            @NotNull CallPosition callPosition,
-            @NotNull Function1<KtExpression, KtExpression> expressionContextProvider,
-            @NotNull LanguageVersionSettings languageVersionSettings,
-            @NotNull DataFlowValueFactory factory,
-            @NotNull InferenceSession inferenceSession
+        @NotNull BindingTrace trace,
+        @NotNull LexicalScope scope,
+        @NotNull KotlinType expectedType,
+        @NotNull DataFlowInfo dataFlowInfo,
+        @NotNull ContextDependency contextDependency,
+        @NotNull ResolutionResultsCache resolutionResultsCache,
+        @NotNull StatementFilter statementFilter,
+        boolean isAnnotationContext,
+        boolean isDebuggerContext,
+        boolean collectAllCandidates,
+        @NotNull CallPosition callPosition,
+        @NotNull Function1<KtExpression, KtExpression> expressionContextProvider,
+        @NotNull LanguageVersionSettings languageVersionSettings,
+        @NotNull DataFlowValueFactory factory,
+        @NotNull InferenceSession inferenceSession
     ) {
         this.trace = trace;
         this.scope = scope;
@@ -108,19 +108,19 @@ public abstract class ResolutionContext<Context extends ResolutionContext<Contex
     }
 
     protected abstract Context create(
-            @NotNull BindingTrace trace,
-            @NotNull LexicalScope scope,
-            @NotNull DataFlowInfo dataFlowInfo,
-            @NotNull KotlinType expectedType,
-            @NotNull ContextDependency contextDependency,
-            @NotNull ResolutionResultsCache resolutionResultsCache,
-            @NotNull StatementFilter statementFilter,
-            boolean collectAllCandidates,
-            @NotNull CallPosition callPosition,
-            @NotNull Function1<KtExpression, KtExpression> expressionContextProvider,
-            @NotNull LanguageVersionSettings languageVersionSettings,
-            @NotNull DataFlowValueFactory dataFlowValueFactory,
-            @NotNull InferenceSession inferenceSession
+        @NotNull BindingTrace trace,
+        @NotNull LexicalScope scope,
+        @NotNull DataFlowInfo dataFlowInfo,
+        @NotNull KotlinType expectedType,
+        @NotNull ContextDependency contextDependency,
+        @NotNull ResolutionResultsCache resolutionResultsCache,
+        @NotNull StatementFilter statementFilter,
+        boolean collectAllCandidates,
+        @NotNull CallPosition callPosition,
+        @NotNull Function1<KtExpression, KtExpression> expressionContextProvider,
+        @NotNull LanguageVersionSettings languageVersionSettings,
+        @NotNull DataFlowValueFactory dataFlowValueFactory,
+        @NotNull InferenceSession inferenceSession
     );
 
     @NotNull

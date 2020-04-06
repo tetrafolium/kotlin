@@ -61,10 +61,10 @@ public class ModifiersChecker {
 
     @NotNull
     public static Modality resolveMemberModalityFromModifiers(
-            @Nullable KtModifierListOwner modifierListOwner,
-            @NotNull Modality defaultModality,
-            @NotNull BindingContext bindingContext,
-            @Nullable DeclarationDescriptor containingDescriptor
+        @Nullable KtModifierListOwner modifierListOwner,
+        @NotNull Modality defaultModality,
+        @NotNull BindingContext bindingContext,
+        @Nullable DeclarationDescriptor containingDescriptor
     ) {
         return resolveModalityFromModifiers(modifierListOwner, defaultModality,
                                             bindingContext, containingDescriptor, /* allowSealed = */ false);
@@ -72,23 +72,23 @@ public class ModifiersChecker {
 
     @NotNull
     public static Modality resolveModalityFromModifiers(
-            @Nullable KtModifierListOwner modifierListOwner,
-            @NotNull Modality defaultModality,
-            @NotNull BindingContext bindingContext,
-            @Nullable DeclarationDescriptor containingDescriptor,
-            boolean allowSealed
+        @Nullable KtModifierListOwner modifierListOwner,
+        @NotNull Modality defaultModality,
+        @NotNull BindingContext bindingContext,
+        @Nullable DeclarationDescriptor containingDescriptor,
+        boolean allowSealed
     ) {
         KtModifierList modifierList = (modifierListOwner != null) ? modifierListOwner.getModifierList() : null;
         Modality modality = resolveModalityFromModifiers(modifierList, defaultModality, allowSealed);
 
         if (modifierListOwner != null) {
             Collection<DeclarationAttributeAltererExtension> extensions =
-                    DeclarationAttributeAltererExtension.Companion.getInstances(modifierListOwner.getProject());
+                DeclarationAttributeAltererExtension.Companion.getInstances(modifierListOwner.getProject());
 
             DeclarationDescriptor descriptor = bindingContext.get(BindingContext.DECLARATION_TO_DESCRIPTOR, modifierListOwner);
             for (DeclarationAttributeAltererExtension extension : extensions) {
                 Modality newModality = extension.refineDeclarationModality(
-                        modifierListOwner, descriptor, containingDescriptor, modality, bindingContext, false);
+                                           modifierListOwner, descriptor, containingDescriptor, modality, bindingContext, false);
 
                 if (newModality != null) {
                     modality = newModality;
@@ -102,9 +102,9 @@ public class ModifiersChecker {
 
     @NotNull
     private static Modality resolveModalityFromModifiers(
-            @Nullable KtModifierList modifierList,
-            @NotNull Modality defaultModality,
-            boolean allowSealed
+        @Nullable KtModifierList modifierList,
+        @NotNull Modality defaultModality,
+        boolean allowSealed
     ) {
         if (modifierList == null) return defaultModality;
         boolean hasAbstractModifier = modifierList.hasModifier(ABSTRACT_KEYWORD);
@@ -134,8 +134,8 @@ public class ModifiersChecker {
 
     @NotNull
     public static Visibility resolveVisibilityFromModifiers(
-            @NotNull KtModifierListOwner modifierListOwner,
-            @NotNull Visibility defaultVisibility
+        @NotNull KtModifierListOwner modifierListOwner,
+        @NotNull Visibility defaultVisibility
     ) {
         return resolveVisibilityFromModifiers(modifierListOwner.getModifierList(), defaultVisibility);
     }
@@ -157,8 +157,8 @@ public class ModifiersChecker {
         }
 
         public void checkParameterHasNoValOrVar(
-                @NotNull KtValVarKeywordOwner parameter,
-                @NotNull DiagnosticFactory1<PsiElement, KtKeywordToken> diagnosticFactory
+            @NotNull KtValVarKeywordOwner parameter,
+            @NotNull DiagnosticFactory1<PsiElement, KtKeywordToken> diagnosticFactory
         ) {
             PsiElement valOrVar = parameter.getValOrVarKeyword();
             if (valOrVar != null) {
@@ -188,7 +188,7 @@ public class ModifiersChecker {
 
             // Local enums / objects / companion objects are handled in different checks
             if ((kind == DetailedClassKind.ENUM_CLASS || kind == DetailedClassKind.OBJECT || kind == DetailedClassKind.COMPANION_OBJECT) &&
-                DescriptorUtils.isLocal(classDescriptor)) {
+                    DescriptorUtils.isLocal(classDescriptor)) {
                 return;
             }
 
@@ -196,9 +196,9 @@ public class ModifiersChecker {
             // Companion objects are reported in ModifierCheckerCore.
             if (DescriptorUtils.isEnumEntry(containingClass) && !classDescriptor.isInner() && kind != DetailedClassKind.COMPANION_OBJECT) {
                 DiagnosticFactory1<KtClassOrObject, String> diagnostic =
-                        languageVersionSettings.supportsFeature(LanguageFeature.NestedClassesInEnumEntryShouldBeInner)
-                        ? NESTED_CLASS_NOT_ALLOWED
-                        : NESTED_CLASS_DEPRECATED;
+                    languageVersionSettings.supportsFeature(LanguageFeature.NestedClassesInEnumEntryShouldBeInner)
+                    ? NESTED_CLASS_NOT_ALLOWED
+                    : NESTED_CLASS_DEPRECATED;
                 trace.report(diagnostic.on(ktClassOrObject, kind.withCapitalFirstLetter));
                 return;
             }
@@ -216,8 +216,8 @@ public class ModifiersChecker {
         }
 
         public void checkModifiersForLocalDeclaration(
-                @NotNull KtDeclaration modifierListOwner,
-                @NotNull DeclarationDescriptor descriptor
+            @NotNull KtDeclaration modifierListOwner,
+            @NotNull DeclarationDescriptor descriptor
         ) {
             checkModifierListCommon(modifierListOwner, descriptor);
         }
@@ -237,13 +237,13 @@ public class ModifiersChecker {
             KtModifierList modifierList = modifierListOwner.getModifierList();
             PsiElement keyword = modifierList != null ? modifierList.getModifier(HEADER_KEYWORD) : null;
             if (keyword != null &&
-                descriptor instanceof ClassDescriptor && descriptor.getContainingDeclaration() instanceof ClassDescriptor) {
+                    descriptor instanceof ClassDescriptor && descriptor.getContainingDeclaration() instanceof ClassDescriptor) {
                 trace.report(WRONG_MODIFIER_TARGET.on(keyword, KtTokens.HEADER_KEYWORD, "nested class"));
             }
             else if (keyword == null && modifierList != null) {
                 keyword = modifierList.getModifier(EXPECT_KEYWORD);
                 if (keyword != null &&
-                    descriptor instanceof ClassDescriptor && descriptor.getContainingDeclaration() instanceof ClassDescriptor) {
+                        descriptor instanceof ClassDescriptor && descriptor.getContainingDeclaration() instanceof ClassDescriptor) {
                     trace.report(WRONG_MODIFIER_TARGET.on(keyword, KtTokens.EXPECT_KEYWORD, "nested class"));
                 }
             }
@@ -251,8 +251,8 @@ public class ModifiersChecker {
 
         @NotNull
         public Map<KtModifierKeywordToken, PsiElement> getTokensCorrespondingToModifiers(
-                @NotNull KtModifierList modifierList,
-                @NotNull Collection<KtModifierKeywordToken> possibleModifiers
+            @NotNull KtModifierList modifierList,
+            @NotNull Collection<KtModifierKeywordToken> possibleModifiers
         ) {
             Map<KtModifierKeywordToken, PsiElement> tokens = new HashMap<>();
             for (KtModifierKeywordToken modifier : possibleModifiers) {
@@ -266,7 +266,7 @@ public class ModifiersChecker {
 
         public void runDeclarationCheckers(@NotNull KtDeclaration declaration, @NotNull DeclarationDescriptor descriptor) {
             DeclarationCheckerContext context = new DeclarationCheckerContext(
-                    trace, languageVersionSettings, deprecationResolver, moduleDescriptor, expectActualTracker
+                trace, languageVersionSettings, deprecationResolver, moduleDescriptor, expectActualTracker
             );
             for (DeclarationChecker checker : declarationCheckers) {
                 checker.check(declaration, descriptor, context);
@@ -293,12 +293,12 @@ public class ModifiersChecker {
     private final ModuleDescriptor moduleDescriptor;
 
     public ModifiersChecker(
-            @NotNull AnnotationChecker annotationChecker,
-            @NotNull Iterable<DeclarationChecker> declarationCheckers,
-            @NotNull LanguageVersionSettings languageVersionSettings,
-            @NotNull ExpectActualTracker expectActualTracker,
-            @NotNull DeprecationResolver deprecationResolver,
-            @NotNull ModuleDescriptor moduleDescriptor
+        @NotNull AnnotationChecker annotationChecker,
+        @NotNull Iterable<DeclarationChecker> declarationCheckers,
+        @NotNull LanguageVersionSettings languageVersionSettings,
+        @NotNull ExpectActualTracker expectActualTracker,
+        @NotNull DeprecationResolver deprecationResolver,
+        @NotNull ModuleDescriptor moduleDescriptor
     ) {
         this.annotationChecker = annotationChecker;
         this.declarationCheckers = declarationCheckers;

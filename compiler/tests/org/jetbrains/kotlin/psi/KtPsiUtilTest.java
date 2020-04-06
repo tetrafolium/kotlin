@@ -116,13 +116,13 @@ public class KtPsiUtilTest extends KotlinTestWithEnvironment {
     @Override
     protected KotlinCoreEnvironment createEnvironment() {
         return KotlinCoreEnvironment.createForTests(
-                getTestRootDisposable(), KotlinTestUtils.newConfiguration(), EnvironmentConfigFiles.JVM_CONFIG_FILES
-        );
+                   getTestRootDisposable(), KotlinTestUtils.newConfiguration(), EnvironmentConfigFiles.JVM_CONFIG_FILES
+               );
     }
 
     private ImportPath getImportPathFromParsed(String text) {
         KtImportDirective importDirective =
-                PsiTreeUtil.findChildOfType(KtPsiFactoryKt.KtPsiFactory(getProject()).createFile(text), KtImportDirective.class);
+            PsiTreeUtil.findChildOfType(KtPsiFactoryKt.KtPsiFactory(getProject()).createFile(text), KtImportDirective.class);
 
         assertNotNull("At least one import directive is expected", importDirective);
 

@@ -224,18 +224,18 @@ public class KotlinJavaPsiFacade {
         List<KotlinPsiElementFinderWrapper> elementFinders = new ArrayList<>();
         JavaFileManager javaFileManager = findJavaFileManager(project);
         elementFinders.add(
-                javaFileManager instanceof KotlinCliJavaFileManager
-                ? new CliFinder((KotlinCliJavaFileManager) javaFileManager)
-                : new NonCliFinder(project, javaFileManager)
+            javaFileManager instanceof KotlinCliJavaFileManager
+            ? new CliFinder((KotlinCliJavaFileManager) javaFileManager)
+            : new NonCliFinder(project, javaFileManager)
         );
 
         List<PsiElementFinder> nonKotlinFinders = ArraysKt.filter(
-                getProject().getExtensions(PsiElementFinder.EP_NAME),
-                finder -> (finder instanceof KotlinSafeClassFinder) ||
-                          !(finder instanceof NonClasspathClassFinder ||
-                            finder instanceof KotlinFinderMarker ||
-                            finder instanceof PsiElementFinderImpl)
-        );
+                    getProject().getExtensions(PsiElementFinder.EP_NAME),
+                    finder -> (finder instanceof KotlinSafeClassFinder) ||
+                    !(finder instanceof NonClasspathClassFinder ||
+                      finder instanceof KotlinFinderMarker ||
+                      finder instanceof PsiElementFinderImpl)
+                );
 
         elementFinders.addAll(CollectionsKt.map(nonKotlinFinders, KotlinJavaPsiFacade::wrap));
 

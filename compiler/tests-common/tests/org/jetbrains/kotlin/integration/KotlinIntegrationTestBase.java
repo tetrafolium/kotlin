@@ -70,8 +70,8 @@ public abstract class KotlinIntegrationTestBase extends TestCaseWithTmpdir {
         String RELATIVE_PATH_WITH_MIXED_SEPARATOR = Regex.Companion.escape(pathId) + "[-.\\w/\\\\]*";
 
         return new Regex(RELATIVE_PATH_WITH_MIXED_SEPARATOR).replace(
-                contentWithRelativePaths, mr -> FileUtil.toSystemIndependentName(mr.getValue())
-        );
+                   contentWithRelativePaths, mr -> FileUtil.toSystemIndependentName(mr.getValue())
+               );
     }
 
     @NotNull
@@ -97,7 +97,7 @@ public abstract class KotlinIntegrationTestBase extends TestCaseWithTmpdir {
 
     private static int runProcess(GeneralCommandLine commandLine, StringBuilder executionLog) throws ExecutionException {
         OSProcessHandler handler =
-                new OSProcessHandler(commandLine.createProcess(), commandLine.getCommandLineString(), commandLine.getCharset());
+            new OSProcessHandler(commandLine.createProcess(), commandLine.getCommandLineString(), commandLine.getCharset());
 
         StringBuilder outContent = new StringBuilder();
         StringBuilder errContent = new StringBuilder();

@@ -47,17 +47,17 @@ public class KtValueArgument extends KtElementImplStub<KotlinValueArgumentStub<?
     }
 
     private static final TokenSet CONSTANT_EXPRESSIONS_TYPES = TokenSet.create(
-            KtStubElementTypes.NULL,
-            KtStubElementTypes.BOOLEAN_CONSTANT,
-            KtStubElementTypes.FLOAT_CONSTANT,
-            KtStubElementTypes.CHARACTER_CONSTANT,
-            KtStubElementTypes.INTEGER_CONSTANT,
+                KtStubElementTypes.NULL,
+                KtStubElementTypes.BOOLEAN_CONSTANT,
+                KtStubElementTypes.FLOAT_CONSTANT,
+                KtStubElementTypes.CHARACTER_CONSTANT,
+                KtStubElementTypes.INTEGER_CONSTANT,
 
-            KtStubElementTypes.REFERENCE_EXPRESSION,
-            KtStubElementTypes.DOT_QUALIFIED_EXPRESSION,
+                KtStubElementTypes.REFERENCE_EXPRESSION,
+                KtStubElementTypes.DOT_QUALIFIED_EXPRESSION,
 
-            KtStubElementTypes.STRING_TEMPLATE
-    );
+                KtStubElementTypes.STRING_TEMPLATE
+            );
 
     @Override
     @Nullable @IfNotParsed

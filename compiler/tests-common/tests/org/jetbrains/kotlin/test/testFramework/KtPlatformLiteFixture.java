@@ -60,8 +60,8 @@ public abstract class KtPlatformLiteFixture extends KtUsefulTestCase {
     }
 
     private static <T> void registerExtensionPoint(
-            ExtensionsArea area, ExtensionPointName<T> extensionPointName,
-            Class<? extends T> aClass
+        ExtensionsArea area, ExtensionPointName<T> extensionPointName,
+        Class<? extends T> aClass
     ) {
         String name = extensionPointName.getName();
         if (!area.hasExtensionPoint(name)) {

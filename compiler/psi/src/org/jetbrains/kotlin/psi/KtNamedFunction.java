@@ -36,7 +36,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class KtNamedFunction extends KtTypeParameterListOwnerStub<KotlinFunctionStub>
-        implements KtFunction, KtDeclarationWithInitializer, PsiModifiableCodeBlock {
+    implements KtFunction, KtDeclarationWithInitializer, PsiModifiableCodeBlock {
     public KtNamedFunction(@NotNull ASTNode node) {
         super(node);
     }
@@ -130,7 +130,7 @@ public class KtNamedFunction extends KtTypeParameterListOwnerStub<KotlinFunction
 
         return AstLoadingFilter.forceAllowTreeLoading(this.getContainingFile(), () ->
                 findChildByClass(KtExpression.class)
-        );
+                                                     );
     }
 
     @Nullable

@@ -30,7 +30,7 @@ import static org.jetbrains.kotlin.test.clientserver.TestProcessServerKt.getGene
 public abstract class AbstractBlackBoxCodegenTest extends CodegenTestCase {
 
     public static final boolean IGNORE_EXPECTED_FAILURES =
-            Boolean.getBoolean("kotlin.suppress.expected.test.failures");
+        Boolean.getBoolean("kotlin.suppress.expected.test.failures");
 
     @Override
     protected void doMultiFileTest(
@@ -65,36 +65,36 @@ public abstract class AbstractBlackBoxCodegenTest extends CodegenTestCase {
         if (!InTextDirectivesUtils.isDirectiveDefined(FileUtil.loadFile(wholeFile), "CHECK_BYTECODE_LISTING")) return;
 
         String suffix =
-                (coroutinesPackage.contains("experimental") || coroutinesPackage.isEmpty())
-                && InTextDirectivesUtils.isDirectiveDefined(FileUtil.loadFile(wholeFile), "COMMON_COROUTINES_TEST")
-                ? "_1_2" : "";
+            (coroutinesPackage.contains("experimental") || coroutinesPackage.isEmpty())
+            && InTextDirectivesUtils.isDirectiveDefined(FileUtil.loadFile(wholeFile), "COMMON_COROUTINES_TEST")
+            ? "_1_2" : "";
         File expectedFile = new File(wholeFile.getParent(), FilesKt.getNameWithoutExtension(wholeFile) + suffix + ".txt");
 
         String text =
-                BytecodeListingTextCollectingVisitor.Companion.getText(
-                        classFileFactory,
-                        new BytecodeListingTextCollectingVisitor.Filter() {
-                            @Override
-                            public boolean shouldWriteClass(int access, @NotNull String name) {
-                                return !name.startsWith("helpers/");
-                            }
+            BytecodeListingTextCollectingVisitor.Companion.getText(
+                classFileFactory,
+        new BytecodeListingTextCollectingVisitor.Filter() {
+            @Override
+            public boolean shouldWriteClass(int access, @NotNull String name) {
+                return !name.startsWith("helpers/");
+            }
 
-                            @Override
-                            public boolean shouldWriteMethod(int access, @NotNull String name, @NotNull String desc) {
-                                return true;
-                            }
+            @Override
+            public boolean shouldWriteMethod(int access, @NotNull String name, @NotNull String desc) {
+                return true;
+            }
 
-                            @Override
-                            public boolean shouldWriteField(int access, @NotNull String name, @NotNull String desc) {
-                                return true;
-                            }
+            @Override
+            public boolean shouldWriteField(int access, @NotNull String name, @NotNull String desc) {
+                return true;
+            }
 
-                            @Override
-                            public boolean shouldWriteInnerClass(@NotNull String name) {
-                                return true;
-                            }
-                        }
-                );
+            @Override
+            public boolean shouldWriteInnerClass(@NotNull String name) {
+                return true;
+            }
+        }
+            );
 
         assertEqualsToFile(expectedFile, text, s -> s.replace("COROUTINES_PACKAGE", coroutinesPackage));
     }

@@ -70,9 +70,9 @@ import static org.jetbrains.kotlin.resolve.BindingContext.*;
 
 class CodegenAnnotatingVisitor extends KtVisitorVoid {
     private static final TokenSet BINARY_OPERATIONS = TokenSet.orSet(
-            AUGMENTED_ASSIGNMENTS,
-            TokenSet.create(PLUS, MINUS, MUL, DIV, PERC, RANGE, LT, GT, LTEQ, GTEQ, IDENTIFIER)
-    );
+                AUGMENTED_ASSIGNMENTS,
+                TokenSet.create(PLUS, MINUS, MUL, DIV, PERC, RANGE, LT, GT, LTEQ, GTEQ, IDENTIFIER)
+            );
 
     private final Map<String, Integer> anonymousSubclassesCount = new HashMap<>();
 
@@ -101,42 +101,42 @@ class CodegenAnnotatingVisitor extends KtVisitorVoid {
 
     @NotNull
     private ClassDescriptor recordClassForCallable(
-            @NotNull KtElement element,
-            @NotNull CallableDescriptor callableDescriptor,
-            @NotNull Collection<KotlinType> supertypes,
-            @NotNull String name
+        @NotNull KtElement element,
+        @NotNull CallableDescriptor callableDescriptor,
+        @NotNull Collection<KotlinType> supertypes,
+        @NotNull String name
     ) {
         return recordClassForCallable(element, callableDescriptor, supertypes, name, null);
     }
 
     @NotNull
     private ClassDescriptor recordClassForFunction(
-            @NotNull KtElement element,
-            @NotNull FunctionDescriptor functionDescriptor,
-            @NotNull String name,
-            @Nullable DeclarationDescriptor customContainer
+        @NotNull KtElement element,
+        @NotNull FunctionDescriptor functionDescriptor,
+        @NotNull String name,
+        @Nullable DeclarationDescriptor customContainer
     ) {
         return recordClassForCallable(
-                element, functionDescriptor,
-                runtimeTypes.getSupertypesForClosure(functionDescriptor),
-                name, customContainer
-        );
+                   element, functionDescriptor,
+                   runtimeTypes.getSupertypesForClosure(functionDescriptor),
+                   name, customContainer
+               );
     }
 
     @NotNull
     private ClassDescriptor recordClassForCallable(
-            @NotNull KtElement element,
-            @NotNull CallableDescriptor callableDescriptor,
-            @NotNull Collection<KotlinType> supertypes,
-            @NotNull String name,
-            @Nullable DeclarationDescriptor customContainer
+        @NotNull KtElement element,
+        @NotNull CallableDescriptor callableDescriptor,
+        @NotNull Collection<KotlinType> supertypes,
+        @NotNull String name,
+        @Nullable DeclarationDescriptor customContainer
     ) {
         String simpleName = name.substring(name.lastIndexOf('/') + 1);
         ClassDescriptor classDescriptor = new SyntheticClassDescriptorForLambda(
-                customContainer != null ? customContainer : correctContainerForLambda(callableDescriptor),
-                Name.special("<closure-" + simpleName + ">"),
-                supertypes,
-                element
+            customContainer != null ? customContainer : correctContainerForLambda(callableDescriptor),
+            Name.special("<closure-" + simpleName + ">"),
+            supertypes,
+            element
         );
 
         bindingTrace.record(CLASS_FOR_CALLABLE, callableDescriptor, classDescriptor);
@@ -323,7 +323,7 @@ class CodegenAnnotatingVisitor extends KtVisitorVoid {
     public void visitLambdaExpression(@NotNull KtLambdaExpression lambdaExpression) {
         KtFunctionLiteral functionLiteral = lambdaExpression.getFunctionLiteral();
         FunctionDescriptor functionDescriptor =
-                (FunctionDescriptor) bindingContext.get(DECLARATION_TO_DESCRIPTOR, functionLiteral);
+            (FunctionDescriptor) bindingContext.get(DECLARATION_TO_DESCRIPTOR, functionLiteral);
         // working around a problem with shallow analysis
         if (functionDescriptor == null) return;
 
@@ -358,9 +358,9 @@ class CodegenAnnotatingVisitor extends KtVisitorVoid {
 
         // TransientReceiver corresponds to an unbound reference, other receiver values -- to bound references
         KotlinType receiverType =
-                dispatchReceiver != null && !(dispatchReceiver instanceof TransientReceiver) ? dispatchReceiver.getType() :
-                extensionReceiver != null && !(extensionReceiver instanceof TransientReceiver) ? extensionReceiver.getType() :
-                null;
+            dispatchReceiver != null && !(dispatchReceiver instanceof TransientReceiver) ? dispatchReceiver.getType() :
+            extensionReceiver != null && !(extensionReceiver instanceof TransientReceiver) ? extensionReceiver.getType() :
+            null;
 
         CallableDescriptor callableDescriptor;
         Collection<KotlinType> supertypes;
@@ -370,8 +370,8 @@ class CodegenAnnotatingVisitor extends KtVisitorVoid {
             if (callableDescriptor == null) return;
 
             supertypes = runtimeTypes.getSupertypesForFunctionReference(
-                    (FunctionDescriptor) target, (AnonymousFunctionDescriptor) callableDescriptor, receiverType != null
-            );
+                             (FunctionDescriptor) target, (AnonymousFunctionDescriptor) callableDescriptor, receiverType != null
+                         );
         }
         else if (target instanceof PropertyDescriptor) {
             callableDescriptor = bindingContext.get(VARIABLE, expression);
@@ -379,12 +379,12 @@ class CodegenAnnotatingVisitor extends KtVisitorVoid {
 
             //noinspection ConstantConditions
             supertypes = Collections.singleton(
-                    runtimeTypes.getSupertypeForPropertyReference(
-                            (PropertyDescriptor) target,
-                            ReflectionTypes.Companion.isNumberedKMutablePropertyType(callableDescriptor.getReturnType()),
-                            receiverType != null
-                    )
-            );
+                             runtimeTypes.getSupertypeForPropertyReference(
+                                 (PropertyDescriptor) target,
+                                 ReflectionTypes.Companion.isNumberedKMutablePropertyType(callableDescriptor.getReturnType()),
+                                 receiverType != null
+                             )
+                         );
         }
         else {
             return;
@@ -417,21 +417,21 @@ class CodegenAnnotatingVisitor extends KtVisitorVoid {
     }
 
     private SimpleFunctionDescriptor createAndRecordSuspendFunctionView(
-            MutableClosure closure,
-            SimpleFunctionDescriptor functionDescriptor,
-            boolean isSuspendLambda
+        MutableClosure closure,
+        SimpleFunctionDescriptor functionDescriptor,
+        boolean isSuspendLambda
     ) {
         SimpleFunctionDescriptor jvmSuspendFunctionView =
-                CoroutineCodegenUtilKt.getOrCreateJvmSuspendFunctionView(
-                        functionDescriptor,
-                        languageVersionSettings.supportsFeature(LanguageFeature.ReleaseCoroutines),
-                        this.bindingContext
-                );
+            CoroutineCodegenUtilKt.getOrCreateJvmSuspendFunctionView(
+                functionDescriptor,
+                languageVersionSettings.supportsFeature(LanguageFeature.ReleaseCoroutines),
+                this.bindingContext
+            );
 
         bindingTrace.record(
-                CodegenBinding.SUSPEND_FUNCTION_TO_JVM_VIEW,
-                functionDescriptor,
-                jvmSuspendFunctionView
+            CodegenBinding.SUSPEND_FUNCTION_TO_JVM_VIEW,
+            functionDescriptor,
+            jvmSuspendFunctionView
         );
 
         closure.setSuspend(true);
@@ -463,11 +463,11 @@ class CodegenAnnotatingVisitor extends KtVisitorVoid {
         if (delegateType == null) return;
 
         LocalVariableDescriptor metadataVariableDescriptor = new LocalVariableDescriptor(
-                variableDescriptor.getContainingDeclaration(),
-                Annotations.Companion.getEMPTY(),
-                Name.identifier(variableDescriptor.getName().asString() + "$metadata"),
-                ReflectionTypes.Companion.createKPropertyStarType(DescriptorUtilsKt.getModule(variableDescriptor)),
-                SourceElement.NO_SOURCE
+            variableDescriptor.getContainingDeclaration(),
+            Annotations.Companion.getEMPTY(),
+            Name.identifier(variableDescriptor.getName().asString() + "$metadata"),
+            ReflectionTypes.Companion.createKPropertyStarType(DescriptorUtilsKt.getModule(variableDescriptor)),
+            SourceElement.NO_SOURCE
         );
         bindingTrace.record(LOCAL_VARIABLE_PROPERTY_METADATA, variableDescriptor, metadataVariableDescriptor);
     }
@@ -497,7 +497,7 @@ class CodegenAnnotatingVisitor extends KtVisitorVoid {
             VariableDescriptorWithAccessors variableDescriptor = (VariableDescriptorWithAccessors) descriptor;
             String name = inventAnonymousClassName();
             KotlinType supertype =
-                    runtimeTypes.getSupertypeForPropertyReference(variableDescriptor, variableDescriptor.isVar(), /* bound = */ false);
+                runtimeTypes.getSupertypeForPropertyReference(variableDescriptor, variableDescriptor.isVar(), /* bound = */ false);
             ClassDescriptor classDescriptor = recordClassForCallable(delegate, variableDescriptor, Collections.singleton(supertype), name);
             recordClosure(classDescriptor, name);
 
@@ -536,10 +536,10 @@ class CodegenAnnotatingVisitor extends KtVisitorVoid {
                 }
 
                 return AsmUtil.asmTypeByClassId(
-                        DescriptorUtils.isInterface(descriptor)
-                        ? classId.createNestedClassId(Name.identifier(JvmAbi.DEFAULT_IMPLS_CLASS_NAME))
-                        : classId
-                );
+                           DescriptorUtils.isInterface(descriptor)
+                           ? classId.createNestedClassId(Name.identifier(JvmAbi.DEFAULT_IMPLS_CLASS_NAME))
+                           : classId
+                       );
             }
         }
 
@@ -567,7 +567,7 @@ class CodegenAnnotatingVisitor extends KtVisitorVoid {
         String nameForClassOrPackageMember = getNameForClassOrPackageMember(functionDescriptor);
 
         if (functionDescriptor instanceof SimpleFunctionDescriptor && functionDescriptor.isSuspend() &&
-            !functionDescriptor.getVisibility().equals(Visibilities.LOCAL)) {
+                !functionDescriptor.getVisibility().equals(Visibilities.LOCAL)) {
 
             if (nameForClassOrPackageMember != null) {
                 nameStack.push(nameForClassOrPackageMember);
@@ -578,7 +578,7 @@ class CodegenAnnotatingVisitor extends KtVisitorVoid {
             MutableClosure closure = recordClosure(classDescriptor, name);
 
             SimpleFunctionDescriptor jvmSuspendFunctionView =
-                    createAndRecordSuspendFunctionView(closure, (SimpleFunctionDescriptor) functionDescriptor, false);
+                createAndRecordSuspendFunctionView(closure, (SimpleFunctionDescriptor) functionDescriptor, false);
 
             // This is a very subtle place (hack).
             // When generating bytecode of some suspend function, we replace the original descriptor
@@ -590,7 +590,7 @@ class CodegenAnnotatingVisitor extends KtVisitorVoid {
             for (Pair<ValueParameterDescriptor, ValueParameterDescriptor> parameterDescriptorPair : CollectionsKt
                     .zip(functionDescriptor.getValueParameters(), jvmSuspendFunctionView.getValueParameters())) {
                 bindingTrace.record(
-                        CodegenBinding.PARAMETER_SYNONYM, parameterDescriptorPair.getFirst(), parameterDescriptorPair.getSecond()
+                    CodegenBinding.PARAMETER_SYNONYM, parameterDescriptorPair.getFirst(), parameterDescriptorPair.getSecond()
                 );
             }
 
@@ -683,8 +683,8 @@ class CodegenAnnotatingVisitor extends KtVisitorVoid {
         ReceiverValue receiver = call.getExtensionReceiver();
         if (descriptor.getExtensionReceiverParameter() != null && receiver instanceof ExpressionReceiver) {
             recordSuspendFunctionTypeWrapperForArgument(
-                    descriptor.getExtensionReceiverParameter(),
-                    ((ExpressionReceiver) receiver).getExpression()
+                descriptor.getExtensionReceiverParameter(),
+                ((ExpressionReceiver) receiver).getExpression()
             );
         }
     }
@@ -699,9 +699,9 @@ class CodegenAnnotatingVisitor extends KtVisitorVoid {
             Type functionType = Type.getObjectType(NUMBERED_FUNCTION_PREFIX + functionTypeArity);
 
             bindingTrace.record(
-                    FUNCTION_TYPE_FOR_SUSPEND_WRAPPER,
-                    argumentExpression,
-                    functionType
+                FUNCTION_TYPE_FOR_SUSPEND_WRAPPER,
+                argumentExpression,
+                functionType
             );
         }
     }
@@ -717,25 +717,25 @@ class CodegenAnnotatingVisitor extends KtVisitorVoid {
             CallableDescriptor callableDescriptor = ((ResolvedCall) variableAsFunction).getResultingDescriptor();
 
             if (variableDescriptor instanceof ValueParameterDescriptor &&
-                ((ValueParameterDescriptor) variableDescriptor).isCrossinline() &&
-                callableDescriptor instanceof FunctionDescriptor &&
-                ((FunctionDescriptor) callableDescriptor).isSuspend()) {
+                    ((ValueParameterDescriptor) variableDescriptor).isCrossinline() &&
+                    callableDescriptor instanceof FunctionDescriptor &&
+                    ((FunctionDescriptor) callableDescriptor).isSuspend()) {
                 FunctionDescriptor enclosingDescriptor =
-                        bindingContext.get(ENCLOSING_SUSPEND_FUNCTION_FOR_SUSPEND_FUNCTION_CALL, resolvedCall.getCall());
+                    bindingContext.get(ENCLOSING_SUSPEND_FUNCTION_FOR_SUSPEND_FUNCTION_CALL, resolvedCall.getCall());
                 if (enclosingDescriptor == null) return;
 
                 DeclarationDescriptor functionWithCrossinlineParameter = variableDescriptor.getContainingDeclaration();
                 for (int i = functionsStack.size() - 1; i >= 0; i--) {
                     if (functionsStack.get(i).isSuspend()) {
                         Boolean alreadyPutValue = bindingTrace.getBindingContext()
-                                .get(CodegenBinding.CAPTURES_CROSSINLINE_SUSPEND_LAMBDA, functionsStack.get(i));
+                                                  .get(CodegenBinding.CAPTURES_CROSSINLINE_SUSPEND_LAMBDA, functionsStack.get(i));
                         if (alreadyPutValue != null && alreadyPutValue) {
                             return;
                         }
                         bindingTrace.record(
-                                CodegenBinding.CAPTURES_CROSSINLINE_SUSPEND_LAMBDA,
-                                functionsStack.get(i),
-                                true
+                            CodegenBinding.CAPTURES_CROSSINLINE_SUSPEND_LAMBDA,
+                            functionsStack.get(i),
+                            true
                         );
                     }
                     if (functionsStack.get(i) == functionWithCrossinlineParameter) {
@@ -795,8 +795,8 @@ class CodegenAnnotatingVisitor extends KtVisitorVoid {
     }
 
     private void writeSamValueForValueParameters(
-            @NotNull Collection<ValueParameterDescriptor> valueParametersWithSAMConversion,
-            @Nullable List<ResolvedValueArgument> valueArguments
+        @NotNull Collection<ValueParameterDescriptor> valueParametersWithSAMConversion,
+        @Nullable List<ResolvedValueArgument> valueArguments
     ) {
         if (valueArguments == null) return;
 
@@ -977,9 +977,9 @@ class CodegenAnnotatingVisitor extends KtVisitorVoid {
         if (enumClassId == null) return false;
 
         return switchCodegenProvider.checkAllItemsAreConstantsSatisfying(
-                expression,
-                constant -> isEnumEntryOrNull(enumClassId, constant)
-        );
+                   expression,
+                   constant -> isEnumEntryOrNull(enumClassId, constant)
+               );
     }
 
     private static boolean isEnumEntryOrNull(ClassId enumClassId, ConstantValue<?> constant) {

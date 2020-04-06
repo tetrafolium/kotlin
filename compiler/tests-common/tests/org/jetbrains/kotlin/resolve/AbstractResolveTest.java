@@ -23,8 +23,8 @@ public abstract class AbstractResolveTest extends ExtensibleResolveTestCase {
     @Override
     protected ExpectedResolveData getExpectedResolveData() {
         return new ExpectedResolveData(
-                ExpectedResolveDataUtil.prepareDefaultNameToDescriptors(getEnvironment()),
-                ExpectedResolveDataUtil.prepareDefaultNameToDeclaration(getEnvironment())
+                   ExpectedResolveDataUtil.prepareDefaultNameToDescriptors(getEnvironment()),
+                   ExpectedResolveDataUtil.prepareDefaultNameToDeclaration(getEnvironment())
         ) {
             @Override
             protected KtFile createKtFile(String fileName, String text) {

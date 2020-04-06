@@ -25,11 +25,11 @@ import org.jetbrains.kotlin.descriptors.ClassDescriptor;
 public class AnonymousClassContext extends ClassContext {
 
     public AnonymousClassContext(
-            @NotNull KotlinTypeMapper typeMapper,
-            @NotNull ClassDescriptor contextDescriptor,
-            @NotNull OwnerKind contextKind,
-            @Nullable CodegenContext parentContext,
-            @Nullable LocalLookup localLookup
+        @NotNull KotlinTypeMapper typeMapper,
+        @NotNull ClassDescriptor contextDescriptor,
+        @NotNull OwnerKind contextKind,
+        @Nullable CodegenContext parentContext,
+        @Nullable LocalLookup localLookup
     ) {
         super(typeMapper, contextDescriptor, contextKind, parentContext, localLookup);
     }

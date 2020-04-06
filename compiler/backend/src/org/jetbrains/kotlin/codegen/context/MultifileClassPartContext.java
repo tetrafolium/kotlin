@@ -26,11 +26,11 @@ public class MultifileClassPartContext extends MultifileClassContextBase impleme
     private final KtFile sourceFile;
 
     public MultifileClassPartContext(
-            PackageFragmentDescriptor descriptor,
-            CodegenContext parent,
-            Type multifileClassType,
-            Type filePartType,
-            @NotNull KtFile sourceFile
+        PackageFragmentDescriptor descriptor,
+        CodegenContext parent,
+        Type multifileClassType,
+        Type filePartType,
+        @NotNull KtFile sourceFile
     ) {
         super(descriptor, parent, multifileClassType, filePartType);
         this.sourceFile = sourceFile;

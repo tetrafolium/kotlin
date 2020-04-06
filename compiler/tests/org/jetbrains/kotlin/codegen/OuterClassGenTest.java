@@ -156,10 +156,10 @@ public class OuterClassGenTest extends CodegenTestCase {
 
     private void doTest(@NotNull String classFqName, @NotNull String javaClassName, @NotNull String testDataFile) throws Exception {
         File javaOut = CodegenTestUtil.compileJava(
-                Collections.singletonList(KotlinTestUtils.getTestDataPathBase() + "/codegen/" + getPrefix() + "/" + testDataFile + ".java"),
-                Collections.emptyList(),
-                Collections.emptyList()
-        );
+                           Collections.singletonList(KotlinTestUtils.getTestDataPathBase() + "/codegen/" + getPrefix() + "/" + testDataFile + ".java"),
+                           Collections.emptyList(),
+                           Collections.emptyList()
+                       );
 
         String javaClassPath = javaClassName.replace('.', File.separatorChar) + ".class";
 
@@ -170,9 +170,9 @@ public class OuterClassGenTest extends CodegenTestCase {
     }
 
     private void doCustomTest(
-            @Language("RegExp") @NotNull String internalNameRegexp,
-            @NotNull OuterClassInfo expectedInfo,
-            @NotNull String testDataFile
+        @Language("RegExp") @NotNull String internalNameRegexp,
+        @NotNull OuterClassInfo expectedInfo,
+        @NotNull String testDataFile
     ) {
         ClassReader kotlinReader = getKotlinClassReader(internalNameRegexp, testDataFile);
         OuterClassInfo kotlinInfo = readOuterClassInfo(kotlinReader);
@@ -198,7 +198,7 @@ public class OuterClassGenTest extends CodegenTestCase {
             }
         }
         throw new AssertionError(
-                "Couldn't find class by regexp: " + internalNameRegexp + " in:\n" + StringsKt.join(outputFiles.asList(), "\n")
+            "Couldn't find class by regexp: " + internalNameRegexp + " in:\n" + StringsKt.join(outputFiles.asList(), "\n")
         );
     }
 
@@ -209,9 +209,9 @@ public class OuterClassGenTest extends CodegenTestCase {
     }
 
     private static void compareInfo(
-            @NotNull String kotlinClassName,
-            @Nullable OuterClassInfo kotlinInfo,
-            @Nullable OuterClassInfo expectedJavaInfo
+        @NotNull String kotlinClassName,
+        @Nullable OuterClassInfo kotlinInfo,
+        @Nullable OuterClassInfo expectedJavaInfo
     ) {
         assertEquals("Error in enclosingMethodInfo info for: " + kotlinClassName + " class", expectedJavaInfo, kotlinInfo);
     }

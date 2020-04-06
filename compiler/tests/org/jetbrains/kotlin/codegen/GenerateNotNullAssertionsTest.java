@@ -50,7 +50,7 @@ public class GenerateNotNullAssertionsTest extends CodegenTestCase {
     private void setUpEnvironment(boolean disableCallAssertions, boolean disableParamAssertions) {
         File[] extraClassPath = javaClassesOutputDirectory != null ? new File[] {javaClassesOutputDirectory} : new File[0];
         CompilerConfiguration configuration =
-                KotlinTestUtils.newConfiguration(ConfigurationKind.JDK_ONLY, TestJdkKind.MOCK_JDK, extraClassPath);
+            KotlinTestUtils.newConfiguration(ConfigurationKind.JDK_ONLY, TestJdkKind.MOCK_JDK, extraClassPath);
 
         configuration.put(JVMConfigurationKeys.DISABLE_CALL_ASSERTIONS, disableCallAssertions);
         configuration.put(JVMConfigurationKeys.DISABLE_PARAM_ASSERTIONS, disableParamAssertions);
@@ -65,10 +65,10 @@ public class GenerateNotNullAssertionsTest extends CodegenTestCase {
 
     private void compileJava(@NotNull String fileName) {
         javaClassesOutputDirectory = CodegenTestUtil.compileJava(
-                Collections.singletonList(KotlinTestUtils.getTestDataPathBase() + "/codegen/" + getPrefix() + "/" + fileName),
-                Collections.emptyList(),
-                Collections.emptyList()
-        );
+                                         Collections.singletonList(KotlinTestUtils.getTestDataPathBase() + "/codegen/" + getPrefix() + "/" + fileName),
+                                         Collections.emptyList(),
+                                         Collections.emptyList()
+                                     );
     }
 
     private void doTestCallAssertions(boolean disableCallAssertions) throws Exception {
@@ -233,14 +233,14 @@ public class GenerateNotNullAssertionsTest extends CodegenTestCase {
         reader.accept(new ClassVisitor(Opcodes.API_VERSION) {
             @Override
             public MethodVisitor visitMethod(
-                    int access, @NotNull String callerName, @NotNull String callerDesc, String signature, String[] exceptions
+                int access, @NotNull String callerName, @NotNull String callerDesc, String signature, String[] exceptions
             ) {
                 return new MethodVisitor(Opcodes.API_VERSION) {
                     @Override
                     public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
                         assertFalse(
-                                "Intrinsics method is called: " + name + desc + "  Caller: " + callerName + callerDesc,
-                                "kotlin/jvm/internal/Intrinsics".equals(owner)
+                            "Intrinsics method is called: " + name + desc + "  Caller: " + callerName + callerDesc,
+                            "kotlin/jvm/internal/Intrinsics".equals(owner)
                         );
                     }
                 };

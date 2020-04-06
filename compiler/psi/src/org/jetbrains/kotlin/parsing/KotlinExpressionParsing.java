@@ -46,7 +46,7 @@ public class KotlinExpressionParsing extends AbstractKotlinParsing {
     private static final ImmutableMap<String, KtToken> KEYWORD_TEXTS = tokenSetToMap(KEYWORDS);
 
     private static final IElementType[] LOCAL_DECLARATION_FIRST =
-            new IElementType[] {CLASS_KEYWORD, INTERFACE_KEYWORD, FUN_KEYWORD, VAL_KEYWORD, VAR_KEYWORD, TYPE_ALIAS_KEYWORD};
+        new IElementType[] {CLASS_KEYWORD, INTERFACE_KEYWORD, FUN_KEYWORD, VAL_KEYWORD, VAR_KEYWORD, TYPE_ALIAS_KEYWORD};
     private static final TokenSet TOKEN_SET_TO_FOLLOW_AFTER_DESTRUCTURING_DECLARATION_IN_LAMBDA = TokenSet.create(ARROW, COMMA, COLON);
 
     private static ImmutableMap<String, KtToken> tokenSetToMap(TokenSet tokens) {
@@ -58,87 +58,87 @@ public class KotlinExpressionParsing extends AbstractKotlinParsing {
     }
 
     private static final TokenSet TYPE_ARGUMENT_LIST_STOPPERS = TokenSet.create(
-            INTEGER_LITERAL, FLOAT_LITERAL, CHARACTER_LITERAL, OPEN_QUOTE,
-            PACKAGE_KEYWORD, AS_KEYWORD, TYPE_ALIAS_KEYWORD, INTERFACE_KEYWORD, CLASS_KEYWORD, THIS_KEYWORD, VAL_KEYWORD, VAR_KEYWORD,
-            FUN_KEYWORD, FOR_KEYWORD, NULL_KEYWORD,
-            TRUE_KEYWORD, FALSE_KEYWORD, IS_KEYWORD, THROW_KEYWORD, RETURN_KEYWORD, BREAK_KEYWORD,
-            CONTINUE_KEYWORD, OBJECT_KEYWORD, IF_KEYWORD, TRY_KEYWORD, ELSE_KEYWORD, WHILE_KEYWORD, DO_KEYWORD,
-            WHEN_KEYWORD, RBRACKET, RBRACE, RPAR, PLUSPLUS, MINUSMINUS, EXCLEXCL,
-            //            MUL,
-            PLUS, MINUS, EXCL, DIV, PERC, LTEQ,
-            // TODO GTEQ,   foo<bar, baz>=x
-            EQEQEQ, EXCLEQEQEQ, EQEQ, EXCLEQ, ANDAND, OROR, SAFE_ACCESS, ELVIS,
-            SEMICOLON, RANGE, EQ, MULTEQ, DIVEQ, PERCEQ, PLUSEQ, MINUSEQ, NOT_IN, NOT_IS,
-            COLONCOLON,
-            COLON
-    );
+                INTEGER_LITERAL, FLOAT_LITERAL, CHARACTER_LITERAL, OPEN_QUOTE,
+                PACKAGE_KEYWORD, AS_KEYWORD, TYPE_ALIAS_KEYWORD, INTERFACE_KEYWORD, CLASS_KEYWORD, THIS_KEYWORD, VAL_KEYWORD, VAR_KEYWORD,
+                FUN_KEYWORD, FOR_KEYWORD, NULL_KEYWORD,
+                TRUE_KEYWORD, FALSE_KEYWORD, IS_KEYWORD, THROW_KEYWORD, RETURN_KEYWORD, BREAK_KEYWORD,
+                CONTINUE_KEYWORD, OBJECT_KEYWORD, IF_KEYWORD, TRY_KEYWORD, ELSE_KEYWORD, WHILE_KEYWORD, DO_KEYWORD,
+                WHEN_KEYWORD, RBRACKET, RBRACE, RPAR, PLUSPLUS, MINUSMINUS, EXCLEXCL,
+                //            MUL,
+                PLUS, MINUS, EXCL, DIV, PERC, LTEQ,
+                // TODO GTEQ,   foo<bar, baz>=x
+                EQEQEQ, EXCLEQEQEQ, EQEQ, EXCLEQ, ANDAND, OROR, SAFE_ACCESS, ELVIS,
+                SEMICOLON, RANGE, EQ, MULTEQ, DIVEQ, PERCEQ, PLUSEQ, MINUSEQ, NOT_IN, NOT_IS,
+                COLONCOLON,
+                COLON
+            );
 
     /*package*/ static final TokenSet EXPRESSION_FIRST = TokenSet.create(
-            // Prefix
-            MINUS, PLUS, MINUSMINUS, PLUSPLUS,
-            EXCL, EXCLEXCL, // Joining complex tokens makes it necessary to put EXCLEXCL here
-            // Atomic
+                // Prefix
+                MINUS, PLUS, MINUSMINUS, PLUSPLUS,
+                EXCL, EXCLEXCL, // Joining complex tokens makes it necessary to put EXCLEXCL here
+                // Atomic
 
-            COLONCOLON, // callable reference
+                COLONCOLON, // callable reference
 
-            LPAR, // parenthesized
+                LPAR, // parenthesized
 
-            // literal constant
-            TRUE_KEYWORD, FALSE_KEYWORD,
-            OPEN_QUOTE,
-            INTEGER_LITERAL, CHARACTER_LITERAL, FLOAT_LITERAL,
-            NULL_KEYWORD,
+                // literal constant
+                TRUE_KEYWORD, FALSE_KEYWORD,
+                OPEN_QUOTE,
+                INTEGER_LITERAL, CHARACTER_LITERAL, FLOAT_LITERAL,
+                NULL_KEYWORD,
 
-            LBRACE, // functionLiteral
-            FUN_KEYWORD, // expression function
+                LBRACE, // functionLiteral
+                FUN_KEYWORD, // expression function
 
-            THIS_KEYWORD, // this
-            SUPER_KEYWORD, // super
+                THIS_KEYWORD, // this
+                SUPER_KEYWORD, // super
 
-            IF_KEYWORD, // if
-            WHEN_KEYWORD, // when
-            TRY_KEYWORD, // try
-            OBJECT_KEYWORD, // object
+                IF_KEYWORD, // if
+                WHEN_KEYWORD, // when
+                TRY_KEYWORD, // try
+                OBJECT_KEYWORD, // object
 
-            // jump
-            THROW_KEYWORD,
-            RETURN_KEYWORD,
-            CONTINUE_KEYWORD,
-            BREAK_KEYWORD,
+                // jump
+                THROW_KEYWORD,
+                RETURN_KEYWORD,
+                CONTINUE_KEYWORD,
+                BREAK_KEYWORD,
 
-            // loop
-            FOR_KEYWORD,
-            WHILE_KEYWORD,
-            DO_KEYWORD,
+                // loop
+                FOR_KEYWORD,
+                WHILE_KEYWORD,
+                DO_KEYWORD,
 
-            IDENTIFIER, // SimpleName
+                IDENTIFIER, // SimpleName
 
-            AT, // Just for better recovery and maybe for annotations
+                AT, // Just for better recovery and maybe for annotations
 
-            LBRACKET // Collection literal expression
-    );
+                LBRACKET // Collection literal expression
+            );
 
     public static final TokenSet STATEMENT_FIRST = TokenSet.orSet(
-            EXPRESSION_FIRST,
-            TokenSet.create(
+                EXPRESSION_FIRST,
+                TokenSet.create(
                     // declaration
                     FUN_KEYWORD,
                     VAL_KEYWORD, VAR_KEYWORD,
                     INTERFACE_KEYWORD,
                     CLASS_KEYWORD,
                     TYPE_ALIAS_KEYWORD
-            ),
-            MODIFIER_KEYWORDS
-    );
+                ),
+                MODIFIER_KEYWORDS
+            );
 
     private static final TokenSet STATEMENT_NEW_LINE_QUICK_RECOVERY_SET =
-            TokenSet.orSet(
-                    TokenSet.andSet(STATEMENT_FIRST, TokenSet.andNot(KEYWORDS, TokenSet.create(IN_KEYWORD))),
-                    TokenSet.create(EOL_OR_SEMICOLON));
+        TokenSet.orSet(
+            TokenSet.andSet(STATEMENT_FIRST, TokenSet.andNot(KEYWORDS, TokenSet.create(IN_KEYWORD))),
+            TokenSet.create(EOL_OR_SEMICOLON));
 
     /*package*/ static final TokenSet EXPRESSION_FOLLOW = TokenSet.create(
-            EOL_OR_SEMICOLON, ARROW, COMMA, RBRACE, RPAR, RBRACKET
-    );
+                EOL_OR_SEMICOLON, ARROW, COMMA, RBRACE, RPAR, RBRACKET
+            );
 
     @SuppressWarnings({"UnusedDeclaration"})
     public enum Precedence {
@@ -228,13 +228,13 @@ public class KotlinExpressionParsing extends AbstractKotlinParsing {
     }
 
     public static final TokenSet ALLOW_NEWLINE_OPERATIONS = TokenSet.create(
-            DOT, SAFE_ACCESS,
-            COLON, AS_KEYWORD, AS_SAFE,
-            ELVIS,
-            // Can't allow `is` and `!is` because of when entry conditions: IS_KEYWORD, NOT_IS,
-            ANDAND,
-            OROR
-    );
+                DOT, SAFE_ACCESS,
+                COLON, AS_KEYWORD, AS_SAFE,
+                ELVIS,
+                // Can't allow `is` and `!is` because of when entry conditions: IS_KEYWORD, NOT_IS,
+                ANDAND,
+                OROR
+            );
 
     public static final TokenSet ALL_OPERATIONS;
 
@@ -587,9 +587,9 @@ public class KotlinExpressionParsing extends AbstractKotlinParsing {
     }
 
     private static void doneOrDrop(
-            @NotNull PsiBuilder.Marker marker,
-            @NotNull IElementType type,
-            boolean condition
+        @NotNull PsiBuilder.Marker marker,
+        @NotNull IElementType type,
+        boolean condition
     ) {
         if (condition) {
             marker.done(type);
@@ -669,7 +669,7 @@ public class KotlinExpressionParsing extends AbstractKotlinParsing {
             parseDoWhile();
         }
         else if (atSet(LOCAL_DECLARATION_FIRST) &&
-                    parseLocalDeclaration(/* rollbackIfDefinitelyNotExpression = */ myBuilder.newlineBeforeCurrentToken(), false)) {
+                 parseLocalDeclaration(/* rollbackIfDefinitelyNotExpression = */ myBuilder.newlineBeforeCurrentToken(), false)) {
             // declaration was parsed, do nothing
         }
         else if (at(IDENTIFIER)) {
@@ -1187,8 +1187,8 @@ public class KotlinExpressionParsing extends AbstractKotlinParsing {
     }
 
     private boolean rollbackOrDrop(PsiBuilder.Marker rollbackMarker,
-            KtToken expected, String expectMessage,
-            IElementType validForDrop) {
+                                   KtToken expected, String expectMessage,
+                                   IElementType validForDrop) {
         if (at(expected)) {
             advance(); // dropAt
             rollbackMarker.drop();
@@ -1302,7 +1302,7 @@ public class KotlinExpressionParsing extends AbstractKotlinParsing {
             if (!atSet(EXPRESSION_FIRST)) {
                 errorAndAdvance("Expecting a statement");
             }
-            else if (isScriptTopLevel){
+            else if (isScriptTopLevel) {
                 PsiBuilder.Marker scriptInitializer = mark();
                 parseBlockLevelExpression();
                 scriptInitializer.done(SCRIPT_INITIALIZER);
@@ -1349,9 +1349,9 @@ public class KotlinExpressionParsing extends AbstractKotlinParsing {
      */
     @Nullable
     private IElementType parseLocalDeclarationRest(
-            @NotNull KotlinParsing.ModifierDetector modifierDetector,
-            boolean failIfDefinitelyNotExpression,
-            boolean isScriptTopLevel
+        @NotNull KotlinParsing.ModifierDetector modifierDetector,
+        boolean failIfDefinitelyNotExpression,
+        boolean isScriptTopLevel
     ) {
         IElementType keywordToken = tt();
         if (failIfDefinitelyNotExpression) {
@@ -1375,9 +1375,9 @@ public class KotlinExpressionParsing extends AbstractKotlinParsing {
         }
 
         return myKotlinParsing.parseCommonDeclaration(
-                modifierDetector, NameParsingMode.REQUIRED,
-                isScriptTopLevel ? KotlinParsing.DeclarationParsingMode.SCRIPT_TOPLEVEL : KotlinParsing.DeclarationParsingMode.LOCAL
-        );
+                   modifierDetector, NameParsingMode.REQUIRED,
+                   isScriptTopLevel ? KotlinParsing.DeclarationParsingMode.SCRIPT_TOPLEVEL : KotlinParsing.DeclarationParsingMode.LOCAL
+               );
     }
 
     /*

@@ -47,10 +47,10 @@ public class PackageCodegenImpl implements PackageCodegen {
     private final PackagePartRegistry packagePartRegistry;
 
     public PackageCodegenImpl(
-            @NotNull GenerationState state,
-            @NotNull Collection<KtFile> files,
-            @NotNull FqName packageFqName,
-            @NotNull PackagePartRegistry registry
+        @NotNull GenerationState state,
+        @NotNull Collection<KtFile> files,
+        @NotNull FqName packageFqName,
+        @NotNull PackagePartRegistry registry
     ) {
         this.state = state;
         this.files = files;
@@ -136,11 +136,11 @@ public class PackageCodegenImpl implements PackageCodegen {
         SmartList<PackageFragmentDescriptor> fragments = new SmartList<>();
         for (KtFile file : files) {
             PackageFragmentDescriptor fragment =
-                    PackageDescriptorUtilKt.findPackageFragmentForFile(state.getModule(), file);
+                PackageDescriptorUtilKt.findPackageFragmentForFile(state.getModule(), file);
             assert fragment != null : "package fragment is null for " + file + "\n" + file.getText();
 
             assert expectedPackageFqName.equals(fragment.getFqName()) :
-                    "expected package fq name: " + expectedPackageFqName + ", actual: " + fragment.getFqName();
+            "expected package fq name: " + expectedPackageFqName + ", actual: " + fragment.getFqName();
 
             if (!fragments.contains(fragment)) {
                 fragments.add(fragment);

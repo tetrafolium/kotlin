@@ -59,8 +59,8 @@ public class SingleAbstractMethodUtils {
 
     @Nullable
     public static SimpleType getFunctionTypeForSamInterface(
-            @NotNull JavaClassDescriptor clazz,
-            @Nullable SamConversionResolver samResolver
+        @NotNull JavaClassDescriptor clazz,
+        @Nullable SamConversionResolver samResolver
     ) {
         if (samResolver == null) {
             return clazz.getDefaultFunctionTypeForSamInterface();
@@ -101,7 +101,7 @@ public class SingleAbstractMethodUtils {
                 // Function2<String, String, Int>?
                 KotlinType type = TypeSubstitutor.create(noProjectionsSamType).substitute(functionTypeDefault, IN_VARIANCE);
                 assert type != null : "Substitution based on type with no projections '" + noProjectionsSamType +
-                                      "' should not end with conflict";
+                "' should not end with conflict";
 
                 SimpleType simpleType = TypeSubstitutionKt.asSimpleType(type);
 
@@ -113,8 +113,8 @@ public class SingleAbstractMethodUtils {
 
     @NotNull
     public static SimpleType getFunctionTypeForAbstractMethod(
-            @NotNull FunctionDescriptor function,
-            boolean shouldConvertFirstParameterToDescriptor
+        @NotNull FunctionDescriptor function,
+        boolean shouldConvertFirstParameterToDescriptor
     ) {
         KotlinType returnType = function.getReturnType();
         assert returnType != null : "function is not initialized: " + function;
@@ -137,9 +137,9 @@ public class SingleAbstractMethodUtils {
         }
 
         return FunctionTypesKt.createFunctionType(
-                DescriptorUtilsKt.getBuiltIns(function), Annotations.Companion.getEMPTY(),
-                receiverType, parameterTypes, parameterNames, returnType
-        );
+                   DescriptorUtilsKt.getBuiltIns(function), Annotations.Companion.getEMPTY(),
+                   receiverType, parameterTypes, parameterNames, returnType
+               );
     }
 
     @Nullable
@@ -169,9 +169,9 @@ public class SingleAbstractMethodUtils {
 
     @NotNull
     public static SamConstructorDescriptor createSamConstructorFunction(
-            @NotNull DeclarationDescriptor owner,
-            @NotNull JavaClassDescriptor samInterface,
-            @NotNull SamConversionResolver samResolver
+        @NotNull DeclarationDescriptor owner,
+        @NotNull JavaClassDescriptor samInterface,
+        @NotNull SamConversionResolver samResolver
     ) {
         assert getSingleAbstractMethodOrNull(samInterface) != null : samInterface;
 
@@ -185,11 +185,11 @@ public class SingleAbstractMethodUtils {
     }
 
     private static void initializeSamConstructorDescriptor(
-            @NotNull JavaClassDescriptor samInterface,
-            @NotNull SimpleFunctionDescriptorImpl samConstructor,
-            @NotNull List<TypeParameterDescriptor> samTypeParameters,
-            @NotNull KotlinType unsubstitutedSamType,
-            @NotNull SamConversionResolver samResolver
+        @NotNull JavaClassDescriptor samInterface,
+        @NotNull SimpleFunctionDescriptorImpl samConstructor,
+        @NotNull List<TypeParameterDescriptor> samTypeParameters,
+        @NotNull KotlinType unsubstitutedSamType,
+        @NotNull SamConversionResolver samResolver
     ) {
         TypeParameters typeParameters = recreateAndInitializeTypeParameters(samTypeParameters, samConstructor);
 
@@ -197,33 +197,33 @@ public class SingleAbstractMethodUtils {
         assert parameterTypeUnsubstituted != null : "couldn't get function type for SAM type " + unsubstitutedSamType;
         KotlinType parameterType = typeParameters.substitutor.substitute(parameterTypeUnsubstituted, Variance.IN_VARIANCE);
         assert parameterType != null : "couldn't substitute type: " + parameterTypeUnsubstituted +
-                                       ", substitutor = " + typeParameters.substitutor;
+        ", substitutor = " + typeParameters.substitutor;
         ValueParameterDescriptor parameter = new ValueParameterDescriptorImpl(
-                samConstructor, null, 0, Annotations.Companion.getEMPTY(), Name.identifier("function"), parameterType,
-                /* declaresDefaultValue = */ false,
-                /* isCrossinline = */ false,
-                /* isNoinline = */ false,
-                null, SourceElement.NO_SOURCE);
+            samConstructor, null, 0, Annotations.Companion.getEMPTY(), Name.identifier("function"), parameterType,
+            /* declaresDefaultValue = */ false,
+            /* isCrossinline = */ false,
+            /* isNoinline = */ false,
+            null, SourceElement.NO_SOURCE);
 
         KotlinType returnType = typeParameters.substitutor.substitute(unsubstitutedSamType, Variance.OUT_VARIANCE);
         assert returnType != null : "couldn't substitute type: " + unsubstitutedSamType +
-                                    ", substitutor = " + typeParameters.substitutor;
+        ", substitutor = " + typeParameters.substitutor;
 
         samConstructor.initialize(
-                null,
-                null,
-                typeParameters.descriptors,
-                Collections.singletonList(parameter),
-                returnType,
-                Modality.FINAL,
-                samInterface.getVisibility()
+            null,
+            null,
+            typeParameters.descriptors,
+            Collections.singletonList(parameter),
+            returnType,
+            Modality.FINAL,
+            samInterface.getVisibility()
         );
     }
 
     public static SamConstructorDescriptor createTypeAliasSamConstructorFunction(
-            @NotNull TypeAliasDescriptor typeAliasDescriptor,
-            @NotNull SamConstructorDescriptor underlyingSamConstructor,
-            @NotNull SamConversionResolver samResolver
+        @NotNull TypeAliasDescriptor typeAliasDescriptor,
+        @NotNull SamConstructorDescriptor underlyingSamConstructor,
+        @NotNull SamConversionResolver samResolver
     ) {
         SamTypeAliasConstructorDescriptorImpl result = new SamTypeAliasConstructorDescriptorImpl(typeAliasDescriptor, underlyingSamConstructor);
 
@@ -250,25 +250,25 @@ public class SingleAbstractMethodUtils {
 
     @NotNull
     public static SamAdapterDescriptor<JavaMethodDescriptor> createSamAdapterFunction(
-            @NotNull JavaMethodDescriptor original,
-            @NotNull SamConversionResolver samResolver
+        @NotNull JavaMethodDescriptor original,
+        @NotNull SamConversionResolver samResolver
     ) {
         SamAdapterFunctionDescriptor result = new SamAdapterFunctionDescriptor(original);
         return initSamAdapter(original, result, new FunctionInitializer() {
             @Override
             public void initialize(
-                    @NotNull List<TypeParameterDescriptor> typeParameters,
-                    @NotNull List<ValueParameterDescriptor> valueParameters,
-                    @NotNull KotlinType returnType
+                @NotNull List<TypeParameterDescriptor> typeParameters,
+                @NotNull List<ValueParameterDescriptor> valueParameters,
+                @NotNull KotlinType returnType
             ) {
                 result.initialize(
-                        null,
-                        original.getDispatchReceiverParameter(),
-                        typeParameters,
-                        valueParameters,
-                        returnType,
-                        Modality.FINAL,
-                        original.getVisibility()
+                    null,
+                    original.getDispatchReceiverParameter(),
+                    typeParameters,
+                    valueParameters,
+                    returnType,
+                    Modality.FINAL,
+                    original.getVisibility()
                 );
             }
         }, samResolver);
@@ -276,16 +276,16 @@ public class SingleAbstractMethodUtils {
 
     @NotNull
     public static SamAdapterDescriptor<JavaClassConstructorDescriptor> createSamAdapterConstructor(
-            @NotNull JavaClassConstructorDescriptor original,
-            @NotNull SamConversionResolver samResolver
+        @NotNull JavaClassConstructorDescriptor original,
+        @NotNull SamConversionResolver samResolver
     ) {
         SamAdapterClassConstructorDescriptor result = new SamAdapterClassConstructorDescriptor(original);
         return initSamAdapter(original, result, new FunctionInitializer() {
             @Override
             public void initialize(
-                    @NotNull List<TypeParameterDescriptor> typeParameters,
-                    @NotNull List<ValueParameterDescriptor> valueParameters,
-                    @NotNull KotlinType returnType
+                @NotNull List<TypeParameterDescriptor> typeParameters,
+                @NotNull List<ValueParameterDescriptor> valueParameters,
+                @NotNull KotlinType returnType
             ) {
                 result.initialize(valueParameters, original.getVisibility());
                 result.setReturnType(returnType);
@@ -295,10 +295,10 @@ public class SingleAbstractMethodUtils {
 
     @NotNull
     private static <F extends FunctionDescriptor> SamAdapterDescriptor<F> initSamAdapter(
-            @NotNull F original,
-            @NotNull SamAdapterDescriptor<F> adapter,
-            @NotNull FunctionInitializer initializer,
-            @NotNull SamConversionResolver samResolver
+        @NotNull F original,
+        @NotNull SamAdapterDescriptor<F> adapter,
+        @NotNull FunctionInitializer initializer,
+        @NotNull SamConversionResolver samResolver
     ) {
         TypeParameters typeParameters = recreateAndInitializeTypeParameters(original.getTypeParameters(), adapter);
 
@@ -308,7 +308,7 @@ public class SingleAbstractMethodUtils {
         TypeSubstitutor substitutor = typeParameters.substitutor;
         KotlinType returnType = substitutor.substitute(returnTypeUnsubstituted, Variance.INVARIANT);
         assert returnType != null : "couldn't substitute type: " + returnTypeUnsubstituted +
-                                        ", substitutor = " + substitutor;
+        ", substitutor = " + substitutor;
 
 
         List<ValueParameterDescriptor> valueParameters = createValueParametersForSamAdapter(original, adapter, substitutor, samResolver);
@@ -319,10 +319,10 @@ public class SingleAbstractMethodUtils {
     }
 
     public static List<ValueParameterDescriptor> createValueParametersForSamAdapter(
-            @NotNull FunctionDescriptor original,
-            @NotNull FunctionDescriptor samAdapter,
-            @NotNull TypeSubstitutor substitutor,
-            @NotNull SamConversionResolver samResolver
+        @NotNull FunctionDescriptor original,
+        @NotNull FunctionDescriptor samAdapter,
+        @NotNull TypeSubstitutor substitutor,
+        @NotNull SamConversionResolver samResolver
     ) {
         List<ValueParameterDescriptor> originalValueParameters = original.getValueParameters();
         List<ValueParameterDescriptor> valueParameters = new ArrayList<>(originalValueParameters.size());
@@ -334,12 +334,12 @@ public class SingleAbstractMethodUtils {
             assert newType != null : "couldn't substitute type: " + newTypeUnsubstituted + ", substitutor = " + substitutor;
 
             ValueParameterDescriptor newParam = new ValueParameterDescriptorImpl(
-                    samAdapter, null, originalParam.getIndex(), originalParam.getAnnotations(),
-                    originalParam.getName(), newType,
-                    /* declaresDefaultValue = */ false,
-                    /* isCrossinline = */ false,
-                    /* isNoinline = */ false,
-                    null, SourceElement.NO_SOURCE
+                samAdapter, null, originalParam.getIndex(), originalParam.getAnnotations(),
+                originalParam.getName(), newType,
+                /* declaresDefaultValue = */ false,
+                /* isCrossinline = */ false,
+                /* isNoinline = */ false,
+                null, SourceElement.NO_SOURCE
             );
             valueParameters.add(newParam);
         }
@@ -348,15 +348,15 @@ public class SingleAbstractMethodUtils {
 
     @NotNull
     private static TypeParameters recreateAndInitializeTypeParameters(
-            @NotNull List<TypeParameterDescriptor> originalParameters,
-            @Nullable DeclarationDescriptor newOwner
+        @NotNull List<TypeParameterDescriptor> originalParameters,
+        @Nullable DeclarationDescriptor newOwner
     ) {
         if (newOwner instanceof SamAdapterClassConstructorDescriptor) {
             return new TypeParameters(originalParameters, TypeSubstitutor.EMPTY);
         }
 
         Map<TypeParameterDescriptor, TypeParameterDescriptorImpl> traitToFunTypeParameters =
-                JavaResolverUtils.recreateTypeParametersAndReturnMapping(originalParameters, newOwner);
+            JavaResolverUtils.recreateTypeParametersAndReturnMapping(originalParameters, newOwner);
         TypeSubstitutor typeParametersSubstitutor = JavaResolverUtils.createSubstitutorForTypeParameters(traitToFunTypeParameters);
         for (Map.Entry<TypeParameterDescriptor, TypeParameterDescriptorImpl> mapEntry : traitToFunTypeParameters.entrySet()) {
             TypeParameterDescriptor traitTypeParameter = mapEntry.getKey();
@@ -387,9 +387,9 @@ public class SingleAbstractMethodUtils {
 
     private static abstract class FunctionInitializer {
         public abstract void initialize(
-                @NotNull List<TypeParameterDescriptor> typeParameters,
-                @NotNull List<ValueParameterDescriptor> valueParameters,
-                @NotNull KotlinType returnType
+            @NotNull List<TypeParameterDescriptor> typeParameters,
+            @NotNull List<ValueParameterDescriptor> valueParameters,
+            @NotNull KotlinType returnType
         );
     }
 

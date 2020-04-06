@@ -119,7 +119,7 @@ class JUnit3RunnerWithInnersForGradle extends Runner implements Filterable, Sort
 
             includePatternsField.setAccessible(true);
             @SuppressWarnings("unchecked") List<Object> includePatterns =
-                    (ArrayList<Object>) includePatternsField.get(testSelectionMatcher);
+                (ArrayList<Object>) includePatternsField.get(testSelectionMatcher);
 
             if (includePatterns.size() != 1) {
                 return null;

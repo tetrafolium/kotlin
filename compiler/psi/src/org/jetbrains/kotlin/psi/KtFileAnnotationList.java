@@ -25,7 +25,7 @@ import org.jetbrains.kotlin.psi.stubs.elements.KtStubElementTypes;
 import java.util.List;
 
 public class KtFileAnnotationList extends KtElementImplStub<KotlinPlaceHolderStub<KtFileAnnotationList>> implements
-                                                                                                            KtAnnotationsContainer {
+    KtAnnotationsContainer {
 
     public KtFileAnnotationList(@NotNull ASTNode node) {
         super(node);

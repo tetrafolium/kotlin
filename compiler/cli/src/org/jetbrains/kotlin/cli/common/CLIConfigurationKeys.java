@@ -26,23 +26,23 @@ import java.util.List;
 public class CLIConfigurationKeys {
     // Roots, including dependencies and own sources
     public static final CompilerConfigurationKey<List<ContentRoot>> CONTENT_ROOTS =
-            CompilerConfigurationKey.create("content roots");
+        CompilerConfigurationKey.create("content roots");
 
     public static final CompilerConfigurationKey<MessageCollector> MESSAGE_COLLECTOR_KEY =
-            CompilerConfigurationKey.create("message collector");
+        CompilerConfigurationKey.create("message collector");
     public static final CompilerConfigurationKey<Boolean> ALLOW_KOTLIN_PACKAGE =
-            CompilerConfigurationKey.create("allow kotlin package");
+        CompilerConfigurationKey.create("allow kotlin package");
     public static final CompilerConfigurationKey<CommonCompilerPerformanceManager> PERF_MANAGER =
-            CompilerConfigurationKey.create("performance manager");
+        CompilerConfigurationKey.create("performance manager");
 
     // Used in Eclipse plugin (see KotlinCLICompiler)
     public static final CompilerConfigurationKey<String> INTELLIJ_PLUGIN_ROOT =
-            CompilerConfigurationKey.create("intellij plugin root");
+        CompilerConfigurationKey.create("intellij plugin root");
 
     // See K2MetadataCompilerArguments
 
     public static final CompilerConfigurationKey<File> METADATA_DESTINATION_DIRECTORY =
-            CompilerConfigurationKey.create("metadata destination directory");
+        CompilerConfigurationKey.create("metadata destination directory");
 
     private CLIConfigurationKeys() {
     }

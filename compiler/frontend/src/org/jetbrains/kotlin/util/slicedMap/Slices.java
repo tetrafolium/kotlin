@@ -65,10 +65,10 @@ public class Slices {
                     long oldConstantValue = oldConstant.getValue(TypeUtils.NO_EXPECTED_TYPE).longValue();
                     Number newConstantValue = newConstant.getValue(TypeUtils.NO_EXPECTED_TYPE);
                     if (oldConstantValue == newConstantValue.longValue() ||
-                        oldConstantValue == ConstantValueFactoryKt.fromUIntToLong(newConstantValue.intValue()) ||
-                        oldConstantValue == ConstantValueFactoryKt.fromUByteToLong(newConstantValue.byteValue()) ||
-                        oldConstantValue == ConstantValueFactoryKt.fromUShortToLong(newConstantValue.shortValue())
-                    ) {
+                            oldConstantValue == ConstantValueFactoryKt.fromUIntToLong(newConstantValue.intValue()) ||
+                            oldConstantValue == ConstantValueFactoryKt.fromUByteToLong(newConstantValue.byteValue()) ||
+                            oldConstantValue == ConstantValueFactoryKt.fromUShortToLong(newConstantValue.shortValue())
+                       ) {
                         return true;
                     }
                 }

@@ -30,25 +30,25 @@ public abstract class CallResolutionContext<Context extends CallResolutionContex
     public final MutableDataFlowInfoForArguments dataFlowInfoForArguments;
 
     protected CallResolutionContext(
-            @NotNull BindingTrace trace,
-            @NotNull LexicalScope scope,
-            @NotNull Call call,
-            @NotNull KotlinType expectedType,
-            @NotNull DataFlowInfo dataFlowInfo,
-            @NotNull ContextDependency contextDependency,
-            @NotNull CheckArgumentTypesMode checkArguments,
-            @NotNull ResolutionResultsCache resolutionResultsCache,
-            @SuppressWarnings("NullableProblems")
-            @Nullable MutableDataFlowInfoForArguments dataFlowInfoForArguments,
-            @NotNull StatementFilter statementFilter,
-            boolean isAnnotationContext,
-            boolean isDebuggerContext,
-            boolean collectAllCandidates,
-            @NotNull CallPosition callPosition,
-            @NotNull Function1<KtExpression, KtExpression> expressionContextProvider,
-            @NotNull LanguageVersionSettings languageVersionSettings,
-            @NotNull DataFlowValueFactory dataFlowValueFactory,
-            @NotNull InferenceSession inferenceSession
+        @NotNull BindingTrace trace,
+        @NotNull LexicalScope scope,
+        @NotNull Call call,
+        @NotNull KotlinType expectedType,
+        @NotNull DataFlowInfo dataFlowInfo,
+        @NotNull ContextDependency contextDependency,
+        @NotNull CheckArgumentTypesMode checkArguments,
+        @NotNull ResolutionResultsCache resolutionResultsCache,
+        @SuppressWarnings("NullableProblems")
+        @Nullable MutableDataFlowInfoForArguments dataFlowInfoForArguments,
+        @NotNull StatementFilter statementFilter,
+        boolean isAnnotationContext,
+        boolean isDebuggerContext,
+        boolean collectAllCandidates,
+        @NotNull CallPosition callPosition,
+        @NotNull Function1<KtExpression, KtExpression> expressionContextProvider,
+        @NotNull LanguageVersionSettings languageVersionSettings,
+        @NotNull DataFlowValueFactory dataFlowValueFactory,
+        @NotNull InferenceSession inferenceSession
     ) {
         super(trace, scope, expectedType, dataFlowInfo, contextDependency, resolutionResultsCache,
               statementFilter, isAnnotationContext, isDebuggerContext, collectAllCandidates, callPosition, expressionContextProvider, languageVersionSettings,

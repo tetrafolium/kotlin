@@ -24,7 +24,7 @@ import org.jetbrains.kotlin.psi.stubs.KotlinNameReferenceExpressionStub;
 import org.jetbrains.kotlin.psi.stubs.elements.KtStubElementTypes;
 
 public class KotlinNameReferenceExpressionStubImpl extends KotlinStubBaseImpl<KtNameReferenceExpression> implements
-                                                                                                       KotlinNameReferenceExpressionStub {
+    KotlinNameReferenceExpressionStub {
     @NotNull
     private final StringRef referencedName;
 

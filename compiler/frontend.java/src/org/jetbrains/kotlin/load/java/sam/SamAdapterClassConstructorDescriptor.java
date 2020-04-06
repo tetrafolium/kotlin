@@ -24,7 +24,7 @@ import org.jetbrains.kotlin.descriptors.annotations.Annotations;
 import org.jetbrains.kotlin.load.java.descriptors.JavaClassConstructorDescriptor;
 
 /* package */ class SamAdapterClassConstructorDescriptor extends JavaClassConstructorDescriptor
-        implements SamAdapterDescriptor<JavaClassConstructorDescriptor> {
+    implements SamAdapterDescriptor<JavaClassConstructorDescriptor> {
     private final JavaClassConstructorDescriptor declaration;
 
     public SamAdapterClassConstructorDescriptor(@NotNull JavaClassConstructorDescriptor declaration) {
@@ -36,13 +36,13 @@ import org.jetbrains.kotlin.load.java.descriptors.JavaClassConstructorDescriptor
     }
 
     private SamAdapterClassConstructorDescriptor(
-            @NotNull ClassDescriptor containingDeclaration,
-            @Nullable JavaClassConstructorDescriptor original,
-            @NotNull Annotations annotations,
-            boolean isPrimary,
-            @NotNull Kind kind,
-            @NotNull SourceElement source,
-            @NotNull JavaClassConstructorDescriptor declaration
+        @NotNull ClassDescriptor containingDeclaration,
+        @Nullable JavaClassConstructorDescriptor original,
+        @NotNull Annotations annotations,
+        boolean isPrimary,
+        @NotNull Kind kind,
+        @NotNull SourceElement source,
+        @NotNull JavaClassConstructorDescriptor declaration
     ) {
         super(containingDeclaration, original, annotations, isPrimary, kind, source);
         this.declaration = declaration;
@@ -51,11 +51,11 @@ import org.jetbrains.kotlin.load.java.descriptors.JavaClassConstructorDescriptor
     @NotNull
     @Override
     protected JavaClassConstructorDescriptor createDescriptor(
-            @NotNull ClassDescriptor newOwner,
-            @Nullable JavaClassConstructorDescriptor original,
-            @NotNull Kind kind,
-            @NotNull SourceElement sourceElement,
-            @NotNull Annotations annotations
+        @NotNull ClassDescriptor newOwner,
+        @Nullable JavaClassConstructorDescriptor original,
+        @NotNull Kind kind,
+        @NotNull SourceElement sourceElement,
+        @NotNull Annotations annotations
     ) {
         return new SamAdapterClassConstructorDescriptor(newOwner, original, annotations, isPrimary, kind, sourceElement, declaration);
     }

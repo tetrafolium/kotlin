@@ -39,8 +39,8 @@ public class BindingContextUtils {
 
     @Nullable
     public static VariableDescriptor extractVariableFromResolvedCall(
-            @NotNull BindingContext bindingContext,
-            @Nullable KtElement callElement
+        @NotNull BindingContext bindingContext,
+        @Nullable KtElement callElement
     ) {
         ResolvedCall<? extends CallableDescriptor> resolvedCall = CallUtilKt.getResolvedCall(callElement, bindingContext);
         if (resolvedCall == null || !(resolvedCall.getResultingDescriptor() instanceof VariableDescriptor)) return null;
@@ -59,8 +59,8 @@ public class BindingContextUtils {
 
     @Nullable
     public static VariableDescriptor extractVariableDescriptorFromReference(
-            @NotNull BindingContext bindingContext,
-            @Nullable KtElement element
+        @NotNull BindingContext bindingContext,
+        @Nullable KtElement element
     ) {
         if (element instanceof KtSimpleNameExpression) {
             return variableDescriptorForDeclaration(bindingContext.get(BindingContext.REFERENCE_TARGET, (KtSimpleNameExpression) element));
@@ -87,8 +87,8 @@ public class BindingContextUtils {
 
     @NotNull
     public static KotlinType getTypeNotNull(
-            @NotNull BindingContext bindingContext,
-            @NotNull KtExpression expression
+        @NotNull BindingContext bindingContext,
+        @NotNull KtExpression expression
     ) {
         KotlinType result = bindingContext.getType(expression);
         if (result == null) {
@@ -99,10 +99,10 @@ public class BindingContextUtils {
 
     @NotNull
     public static <K, V> V getNotNull(
-            @NotNull BindingContext bindingContext,
-            @NotNull ReadOnlySlice<K, V> slice,
-            @NotNull K key,
-            @NotNull String messageIfNull
+        @NotNull BindingContext bindingContext,
+        @NotNull ReadOnlySlice<K, V> slice,
+        @NotNull K key,
+        @NotNull String messageIfNull
     ) {
         V value = bindingContext.get(slice, key);
         if (value == null) {
@@ -137,9 +137,9 @@ public class BindingContextUtils {
     }
 
     public static void reportAmbiguousLabel(
-            @NotNull BindingTrace trace,
-            @NotNull KtSimpleNameExpression targetLabel,
-            @NotNull Collection<DeclarationDescriptor> declarationsByLabel
+        @NotNull BindingTrace trace,
+        @NotNull KtSimpleNameExpression targetLabel,
+        @NotNull Collection<DeclarationDescriptor> declarationsByLabel
     ) {
         Collection<PsiElement> targets = Lists.newArrayList();
         for (DeclarationDescriptor descriptor : declarationsByLabel) {
@@ -155,10 +155,10 @@ public class BindingContextUtils {
 
     @Nullable
     public static KotlinType updateRecordedType(
-            @Nullable KotlinType type,
-            @NotNull KtExpression expression,
-            @NotNull BindingTrace trace,
-            boolean shouldBeMadeNullable
+        @Nullable KotlinType type,
+        @NotNull KtExpression expression,
+        @NotNull BindingTrace trace,
+        boolean shouldBeMadeNullable
     ) {
         if (type == null) return null;
         if (shouldBeMadeNullable) {
@@ -178,8 +178,8 @@ public class BindingContextUtils {
     }
 
     public static boolean isExpressionWithValidReference(
-            @NotNull KtExpression expression,
-            @NotNull BindingContext context
+        @NotNull KtExpression expression,
+        @NotNull BindingContext context
     ) {
         if (expression instanceof KtCallExpression) {
             ResolvedCall<?> resolvedCall = CallUtilKt.getResolvedCall(expression, context);
@@ -207,16 +207,16 @@ public class BindingContextUtils {
 
     @NotNull
     public static Pair<FunctionDescriptor, PsiElement> getContainingFunctionSkipFunctionLiterals(
-            @Nullable DeclarationDescriptor startDescriptor,
-            boolean strict
+        @Nullable DeclarationDescriptor startDescriptor,
+        boolean strict
     ) {
         FunctionDescriptor containingFunctionDescriptor = DescriptorUtils.getParentOfType(startDescriptor, FunctionDescriptor.class, strict);
         PsiElement containingFunction =
-                containingFunctionDescriptor != null ? DescriptorToSourceUtils.getSourceFromDescriptor(containingFunctionDescriptor) : null;
+            containingFunctionDescriptor != null ? DescriptorToSourceUtils.getSourceFromDescriptor(containingFunctionDescriptor) : null;
         while (containingFunction instanceof KtFunctionLiteral) {
             containingFunctionDescriptor = DescriptorUtils.getParentOfType(containingFunctionDescriptor, FunctionDescriptor.class);
             containingFunction = containingFunctionDescriptor != null ? DescriptorToSourceUtils
-                    .getSourceFromDescriptor(containingFunctionDescriptor) : null;
+                                 .getSourceFromDescriptor(containingFunctionDescriptor) : null;
         }
 
         return new Pair<>(containingFunctionDescriptor, containingFunction);
@@ -224,16 +224,16 @@ public class BindingContextUtils {
 
     @Nullable
     public static ResolvedCall<ConstructorDescriptor> getDelegationConstructorCall(
-            @NotNull BindingContext bindingContext,
-            @NotNull ConstructorDescriptor constructorDescriptor
+        @NotNull BindingContext bindingContext,
+        @NotNull ConstructorDescriptor constructorDescriptor
     ) {
         return bindingContext.get(CONSTRUCTOR_RESOLVED_DELEGATION_CALL, constructorDescriptor);
     }
 
     @SuppressWarnings("unchecked")
     static void addOwnDataTo(
-            @NotNull BindingTrace trace, @Nullable TraceEntryFilter filter, boolean commitDiagnostics,
-            @NotNull MutableSlicedMap map, MutableDiagnosticsWithSuppression diagnostics
+        @NotNull BindingTrace trace, @Nullable TraceEntryFilter filter, boolean commitDiagnostics,
+        @NotNull MutableSlicedMap map, MutableDiagnosticsWithSuppression diagnostics
     ) {
         map.forEach((slice, key, value) -> {
             if (filter == null || filter.accept(slice, key)) {

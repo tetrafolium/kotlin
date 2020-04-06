@@ -70,8 +70,8 @@ public class BoundsSubstitutor {
         // In the end, we want every parameter to have no references to those after it in the list
         // This gives us the reversed order: the one that refers to everybody else comes first
         List<TypeParameterDescriptor> topOrder = DFS.topologicalOrder(
-                typeParameters, current -> getTypeParametersFromUpperBounds(current, typeParameters)
-        );
+                    typeParameters, current -> getTypeParametersFromUpperBounds(current, typeParameters)
+                );
 
         assert topOrder.size() == typeParameters.size() : "All type parameters must be visited, but only " + topOrder + " were";
 
@@ -82,25 +82,25 @@ public class BoundsSubstitutor {
 
     @NotNull
     private static List<TypeParameterDescriptor> getTypeParametersFromUpperBounds(
-            @NotNull TypeParameterDescriptor current,
-            @NotNull List<TypeParameterDescriptor> typeParameters
+        @NotNull TypeParameterDescriptor current,
+        @NotNull List<TypeParameterDescriptor> typeParameters
     ) {
         return DFS.dfs(
-                current.getUpperBounds(),
-                typeParameter -> CollectionsKt.map(typeParameter.getArguments(), TypeProjection::getType),
-                new DFS.NodeHandlerWithListResult<KotlinType, TypeParameterDescriptor>() {
-                    @Override
-                    public boolean beforeChildren(KotlinType current) {
-                        ClassifierDescriptor declarationDescriptor = current.getConstructor().getDeclarationDescriptor();
-                        // typeParameters in a list, but it contains very few elements, so it's fine to call contains() on it
-                        //noinspection SuspiciousMethodCalls
-                        if (typeParameters.contains(declarationDescriptor)) {
-                            result.add((TypeParameterDescriptor) declarationDescriptor);
-                        }
-
-                        return true;
-                    }
+                   current.getUpperBounds(),
+                   typeParameter -> CollectionsKt.map(typeParameter.getArguments(), TypeProjection::getType),
+        new DFS.NodeHandlerWithListResult<KotlinType, TypeParameterDescriptor>() {
+            @Override
+            public boolean beforeChildren(KotlinType current) {
+                ClassifierDescriptor declarationDescriptor = current.getConstructor().getDeclarationDescriptor();
+                // typeParameters in a list, but it contains very few elements, so it's fine to call contains() on it
+                //noinspection SuspiciousMethodCalls
+                if (typeParameters.contains(declarationDescriptor)) {
+                    result.add((TypeParameterDescriptor) declarationDescriptor);
                 }
-        );
+
+                return true;
+            }
+        }
+               );
     }
 }

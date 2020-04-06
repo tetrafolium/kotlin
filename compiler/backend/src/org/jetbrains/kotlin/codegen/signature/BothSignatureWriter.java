@@ -52,10 +52,10 @@ public class BothSignatureWriter extends JvmSignatureWriter {
 
     public BothSignatureWriter(@NotNull Mode mode) {
         this.signatureVisitor =
-                mode.asmType != null
-                ? new CheckSignatureAdapter(mode.asmType, signatureWriter)
-                : signatureWriter
-        ;
+            mode.asmType != null
+            ? new CheckSignatureAdapter(mode.asmType, signatureWriter)
+            : signatureWriter
+            ;
     }
 
     private final Stack<SignatureVisitor> visitors = new Stack<>();
@@ -122,10 +122,14 @@ public class BothSignatureWriter extends JvmSignatureWriter {
 
     private static char toJvmVariance(@NotNull Variance variance) {
         switch (variance) {
-            case INVARIANT: return '=';
-            case IN_VARIANCE: return '-';
-            case OUT_VARIANCE: return '+';
-            default: throw new IllegalStateException("Unknown variance: " + variance);
+        case INVARIANT:
+            return '=';
+        case IN_VARIANCE:
+            return '-';
+        case OUT_VARIANCE:
+            return '+';
+        default:
+            throw new IllegalStateException("Unknown variance: " + variance);
         }
     }
 

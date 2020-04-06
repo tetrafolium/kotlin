@@ -71,7 +71,7 @@ public class ExpectedResolveDataUtil {
                              standardFunction(builtIns.getInt(), "compareTo", project, environment, builtIns.getDoubleType()));
         @NotNull
         FunctionDescriptor descriptorForSet = standardFunction(builtIns.getArray(), "set", project, environment,
-                                                               builtIns.getIntType(), builtIns.getIntType());
+                                              builtIns.getIntType(), builtIns.getIntType());
         nameToDescriptor.put("kotlin::Array.set(Int, Int)", descriptorForSet.getOriginal());
 
         return nameToDescriptor;
@@ -138,11 +138,11 @@ public class ExpectedResolveDataUtil {
 
     @NotNull
     private static FunctionDescriptor standardFunction(
-            ClassDescriptor classDescriptor,
-            String name,
-            Project project,
-            KotlinCoreEnvironment environment,
-            KotlinType... parameterTypes
+        ClassDescriptor classDescriptor,
+        String name,
+        Project project,
+        KotlinCoreEnvironment environment,
+        KotlinType... parameterTypes
     ) {
         ModuleDescriptorImpl emptyModule = KotlinTestUtils.createEmptyModule();
         ContainerForTests container = InjectionKt.createContainerForTests(project, emptyModule);
@@ -150,28 +150,28 @@ public class ExpectedResolveDataUtil {
         emptyModule.initialize(PackageFragmentProvider.Empty.INSTANCE);
 
         LexicalScopeImpl lexicalScope = new LexicalScopeImpl(ImportingScope.Empty.INSTANCE, classDescriptor, false,
-                                                             classDescriptor.getThisAsReceiverParameter(),
-                                                             LexicalScopeKind.SYNTHETIC);
+                classDescriptor.getThisAsReceiverParameter(),
+                LexicalScopeKind.SYNTHETIC);
 
         LanguageVersionSettings languageVersionSettings = CommonConfigurationKeysKt.getLanguageVersionSettings(environment.getConfiguration());
         ExpressionTypingContext context = ExpressionTypingContext.newContext(
-                new BindingTraceContext(), lexicalScope,
-                DataFlowInfoFactory.EMPTY, TypeUtils.NO_EXPECTED_TYPE, languageVersionSettings, container.getDataFlowValueFactory());
+                                              new BindingTraceContext(), lexicalScope,
+                                              DataFlowInfoFactory.EMPTY, TypeUtils.NO_EXPECTED_TYPE, languageVersionSettings, container.getDataFlowValueFactory());
 
         KtExpression callElement = KtPsiFactory(project).createExpression(name);
 
         TemporaryBindingTrace traceWithFakeArgumentInfo =
-                TemporaryBindingTrace.create(context.trace, "trace to store fake argument for", name);
+            TemporaryBindingTrace.create(context.trace, "trace to store fake argument for", name);
         List<KtExpression> fakeArguments = new ArrayList<>(parameterTypes.length);
         for (KotlinType type : parameterTypes) {
             fakeArguments.add(ExpressionTypingUtils.createFakeExpressionOfType(
-                    project, traceWithFakeArgumentInfo, "fakeArgument" + fakeArguments.size(), type
-            ));
+                                  project, traceWithFakeArgumentInfo, "fakeArgument" + fakeArguments.size(), type
+                              ));
         }
 
         OverloadResolutionResults<FunctionDescriptor> functions = container.getFakeCallResolver().resolveFakeCall(
-                context, null, Name.identifier(name), callElement, callElement, FakeCallKind.OTHER, fakeArguments
-        );
+                    context, null, Name.identifier(name), callElement, callElement, FakeCallKind.OTHER, fakeArguments
+                );
 
         for (ResolvedCall<? extends FunctionDescriptor> resolvedCall : functions.getResultingCalls()) {
             List<ValueParameterDescriptor> unsubstitutedValueParameters = resolvedCall.getResultingDescriptor().getValueParameters();

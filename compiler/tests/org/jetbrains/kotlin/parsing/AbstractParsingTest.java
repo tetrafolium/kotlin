@@ -62,10 +62,10 @@ public abstract class AbstractParsingTest extends KtParsingTestCase {
         for (Method method : methods) {
             String methodName = method.getName();
             if (!methodName.startsWith("get") && !methodName.startsWith("find") ||
-                methodName.equals("getReference") ||
-                methodName.equals("getReferences") ||
-                methodName.equals("getUseScope") ||
-                methodName.equals("getPresentation")) {
+                    methodName.equals("getReference") ||
+                    methodName.equals("getReferences") ||
+                    methodName.equals("getUseScope") ||
+                    methodName.equals("getPresentation")) {
                 continue;
             }
 
@@ -80,9 +80,9 @@ public abstract class AbstractParsingTest extends KtParsingTestCase {
                 for (Annotation annotation : method.getDeclaredAnnotations()) {
                     if (annotation instanceof IfNotParsed) {
                         assertNotNull(
-                                "Incomplete operation in parsed OK test, method " + methodName +
-                                " in " + declaringClass.getSimpleName() + " returns null. Element text: \n" + elem.getText(),
-                                PsiTreeUtil.findChildOfType(elem, PsiErrorElement.class));
+                            "Incomplete operation in parsed OK test, method " + methodName +
+                            " in " + declaringClass.getSimpleName() + " returns null. Element text: \n" + elem.getText(),
+                            PsiTreeUtil.findChildOfType(elem, PsiErrorElement.class));
                     }
                 }
             }

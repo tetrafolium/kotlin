@@ -22,12 +22,12 @@ import static org.jetbrains.kotlin.diagnostics.Severity.WARNING;
 
 public interface ErrorsJvm {
     DiagnosticFactory1<PsiElement, ConflictingJvmDeclarationsData> CONFLICTING_JVM_DECLARATIONS =
-            DiagnosticFactory1.create(ERROR, DECLARATION_SIGNATURE_OR_DEFAULT);
+        DiagnosticFactory1.create(ERROR, DECLARATION_SIGNATURE_OR_DEFAULT);
 
     DiagnosticFactory1<PsiElement, ConflictingJvmDeclarationsData> ACCIDENTAL_OVERRIDE =
-            DiagnosticFactory1.create(ERROR, DECLARATION_SIGNATURE_OR_DEFAULT);
+        DiagnosticFactory1.create(ERROR, DECLARATION_SIGNATURE_OR_DEFAULT);
     DiagnosticFactory1<PsiElement, ConflictingJvmDeclarationsData> CONFLICTING_INHERITED_JVM_DECLARATIONS =
-            DiagnosticFactory1.create(ERROR, DECLARATION_SIGNATURE_OR_DEFAULT);
+        DiagnosticFactory1.create(ERROR, DECLARATION_SIGNATURE_OR_DEFAULT);
 
     DiagnosticFactory0<KtDeclaration> OVERRIDE_CANNOT_BE_STATIC = DiagnosticFactory0.create(ERROR, DECLARATION_SIGNATURE);
     DiagnosticFactory0<KtDeclaration> JVM_STATIC_NOT_IN_OBJECT_OR_CLASS_COMPANION = DiagnosticFactory0.create(ERROR, DECLARATION_SIGNATURE);
@@ -120,10 +120,10 @@ public interface ErrorsJvm {
     DiagnosticFactory0<KtAnnotationEntry> EXPLICIT_METADATA_IS_DISALLOWED = DiagnosticFactory0.create(ERROR);
 
     DiagnosticFactory2<KtElement, KotlinType, KotlinType> NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS
-            = DiagnosticFactory2.create(WARNING);
+        = DiagnosticFactory2.create(WARNING);
 
     DiagnosticFactory1<KtElement, KotlinType> RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS
-            = DiagnosticFactory1.create(WARNING);
+        = DiagnosticFactory1.create(WARNING);
 
     DiagnosticFactory1<KtAnnotationEntry, String> ANNOTATION_TARGETS_NON_EXISTENT_ACCESSOR = DiagnosticFactory1.create(WARNING);
 

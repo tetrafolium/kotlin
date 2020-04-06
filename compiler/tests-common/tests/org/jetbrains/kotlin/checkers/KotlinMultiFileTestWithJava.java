@@ -68,7 +68,7 @@ public abstract class KotlinMultiFileTestWithJava<M, F> extends KtUsefulTestCase
                 getTestJdkKind(file),
                 getClasspath(file),
                 isJavaSourceRootNeeded() ? Collections.singletonList(javaFilesDir) : Collections.emptyList()
-        );
+                                              );
         configuration.add(JVMConfigurationKeys.SCRIPT_DEFINITIONS, StandardScriptDefinition.INSTANCE);
         if (isKotlinSourceRootNeeded()) {
             ContentRootsKt.addKotlinSourceRoot(configuration, kotlinSourceRoot.getPath());
@@ -104,8 +104,8 @@ public abstract class KotlinMultiFileTestWithJava<M, F> extends KtUsefulTestCase
         result.addAll(getExtraClasspath());
 
         boolean loadAndroidAnnotations = InTextDirectivesUtils.isDirectiveDefined(
-                FilesKt.readText(file, Charsets.UTF_8), "ANDROID_ANNOTATIONS"
-        );
+                                             FilesKt.readText(file, Charsets.UTF_8), "ANDROID_ANNOTATIONS"
+                                         );
 
         if (loadAndroidAnnotations) {
             result.add(ForTestCompileRuntime.androidAnnotationsForTests());
@@ -161,10 +161,10 @@ public abstract class KotlinMultiFileTestWithJava<M, F> extends KtUsefulTestCase
         return KotlinTestUtils.createTestFiles(file.getName(), expectedText, new KotlinTestUtils.TestFileFactory<M, F>() {
             @Override
             public F createFile(
-                    @Nullable M module,
-                    @NotNull String fileName,
-                    @NotNull String text,
-                    @NotNull Map<String, String> directives
+                @Nullable M module,
+                @NotNull String fileName,
+                @NotNull String text,
+                @NotNull Map<String, String> directives
             ) {
                 if (fileName.endsWith(".java")) {
                     writeSourceFile(fileName, text, javaFilesDir);

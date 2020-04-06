@@ -64,13 +64,13 @@ public class ArgumentTypeResolver {
     private ExpressionTypingServices expressionTypingServices;
 
     public ArgumentTypeResolver(
-            @NotNull TypeResolver typeResolver,
-            @NotNull DoubleColonExpressionResolver doubleColonExpressionResolver,
-            @NotNull KotlinBuiltIns builtIns,
-            @NotNull ReflectionTypes reflectionTypes,
-            @NotNull ConstantExpressionEvaluator constantExpressionEvaluator,
-            @NotNull FunctionPlaceholders functionPlaceholders,
-            @NotNull ModuleDescriptor moduleDescriptor
+        @NotNull TypeResolver typeResolver,
+        @NotNull DoubleColonExpressionResolver doubleColonExpressionResolver,
+        @NotNull KotlinBuiltIns builtIns,
+        @NotNull ReflectionTypes reflectionTypes,
+        @NotNull ConstantExpressionEvaluator constantExpressionEvaluator,
+        @NotNull FunctionPlaceholders functionPlaceholders,
+        @NotNull ModuleDescriptor moduleDescriptor
     ) {
         this.typeResolver = typeResolver;
         this.doubleColonExpressionResolver = doubleColonExpressionResolver;
@@ -88,8 +88,8 @@ public class ArgumentTypeResolver {
     }
 
     public static boolean isSubtypeOfForArgumentType(
-            @NotNull KotlinType actualType,
-            @NotNull KotlinType expectedType
+        @NotNull KotlinType actualType,
+        @NotNull KotlinType expectedType
     ) {
         if (FunctionPlaceholdersKt.isFunctionPlaceholder(actualType)) {
             KotlinType functionType = ConstraintSystemBuilderImplKt.createTypeForFunctionPlaceholder(actualType, expectedType);
@@ -99,7 +99,7 @@ public class ArgumentTypeResolver {
     }
 
     public void checkTypesWithNoCallee(
-            @NotNull CallResolutionContext<?> context
+        @NotNull CallResolutionContext<?> context
     ) {
         if (context.checkArguments != CheckArgumentTypesMode.CHECK_VALUE_ARGUMENTS) return;
 
@@ -140,26 +140,26 @@ public class ArgumentTypeResolver {
     }
 
     public static boolean isFunctionLiteralArgument(
-            @NotNull KtExpression expression, @NotNull ResolutionContext context
+        @NotNull KtExpression expression, @NotNull ResolutionContext context
     ) {
         return getFunctionLiteralArgumentIfAny(expression, context) != null;
     }
 
     public static boolean isCallableReferenceArgument(
-            @NotNull KtExpression expression, @NotNull ResolutionContext context
+        @NotNull KtExpression expression, @NotNull ResolutionContext context
     ) {
         return getCallableReferenceExpressionIfAny(expression, context) != null;
     }
 
     public static boolean isFunctionLiteralOrCallableReference(
-            @NotNull KtExpression expression, @NotNull ResolutionContext context
+        @NotNull KtExpression expression, @NotNull ResolutionContext context
     ) {
         return isFunctionLiteralArgument(expression, context) || isCallableReferenceArgument(expression, context);
     }
 
     @Nullable
     public static KtFunction getFunctionLiteralArgumentIfAny(
-            @NotNull KtExpression expression, @NotNull ResolutionContext context
+        @NotNull KtExpression expression, @NotNull ResolutionContext context
     ) {
         KtExpression deparenthesizedExpression = getLastElementDeparenthesized(expression, context.statementFilter);
         if (deparenthesizedExpression instanceof KtLambdaExpression) {
@@ -173,8 +173,8 @@ public class ArgumentTypeResolver {
 
     @Nullable
     public static KtCallableReferenceExpression getCallableReferenceExpressionIfAny(
-            @NotNull KtExpression expression,
-            @NotNull ResolutionContext context
+        @NotNull KtExpression expression,
+        @NotNull ResolutionContext context
     ) {
         KtExpression deparenthesizedExpression = getLastElementDeparenthesized(expression, context.statementFilter);
         if (deparenthesizedExpression instanceof KtCallableReferenceExpression) {
@@ -185,10 +185,10 @@ public class ArgumentTypeResolver {
 
     @NotNull
     public KotlinTypeInfo getArgumentTypeInfo(
-            @Nullable KtExpression expression,
-            @NotNull CallResolutionContext<?> context,
-            @NotNull ResolveArgumentsMode resolveArgumentsMode,
-            boolean suspendFunctionTypeExpected
+        @Nullable KtExpression expression,
+        @NotNull CallResolutionContext<?> context,
+        @NotNull ResolveArgumentsMode resolveArgumentsMode,
+        boolean suspendFunctionTypeExpected
     ) {
         if (expression == null) {
             return TypeInfoFactoryKt.noTypeInfo(context);
@@ -228,20 +228,20 @@ public class ArgumentTypeResolver {
     }
 
     private void convertSignedConstantToUnsigned(
-            @NotNull KtExpression expression,
-            @NotNull CallResolutionContext<?> context
+        @NotNull KtExpression expression,
+        @NotNull CallResolutionContext<?> context
     ) {
         CompileTimeConstant<?> constant = context.trace.get(BindingContext.COMPILE_TIME_VALUE, expression);
         if (!(constant instanceof IntegerValueTypeConstant) || !constantCanBeConvertedToUnsigned(constant)) return;
 
         IntegerValueTypeConstant unsignedConstant = IntegerValueTypeConstant.convertToUnsignedConstant(
-                (IntegerValueTypeConstant) constant, moduleDescriptor
-        );
+                    (IntegerValueTypeConstant) constant, moduleDescriptor
+                );
 
         context.trace.record(BindingContext.COMPILE_TIME_VALUE, expression, unsignedConstant);
 
         updateResultArgumentTypeIfNotDenotable(
-                context.trace, context.statementFilter, context.expectedType, unsignedConstant.getUnknownIntegerType(), expression
+            context.trace, context.statementFilter, context.expectedType, unsignedConstant.getUnknownIntegerType(), expression
         );
     }
 
@@ -251,10 +251,10 @@ public class ArgumentTypeResolver {
 
     @NotNull
     public KotlinTypeInfo getCallableReferenceTypeInfo(
-            @NotNull KtExpression expression,
-            @NotNull KtCallableReferenceExpression callableReferenceExpression,
-            @NotNull CallResolutionContext<?> context,
-            @NotNull ResolveArgumentsMode resolveArgumentsMode
+        @NotNull KtExpression expression,
+        @NotNull KtCallableReferenceExpression callableReferenceExpression,
+        @NotNull CallResolutionContext<?> context,
+        @NotNull ResolveArgumentsMode resolveArgumentsMode
     ) {
         if (resolveArgumentsMode == SHAPE_FUNCTION_ARGUMENTS) {
             KotlinType type = getShapeTypeOfCallableReference(callableReferenceExpression, context, true);
@@ -265,16 +265,16 @@ public class ArgumentTypeResolver {
 
     @Nullable
     public KotlinType getShapeTypeOfCallableReference(
-            @NotNull KtCallableReferenceExpression callableReferenceExpression,
-            @NotNull CallResolutionContext<?> context,
-            boolean expectedTypeIsUnknown
+        @NotNull KtCallableReferenceExpression callableReferenceExpression,
+        @NotNull CallResolutionContext<?> context,
+        boolean expectedTypeIsUnknown
     ) {
         Pair<DoubleColonLHS, OverloadResolutionResults<?>> pair =
-                doubleColonExpressionResolver.resolveCallableReference(
-                        callableReferenceExpression,
-                        ExpressionTypingContext.newContext(context),
-                        SHAPE_FUNCTION_ARGUMENTS
-                );
+            doubleColonExpressionResolver.resolveCallableReference(
+                callableReferenceExpression,
+                ExpressionTypingContext.newContext(context),
+                SHAPE_FUNCTION_ARGUMENTS
+            );
         DoubleColonLHS lhs = pair.getFirst();
         OverloadResolutionResults<?> overloadResolutionResults = pair.getSecond();
 
@@ -285,8 +285,8 @@ public class ArgumentTypeResolver {
             if (resolvedCall == null) return null;
 
             return DoubleColonExpressionResolver.Companion.createKCallableTypeForReference(
-                    resolvedCall.getResultingDescriptor(), lhs, reflectionTypes, context.scope.getOwnerDescriptor()
-            );
+                       resolvedCall.getResultingDescriptor(), lhs, reflectionTypes, context.scope.getOwnerDescriptor()
+                   );
         }
 
         if (expectedTypeIsUnknown) {
@@ -294,8 +294,8 @@ public class ArgumentTypeResolver {
         }
 
         return FunctionTypesKt.createFunctionType(
-                builtIns, Annotations.Companion.getEMPTY(), null, Collections.emptyList(), null, TypeUtils.DONT_CARE
-        );
+                   builtIns, Annotations.Companion.getEMPTY(), null, Collections.emptyList(), null, TypeUtils.DONT_CARE
+               );
     }
 
     private static boolean isSingleAndPossibleTransformToSuccess(@NotNull OverloadResolutionResults<?> overloadResolutionResults) {
@@ -306,11 +306,11 @@ public class ArgumentTypeResolver {
 
     @NotNull
     public KotlinTypeInfo getFunctionLiteralTypeInfo(
-            @NotNull KtExpression expression,
-            @NotNull KtFunction functionLiteral,
-            @NotNull CallResolutionContext<?> context,
-            @NotNull ResolveArgumentsMode resolveArgumentsMode,
-            boolean suspendFunctionTypeExpected
+        @NotNull KtExpression expression,
+        @NotNull KtFunction functionLiteral,
+        @NotNull CallResolutionContext<?> context,
+        @NotNull ResolveArgumentsMode resolveArgumentsMode,
+        boolean suspendFunctionTypeExpected
     ) {
         if (resolveArgumentsMode == SHAPE_FUNCTION_ARGUMENTS) {
             KotlinType type = getShapeTypeOfFunctionLiteral(functionLiteral, context.scope, context.trace, true, suspendFunctionTypeExpected);
@@ -321,18 +321,18 @@ public class ArgumentTypeResolver {
 
     @Nullable
     public KotlinType getShapeTypeOfFunctionLiteral(
-            @NotNull KtFunction function,
-            @NotNull LexicalScope scope,
-            @NotNull BindingTrace trace,
-            boolean expectedTypeIsUnknown,
-            boolean suspendFunctionTypeExpected
+        @NotNull KtFunction function,
+        @NotNull LexicalScope scope,
+        @NotNull BindingTrace trace,
+        boolean expectedTypeIsUnknown,
+        boolean suspendFunctionTypeExpected
     ) {
         boolean isFunctionLiteral = function instanceof KtFunctionLiteral;
         if (function.getValueParameterList() == null && isFunctionLiteral) {
             return expectedTypeIsUnknown
                    ? functionPlaceholders.createFunctionPlaceholderType(Collections.emptyList(), /* hasDeclaredArguments = */ false)
                    : FunctionTypesKt.createFunctionType(
-                           builtIns, Annotations.Companion.getEMPTY(), null, Collections.emptyList(), null, DONT_CARE
+                       builtIns, Annotations.Companion.getEMPTY(), null, Collections.emptyList(), null, DONT_CARE
                    );
         }
         List<KtParameter> valueParameters = function.getValueParameters();
@@ -355,16 +355,16 @@ public class ArgumentTypeResolver {
         return expectedTypeIsUnknown && isFunctionLiteral
                ? functionPlaceholders.createFunctionPlaceholderType(parameterTypes, /* hasDeclaredArguments = */ true)
                : FunctionTypesKt.createFunctionType(
-                       builtIns, Annotations.Companion.getEMPTY(), receiverType, parameterTypes, parameterNames, returnType, suspendFunctionTypeExpected
+                   builtIns, Annotations.Companion.getEMPTY(), receiverType, parameterTypes, parameterNames, returnType, suspendFunctionTypeExpected
                );
     }
 
     @Nullable
     public KotlinType resolveTypeRefWithDefault(
-            @Nullable KtTypeReference returnTypeRef,
-            @NotNull LexicalScope scope,
-            @NotNull BindingTrace trace,
-            @Nullable KotlinType defaultValue
+        @Nullable KtTypeReference returnTypeRef,
+        @NotNull LexicalScope scope,
+        @NotNull BindingTrace trace,
+        @Nullable KotlinType defaultValue
     ) {
         if (returnTypeRef != null) {
             return typeResolver.resolveType(scope, returnTypeRef, trace, true);
@@ -376,7 +376,7 @@ public class ArgumentTypeResolver {
      * Visits function call arguments and determines data flow information changes
      */
     public void analyzeArgumentsAndRecordTypes(
-            @NotNull CallResolutionContext<?> context, @NotNull ResolveArgumentsMode resolveArgumentsMode
+        @NotNull CallResolutionContext<?> context, @NotNull ResolveArgumentsMode resolveArgumentsMode
     ) {
         MutableDataFlowInfoForArguments infoForArguments = context.dataFlowInfoForArguments;
         Call call = context.call;
@@ -398,18 +398,18 @@ public class ArgumentTypeResolver {
 
     @Nullable
     public KotlinType updateResultArgumentTypeIfNotDenotable(
-            @NotNull ResolutionContext context,
-            @NotNull KtExpression expression
+        @NotNull ResolutionContext context,
+        @NotNull KtExpression expression
     ) {
         return updateResultArgumentTypeIfNotDenotable(context.trace, context.statementFilter, context.expectedType, expression);
     }
 
     @Nullable
     public KotlinType updateResultArgumentTypeIfNotDenotable(
-            @NotNull BindingTrace trace,
-            @NotNull StatementFilter statementFilter,
-            @NotNull KotlinType expectedType,
-            @NotNull KtExpression expression
+        @NotNull BindingTrace trace,
+        @NotNull StatementFilter statementFilter,
+        @NotNull KotlinType expectedType,
+        @NotNull KtExpression expression
     ) {
         KotlinType type = trace.getType(expression);
         return type != null ? updateResultArgumentTypeIfNotDenotable(trace, statementFilter, expectedType, type, expression) : null;
@@ -417,11 +417,11 @@ public class ArgumentTypeResolver {
 
     @Nullable
     public KotlinType updateResultArgumentTypeIfNotDenotable(
-            @NotNull BindingTrace trace,
-            @NotNull StatementFilter statementFilter,
-            @NotNull KotlinType expectedType,
-            @NotNull KotlinType targetType,
-            @NotNull KtExpression expression
+        @NotNull BindingTrace trace,
+        @NotNull StatementFilter statementFilter,
+        @NotNull KotlinType expectedType,
+        @NotNull KotlinType targetType,
+        @NotNull KtExpression expression
     ) {
         TypeConstructor typeConstructor = targetType.getConstructor();
         if (!typeConstructor.isDenotable()) {

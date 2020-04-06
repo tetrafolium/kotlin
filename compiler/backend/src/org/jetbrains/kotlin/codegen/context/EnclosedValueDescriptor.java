@@ -33,11 +33,11 @@ public final class EnclosedValueDescriptor {
     private final KotlinType kotlinType;
 
     public EnclosedValueDescriptor(
-            @NotNull String fieldName,
-            @Nullable DeclarationDescriptor descriptor,
-            @NotNull StackValue.StackValueWithSimpleReceiver innerValue,
-            @NotNull Type type,
-            @Nullable KotlinType kotlinType
+        @NotNull String fieldName,
+        @Nullable DeclarationDescriptor descriptor,
+        @NotNull StackValue.StackValueWithSimpleReceiver innerValue,
+        @NotNull Type type,
+        @Nullable KotlinType kotlinType
     ) {
         this.fieldName = fieldName;
         this.descriptor = descriptor;
@@ -48,12 +48,12 @@ public final class EnclosedValueDescriptor {
     }
 
     public EnclosedValueDescriptor(
-            @NotNull String name,
-            @Nullable DeclarationDescriptor descriptor,
-            @NotNull StackValue.StackValueWithSimpleReceiver innerValue,
-            @NotNull StackValue.Field instanceValue,
-            @NotNull Type type,
-            @Nullable KotlinType kotlinType
+        @NotNull String name,
+        @Nullable DeclarationDescriptor descriptor,
+        @NotNull StackValue.StackValueWithSimpleReceiver innerValue,
+        @NotNull StackValue.Field instanceValue,
+        @NotNull Type type,
+        @Nullable KotlinType kotlinType
     ) {
         this.fieldName = name;
         this.descriptor = descriptor;

@@ -34,7 +34,7 @@ public class OverloadResolutionResultsImpl<D extends CallableDescriptor> impleme
 
     public static <D extends CallableDescriptor> OverloadResolutionResultsImpl<D> nameNotFound() {
         OverloadResolutionResultsImpl<D> results = new OverloadResolutionResultsImpl<>(
-                Code.NAME_NOT_FOUND, Collections.<MutableResolvedCall<D>>emptyList());
+            Code.NAME_NOT_FOUND, Collections.<MutableResolvedCall<D>>emptyList());
         results.setAllCandidates(Collections.emptyList());
         return results;
     }
@@ -146,8 +146,8 @@ public class OverloadResolutionResultsImpl<D extends CallableDescriptor> impleme
         if (getResultCode() == Code.SUCCESS) return this;
 
         assert isSingleResult() && getResultCode() == Code.INCOMPLETE_TYPE_INFERENCE :
-                "Only incomplete type inference status with one candidate can be changed to success: " +
-                getResultCode() + "\n" + getResultingCalls();
+        "Only incomplete type inference status with one candidate can be changed to success: " +
+        getResultCode() + "\n" + getResultingCalls();
         OverloadResolutionResultsImpl<D> newResults = new OverloadResolutionResultsImpl<>(Code.SUCCESS, getResultingCalls());
         newResults.setAllCandidates(getAllCandidates());
         return newResults;

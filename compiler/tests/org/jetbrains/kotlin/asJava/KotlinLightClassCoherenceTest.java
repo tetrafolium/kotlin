@@ -37,10 +37,10 @@ public class KotlinLightClassCoherenceTest extends KotlinAsJavaTestBase {
     @Override
     protected List<File> getKotlinSourceRoots() {
         return Lists.newArrayList(
-                new File("compiler/testData/asJava/lightClassStructure/Declared.kt"),
-                new File("compiler/testData/asJava/lightClassStructure/Package.kt"),
-                new File("compiler/testData/asJava/lightClassStructure/ClassObject.kt")
-        );
+                   new File("compiler/testData/asJava/lightClassStructure/Declared.kt"),
+                   new File("compiler/testData/asJava/lightClassStructure/Package.kt"),
+                   new File("compiler/testData/asJava/lightClassStructure/ClassObject.kt")
+               );
     }
 
     @NotNull

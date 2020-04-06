@@ -71,13 +71,13 @@ public class StubClassBuilder extends AbstractClassBuilder {
 
     @Override
     public void defineClass(
-            PsiElement origin,
-            int version,
-            int access,
-            @NotNull String name,
-            @Nullable String signature,
-            @NotNull String superName,
-            @NotNull String[] interfaces
+        PsiElement origin,
+        int version,
+        int access,
+        @NotNull String name,
+        @Nullable String signature,
+        @NotNull String superName,
+        @NotNull String[] interfaces
     ) {
         assert v == null : "defineClass() called twice?";
 
@@ -150,12 +150,12 @@ public class StubClassBuilder extends AbstractClassBuilder {
     @NotNull
     @Override
     public MethodVisitor newMethod(
-            @NotNull JvmDeclarationOrigin origin,
-            int access,
-            @NotNull String name,
-            @NotNull String desc,
-            @Nullable String signature,
-            @Nullable String[] exceptions
+        @NotNull JvmDeclarationOrigin origin,
+        int access,
+        @NotNull String name,
+        @NotNull String desc,
+        @Nullable String signature,
+        @Nullable String[] exceptions
     ) {
         MethodVisitor internalVisitor = super.newMethod(origin, access, name, desc, signature, exceptions);
 
@@ -170,12 +170,12 @@ public class StubClassBuilder extends AbstractClassBuilder {
     @NotNull
     @Override
     public FieldVisitor newField(
-            @NotNull JvmDeclarationOrigin origin,
-            int access,
-            @NotNull String name,
-            @NotNull String desc,
-            @Nullable String signature,
-            @Nullable Object value
+        @NotNull JvmDeclarationOrigin origin,
+        int access,
+        @NotNull String name,
+        @NotNull String desc,
+        @Nullable String signature,
+        @Nullable Object value
     ) {
         FieldVisitor internalVisitor = super.newField(origin, access, name, desc, signature, value);
 

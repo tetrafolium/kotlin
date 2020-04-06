@@ -42,9 +42,9 @@ public class CallMaker {
         private final boolean isExternal;
 
         private ExpressionValueArgument(
-                @Nullable KtExpression expression,
-                @NotNull KtElement reportErrorsOn,
-                boolean isExternal
+            @Nullable KtExpression expression,
+            @NotNull KtElement reportErrorsOn,
+            boolean isExternal
         ) {
             this.expression = expression;
             this.reportErrorsOn = expression == null ? reportErrorsOn : expression;
@@ -111,23 +111,23 @@ public class CallMaker {
         private final boolean isSemanticallyEquivalentToSafeCall;
 
         protected CallImpl(
-                @NotNull KtElement callElement,
-                @NotNull Receiver explicitReceiver,
-                @Nullable ASTNode callOperationNode,
-                @Nullable KtExpression calleeExpression,
-                @NotNull List<? extends ValueArgument> valueArguments
+            @NotNull KtElement callElement,
+            @NotNull Receiver explicitReceiver,
+            @Nullable ASTNode callOperationNode,
+            @Nullable KtExpression calleeExpression,
+            @NotNull List<? extends ValueArgument> valueArguments
         ) {
             this(callElement, explicitReceiver, callOperationNode, calleeExpression, valueArguments, CallType.DEFAULT, false);
         }
 
         protected CallImpl(
-                @NotNull KtElement callElement,
-                @Nullable Receiver explicitReceiver,
-                @Nullable ASTNode callOperationNode,
-                @Nullable KtExpression calleeExpression,
-                @NotNull List<? extends ValueArgument> valueArguments,
-                @NotNull CallType callType,
-                boolean isSemanticallyEquivalentToSafeCall
+            @NotNull KtElement callElement,
+            @Nullable Receiver explicitReceiver,
+            @Nullable ASTNode callOperationNode,
+            @Nullable KtExpression calleeExpression,
+            @NotNull List<? extends ValueArgument> valueArguments,
+            @NotNull CallType callType,
+            boolean isSemanticallyEquivalentToSafeCall
         ) {
             this.callElement = callElement;
             this.explicitReceiver = explicitReceiver;
@@ -212,8 +212,8 @@ public class CallMaker {
 
     @NotNull
     public static Call makeCallWithExpressions(@NotNull KtElement callElement, @Nullable Receiver explicitReceiver,
-                                               @Nullable ASTNode callOperationNode, @NotNull KtExpression calleeExpression,
-                                               @NotNull List<KtExpression> argumentExpressions) {
+            @Nullable ASTNode callOperationNode, @NotNull KtExpression calleeExpression,
+            @NotNull List<KtExpression> argumentExpressions) {
         return makeCallWithExpressions(callElement, explicitReceiver, callOperationNode, calleeExpression, argumentExpressions, CallType.DEFAULT,
                                        false);
     }
@@ -229,10 +229,10 @@ public class CallMaker {
 
     @NotNull
     public static Call makeCallWithExpressions(
-            @NotNull KtElement callElement, @Nullable Receiver explicitReceiver,
-            @Nullable ASTNode callOperationNode, @NotNull KtExpression calleeExpression,
-            @NotNull List<KtExpression> argumentExpressions, @NotNull CallType callType,
-            boolean isSemanticallyEquivalentToSafeCall
+        @NotNull KtElement callElement, @Nullable Receiver explicitReceiver,
+        @Nullable ASTNode callOperationNode, @NotNull KtExpression calleeExpression,
+        @NotNull List<KtExpression> argumentExpressions, @NotNull CallType callType,
+        boolean isSemanticallyEquivalentToSafeCall
     ) {
         List<ValueArgument> arguments;
         if (argumentExpressions.isEmpty()) {
@@ -245,8 +245,8 @@ public class CallMaker {
             }
         }
         return makeCall(
-                callElement, explicitReceiver, callOperationNode, calleeExpression, arguments, callType, isSemanticallyEquivalentToSafeCall
-        );
+                   callElement, explicitReceiver, callOperationNode, calleeExpression, arguments, callType, isSemanticallyEquivalentToSafeCall
+               );
     }
 
     @NotNull
@@ -256,21 +256,21 @@ public class CallMaker {
 
     @NotNull
     public static Call makeCall(
-            KtElement callElement, @Nullable Receiver explicitReceiver, @Nullable ASTNode callOperationNode,
-            KtExpression calleeExpression, List<? extends ValueArgument> arguments, CallType callType
+        KtElement callElement, @Nullable Receiver explicitReceiver, @Nullable ASTNode callOperationNode,
+        KtExpression calleeExpression, List<? extends ValueArgument> arguments, CallType callType
     ) {
         return makeCall(callElement, explicitReceiver, callOperationNode, calleeExpression, arguments, callType, false);
     }
 
     @NotNull
     public static Call makeCall(
-            KtElement callElement,
-            @Nullable Receiver explicitReceiver,
-            @Nullable ASTNode callOperationNode,
-            KtExpression calleeExpression,
-            List<? extends ValueArgument> arguments,
-            CallType callType,
-            boolean isSemanticallyEquivalentToSafeCall
+        KtElement callElement,
+        @Nullable Receiver explicitReceiver,
+        @Nullable ASTNode callOperationNode,
+        KtExpression calleeExpression,
+        List<? extends ValueArgument> arguments,
+        CallType callType,
+        boolean isSemanticallyEquivalentToSafeCall
     ) {
         return new CallImpl(callElement, explicitReceiver, callOperationNode, calleeExpression, arguments, callType, isSemanticallyEquivalentToSafeCall);
     }
@@ -287,7 +287,7 @@ public class CallMaker {
 
     @NotNull
     public static Call makeArraySetCall(@NotNull ReceiverValue arrayAsReceiver, @NotNull KtArrayAccessExpression arrayAccessExpression,
-            @NotNull KtExpression rightHandSide, @NotNull CallType callType) {
+                                        @NotNull KtExpression rightHandSide, @NotNull CallType callType) {
         List<KtExpression> arguments = Lists.newArrayList(arrayAccessExpression.getIndexExpressions());
         arguments.add(rightHandSide);
         return makeCallWithExpressions(arrayAccessExpression, arrayAsReceiver, null, arrayAccessExpression, arguments, callType);
@@ -295,18 +295,18 @@ public class CallMaker {
 
     @NotNull
     public static Call makeArrayGetCall(@NotNull ReceiverValue arrayAsReceiver, @NotNull KtArrayAccessExpression arrayAccessExpression,
-            @NotNull CallType callType) {
+                                        @NotNull CallType callType) {
         return makeCallWithExpressions(arrayAccessExpression, arrayAsReceiver, null, arrayAccessExpression, arrayAccessExpression.getIndexExpressions(), callType);
     }
 
     public static Call makeCallForCollectionLiteral(@NotNull KtCollectionLiteralExpression collectionLiteralExpression) {
         return makeCallWithExpressions(
-                collectionLiteralExpression,
-                null,
-                null,
-                collectionLiteralExpression,
-                collectionLiteralExpression.getInnerExpressions(),
-                CallType.DEFAULT);
+                   collectionLiteralExpression,
+                   null,
+                   null,
+                   collectionLiteralExpression,
+                   collectionLiteralExpression.getInnerExpressions(),
+                   CallType.DEFAULT);
     }
 
     @NotNull

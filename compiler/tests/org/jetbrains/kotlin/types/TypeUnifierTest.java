@@ -67,8 +67,8 @@ public class TypeUnifierTest extends KotlinTestWithEnvironment {
         module = DslKt.getService(container, ModuleDescriptor.class);
 
         builtinsImportingScope = ScopeUtilsKt.chainImportingScopes(
-                CollectionsKt.map(KotlinBuiltIns.BUILT_INS_PACKAGE_FQ_NAMES,
-                                  fqName -> ScopeUtilsKt.memberScopeAsImportingScope(module.getPackage(fqName).getMemberScope())), null);
+                                     CollectionsKt.map(KotlinBuiltIns.BUILT_INS_PACKAGE_FQ_NAMES,
+                                             fqName -> ScopeUtilsKt.memberScopeAsImportingScope(module.getPackage(fqName).getMemberScope())), null);
         typeResolver = DslKt.getService(container, TypeResolver.class);
         x = createTypeVariable("X");
         y = createTypeVariable("Y");
@@ -77,8 +77,8 @@ public class TypeUnifierTest extends KotlinTestWithEnvironment {
 
     private TypeParameterDescriptor createTypeVariable(String name) {
         return TypeParameterDescriptorImpl.createWithDefaultBound(
-                module, Annotations.Companion.getEMPTY(), false, Variance.INVARIANT, Name.identifier(name), 0
-        );
+                   module, Annotations.Companion.getEMPTY(), false, Variance.INVARIANT, Name.identifier(name), 0
+               );
     }
 
     public void testNoVariables() throws Exception {
@@ -194,17 +194,17 @@ public class TypeUnifierTest extends KotlinTestWithEnvironment {
 
     private TypeProjection makeType(String typeStr) {
         LexicalScope withX = new LexicalScopeImpl(
-                builtinsImportingScope, module,
-                false, null, LexicalScopeKind.SYNTHETIC, LocalRedeclarationChecker.DO_NOTHING.INSTANCE,
-                handler -> {
-                    handler.addClassifierDescriptor(x);
-                    handler.addClassifierDescriptor(y);
-                    return Unit.INSTANCE;
-                }
+            builtinsImportingScope, module,
+            false, null, LexicalScopeKind.SYNTHETIC, LocalRedeclarationChecker.DO_NOTHING.INSTANCE,
+        handler -> {
+            handler.addClassifierDescriptor(x);
+            handler.addClassifierDescriptor(y);
+            return Unit.INSTANCE;
+        }
         );
 
         KtTypeProjection projection = KtPsiFactoryKt
-                .KtPsiFactory(getProject()).createTypeArguments("<" + typeStr + ">").getArguments().get(0);
+                                      .KtPsiFactory(getProject()).createTypeArguments("<" + typeStr + ">").getArguments().get(0);
 
         KtTypeReference typeReference = projection.getTypeReference();
         assert typeReference != null;
@@ -216,17 +216,17 @@ public class TypeUnifierTest extends KotlinTestWithEnvironment {
     private static Variance getProjectionKind(String typeStr, KtTypeProjection projection) {
         Variance variance;
         switch (projection.getProjectionKind()) {
-            case IN:
-                variance = Variance.IN_VARIANCE;
-                break;
-            case OUT:
-                variance = Variance.OUT_VARIANCE;
-                break;
-            case NONE:
-                variance = Variance.INVARIANT;
-                break;
-            default:
-                throw new UnsupportedOperationException("Star projections are not supported: " + typeStr);
+        case IN:
+            variance = Variance.IN_VARIANCE;
+            break;
+        case OUT:
+            variance = Variance.OUT_VARIANCE;
+            break;
+        case NONE:
+            variance = Variance.INVARIANT;
+            break;
+        default:
+            throw new UnsupportedOperationException("Star projections are not supported: " + typeStr);
         }
         return variance;
     }

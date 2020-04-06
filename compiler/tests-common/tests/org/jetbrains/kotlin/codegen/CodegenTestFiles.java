@@ -44,9 +44,9 @@ public class CodegenTestFiles {
     private final List<Object> scriptParameterValues;
 
     private CodegenTestFiles(
-            @NotNull List<KtFile> psiFiles,
-            @NotNull List<Pair<String, String>> expectedValues,
-            @NotNull List<Object> scriptParameterValues
+        @NotNull List<KtFile> psiFiles,
+        @NotNull List<Pair<String, String>> expectedValues,
+        @NotNull List<Object> scriptParameterValues
     ) {
         this.psiFiles = psiFiles;
         this.expectedValues = expectedValues;

@@ -29,8 +29,8 @@ public class JavaElementFinderTest extends KotlinAsJavaTestBase {
     @Override
     protected List<File> getKotlinSourceRoots() {
         return Collections.singletonList(
-                new File("compiler/testData/asJava/findClasses/" + getTestName(false) + ".kt")
-        );
+                   new File("compiler/testData/asJava/findClasses/" + getTestName(false) + ".kt")
+               );
     }
 
     @Override

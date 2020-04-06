@@ -54,7 +54,7 @@ public class DiagnosticsElementsCache {
         for (Diagnostic diagnostic : diagnostics) {
             if (diagnostic == null) {
                 throw new IllegalStateException(
-                        "There shouldn't be null diagnostics in the collection: " + CollectionsKt.toList(diagnostics));
+                    "There shouldn't be null diagnostics in the collection: " + CollectionsKt.toList(diagnostics));
             }
             if (filter.invoke(diagnostic)) {
                 elementToDiagnostic.putValue(diagnostic.getPsiElement(), diagnostic);

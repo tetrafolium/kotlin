@@ -42,8 +42,8 @@ public abstract class KotlinLightClassStructureTest extends KotlinAsJavaTestBase
         @Override
         protected List<File> getKotlinSourceRoots() {
             return Collections.singletonList(
-                    new File("compiler/testData/asJava/lightClassStructure/Declared.kt")
-            );
+                       new File("compiler/testData/asJava/lightClassStructure/Declared.kt")
+                   );
         }
 
         public void testNoModifiers() {
@@ -102,8 +102,8 @@ public abstract class KotlinLightClassStructureTest extends KotlinAsJavaTestBase
         @Override
         protected List<File> getKotlinSourceRoots() {
             return Collections.singletonList(
-                    new File("compiler/testData/asJava/lightClassStructure/DeclaredWithGenerics.kt")
-            );
+                       new File("compiler/testData/asJava/lightClassStructure/DeclaredWithGenerics.kt")
+                   );
         }
 
         public void testGeneric1() throws Exception {
@@ -129,8 +129,8 @@ public abstract class KotlinLightClassStructureTest extends KotlinAsJavaTestBase
         @Override
         protected List<File> getKotlinSourceRoots() {
             return Collections.singletonList(
-                    new File("compiler/testData/asJava/lightClassStructure/PlatformStaticMethodsGenerics.kt")
-            );
+                       new File("compiler/testData/asJava/lightClassStructure/PlatformStaticMethodsGenerics.kt")
+                   );
         }
 
         public void testInClassObjectSynthetic() throws Exception {
@@ -156,8 +156,8 @@ public abstract class KotlinLightClassStructureTest extends KotlinAsJavaTestBase
         @Override
         protected List<File> getKotlinSourceRoots() {
             return Collections.singletonList(
-                    new File("compiler/testData/asJava/lightClassStructure/Package.kt")
-            );
+                       new File("compiler/testData/asJava/lightClassStructure/Package.kt")
+                   );
         }
 
         public void testPackage() throws Exception {
@@ -241,7 +241,7 @@ public abstract class KotlinLightClassStructureTest extends KotlinAsJavaTestBase
     }
 
     enum ClassProperty {
-        PUBLIC(PsiModifier.PUBLIC), 
+        PUBLIC(PsiModifier.PUBLIC),
         PROTECTED(PsiModifier.PROTECTED),
         PACKAGE_LOCAL(PsiModifier.PACKAGE_LOCAL),
         PRIVATE(PsiModifier.PRIVATE),

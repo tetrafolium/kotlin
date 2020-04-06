@@ -37,11 +37,11 @@ public class CompileEnvironmentTest extends TestCase {
             File out = new File(tempDir, "out");
             File stdlib = ForTestCompileRuntime.runtimeJarForTests();
             ExitCode exitCode = new K2JVMCompiler().exec(
-                    System.out,
-                    KotlinTestUtils.getTestDataPathBase() + "/compiler/smoke/Smoke.kt",
-                    "-d", out.getAbsolutePath(),
-                    "-no-stdlib",
-                    "-classpath", stdlib.getAbsolutePath()
+                System.out,
+                KotlinTestUtils.getTestDataPathBase() + "/compiler/smoke/Smoke.kt",
+                "-d", out.getAbsolutePath(),
+                "-no-stdlib",
+                "-classpath", stdlib.getAbsolutePath()
             );
             Assert.assertEquals(ExitCode.OK, exitCode);
             File[] files = out.listFiles();

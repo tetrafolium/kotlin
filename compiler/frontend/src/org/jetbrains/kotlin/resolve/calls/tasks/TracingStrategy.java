@@ -54,10 +54,10 @@ public interface TracingStrategy {
 
         @Override
         public void wrongReceiverType(
-                @NotNull BindingTrace trace,
-                @NotNull ReceiverParameterDescriptor receiverParameter,
-                @NotNull ReceiverValue receiverArgument,
-                @NotNull ResolutionContext<?> c
+            @NotNull BindingTrace trace,
+            @NotNull ReceiverParameterDescriptor receiverParameter,
+            @NotNull ReceiverValue receiverArgument,
+            @NotNull ResolutionContext<?> c
         ) {}
 
         @Override
@@ -77,8 +77,8 @@ public interface TracingStrategy {
 
         @Override
         public <D extends CallableDescriptor> void cannotCompleteResolve(
-                @NotNull BindingTrace trace,
-                @NotNull Collection<? extends ResolvedCall<D>> descriptors
+            @NotNull BindingTrace trace,
+            @NotNull Collection<? extends ResolvedCall<D>> descriptors
         ) {}
 
         @Override
@@ -89,9 +89,9 @@ public interface TracingStrategy {
 
         @Override
         public void nestedClassAccessViaInstanceReference(
-                @NotNull BindingTrace trace,
-                @NotNull ClassDescriptor classDescriptor,
-                @NotNull ExplicitReceiverKind explicitReceiverKind
+            @NotNull BindingTrace trace,
+            @NotNull ClassDescriptor classDescriptor,
+            @NotNull ExplicitReceiverKind explicitReceiverKind
         ) {}
 
         @Override
@@ -119,10 +119,10 @@ public interface TracingStrategy {
     void missingReceiver(@NotNull BindingTrace trace, @NotNull ReceiverParameterDescriptor expectedReceiver);
 
     void wrongReceiverType(
-            @NotNull BindingTrace trace,
-            @NotNull ReceiverParameterDescriptor receiverParameter,
-            @NotNull ReceiverValue receiverArgument,
-            @NotNull ResolutionContext<?> c
+        @NotNull BindingTrace trace,
+        @NotNull ReceiverParameterDescriptor receiverParameter,
+        @NotNull ReceiverValue receiverArgument,
+        @NotNull ResolutionContext<?> c
     );
 
     void noReceiverAllowed(@NotNull BindingTrace trace);
@@ -130,9 +130,9 @@ public interface TracingStrategy {
     void noValueForParameter(@NotNull BindingTrace trace, @NotNull ValueParameterDescriptor valueParameter);
 
     void wrongNumberOfTypeArguments(
-            @NotNull BindingTrace trace,
-            int expectedTypeArgumentCount,
-            @NotNull CallableDescriptor descriptor
+        @NotNull BindingTrace trace,
+        int expectedTypeArgumentCount,
+        @NotNull CallableDescriptor descriptor
     );
 
     <D extends CallableDescriptor> void ambiguity(@NotNull BindingTrace trace, @NotNull Collection<? extends ResolvedCall<D>> descriptors);
@@ -140,8 +140,8 @@ public interface TracingStrategy {
     <D extends CallableDescriptor> void noneApplicable(@NotNull BindingTrace trace, @NotNull Collection<? extends ResolvedCall<D>> descriptors);
 
     <D extends CallableDescriptor> void cannotCompleteResolve(
-            @NotNull BindingTrace trace,
-            @NotNull Collection<? extends ResolvedCall<D>> descriptors
+        @NotNull BindingTrace trace,
+        @NotNull Collection<? extends ResolvedCall<D>> descriptors
     );
 
     void instantiationOfAbstractClass(@NotNull BindingTrace trace);
@@ -149,9 +149,9 @@ public interface TracingStrategy {
     void abstractSuperCall(@NotNull BindingTrace trace);
 
     void nestedClassAccessViaInstanceReference(
-            @NotNull BindingTrace trace,
-            @NotNull ClassDescriptor classDescriptor,
-            @NotNull ExplicitReceiverKind explicitReceiverKind
+        @NotNull BindingTrace trace,
+        @NotNull ClassDescriptor classDescriptor,
+        @NotNull ExplicitReceiverKind explicitReceiverKind
     );
 
     void unsafeCall(@NotNull BindingTrace trace, @NotNull KotlinType type, boolean isCallForImplicitInvoke);

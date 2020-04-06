@@ -31,15 +31,15 @@ import org.jetbrains.kotlin.psi.KtTypeParameterListOwner;
 import java.util.List;
 
 public class KtLightTypeParameter
-        extends AbstractLightClass implements PsiTypeParameter, KtLightDeclaration<KtTypeParameter, PsiTypeParameter> {
+    extends AbstractLightClass implements PsiTypeParameter, KtLightDeclaration<KtTypeParameter, PsiTypeParameter> {
     private final PsiTypeParameterListOwner owner;
     private final int index;
     private final String name;
 
     public KtLightTypeParameter(
-            @NotNull PsiTypeParameterListOwner owner,
-            int index,
-            @NotNull String name) {
+        @NotNull PsiTypeParameterListOwner owner,
+        int index,
+        @NotNull String name) {
         super(owner.getManager(), KotlinLanguage.INSTANCE);
         this.owner = owner;
         this.index = index;

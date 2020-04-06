@@ -85,27 +85,27 @@ public class DefaultModalityModifiersTest extends KotlinTestWithEnvironment {
         @NotNull
         private LexicalScope createScope(@NotNull MemberScope libraryScope) {
             KtFile file =
-                    KtPsiFactoryKt.KtPsiFactory(getProject()).createFile("abstract class C { abstract fun foo(); abstract val a: Int }");
+                KtPsiFactoryKt.KtPsiFactory(getProject()).createFile("abstract class C { abstract fun foo(); abstract val a: Int }");
             KtDeclaration aClass = file.getDeclarations().get(0);
             assert aClass instanceof KtClass;
             AnalysisResult bindingContext = JvmResolveUtil.analyzeAndCheckForErrors(file, getEnvironment());
             DeclarationDescriptor classDescriptor =
-                    bindingContext.getBindingContext().get(BindingContext.DECLARATION_TO_DESCRIPTOR, aClass);
+                bindingContext.getBindingContext().get(BindingContext.DECLARATION_TO_DESCRIPTOR, aClass);
             return new LexicalScopeImpl(
-                    ScopeUtilsKt.memberScopeAsImportingScope(libraryScope), root, false, null,
-                    LexicalScopeKind.SYNTHETIC, LocalRedeclarationChecker.DO_NOTHING.INSTANCE,
-                    handler -> {
-                        handler.addClassifierDescriptor((ClassifierDescriptor) classDescriptor);
-                        return Unit.INSTANCE;
-                    }
-            );
+                       ScopeUtilsKt.memberScopeAsImportingScope(libraryScope), root, false, null,
+                       LexicalScopeKind.SYNTHETIC, LocalRedeclarationChecker.DO_NOTHING.INSTANCE,
+            handler -> {
+                handler.addClassifierDescriptor((ClassifierDescriptor) classDescriptor);
+                return Unit.INSTANCE;
+            }
+                   );
         }
 
         private ClassDescriptorWithResolutionScopes createClassDescriptor(ClassKind kind, KtClass aClass) {
             ResolveSession resolveSession = createLazyResolveSession(
-                    ContextKt.ModuleContext(root, getProject()),
-                    Collections.singleton(aClass.getContainingKtFile())
-            );
+                                                ContextKt.ModuleContext(root, getProject()),
+                                                Collections.singleton(aClass.getContainingKtFile())
+                                            );
 
             return (ClassDescriptorWithResolutionScopes) resolveSession.getClassDescriptor(aClass, NoLookupLocation.FROM_TEST);
         }
@@ -125,8 +125,8 @@ public class DefaultModalityModifiersTest extends KotlinTestWithEnvironment {
             List<KtDeclaration> declarations = aClass.getDeclarations();
             KtNamedFunction function = (KtNamedFunction) declarations.get(0);
             SimpleFunctionDescriptor functionDescriptor =
-                    functionDescriptorResolver.resolveFunctionDescriptor(classDescriptor, scope, function,
-                                                                         KotlinTestUtils.DUMMY_TRACE, DataFlowInfoFactory.EMPTY);
+                functionDescriptorResolver.resolveFunctionDescriptor(classDescriptor, scope, function,
+                        KotlinTestUtils.DUMMY_TRACE, DataFlowInfoFactory.EMPTY);
 
             assertEquals(expectedFunctionModality, functionDescriptor.getModality());
         }
@@ -153,8 +153,8 @@ public class DefaultModalityModifiersTest extends KotlinTestWithEnvironment {
             PropertyDescriptor propertyDescriptor = descriptorResolver.resolvePropertyDescriptor(
                     classDescriptor, scope, scope, property, KotlinTestUtils.DUMMY_TRACE, DataFlowInfoFactory.EMPTY);
             PropertyAccessorDescriptor propertyAccessor = isGetter
-                                                          ? propertyDescriptor.getGetter()
-                                                          : propertyDescriptor.getSetter();
+                    ? propertyDescriptor.getGetter()
+                    : propertyDescriptor.getSetter();
             assert propertyAccessor != null;
             assertEquals(expectedPropertyAccessorModality, propertyAccessor.getModality());
         }

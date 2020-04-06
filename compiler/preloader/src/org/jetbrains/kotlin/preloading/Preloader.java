@@ -64,17 +64,17 @@ public class Preloader {
         Method mainMethod = mainClass.getMethod("main", String[].class);
 
         Runtime.getRuntime().addShutdownHook(
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (options.measure) {
-                            System.out.println();
-                            System.out.println("=== Preloader's measurements: ");
-                            System.out.format("Total time: %.3fs\n", (System.nanoTime() - startTime) / 1e9);
-                        }
-                        handler.done();
-                    }
-                })
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (options.measure) {
+                    System.out.println();
+                    System.out.println("=== Preloader's measurements: ");
+                    System.out.format("Total time: %.3fs\n", (System.nanoTime() - startTime) / 1e9);
+                }
+                handler.done();
+            }
+        })
         );
 
         //noinspection SSBasedInspection
@@ -250,12 +250,12 @@ public class Preloader {
         public final List<String> arguments;
 
         private Options(
-                List<File> classpath,
-                boolean measure,
-                List<File> instrumenters,
-                int estimate,
-                String mainClass,
-                List<String> arguments
+            List<File> classpath,
+            boolean measure,
+            List<File> instrumenters,
+            int estimate,
+            String mainClass,
+            List<String> arguments
         ) {
             this.classpath = classpath;
             this.measure = measure;

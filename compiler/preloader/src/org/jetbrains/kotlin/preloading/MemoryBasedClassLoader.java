@@ -37,11 +37,11 @@ public class MemoryBasedClassLoader extends ClassLoader {
     private final ClassLoader fallbackResourceLoader;
 
     public MemoryBasedClassLoader(
-            ClassCondition classesToLoadByParent,
-            ClassLoader parent,
-            Map<String, Object> preloadedResources,
-            ClassHandler handler,
-            ClassLoader fallbackResourceLoader
+        ClassCondition classesToLoadByParent,
+        ClassLoader parent,
+        Map<String, Object> preloadedResources,
+        ClassHandler handler,
+        ClassLoader fallbackResourceLoader
     ) {
         super(null);
         this.classesToLoadByParent = classesToLoadByParent;

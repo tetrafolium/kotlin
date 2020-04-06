@@ -28,11 +28,11 @@ public class EnumSwitchCodegen extends SwitchCodegen {
     private final WhenByEnumsMapping mapping;
 
     public EnumSwitchCodegen(
-            @NotNull KtWhenExpression expression,
-            boolean isStatement,
-            boolean isExhaustive,
-            @NotNull ExpressionCodegen codegen,
-            @NotNull WhenByEnumsMapping mapping
+        @NotNull KtWhenExpression expression,
+        boolean isStatement,
+        boolean isExhaustive,
+        @NotNull ExpressionCodegen codegen,
+        @NotNull WhenByEnumsMapping mapping
     ) {
         super(expression, isStatement, isExhaustive, codegen, codegen.getState().getTypeMapper().mapType(mapping.getEnumClassDescriptor()));
         this.mapping = mapping;
@@ -45,9 +45,9 @@ public class EnumSwitchCodegen extends SwitchCodegen {
         generateNullCheckIfNeeded();
 
         v.getstatic(
-                mapping.getMappingsClassInternalName(),
-                mapping.getFieldName(),
-                MappingClassesForWhenByEnumCodegen.MAPPINGS_FIELD_DESCRIPTOR
+            mapping.getMappingsClassInternalName(),
+            mapping.getFieldName(),
+            MappingClassesForWhenByEnumCodegen.MAPPINGS_FIELD_DESCRIPTOR
         );
 
         v.swap();

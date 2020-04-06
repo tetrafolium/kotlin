@@ -57,10 +57,10 @@ public class SamWrapperCodegen {
     public static final String SAM_WRAPPER_SUFFIX = "$0";
 
     public SamWrapperCodegen(
-            @NotNull GenerationState state,
-            @NotNull SamType samType,
-            @NotNull MemberCodegen<?> parentCodegen,
-            boolean isInsideInline
+        @NotNull GenerationState state,
+        @NotNull SamType samType,
+        @NotNull MemberCodegen<?> parentCodegen,
+        boolean isInsideInline
     ) {
         this.state = state;
         this.isInsideInline = isInsideInline;
@@ -72,8 +72,8 @@ public class SamWrapperCodegen {
 
     @NotNull
     public Type genWrapper(
-            @NotNull KtFile file,
-            @NotNull CallableMemberDescriptor contextDescriptor
+        @NotNull KtFile file,
+        @NotNull CallableMemberDescriptor contextDescriptor
     ) {
         // Name for generated class, in form of whatever$1
         FqName fqName = getWrapperName(file, contextDescriptor);
@@ -83,23 +83,23 @@ public class SamWrapperCodegen {
         KotlinType functionType = samType.getKotlinFunctionType();
 
         ClassDescriptor classDescriptor = new ClassDescriptorImpl(
-                samType.getJavaClassDescriptor().getContainingDeclaration(),
-                fqName.shortName(),
-                Modality.FINAL,
-                ClassKind.CLASS,
-                Collections.singleton(samType.getType()),
-                SourceElement.NO_SOURCE,
-                /* isExternal = */ false,
-                LockBasedStorageManager.NO_LOCKS
+            samType.getJavaClassDescriptor().getContainingDeclaration(),
+            fqName.shortName(),
+            Modality.FINAL,
+            ClassKind.CLASS,
+            Collections.singleton(samType.getType()),
+            SourceElement.NO_SOURCE,
+            /* isExternal = */ false,
+            LockBasedStorageManager.NO_LOCKS
         );
         // e.g. compare(T, T)
         SimpleFunctionDescriptor erasedInterfaceFunction = samType.getOriginalAbstractMethod().copy(
-                classDescriptor,
-                Modality.FINAL,
-                Visibilities.PUBLIC,
-                CallableMemberDescriptor.Kind.SYNTHESIZED,
-                /*copyOverrides=*/ false
-        );
+                    classDescriptor,
+                    Modality.FINAL,
+                    Visibilities.PUBLIC,
+                    CallableMemberDescriptor.Kind.SYNTHESIZED,
+                    /*copyOverrides=*/ false
+                );
 
         ClassBuilder cv = state.getFactory().newVisitor(JvmDeclarationOriginKt.OtherOrigin(erasedInterfaceFunction), asmType, file);
         cv.defineClass(file,
@@ -108,8 +108,8 @@ public class SamWrapperCodegen {
                        asmType.getInternalName(),
                        null,
                        OBJECT_TYPE.getInternalName(),
-                       new String[]{ typeMapper.mapType(samType.getType()).getInternalName() }
-        );
+                       new String[] { typeMapper.mapType(samType.getType()).getInternalName() }
+                      );
         cv.visitSource(file.getName(), null);
 
         WriteAnnotationUtilKt.writeSyntheticClassMetadata(cv, state);
@@ -155,18 +155,18 @@ public class SamWrapperCodegen {
     }
 
     private void generateMethod(
-            Type ownerType,
-            Type functionType,
-            ClassBuilder cv,
-            SimpleFunctionDescriptor erasedInterfaceFunction,
-            KotlinType functionJetType
+        Type ownerType,
+        Type functionType,
+        ClassBuilder cv,
+        SimpleFunctionDescriptor erasedInterfaceFunction,
+        KotlinType functionJetType
     ) {
         // using root context to avoid creating ClassDescriptor and everything else
         FunctionCodegen codegen = new FunctionCodegen(state.getRootContext().intoClass(
-                (ClassDescriptor) erasedInterfaceFunction.getContainingDeclaration(), OwnerKind.IMPLEMENTATION, state), cv, state, parentCodegen);
+                    (ClassDescriptor) erasedInterfaceFunction.getContainingDeclaration(), OwnerKind.IMPLEMENTATION, state), cv, state, parentCodegen);
 
         FunctionDescriptor invokeFunction =
-                functionJetType.getMemberScope().getContributedFunctions(OperatorNameConventions.INVOKE, NoLookupLocation.FROM_BACKEND).iterator().next().getOriginal();
+            functionJetType.getMemberScope().getContributedFunctions(OperatorNameConventions.INVOKE, NoLookupLocation.FROM_BACKEND).iterator().next().getOriginal();
         StackValue functionField = StackValue.field(functionType, ownerType, FUNCTION_FIELD_NAME, false, StackValue.none());
         codegen.genSamDelegate(erasedInterfaceFunction, invokeFunction, functionField);
 
@@ -178,13 +178,13 @@ public class SamWrapperCodegen {
 
     @NotNull
     private FqName getWrapperName(
-            @NotNull KtFile containingFile,
-            CallableMemberDescriptor contextDescriptor
+        @NotNull KtFile containingFile,
+        CallableMemberDescriptor contextDescriptor
     ) {
         boolean hasPackagePartClass = CollectionsKt.any(
-                CodegenUtil.getDeclarationsToGenerate(containingFile, state.getBindingContext()),
-                PackageCodegenImpl::isFilePartDeclaration
-        );
+                                          CodegenUtil.getDeclarationsToGenerate(containingFile, state.getBindingContext()),
+                                          PackageCodegenImpl::isFilePartDeclaration
+                                      );
         FqName filePartFqName = JvmFileClassUtil.getFileClassInfoNoResolve(containingFile).getFileClassFqName();
 
         FqName outermostOwner;
@@ -199,11 +199,11 @@ public class SamWrapperCodegen {
         }
 
         String shortName = String.format(
-                "%s$sam%s$%s" + SAM_WRAPPER_SUFFIX,
-                outermostOwner.shortName().asString(),
-                (isInsideInline ? "$i" : ""),
-                DescriptorUtils.getFqNameSafe(samType.getJavaClassDescriptor()).asString().replace('.', '_')
-        );
+                               "%s$sam%s$%s" + SAM_WRAPPER_SUFFIX,
+                               outermostOwner.shortName().asString(),
+                               (isInsideInline ? "$i" : ""),
+                               DescriptorUtils.getFqNameSafe(samType.getJavaClassDescriptor()).asString().replace('.', '_')
+                           );
         return outermostOwner.parent().child(Name.identifier(shortName));
     }
 

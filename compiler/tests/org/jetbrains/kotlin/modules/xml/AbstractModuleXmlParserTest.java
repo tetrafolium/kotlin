@@ -41,7 +41,7 @@ public abstract class AbstractModuleXmlParserTest extends TestCase {
         ModuleChunk result = ModuleXmlParser.parseModuleScript(xmlPath, new MessageCollector() {
             @Override
             public void report(
-                    @NotNull CompilerMessageSeverity severity, @NotNull String message, @Nullable CompilerMessageLocation location
+                @NotNull CompilerMessageSeverity severity, @NotNull String message, @Nullable CompilerMessageLocation location
             ) {
                 throw new AssertionError(MessageRenderer.PLAIN_FULL_PATHS.render(severity, message, location));
             }

@@ -29,16 +29,16 @@ public class ClosureContext extends ClassContext {
     private final FunctionDescriptor originalSuspendLambdaDescriptor;
 
     public ClosureContext(
-            @NotNull KotlinTypeMapper typeMapper,
-            @NotNull FunctionDescriptor functionDescriptor,
-            @Nullable CodegenContext parentContext,
-            @NotNull LocalLookup localLookup,
-            // original suspend lambda descriptor
-            @Nullable FunctionDescriptor originalSuspendLambdaDescriptor
+        @NotNull KotlinTypeMapper typeMapper,
+        @NotNull FunctionDescriptor functionDescriptor,
+        @Nullable CodegenContext parentContext,
+        @NotNull LocalLookup localLookup,
+        // original suspend lambda descriptor
+        @Nullable FunctionDescriptor originalSuspendLambdaDescriptor
     ) {
         super(typeMapper,
               anonymousClassForCallable(
-                      typeMapper.getBindingContext(), originalSuspendLambdaDescriptor != null ? originalSuspendLambdaDescriptor : functionDescriptor),
+                  typeMapper.getBindingContext(), originalSuspendLambdaDescriptor != null ? originalSuspendLambdaDescriptor : functionDescriptor),
               OwnerKind.IMPLEMENTATION, parentContext, localLookup);
 
         this.functionDescriptor = functionDescriptor;
@@ -46,10 +46,10 @@ public class ClosureContext extends ClassContext {
     }
 
     public ClosureContext(
-            @NotNull KotlinTypeMapper typeMapper,
-            @NotNull FunctionDescriptor functionDescriptor,
-            @Nullable CodegenContext parentContext,
-            @NotNull LocalLookup localLookup
+        @NotNull KotlinTypeMapper typeMapper,
+        @NotNull FunctionDescriptor functionDescriptor,
+        @Nullable CodegenContext parentContext,
+        @NotNull LocalLookup localLookup
     ) {
         this(typeMapper, functionDescriptor, parentContext, localLookup, null);
     }

@@ -109,11 +109,11 @@ public class K2JSCompiler extends CLICompiler<K2JSCompilerArguments> {
 
     @NotNull
     private static TranslationResult translate(
-            @NotNull JsConfig.Reporter reporter,
-            @NotNull List<KtFile> allKotlinFiles,
-            @NotNull JsAnalysisResult jsAnalysisResult,
-            @NotNull MainCallParameters mainCallParameters,
-            @NotNull JsConfig config
+        @NotNull JsConfig.Reporter reporter,
+        @NotNull List<KtFile> allKotlinFiles,
+        @NotNull JsAnalysisResult jsAnalysisResult,
+        @NotNull MainCallParameters mainCallParameters,
+        @NotNull JsConfig config
     ) throws TranslationException {
         K2JSTranslator translator = new K2JSTranslator(config);
         IncrementalDataProvider incrementalDataProvider = config.getConfiguration().get(JSConfigurationKeys.INCREMENTAL_DATA_PROVIDER);
@@ -156,10 +156,10 @@ public class K2JSCompiler extends CLICompiler<K2JSCompilerArguments> {
     @NotNull
     @Override
     protected ExitCode doExecute(
-            @NotNull K2JSCompilerArguments arguments,
-            @NotNull CompilerConfiguration configuration,
-            @NotNull Disposable rootDisposable,
-            @Nullable KotlinPaths paths
+        @NotNull K2JSCompilerArguments arguments,
+        @NotNull CompilerConfiguration configuration,
+        @NotNull Disposable rootDisposable,
+        @Nullable KotlinPaths paths
     ) {
         MessageCollector messageCollector = configuration.getNotNull(CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY);
 
@@ -172,7 +172,7 @@ public class K2JSCompiler extends CLICompiler<K2JSCompilerArguments> {
         }
 
         ExitCode pluginLoadResult =
-                PluginCliParser.loadPluginsSafe(arguments.getPluginClasspaths(), arguments.getPluginOptions(), configuration);
+            PluginCliParser.loadPluginsSafe(arguments.getPluginClasspaths(), arguments.getPluginOptions(), configuration);
         if (pluginLoadResult != ExitCode.OK) return pluginLoadResult;
 
         configuration.put(JSConfigurationKeys.LIBRARIES, configureLibraries(arguments, paths, messageCollector));
@@ -184,7 +184,7 @@ public class K2JSCompiler extends CLICompiler<K2JSCompilerArguments> {
         }
 
         KotlinCoreEnvironment environmentForJS =
-                KotlinCoreEnvironment.createForProduction(rootDisposable, configuration, EnvironmentConfigFiles.JS_CONFIG_FILES);
+            KotlinCoreEnvironment.createForProduction(rootDisposable, configuration, EnvironmentConfigFiles.JS_CONFIG_FILES);
 
         Project project = environmentForJS.getProject();
         List<KtFile> sourcesFiles = environmentForJS.getSourceFiles();
@@ -232,7 +232,7 @@ public class K2JSCompiler extends CLICompiler<K2JSCompilerArguments> {
         }
 
         AnalyzerWithCompilerReport analyzerWithCompilerReport = new AnalyzerWithCompilerReport(
-                messageCollector, CommonConfigurationKeysKt.getLanguageVersionSettings(configuration)
+            messageCollector, CommonConfigurationKeysKt.getLanguageVersionSettings(configuration)
         );
         analyzerWithCompilerReport.analyzeAndReport(sourcesFiles, () -> TopDownAnalyzerFacadeForJS.analyzeFiles(sourcesFiles, config));
         if (analyzerWithCompilerReport.hasErrors()) {
@@ -313,9 +313,9 @@ public class K2JSCompiler extends CLICompiler<K2JSCompilerArguments> {
     }
 
     private static void checkDuplicateSourceFileNames(
-            @NotNull MessageCollector log,
-            @NotNull List<KtFile> sourceFiles,
-            @NotNull JsConfig config
+        @NotNull MessageCollector log,
+        @NotNull List<KtFile> sourceFiles,
+        @NotNull JsConfig config
     ) {
         if (config.getSourceMapRoots().isEmpty()) return;
 
@@ -332,8 +332,8 @@ public class K2JSCompiler extends CLICompiler<K2JSCompilerArguments> {
                 if (existingPath != null) {
                     if (duplicatePaths.add(relativePath)) {
                         log.report(WARNING, "There are files with same path '" + relativePath + "', relative to source roots: " +
-                                            "'" + path + "' and '" + existingPath + "'. " +
-                                            "This will likely cause problems with debugger", null);
+                                   "'" + path + "' and '" + existingPath + "'. " +
+                                   "This will likely cause problems with debugger", null);
                     }
                 }
                 else {
@@ -359,8 +359,8 @@ public class K2JSCompiler extends CLICompiler<K2JSCompilerArguments> {
 
     @Override
     protected void setupPlatformSpecificArgumentsAndServices(
-            @NotNull CompilerConfiguration configuration, @NotNull K2JSCompilerArguments arguments,
-            @NotNull Services services
+        @NotNull CompilerConfiguration configuration, @NotNull K2JSCompilerArguments arguments,
+        @NotNull Services services
     ) {
         MessageCollector messageCollector = configuration.getNotNull(CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY);
 
@@ -410,7 +410,7 @@ public class K2JSCompiler extends CLICompiler<K2JSCompilerArguments> {
         ModuleKind moduleKind = moduleKindName != null ? moduleKindMap.get(moduleKindName) : ModuleKind.PLAIN;
         if (moduleKind == null) {
             messageCollector.report(
-                    ERROR, "Unknown module kind: " + moduleKindName + ". Valid values are: plain, amd, commonjs, umd", null
+                ERROR, "Unknown module kind: " + moduleKindName + ". Valid values are: plain, amd, commonjs, umd", null
             );
             moduleKind = ModuleKind.PLAIN;
         }
@@ -438,8 +438,8 @@ public class K2JSCompiler extends CLICompiler<K2JSCompilerArguments> {
 
         String sourceMapEmbedContentString = arguments.getSourceMapEmbedSources();
         SourceMapSourceEmbedding sourceMapContentEmbedding = sourceMapEmbedContentString != null ?
-                                                             sourceMapContentEmbeddingMap.get(sourceMapEmbedContentString) :
-                                                             SourceMapSourceEmbedding.INLINING;
+                sourceMapContentEmbeddingMap.get(sourceMapEmbedContentString) :
+                SourceMapSourceEmbedding.INLINING;
         if (sourceMapContentEmbedding == null) {
             String message = "Unknown source map source embedding mode: " + sourceMapEmbedContentString + ". Valid values are: " +
                              StringUtil.join(sourceMapContentEmbeddingMap.keySet(), ", ");
@@ -455,14 +455,14 @@ public class K2JSCompiler extends CLICompiler<K2JSCompilerArguments> {
 
     @NotNull
     private static List<String> configureLibraries(
-            @NotNull K2JSCompilerArguments arguments,
-            @Nullable KotlinPaths paths,
-            @NotNull MessageCollector messageCollector
+        @NotNull K2JSCompilerArguments arguments,
+        @Nullable KotlinPaths paths,
+        @NotNull MessageCollector messageCollector
     ) {
         List<String> libraries = new SmartList<>();
         if (!arguments.getNoStdlib()) {
             File stdlibJar = getLibraryFromHome(
-                    paths, KotlinPaths::getJsStdLibJarPath, PathUtil.JS_LIB_JAR_NAME, messageCollector, "'-no-stdlib'");
+                                 paths, KotlinPaths::getJsStdLibJarPath, PathUtil.JS_LIB_JAR_NAME, messageCollector, "'-no-stdlib'");
             if (stdlibJar != null) {
                 libraries.add(stdlibJar.getAbsolutePath());
             }
@@ -476,8 +476,8 @@ public class K2JSCompiler extends CLICompiler<K2JSCompilerArguments> {
 
     @NotNull
     private static String calculateSourceMapSourceRoot(
-            @NotNull MessageCollector messageCollector,
-            @NotNull K2JSCompilerArguments arguments
+        @NotNull MessageCollector messageCollector,
+        @NotNull K2JSCompilerArguments arguments
     ) {
         File commonPath = null;
         List<File> pathToRoot = new ArrayList<>();

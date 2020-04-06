@@ -39,7 +39,7 @@ public abstract class DelegatedSaxHandler extends DefaultHandler {
 
     @Override
     public void unparsedEntityDecl(@NotNull String name, String publicId, @NotNull String systemId, String notationName)
-            throws SAXException {
+    throws SAXException {
         getDelegate().unparsedEntityDecl(name, publicId, systemId, notationName);
     }
 
@@ -70,7 +70,7 @@ public abstract class DelegatedSaxHandler extends DefaultHandler {
 
     @Override
     public void startElement(@NotNull String uri, @NotNull String localName, @NotNull String qName, @NotNull Attributes attributes)
-            throws SAXException {
+    throws SAXException {
         getDelegate().startElement(uri, localName, qName, attributes);
     }
 

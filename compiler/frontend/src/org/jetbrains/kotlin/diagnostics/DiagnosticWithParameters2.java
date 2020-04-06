@@ -24,11 +24,11 @@ public class DiagnosticWithParameters2<E extends PsiElement, A, B> extends Abstr
     private final B b;
 
     public DiagnosticWithParameters2(
-            @NotNull E psiElement,
-            @NotNull A a,
-            @NotNull B b,
-            @NotNull DiagnosticFactory2<E, A, B> factory,
-            @NotNull Severity severity
+        @NotNull E psiElement,
+        @NotNull A a,
+        @NotNull B b,
+        @NotNull DiagnosticFactory2<E, A, B> factory,
+        @NotNull Severity severity
     ) {
         super(psiElement, factory, severity);
         this.a = a;

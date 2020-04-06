@@ -37,26 +37,26 @@ public abstract class AbstractTopLevelMembersInvocationTest extends AbstractByte
     public void doTest(@NotNull String filename) throws Exception {
         File root = new File(filename);
         List<String> sourceFiles = SequencesKt.toList(SequencesKt.map(
-                SequencesKt.filter(FilesKt.walkTopDown(root).maxDepth(1), File::isFile),
-                this::relativePath
-        ));
+                                       SequencesKt.filter(FilesKt.walkTopDown(root).maxDepth(1), File::isFile),
+                                       this::relativePath
+                                   ));
 
         File library = new File(root, "library");
         List<File> classPath =
-                library.exists()
-                ? Collections.singletonList(CompilerTestUtil.compileJvmLibrary(library))
-                : Collections.emptyList();
+            library.exists()
+            ? Collections.singletonList(CompilerTestUtil.compileJvmLibrary(library))
+            : Collections.emptyList();
 
         assert !sourceFiles.isEmpty() : getTestName(true) + " should contain at least one .kt file";
         Collections.sort(sourceFiles);
 
         myEnvironment = KotlinCoreEnvironment.createForTests(
-                getTestRootDisposable(),
-                KotlinTestUtils.newConfiguration(
-                        ConfigurationKind.JDK_ONLY, TestJdkKind.MOCK_JDK,
-                        CollectionsKt.plus(classPath, KotlinTestUtils.getAnnotationsJar()), Collections.emptyList()
-                ),
-                EnvironmentConfigFiles.JVM_CONFIG_FILES);
+                            getTestRootDisposable(),
+                            KotlinTestUtils.newConfiguration(
+                                ConfigurationKind.JDK_ONLY, TestJdkKind.MOCK_JDK,
+                                CollectionsKt.plus(classPath, KotlinTestUtils.getAnnotationsJar()), Collections.emptyList()
+                            ),
+                            EnvironmentConfigFiles.JVM_CONFIG_FILES);
 
         loadFiles(ArrayUtil.toStringArray(sourceFiles));
 

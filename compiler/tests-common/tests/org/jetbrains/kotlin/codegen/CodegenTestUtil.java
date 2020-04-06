@@ -47,7 +47,7 @@ public class CodegenTestUtil {
     }
 
     public static void assertThrows(@NotNull Method foo, @NotNull Class<? extends Throwable> exceptionClass,
-            @Nullable Object instance, @NotNull Object... args) throws IllegalAccessException {
+                                    @Nullable Object instance, @NotNull Object... args) throws IllegalAccessException {
         boolean caught = false;
         try {
             foo.invoke(instance, args);
@@ -78,9 +78,9 @@ public class CodegenTestUtil {
 
     @NotNull
     public static File compileJava(
-            @NotNull List<String> fileNames,
-            @NotNull List<String> additionalClasspath,
-            @NotNull List<String> additionalOptions
+        @NotNull List<String> fileNames,
+        @NotNull List<String> additionalClasspath,
+        @NotNull List<String> additionalOptions
     ) {
         try {
             File directory = KotlinTestUtils.tmpDir("java-classes");
@@ -93,10 +93,10 @@ public class CodegenTestUtil {
     }
 
     public static void compileJava(
-            @NotNull List<String> fileNames,
-            @NotNull List<String> additionalClasspath,
-            @NotNull List<String> additionalOptions,
-            @NotNull File outDirectory
+        @NotNull List<String> fileNames,
+        @NotNull List<String> additionalClasspath,
+        @NotNull List<String> additionalOptions,
+        @NotNull File outDirectory
     ) {
         try {
             List<String> classpath = new ArrayList<>();
@@ -108,7 +108,7 @@ public class CodegenTestUtil {
             List<String> options = new ArrayList<>(Arrays.asList(
                     "-classpath", StringsKt.join(classpath, File.pathSeparator),
                     "-d", outDirectory.getPath()
-            ));
+                                                   ));
             options.addAll(additionalOptions);
 
             KotlinTestUtils.compileJavaFiles(CollectionsKt.map(fileNames, File::new), options);

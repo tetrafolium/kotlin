@@ -32,9 +32,9 @@ public class RemapVisitor extends SkipMaxAndEndVisitor {
     private final InstructionAdapter instructionAdapter;
 
     public RemapVisitor(
-            @NotNull MethodVisitor mv,
-            @NotNull LocalVarRemapper remapper,
-            @NotNull FieldRemapper nodeRemapper
+        @NotNull MethodVisitor mv,
+        @NotNull LocalVarRemapper remapper,
+        @NotNull FieldRemapper nodeRemapper
     ) {
         super(mv);
         this.instructionAdapter = new InstructionAdapter(mv);
@@ -54,7 +54,7 @@ public class RemapVisitor extends SkipMaxAndEndVisitor {
 
     @Override
     public void visitLocalVariable(
-            @NotNull String name, @NotNull String desc, String signature, @NotNull Label start, @NotNull Label end, int index
+        @NotNull String name, @NotNull String desc, String signature, @NotNull Label start, @NotNull Label end, int index
     ) {
         remapper.visitLocalVariable(name, desc, signature, start, end, index, mv);
     }
@@ -62,7 +62,7 @@ public class RemapVisitor extends SkipMaxAndEndVisitor {
     @Override
     public void visitFieldInsn(int opcode, @NotNull String owner, @NotNull String name, @NotNull String desc) {
         if (name.startsWith(CAPTURED_FIELD_FOLD_PREFIX) &&
-            (nodeRemapper instanceof RegeneratedLambdaFieldRemapper || nodeRemapper.isRoot())) {
+                (nodeRemapper instanceof RegeneratedLambdaFieldRemapper || nodeRemapper.isRoot())) {
             FieldInsnNode fin = new FieldInsnNode(opcode, owner, name, desc);
             StackValue inline = nodeRemapper.getFieldForInline(fin, null);
             assert inline != null : "Captured field should have not null stackValue " + fin;

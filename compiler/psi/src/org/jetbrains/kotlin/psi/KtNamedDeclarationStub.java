@@ -86,9 +86,9 @@ abstract class KtNamedDeclarationStub<T extends KotlinStubWithFqName<?>> extends
     }
 
     private static final Set<String> FUNCTIONLIKE_CONVENTIONS = ImmutableSet.of(
-            OperatorNameConventions.INVOKE.asString(),
-            OperatorNameConventions.GET.asString()
-    );
+                OperatorNameConventions.INVOKE.asString(),
+                OperatorNameConventions.GET.asString()
+            );
 
     private static boolean shouldDropOperatorKeyword(String oldName, String newName) {
         return !OperatorConventions.isConventionName(Name.identifier(newName)) ||
@@ -108,7 +108,7 @@ abstract class KtNamedDeclarationStub<T extends KotlinStubWithFqName<?>> extends
         }
 
         PsiElement newIdentifier =
-                KtPsiFactory(this).createNameIdentifierIfPossible(KtPsiUtilKt.quoteIfNeeded(name));
+            KtPsiFactory(this).createNameIdentifierIfPossible(KtPsiUtilKt.quoteIfNeeded(name));
         if (newIdentifier != null) {
             KtPsiUtilKt.astReplace(identifier, newIdentifier);
         }
@@ -165,7 +165,7 @@ abstract class KtNamedDeclarationStub<T extends KotlinStubWithFqName<?>> extends
                 GlobalSearchScope kotlinFilesScope = GlobalSearchScope.getScopeRestrictedByFileTypes(
                         GlobalSearchScope.allScope(project),
                         KotlinFileType.INSTANCE
-                );
+                                                     );
                 PsiPackage psiPackage = JavaPsiFacade.getInstance(project).findPackage(ktFile.getPackageFqName().asString());
                 SearchScope baseScope = psiPackage != null
                                         ? new PackageScope(psiPackage, false, true)

@@ -100,9 +100,9 @@ public class PossiblyBareType {
         if (!isBare()) return new TypeReconstructionResult(getActualType(), true);
 
         TypeReconstructionResult reconstructionResult = CastDiagnosticsUtil.findStaticallyKnownSubtype(
-                TypeUtils.makeNotNullable(subjectType),
-                getBareTypeConstructor()
-        );
+                    TypeUtils.makeNotNullable(subjectType),
+                    getBareTypeConstructor()
+                );
         KotlinType type = reconstructionResult.getResultingType();
         // No need to make an absent type nullable
         if (type == null) return reconstructionResult;

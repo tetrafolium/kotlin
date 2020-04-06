@@ -80,11 +80,11 @@ public abstract class PlainTextMessageRenderer implements MessageRenderer {
 
         if (COLOR_ENABLED) {
             Ansi ansi = Ansi.ansi()
-                    .bold()
-                    .fg(severityColor(severity))
-                    .a(severity.getPresentableName())
-                    .a(": ")
-                    .reset();
+                        .bold()
+                        .fg(severityColor(severity))
+                        .a(severity.getPresentableName())
+                        .a(": ")
+                        .reset();
 
             if (IMPORTANT_MESSAGE_SEVERITIES.contains(severity)) {
                 ansi.bold();
@@ -136,22 +136,22 @@ public abstract class PlainTextMessageRenderer implements MessageRenderer {
     @NotNull
     private static Ansi.Color severityColor(@NotNull CompilerMessageSeverity severity) {
         switch (severity) {
-            case EXCEPTION:
-                return Ansi.Color.RED;
-            case ERROR:
-                return Ansi.Color.RED;
-            case STRONG_WARNING:
-                return Ansi.Color.YELLOW;
-            case WARNING:
-                return Ansi.Color.YELLOW;
-            case INFO:
-                return Ansi.Color.BLUE;
-            case LOGGING:
-                return Ansi.Color.BLUE;
-            case OUTPUT:
-                return Ansi.Color.BLUE;
-            default:
-                throw new UnsupportedOperationException("Unknown severity: " + severity);
+        case EXCEPTION:
+            return Ansi.Color.RED;
+        case ERROR:
+            return Ansi.Color.RED;
+        case STRONG_WARNING:
+            return Ansi.Color.YELLOW;
+        case WARNING:
+            return Ansi.Color.YELLOW;
+        case INFO:
+            return Ansi.Color.BLUE;
+        case LOGGING:
+            return Ansi.Color.BLUE;
+        case OUTPUT:
+            return Ansi.Color.BLUE;
+        default:
+            throw new UnsupportedOperationException("Unknown severity: " + severity);
         }
     }
 

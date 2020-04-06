@@ -27,8 +27,8 @@ public abstract class KtStringTemplateEntryWithExpression extends KtStringTempla
     }
 
     public KtStringTemplateEntryWithExpression(
-            @NotNull KotlinPlaceHolderWithTextStub<? extends KtStringTemplateEntryWithExpression> stub,
-            @NotNull IStubElementType elementType) {
+        @NotNull KotlinPlaceHolderWithTextStub<? extends KtStringTemplateEntryWithExpression> stub,
+        @NotNull IStubElementType elementType) {
         super(stub, elementType);
     }
 

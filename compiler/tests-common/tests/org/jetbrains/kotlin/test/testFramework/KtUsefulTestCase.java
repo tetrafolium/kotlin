@@ -328,9 +328,9 @@ public abstract class KtUsefulTestCase extends TestCase {
     }
 
     public static <T> void assertOrderedEquals(
-            String erroMsg,
-            Iterable<? extends T> actual,
-            Collection<? extends T> expected) {
+        String erroMsg,
+        Iterable<? extends T> actual,
+        Collection<? extends T> expected) {
         ArrayList<T> list = new ArrayList<>();
         for (T t : actual) {
             list.add(t);

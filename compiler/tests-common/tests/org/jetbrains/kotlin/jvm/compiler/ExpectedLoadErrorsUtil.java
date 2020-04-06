@@ -37,8 +37,8 @@ public class ExpectedLoadErrorsUtil {
     public static final String ANNOTATION_CLASS_NAME = "org.jetbrains.kotlin.jvm.compiler.annotation.ExpectLoadError";
 
     public static void checkForLoadErrors(
-            @NotNull PackageViewDescriptor packageFromJava,
-            @NotNull BindingContext bindingContext
+        @NotNull PackageViewDescriptor packageFromJava,
+        @NotNull BindingContext bindingContext
     ) {
         Map<SourceElement, List<String>> expectedErrors = getExpectedLoadErrors(packageFromJava);
         Map<SourceElement, List<String>> actualErrors = getActualLoadErrors(bindingContext);
@@ -121,12 +121,12 @@ public class ExpectedLoadErrorsUtil {
     }
 
     private static void putError(
-            @NotNull Map<SourceElement, List<String>> result,
-            @NotNull DeclarationDescriptor descriptor,
-            @NotNull List<String> errors
+        @NotNull Map<SourceElement, List<String>> result,
+        @NotNull DeclarationDescriptor descriptor,
+        @NotNull List<String> errors
     ) {
         assert descriptor.getOriginal() instanceof DeclarationDescriptorWithSource
-                : "Signature errors should be reported only on declarations with source, but " + descriptor + " found";
+        : "Signature errors should be reported only on declarations with source, but " + descriptor + " found";
         result.put(((DeclarationDescriptorWithSource) descriptor.getOriginal()).getSource(), errors);
     }
 

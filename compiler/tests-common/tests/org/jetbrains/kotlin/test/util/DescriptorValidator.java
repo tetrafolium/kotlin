@@ -42,9 +42,9 @@ public class DescriptorValidator {
     }
 
     public static void validate(
-            @NotNull ValidationVisitor validator,
-            @NotNull DeclarationDescriptor descriptor,
-            @NotNull DiagnosticCollector collector
+        @NotNull ValidationVisitor validator,
+        @NotNull DeclarationDescriptor descriptor,
+        @NotNull DiagnosticCollector collector
     ) {
         RecursiveDescriptorProcessor.process(descriptor, collector, validator);
     }
@@ -93,9 +93,9 @@ public class DescriptorValidator {
         }
 
         private void validateType(
-                @NotNull DeclarationDescriptor descriptor,
-                @Nullable KotlinType type,
-                @NotNull DiagnosticCollector collector
+            @NotNull DeclarationDescriptor descriptor,
+            @Nullable KotlinType type,
+            @NotNull DiagnosticCollector collector
         ) {
             if (type == null) {
                 report(collector, descriptor, "No type");
@@ -133,9 +133,9 @@ public class DescriptorValidator {
         }
 
         private void validateTypes(
-                DeclarationDescriptor descriptor,
-                DiagnosticCollector collector,
-                Collection<KotlinType> types
+            DeclarationDescriptor descriptor,
+            DiagnosticCollector collector,
+            Collection<KotlinType> types
         ) {
             for (KotlinType type : types) {
                 validateType(descriptor, type, collector);
@@ -149,11 +149,11 @@ public class DescriptorValidator {
         }
 
         private static <T> void assertEquals(
-                DeclarationDescriptor descriptor,
-                DiagnosticCollector collector,
-                String name,
-                T expected,
-                T actual
+            DeclarationDescriptor descriptor,
+            DiagnosticCollector collector,
+            String name,
+            T expected,
+            T actual
         ) {
             if (!expected.equals(actual)) {
                 report(collector, descriptor, "Wrong " + name + ": " + actual + " must be " + expected);
@@ -161,11 +161,11 @@ public class DescriptorValidator {
         }
 
         private static <T> void assertEqualTypes(
-                DeclarationDescriptor descriptor,
-                DiagnosticCollector collector,
-                String name,
-                KotlinType expected,
-                KotlinType actual
+            DeclarationDescriptor descriptor,
+            DiagnosticCollector collector,
+            String name,
+            KotlinType expected,
+            KotlinType actual
         ) {
             if (KotlinTypeKt.isError(expected) && KotlinTypeKt.isError(actual)) {
                 assertEquals(descriptor, collector, name, expected.toString(), actual.toString());
@@ -176,10 +176,10 @@ public class DescriptorValidator {
         }
 
         private static void validateAccessor(
-                PropertyDescriptor descriptor,
-                DiagnosticCollector collector,
-                PropertyAccessorDescriptor accessor,
-                String name
+            PropertyDescriptor descriptor,
+            DiagnosticCollector collector,
+            PropertyAccessorDescriptor accessor,
+            String name
         ) {
             // TODO: fix the discrepancies in descriptor construction and enable these checks
             //assertEquals(accessor, collector, name + " visibility", descriptor.getVisibility(), accessor.getVisibility());
@@ -189,7 +189,7 @@ public class DescriptorValidator {
 
         @Override
         public Boolean visitPackageFragmentDescriptor(
-                PackageFragmentDescriptor descriptor, DiagnosticCollector collector
+            PackageFragmentDescriptor descriptor, DiagnosticCollector collector
         ) {
             validateScope(descriptor, descriptor.getMemberScope(), collector);
             return true;
@@ -205,7 +205,7 @@ public class DescriptorValidator {
 
         @Override
         public Boolean visitVariableDescriptor(
-                VariableDescriptor descriptor, DiagnosticCollector collector
+            VariableDescriptor descriptor, DiagnosticCollector collector
         ) {
             validateReturnType(descriptor, collector);
             return true;
@@ -213,7 +213,7 @@ public class DescriptorValidator {
 
         @Override
         public Boolean visitFunctionDescriptor(
-                FunctionDescriptor descriptor, DiagnosticCollector collector
+            FunctionDescriptor descriptor, DiagnosticCollector collector
         ) {
             validateCallable(descriptor, collector);
             return true;
@@ -221,7 +221,7 @@ public class DescriptorValidator {
 
         @Override
         public Boolean visitTypeParameterDescriptor(
-                TypeParameterDescriptor descriptor, DiagnosticCollector collector
+            TypeParameterDescriptor descriptor, DiagnosticCollector collector
         ) {
             validateTypes(descriptor, collector, descriptor.getUpperBounds());
 
@@ -232,13 +232,13 @@ public class DescriptorValidator {
 
         @Override
         public Boolean visitClassDescriptor(
-                ClassDescriptor descriptor, DiagnosticCollector collector
+            ClassDescriptor descriptor, DiagnosticCollector collector
         ) {
             validateTypeParameters(collector, descriptor.getDeclaredTypeParameters());
 
             Collection<KotlinType> supertypes = descriptor.getTypeConstructor().getSupertypes();
             if (supertypes.isEmpty() && descriptor.getKind() != ClassKind.INTERFACE
-                && !KotlinBuiltIns.isSpecialClassWithNoSupertypes(descriptor)) {
+                    && !KotlinBuiltIns.isSpecialClassWithNoSupertypes(descriptor)) {
                 report(collector, descriptor, "No supertypes for non-trait");
             }
             validateTypes(descriptor, collector, supertypes);
@@ -275,7 +275,7 @@ public class DescriptorValidator {
 
         @Override
         public Boolean visitTypeAliasDescriptor(
-                TypeAliasDescriptor descriptor, DiagnosticCollector data
+            TypeAliasDescriptor descriptor, DiagnosticCollector data
         ) {
             // TODO typealias
             return true;
@@ -283,14 +283,14 @@ public class DescriptorValidator {
 
         @Override
         public Boolean visitModuleDeclaration(
-                ModuleDescriptor descriptor, DiagnosticCollector collector
+            ModuleDescriptor descriptor, DiagnosticCollector collector
         ) {
             return true;
         }
 
         @Override
         public Boolean visitConstructorDescriptor(
-                ConstructorDescriptor constructorDescriptor, DiagnosticCollector collector
+            ConstructorDescriptor constructorDescriptor, DiagnosticCollector collector
         ) {
             visitFunctionDescriptor(constructorDescriptor, collector);
 
@@ -304,14 +304,14 @@ public class DescriptorValidator {
 
         @Override
         public Boolean visitScriptDescriptor(
-                ScriptDescriptor scriptDescriptor, DiagnosticCollector collector
+            ScriptDescriptor scriptDescriptor, DiagnosticCollector collector
         ) {
             return true;
         }
 
         @Override
         public Boolean visitPropertyDescriptor(
-                PropertyDescriptor descriptor, DiagnosticCollector collector
+            PropertyDescriptor descriptor, DiagnosticCollector collector
         ) {
             validateCallable(descriptor, collector);
 
@@ -333,28 +333,28 @@ public class DescriptorValidator {
 
         @Override
         public Boolean visitValueParameterDescriptor(
-                ValueParameterDescriptor descriptor, DiagnosticCollector collector
+            ValueParameterDescriptor descriptor, DiagnosticCollector collector
         ) {
             return visitVariableDescriptor(descriptor, collector);
         }
 
         @Override
         public Boolean visitPropertyGetterDescriptor(
-                PropertyGetterDescriptor descriptor, DiagnosticCollector collector
+            PropertyGetterDescriptor descriptor, DiagnosticCollector collector
         ) {
             return visitFunctionDescriptor(descriptor, collector);
         }
 
         @Override
         public Boolean visitPropertySetterDescriptor(
-                PropertySetterDescriptor descriptor, DiagnosticCollector collector
+            PropertySetterDescriptor descriptor, DiagnosticCollector collector
         ) {
             return visitFunctionDescriptor(descriptor, collector);
         }
 
         @Override
         public Boolean visitReceiverParameterDescriptor(
-                ReceiverParameterDescriptor descriptor, DiagnosticCollector collector
+            ReceiverParameterDescriptor descriptor, DiagnosticCollector collector
         ) {
             validateType(descriptor, descriptor.getType(), collector);
 
@@ -375,10 +375,10 @@ public class DescriptorValidator {
         }
 
         private void assertFound(
-                @NotNull MemberScope scope,
-                @NotNull DeclarationDescriptor expected,
-                @Nullable DeclarationDescriptor found,
-                boolean shouldBeSame
+            @NotNull MemberScope scope,
+            @NotNull DeclarationDescriptor expected,
+            @Nullable DeclarationDescriptor found,
+            boolean shouldBeSame
         ) {
             if (found == null) {
                 report(expected, "Not found in " + scope);
@@ -389,9 +389,9 @@ public class DescriptorValidator {
         }
 
         private void assertFound(
-                @NotNull MemberScope scope,
-                @NotNull DeclarationDescriptor expected,
-                @NotNull Collection<? extends DeclarationDescriptor> found
+            @NotNull MemberScope scope,
+            @NotNull DeclarationDescriptor expected,
+            @NotNull Collection<? extends DeclarationDescriptor> found
         ) {
             if (!found.contains(expected)) {
                 report(expected, "Not found in " + scope + ": " + found);
@@ -400,21 +400,21 @@ public class DescriptorValidator {
 
         @Override
         public Void visitPackageFragmentDescriptor(
-                PackageFragmentDescriptor descriptor, MemberScope scope
+            PackageFragmentDescriptor descriptor, MemberScope scope
         ) {
             return null;
         }
 
         @Override
         public Void visitPackageViewDescriptor(
-                PackageViewDescriptor descriptor, MemberScope scope
+            PackageViewDescriptor descriptor, MemberScope scope
         ) {
             return null;
         }
 
         @Override
         public Void visitVariableDescriptor(
-                VariableDescriptor descriptor, MemberScope scope
+            VariableDescriptor descriptor, MemberScope scope
         ) {
             assertFound(scope, descriptor, scope.getContributedVariables(descriptor.getName(), NoLookupLocation.FROM_TEST));
             return null;
@@ -422,7 +422,7 @@ public class DescriptorValidator {
 
         @Override
         public Void visitFunctionDescriptor(
-                FunctionDescriptor descriptor, MemberScope scope
+            FunctionDescriptor descriptor, MemberScope scope
         ) {
             assertFound(scope, descriptor, scope.getContributedFunctions(descriptor.getName(), NoLookupLocation.FROM_TEST));
             return null;
@@ -430,7 +430,7 @@ public class DescriptorValidator {
 
         @Override
         public Void visitTypeParameterDescriptor(
-                TypeParameterDescriptor descriptor, MemberScope scope
+            TypeParameterDescriptor descriptor, MemberScope scope
         ) {
             assertFound(scope, descriptor, scope.getContributedClassifier(descriptor.getName(), NoLookupLocation.FROM_TEST), true);
             return null;
@@ -438,7 +438,7 @@ public class DescriptorValidator {
 
         @Override
         public Void visitClassDescriptor(
-                ClassDescriptor descriptor, MemberScope scope
+            ClassDescriptor descriptor, MemberScope scope
         ) {
             assertFound(scope, descriptor, scope.getContributedClassifier(descriptor.getName(), NoLookupLocation.FROM_TEST), true);
             return null;
@@ -452,7 +452,7 @@ public class DescriptorValidator {
 
         @Override
         public Void visitModuleDeclaration(
-                ModuleDescriptor descriptor, MemberScope scope
+            ModuleDescriptor descriptor, MemberScope scope
         ) {
             report(descriptor, "Module found in scope: " + scope);
             return null;
@@ -460,7 +460,7 @@ public class DescriptorValidator {
 
         @Override
         public Void visitConstructorDescriptor(
-                ConstructorDescriptor descriptor, MemberScope scope
+            ConstructorDescriptor descriptor, MemberScope scope
         ) {
             report(descriptor, "Constructor found in scope: " + scope);
             return null;
@@ -468,7 +468,7 @@ public class DescriptorValidator {
 
         @Override
         public Void visitScriptDescriptor(
-                ScriptDescriptor descriptor, MemberScope scope
+            ScriptDescriptor descriptor, MemberScope scope
         ) {
             report(descriptor, "Script found in scope: " + scope);
             return null;
@@ -476,21 +476,21 @@ public class DescriptorValidator {
 
         @Override
         public Void visitPropertyDescriptor(
-                PropertyDescriptor descriptor, MemberScope scope
+            PropertyDescriptor descriptor, MemberScope scope
         ) {
             return visitVariableDescriptor(descriptor, scope);
         }
 
         @Override
         public Void visitValueParameterDescriptor(
-                ValueParameterDescriptor descriptor, MemberScope scope
+            ValueParameterDescriptor descriptor, MemberScope scope
         ) {
             return visitVariableDescriptor(descriptor, scope);
         }
 
         @Override
         public Void visitPropertyGetterDescriptor(
-                PropertyGetterDescriptor descriptor, MemberScope scope
+            PropertyGetterDescriptor descriptor, MemberScope scope
         ) {
             report(descriptor, "Getter found in scope: " + scope);
             return null;
@@ -498,7 +498,7 @@ public class DescriptorValidator {
 
         @Override
         public Void visitPropertySetterDescriptor(
-                PropertySetterDescriptor descriptor, MemberScope scope
+            PropertySetterDescriptor descriptor, MemberScope scope
         ) {
             report(descriptor, "Setter found in scope: " + scope);
             return null;
@@ -506,7 +506,7 @@ public class DescriptorValidator {
 
         @Override
         public Void visitReceiverParameterDescriptor(
-                ReceiverParameterDescriptor descriptor, MemberScope scope
+            ReceiverParameterDescriptor descriptor, MemberScope scope
         ) {
             report(descriptor, "Receiver parameter found in scope: " + scope);
             return null;

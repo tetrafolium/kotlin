@@ -66,7 +66,7 @@ public final class InTextDirectivesUtils {
             if (!unquoted.equals(line)) {
                 result.add(unquoted);
             }
-            else{
+            else {
                 String[] variants = line.split(",");
                 for (String variant : variants) {
                     result.add(variant.trim());
@@ -123,7 +123,7 @@ public final class InTextDirectivesUtils {
                         break;
                     } else {
                         throw new AssertionError(
-                                "Line starts with prefix \"" + prefix + "\", but doesn't have space symbol after it: " + line);
+                            "Line starts with prefix \"" + prefix + "\", but doesn't have space symbol after it: " + line);
                     }
                 }
             }

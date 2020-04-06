@@ -134,7 +134,7 @@ public class AnnotationGenTest extends CodegenTestCase {
         assertNull(aClass.getDeclaredMethod("setX", int.class).getAnnotation(Deprecated.class));
         assertNotNull(aClass.getDeclaredField("x").getAnnotation(Deprecated.class));
     }
-    
+
     public void testAnnotationWithParamForParamInFunction() throws Exception {
         loadText("import java.lang.annotation.*\n" +
                  "@java.lang.annotation.Retention(RetentionPolicy.RUNTIME) annotation class A(val a: String)\n" +
@@ -162,7 +162,7 @@ public class AnnotationGenTest extends CodegenTestCase {
             }
         }
         return null;
-    } 
+    }
 
     public void testConstructor() throws NoSuchFieldException, NoSuchMethodException {
         loadText("class A @[java.lang.Deprecated] constructor() {}");
@@ -197,7 +197,7 @@ public class AnnotationGenTest extends CodegenTestCase {
     }
 
     public void testAnnotationClassWithStringProperty()
-        throws
+    throws
         NoSuchFieldException,
         NoSuchMethodException,
         ClassNotFoundException,
@@ -231,7 +231,7 @@ public class AnnotationGenTest extends CodegenTestCase {
     }
 
     public void testAnnotationClassWithAnnotationProperty()
-        throws
+    throws
         NoSuchFieldException,
         NoSuchMethodException,
         ClassNotFoundException,
@@ -270,13 +270,13 @@ public class AnnotationGenTest extends CodegenTestCase {
     }
 
     public void testAnnotationClassWithStringArrayProperty()
-            throws
-            NoSuchFieldException,
-            NoSuchMethodException,
-            ClassNotFoundException,
-            IllegalAccessException,
-            InstantiationException,
-            InvocationTargetException {
+    throws
+        NoSuchFieldException,
+        NoSuchMethodException,
+        ClassNotFoundException,
+        IllegalAccessException,
+        InstantiationException,
+        InvocationTargetException {
         loadText("import java.lang.annotation.*\n" +
                  "" +
                  "@java.lang.annotation.Retention(RetentionPolicy.RUNTIME) annotation class A(val a: Array<String>)\n" +
@@ -306,13 +306,13 @@ public class AnnotationGenTest extends CodegenTestCase {
     }
 
     public void testAnnotationClassWithIntArrayProperty()
-            throws
-            NoSuchFieldException,
-            NoSuchMethodException,
-            ClassNotFoundException,
-            IllegalAccessException,
-            InstantiationException,
-            InvocationTargetException {
+    throws
+        NoSuchFieldException,
+        NoSuchMethodException,
+        ClassNotFoundException,
+        IllegalAccessException,
+        InstantiationException,
+        InvocationTargetException {
         loadText("import java.lang.annotation.*\n" +
                  "" +
                  "@java.lang.annotation.Retention(RetentionPolicy.RUNTIME) annotation class A(val a: IntArray)\n" +
@@ -342,13 +342,13 @@ public class AnnotationGenTest extends CodegenTestCase {
     }
 
     public void testAnnotationClassWithEnumArrayProperty()
-            throws
-            NoSuchFieldException,
-            NoSuchMethodException,
-            ClassNotFoundException,
-            IllegalAccessException,
-            InstantiationException,
-            InvocationTargetException {
+    throws
+        NoSuchFieldException,
+        NoSuchMethodException,
+        ClassNotFoundException,
+        IllegalAccessException,
+        InstantiationException,
+        InvocationTargetException {
         loadText("import java.lang.annotation.*\n" +
                  "" +
                  "@java.lang.annotation.Target(ElementType.TYPE, ElementType.METHOD) annotation class A");
@@ -363,13 +363,13 @@ public class AnnotationGenTest extends CodegenTestCase {
     }
 
     public void testAnnotationClassWithAnnotationArrayProperty()
-            throws
-            NoSuchFieldException,
-            NoSuchMethodException,
-            ClassNotFoundException,
-            IllegalAccessException,
-            InstantiationException,
-            InvocationTargetException {
+    throws
+        NoSuchFieldException,
+        NoSuchMethodException,
+        ClassNotFoundException,
+        IllegalAccessException,
+        InstantiationException,
+        InvocationTargetException {
         loadText("import java.lang.annotation.*\n" +
                  "import java.lang.annotation.Retention\n" +
                  "" +

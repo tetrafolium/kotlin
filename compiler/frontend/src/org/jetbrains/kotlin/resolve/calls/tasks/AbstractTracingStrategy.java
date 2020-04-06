@@ -84,17 +84,17 @@ public abstract class AbstractTracingStrategy implements TracingStrategy {
 
     @Override
     public void wrongReceiverType(
-            @NotNull BindingTrace trace,
-            @NotNull ReceiverParameterDescriptor receiverParameter,
-            @NotNull ReceiverValue receiverArgument,
-            @NotNull ResolutionContext<?> c
+        @NotNull BindingTrace trace,
+        @NotNull ReceiverParameterDescriptor receiverParameter,
+        @NotNull ReceiverValue receiverArgument,
+        @NotNull ResolutionContext<?> c
     ) {
         KtExpression reportOn = receiverArgument instanceof ExpressionReceiver
                                 ? ((ExpressionReceiver) receiverArgument).getExpression()
                                 : reference;
 
         if (!DiagnosticUtilsKt.reportTypeMismatchDueToTypeProjection(
-                c, reportOn, receiverParameter.getType(), receiverArgument.getType())) {
+                    c, reportOn, receiverParameter.getType(), receiverArgument.getType())) {
             trace.report(TYPE_MISMATCH.on(reportOn, receiverParameter.getType(), receiverArgument.getType()));
         }
     }
@@ -106,12 +106,12 @@ public abstract class AbstractTracingStrategy implements TracingStrategy {
 
     @Override
     public void wrongNumberOfTypeArguments(
-            @NotNull BindingTrace trace, int expectedTypeArgumentCount, @NotNull CallableDescriptor descriptor
+        @NotNull BindingTrace trace, int expectedTypeArgumentCount, @NotNull CallableDescriptor descriptor
     ) {
         KtTypeArgumentList typeArgumentList = call.getTypeArgumentList();
         trace.report(WRONG_NUMBER_OF_TYPE_ARGUMENTS.on(
-                typeArgumentList != null ? typeArgumentList : reference, expectedTypeArgumentCount, descriptor
-        ));
+                         typeArgumentList != null ? typeArgumentList : reference, expectedTypeArgumentCount, descriptor
+                     ));
     }
 
     @Override
@@ -126,8 +126,8 @@ public abstract class AbstractTracingStrategy implements TracingStrategy {
 
     @Override
     public <D extends CallableDescriptor> void cannotCompleteResolve(
-            @NotNull BindingTrace trace,
-            @NotNull Collection<? extends ResolvedCall<D>> descriptors
+        @NotNull BindingTrace trace,
+        @NotNull Collection<? extends ResolvedCall<D>> descriptors
     ) {
         trace.report(CANNOT_COMPLETE_RESOLVE.on(reference, descriptors));
     }
@@ -144,9 +144,9 @@ public abstract class AbstractTracingStrategy implements TracingStrategy {
 
     @Override
     public void nestedClassAccessViaInstanceReference(
-            @NotNull BindingTrace trace,
-            @NotNull ClassDescriptor classDescriptor,
-            @NotNull ExplicitReceiverKind explicitReceiverKind
+        @NotNull BindingTrace trace,
+        @NotNull ClassDescriptor classDescriptor,
+        @NotNull ExplicitReceiverKind explicitReceiverKind
     ) {
         if (explicitReceiverKind == ExplicitReceiverKind.NO_EXPLICIT_RECEIVER) {
             DeclarationDescriptor importableDescriptor = DescriptorUtilsKt.getImportableDescriptor(classDescriptor);
@@ -225,10 +225,10 @@ public abstract class AbstractTracingStrategy implements TracingStrategy {
 
     @Nullable
     public static Diagnostic typeInferenceFailedDiagnostic(
-            @NotNull ResolutionContext<?> context,
-            @NotNull InferenceErrorData data,
-            @NotNull KtExpression reference,
-            @NotNull Call call
+        @NotNull ResolutionContext<?> context,
+        @NotNull InferenceErrorData data,
+        @NotNull KtExpression reference,
+        @NotNull Call call
     ) {
         ConstraintSystem constraintSystem = data.constraintSystem;
         ConstraintSystemStatus status = constraintSystem.getStatus();
@@ -245,12 +245,12 @@ public abstract class AbstractTracingStrategy implements TracingStrategy {
 
             ConstraintSystem systemWithoutExpectedTypeConstraint = filterConstraintsOut(constraintSystem, EXPECTED_TYPE_POSITION);
             KotlinType substitutedReturnType = systemWithoutExpectedTypeConstraint.getResultingSubstitutor().substitute(
-                    declaredReturnType, Variance.OUT_VARIANCE);
+                                                   declaredReturnType, Variance.OUT_VARIANCE);
             assert substitutedReturnType != null; //todo
 
             assert !noExpectedType(data.expectedType) : "Expected type doesn't exist, but there is an expected type mismatch error";
             if (!DiagnosticUtilsKt.reportTypeMismatchDueToTypeProjection(
-                    context, call.getCallElement(), data.expectedType, substitutedReturnType)) {
+                        context, call.getCallElement(), data.expectedType, substitutedReturnType)) {
                 return TYPE_INFERENCE_EXPECTED_TYPE_MISMATCH.on(call.getCallElement(), data.expectedType, substitutedReturnType);
             }
         }

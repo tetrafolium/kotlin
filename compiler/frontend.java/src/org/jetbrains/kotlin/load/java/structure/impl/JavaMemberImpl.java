@@ -32,7 +32,7 @@ import org.jetbrains.kotlin.name.Name;
 import java.util.Collection;
 
 public abstract class JavaMemberImpl<Psi extends PsiMember> extends JavaElementImpl<Psi>
-        implements JavaMember, JavaAnnotationOwnerImpl, JavaModifierListOwnerImpl {
+    implements JavaMember, JavaAnnotationOwnerImpl, JavaModifierListOwnerImpl {
     protected JavaMemberImpl(@NotNull Psi psiMember) {
         super(psiMember);
     }

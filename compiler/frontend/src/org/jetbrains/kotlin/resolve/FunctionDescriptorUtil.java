@@ -43,8 +43,8 @@ public class FunctionDescriptorUtil {
     }
 
     public static TypeSubstitution createSubstitution(
-            @NotNull FunctionDescriptor functionDescriptor,
-            @NotNull List<KotlinType> typeArguments
+        @NotNull FunctionDescriptor functionDescriptor,
+        @NotNull List<KotlinType> typeArguments
     ) {
         if (functionDescriptor.getTypeParameters().isEmpty()) return TypeSubstitution.EMPTY;
 
@@ -53,41 +53,41 @@ public class FunctionDescriptorUtil {
 
     @NotNull
     public static LexicalScope getFunctionInnerScope(
-            @NotNull LexicalScope outerScope, @NotNull FunctionDescriptor descriptor,
-            @NotNull BindingTrace trace, @NotNull OverloadChecker overloadChecker
+        @NotNull LexicalScope outerScope, @NotNull FunctionDescriptor descriptor,
+        @NotNull BindingTrace trace, @NotNull OverloadChecker overloadChecker
     ) {
         return getFunctionInnerScope(outerScope, descriptor, new TraceBasedLocalRedeclarationChecker(trace, overloadChecker));
     }
 
     @NotNull
     public static LexicalScope getFunctionInnerScope(
-            @NotNull LexicalScope outerScope,
-            @NotNull FunctionDescriptor descriptor,
-            @NotNull LocalRedeclarationChecker redeclarationChecker
+        @NotNull LexicalScope outerScope,
+        @NotNull FunctionDescriptor descriptor,
+        @NotNull LocalRedeclarationChecker redeclarationChecker
     ) {
         return new LexicalScopeImpl(
-                outerScope, descriptor, true, descriptor.getExtensionReceiverParameter(),
-                LexicalScopeKind.FUNCTION_INNER_SCOPE, redeclarationChecker,
-                handler -> {
-                    for (TypeParameterDescriptor typeParameter : descriptor.getTypeParameters()) {
-                        handler.addClassifierDescriptor(typeParameter);
+                   outerScope, descriptor, true, descriptor.getExtensionReceiverParameter(),
+                   LexicalScopeKind.FUNCTION_INNER_SCOPE, redeclarationChecker,
+        handler -> {
+            for (TypeParameterDescriptor typeParameter : descriptor.getTypeParameters()) {
+                handler.addClassifierDescriptor(typeParameter);
+            }
+            for (ValueParameterDescriptor valueParameterDescriptor : descriptor.getValueParameters()) {
+                if (valueParameterDescriptor instanceof ValueParameterDescriptorImpl.WithDestructuringDeclaration) {
+                    List<VariableDescriptor> entries =
+                    ((ValueParameterDescriptorImpl.WithDestructuringDeclaration) valueParameterDescriptor)
+                    .getDestructuringVariables();
+                    for (VariableDescriptor entry : entries) {
+                        handler.addVariableDescriptor(entry);
                     }
-                    for (ValueParameterDescriptor valueParameterDescriptor : descriptor.getValueParameters()) {
-                        if (valueParameterDescriptor instanceof ValueParameterDescriptorImpl.WithDestructuringDeclaration) {
-                            List<VariableDescriptor> entries =
-                                    ((ValueParameterDescriptorImpl.WithDestructuringDeclaration) valueParameterDescriptor)
-                                            .getDestructuringVariables();
-                            for (VariableDescriptor entry : entries) {
-                                handler.addVariableDescriptor(entry);
-                            }
-                        }
-                        else {
-                            handler.addVariableDescriptor(valueParameterDescriptor);
-                        }
-                    }
-                    return Unit.INSTANCE;
                 }
-        );
+                else {
+                    handler.addVariableDescriptor(valueParameterDescriptor);
+                }
+            }
+            return Unit.INSTANCE;
+        }
+               );
     }
 
     @SuppressWarnings("unchecked")

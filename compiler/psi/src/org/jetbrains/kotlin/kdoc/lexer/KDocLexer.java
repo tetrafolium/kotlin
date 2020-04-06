@@ -25,10 +25,10 @@ import java.io.Reader;
 public class KDocLexer extends MergingLexerAdapter {
     public KDocLexer() {
         super(
-                new FlexAdapter(
-                        new _KDocLexer((Reader) null)
-                ),
-                TokenSet.create(KDocTokens.TEXT, KDocTokens.CODE_BLOCK_TEXT)
+            new FlexAdapter(
+                new _KDocLexer((Reader) null)
+            ),
+            TokenSet.create(KDocTokens.TEXT, KDocTokens.CODE_BLOCK_TEXT)
         );
     }
 }

@@ -31,9 +31,9 @@ public class ResolutionCandidate<D extends CallableDescriptor> {
     private ExplicitReceiverKind explicitReceiverKind;
 
     private ResolutionCandidate(
-            @NotNull Call call, @NotNull D descriptor, @Nullable ReceiverValue dispatchReceiver,
-            @NotNull ExplicitReceiverKind explicitReceiverKind,
-            @Nullable TypeSubstitutor knownTypeParametersResultingSubstitutor
+        @NotNull Call call, @NotNull D descriptor, @Nullable ReceiverValue dispatchReceiver,
+        @NotNull ExplicitReceiverKind explicitReceiverKind,
+        @Nullable TypeSubstitutor knownTypeParametersResultingSubstitutor
     ) {
         this.call = call;
         this.candidateDescriptor = descriptor;
@@ -43,22 +43,22 @@ public class ResolutionCandidate<D extends CallableDescriptor> {
     }
 
     public static <D extends CallableDescriptor> ResolutionCandidate<D> create(
-            @NotNull Call call, @NotNull D descriptor
+        @NotNull Call call, @NotNull D descriptor
     ) {
         return new ResolutionCandidate<>(call, descriptor, null, ExplicitReceiverKind.NO_EXPLICIT_RECEIVER, null);
     }
 
     public static <D extends CallableDescriptor> ResolutionCandidate<D> create(
-            @NotNull Call call, @NotNull D descriptor, @Nullable TypeSubstitutor knownTypeParametersResultingSubstitutor
+        @NotNull Call call, @NotNull D descriptor, @Nullable TypeSubstitutor knownTypeParametersResultingSubstitutor
     ) {
         return new ResolutionCandidate<>(call, descriptor, null, ExplicitReceiverKind.NO_EXPLICIT_RECEIVER,
                                          knownTypeParametersResultingSubstitutor);
     }
 
     public static <D extends CallableDescriptor> ResolutionCandidate<D> create(
-            @NotNull Call call, @NotNull D descriptor, @Nullable ReceiverValue dispatchReceiver,
-            @NotNull ExplicitReceiverKind explicitReceiverKind,
-            @Nullable TypeSubstitutor knownTypeParametersResultingSubstitutor
+        @NotNull Call call, @NotNull D descriptor, @Nullable ReceiverValue dispatchReceiver,
+        @NotNull ExplicitReceiverKind explicitReceiverKind,
+        @Nullable TypeSubstitutor knownTypeParametersResultingSubstitutor
     ) {
         return new ResolutionCandidate<>(call, descriptor, dispatchReceiver, explicitReceiverKind, knownTypeParametersResultingSubstitutor);
     }

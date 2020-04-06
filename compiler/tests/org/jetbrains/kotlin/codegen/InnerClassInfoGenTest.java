@@ -52,7 +52,7 @@ public class InnerClassInfoGenTest extends CodegenTestCase {
         InnerClassAttribute innerC = new InnerClassAttribute("A$B$C", "A$B", "C", ACC_PUBLIC | ACC_FINAL);
         String companionObjectDefaultName = SpecialNames.DEFAULT_NAME_FOR_COMPANION_OBJECT.asString();
         InnerClassAttribute innerACompanionObject = new InnerClassAttribute(
-                "A$" + companionObjectDefaultName, "A", companionObjectDefaultName, ACC_PUBLIC | ACC_STATIC | ACC_FINAL);
+            "A$" + companionObjectDefaultName, "A", companionObjectDefaultName, ACC_PUBLIC | ACC_STATIC | ACC_FINAL);
 
         extractAndCompareInnerClasses("A", innerB, innerACompanionObject);
         extractAndCompareInnerClasses("A$B", innerB, innerC);

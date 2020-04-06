@@ -42,7 +42,7 @@ public class MaxLocalsCalculator extends MethodVisitor {
     public void visitVarInsn(int opcode, int var) {
         int n;
         if (opcode == Opcodes.LLOAD || opcode == Opcodes.DLOAD ||
-            opcode == Opcodes.LSTORE || opcode == Opcodes.DSTORE) {
+                opcode == Opcodes.LSTORE || opcode == Opcodes.DSTORE) {
             n = var + 2;
         }
         else {
@@ -62,7 +62,7 @@ public class MaxLocalsCalculator extends MethodVisitor {
 
     @Override
     public void visitLocalVariable(
-            @NotNull String name, @NotNull String desc, String signature, @NotNull Label start, @NotNull Label end, int index
+        @NotNull String name, @NotNull String desc, String signature, @NotNull Label start, @NotNull Label end, int index
     ) {
         // updates max locals
         char c = desc.charAt(0);

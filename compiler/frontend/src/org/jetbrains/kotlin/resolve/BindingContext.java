@@ -116,7 +116,7 @@ public interface BindingContext {
     WritableSlice<KtReferenceExpression, DeclarationDescriptor> REFERENCE_TARGET = new BasicWritableSlice<>(DO_NOTHING);
     // if 'A' really means 'A.Companion' then this slice stores class descriptor for A, REFERENCE_TARGET stores descriptor Companion in this case
     WritableSlice<KtReferenceExpression, ClassifierDescriptorWithTypeParameters> SHORT_REFERENCE_TO_COMPANION_OBJECT =
-            new BasicWritableSlice<>(DO_NOTHING);
+        new BasicWritableSlice<>(DO_NOTHING);
 
     WritableSlice<Call, ResolvedCall<?>> RESOLVED_CALL = new BasicWritableSlice<>(DO_NOTHING);
     WritableSlice<Call, PartialCallResolutionResult> ONLY_RESOLVED_CALL = new BasicWritableSlice<>(DO_NOTHING);
@@ -127,7 +127,7 @@ public interface BindingContext {
     WritableSlice<KtElement, Call> CALL = new BasicWritableSlice<>(DO_NOTHING);
 
     WritableSlice<KtExpression, Collection<? extends DeclarationDescriptor>> AMBIGUOUS_REFERENCE_TARGET =
-            new BasicWritableSlice<>(DO_NOTHING);
+        new BasicWritableSlice<>(DO_NOTHING);
 
     WritableSlice<KtExpression, ResolvedCall<FunctionDescriptor>> LOOP_RANGE_ITERATOR_RESOLVED_CALL = Slices.createSimpleSlice();
 
@@ -178,10 +178,10 @@ public interface BindingContext {
     WritableSlice<PropertyDescriptor, Boolean> BACKING_FIELD_REQUIRED = new SetSlice<PropertyDescriptor>(DO_NOTHING) {
         @Override
         public Boolean computeValue(
-                SlicedMap map,
-                PropertyDescriptor propertyDescriptor,
-                Boolean backingFieldRequired,
-                boolean valueNotFound
+            SlicedMap map,
+            PropertyDescriptor propertyDescriptor,
+            Boolean backingFieldRequired,
+            boolean valueNotFound
         ) {
             if (propertyDescriptor.getKind() != CallableMemberDescriptor.Kind.DECLARATION) {
                 return false;
@@ -195,7 +195,7 @@ public interface BindingContext {
             }
             if (propertyDescriptor.getModality() == Modality.ABSTRACT) return false;
             if (declarationPsiElement instanceof KtProperty &&
-                ((KtProperty) declarationPsiElement).hasDelegate()) return false;
+                    ((KtProperty) declarationPsiElement).hasDelegate()) return false;
             PropertyGetterDescriptor getter = propertyDescriptor.getGetter();
             PropertySetterDescriptor setter = propertyDescriptor.getSetter();
 
@@ -229,7 +229,7 @@ public interface BindingContext {
     WritableSlice<PsiElement, SimpleFunctionDescriptor> FUNCTION = Slices.createSimpleSlice();
     WritableSlice<PsiElement, ConstructorDescriptor> CONSTRUCTOR = Slices.createSimpleSlice();
     WritableSlice<ConstructorDescriptor, ResolvedCall<ConstructorDescriptor>> CONSTRUCTOR_RESOLVED_DELEGATION_CALL =
-            Slices.createSimpleSlice();
+        Slices.createSimpleSlice();
     WritableSlice<PsiElement, VariableDescriptor> VARIABLE = Slices.createSimpleSlice();
     WritableSlice<KtParameter, VariableDescriptor> VALUE_PARAMETER = Slices.createSimpleSlice();
     WritableSlice<KtPropertyAccessor, PropertyAccessorDescriptor> PROPERTY_ACCESSOR = Slices.createSimpleSlice();
@@ -239,15 +239,15 @@ public interface BindingContext {
     WritableSlice<PsiElement, Boolean> DEPRECATED_SHORT_NAME_ACCESS = Slices.createSimpleSlice();
 
     WritableSlice[] DECLARATIONS_TO_DESCRIPTORS = new WritableSlice[] {
-            CLASS, TYPE_PARAMETER, FUNCTION, CONSTRUCTOR, VARIABLE, VALUE_PARAMETER, PROPERTY_ACCESSOR,
-            PRIMARY_CONSTRUCTOR_PARAMETER, SCRIPT, TYPE_ALIAS
+        CLASS, TYPE_PARAMETER, FUNCTION, CONSTRUCTOR, VARIABLE, VALUE_PARAMETER, PROPERTY_ACCESSOR,
+        PRIMARY_CONSTRUCTOR_PARAMETER, SCRIPT, TYPE_ALIAS
     };
 
     @SuppressWarnings("unchecked")
     ReadOnlySlice<PsiElement, DeclarationDescriptor> DECLARATION_TO_DESCRIPTOR =
-            Slices.<PsiElement, DeclarationDescriptor>sliceBuilder()
-                    .setFurtherLookupSlices(DECLARATIONS_TO_DESCRIPTORS)
-                    .build();
+        Slices.<PsiElement, DeclarationDescriptor>sliceBuilder()
+        .setFurtherLookupSlices(DECLARATIONS_TO_DESCRIPTORS)
+        .build();
 
     WritableSlice<KtReferenceExpression, PsiElement> LABEL_TARGET = Slices.createSimpleSlice();
     WritableSlice<KtReferenceExpression, Collection<? extends PsiElement>> AMBIGUOUS_LABEL_TARGET = Slices.createSimpleSlice();
@@ -266,7 +266,7 @@ public interface BindingContext {
 
     @SuppressWarnings("UnusedDeclaration")
     @Deprecated // This field is needed only for the side effects of its initializer
-            Void _static_initializer = BasicWritableSlice.initSliceDebugNames(BindingContext.class);
+    Void _static_initializer = BasicWritableSlice.initSliceDebugNames(BindingContext.class);
 
     @NotNull
     Diagnostics getDiagnostics();

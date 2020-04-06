@@ -97,9 +97,9 @@ public class ControlStructureTypingUtils {
     private final ModuleDescriptor moduleDescriptor;
 
     public ControlStructureTypingUtils(
-            @NotNull CallResolver callResolver,
-            @NotNull DataFlowAnalyzer dataFlowAnalyzer,
-            @NotNull ModuleDescriptor moduleDescriptor
+        @NotNull CallResolver callResolver,
+        @NotNull DataFlowAnalyzer dataFlowAnalyzer,
+        @NotNull ModuleDescriptor moduleDescriptor
     ) {
         this.callResolver = callResolver;
         this.dataFlowAnalyzer = dataFlowAnalyzer;
@@ -107,38 +107,38 @@ public class ControlStructureTypingUtils {
     }
 
     /*package*/ ResolvedCall<FunctionDescriptor> resolveSpecialConstructionAsCall(
-            @NotNull Call call,
-            @NotNull ResolveConstruct construct,
-            @NotNull List<String> argumentNames,
-            @NotNull List<Boolean> isArgumentNullable,
-            @NotNull ExpressionTypingContext context,
-            @Nullable MutableDataFlowInfoForArguments dataFlowInfoForArguments
+        @NotNull Call call,
+        @NotNull ResolveConstruct construct,
+        @NotNull List<String> argumentNames,
+        @NotNull List<Boolean> isArgumentNullable,
+        @NotNull ExpressionTypingContext context,
+        @Nullable MutableDataFlowInfoForArguments dataFlowInfoForArguments
     ) {
         SimpleFunctionDescriptorImpl function = createFunctionDescriptorForSpecialConstruction(
                 construct, argumentNames, isArgumentNullable);
         TracingStrategy tracing = createTracingForSpecialConstruction(call, construct.getName(), context);
         TypeSubstitutor knownTypeParameterSubstitutor = createKnownTypeParameterSubstitutorForSpecialCall(construct, function, context.expectedType, context.languageVersionSettings);
         ResolutionCandidate<FunctionDescriptor> resolutionCandidate =
-                ResolutionCandidate.create(call, function, knownTypeParameterSubstitutor);
+            ResolutionCandidate.create(call, function, knownTypeParameterSubstitutor);
         OverloadResolutionResults<FunctionDescriptor> results = callResolver.resolveCallWithKnownCandidate(
-                call, tracing, context, resolutionCandidate, dataFlowInfoForArguments);
+                    call, tracing, context, resolutionCandidate, dataFlowInfoForArguments);
         assert results.isSingleResult() : "Not single result after resolving one known candidate";
         return results.getResultingCall();
     }
 
     private static @Nullable TypeSubstitutor createKnownTypeParameterSubstitutorForSpecialCall(
-            @NotNull ResolveConstruct construct,
-            @NotNull SimpleFunctionDescriptorImpl function,
-            @NotNull KotlinType expectedType,
-            @NotNull LanguageVersionSettings languageVersionSettings
+        @NotNull ResolveConstruct construct,
+        @NotNull SimpleFunctionDescriptorImpl function,
+        @NotNull KotlinType expectedType,
+        @NotNull LanguageVersionSettings languageVersionSettings
     ) {
         if (languageVersionSettings.supportsFeature(LanguageFeature.NewInference)
-            || construct == ResolveConstruct.ELVIS
-            || TypeUtils.noExpectedType(expectedType)
-            || TypeUtils.isDontCarePlaceholder(expectedType)
-            || KotlinBuiltIns.isUnitOrNullableUnit(expectedType)
-            || KotlinBuiltIns.isAnyOrNullableAny(expectedType)
-                ) {
+                || construct == ResolveConstruct.ELVIS
+                || TypeUtils.noExpectedType(expectedType)
+                || TypeUtils.isDontCarePlaceholder(expectedType)
+                || KotlinBuiltIns.isUnitOrNullableUnit(expectedType)
+                || KotlinBuiltIns.isAnyOrNullableAny(expectedType)
+           ) {
             return null;
         }
 
@@ -148,16 +148,16 @@ public class ControlStructureTypingUtils {
     }
 
     private SimpleFunctionDescriptorImpl createFunctionDescriptorForSpecialConstruction(
-            @NotNull ResolveConstruct construct,
-            @NotNull List<String> argumentNames,
-            @NotNull List<Boolean> isArgumentNullable
+        @NotNull ResolveConstruct construct,
+        @NotNull List<String> argumentNames,
+        @NotNull List<Boolean> isArgumentNullable
     ) {
         assert argumentNames.size() == isArgumentNullable.size();
 
         SimpleFunctionDescriptorImpl function = SimpleFunctionDescriptorImpl.create(
                 moduleDescriptor, Annotations.Companion.getEMPTY(), construct.getSpecialFunctionName(),
                 CallableMemberDescriptor.Kind.DECLARATION, SourceElement.NO_SOURCE
-        );
+                                                );
 
         TypeParameterDescriptor typeParameter = TypeParameterDescriptorImpl.createWithDefaultBound(
                 function, Annotations.Companion.getEMPTY(), false, Variance.INVARIANT,
@@ -170,24 +170,24 @@ public class ControlStructureTypingUtils {
         for (int i = 0; i < argumentNames.size(); i++) {
             KotlinType argumentType = isArgumentNullable.get(i) ? nullableType : type;
             ValueParameterDescriptorImpl valueParameter = new ValueParameterDescriptorImpl(
-                    function, null, i, Annotations.Companion.getEMPTY(), Name.identifier(argumentNames.get(i)),
-                    argumentType,
-                    /* declaresDefaultValue = */ false,
-                    /* isCrossinline = */ false,
-                    /* isNoinline = */ false,
-                    null, SourceElement.NO_SOURCE
+                function, null, i, Annotations.Companion.getEMPTY(), Name.identifier(argumentNames.get(i)),
+                argumentType,
+                /* declaresDefaultValue = */ false,
+                /* isCrossinline = */ false,
+                /* isNoinline = */ false,
+                null, SourceElement.NO_SOURCE
             );
             valueParameters.add(valueParameter);
         }
         KotlinType returnType = construct != ResolveConstruct.ELVIS ? type : TypeUtilsKt.replaceAnnotations(type, AnnotationsForResolveKt.getExactInAnnotations());
         function.initialize(
-                null,
-                null,
-                Lists.newArrayList(typeParameter),
-                valueParameters,
-                returnType,
-                Modality.FINAL,
-                Visibilities.PUBLIC
+            null,
+            null,
+            Lists.newArrayList(typeParameter),
+            valueParameters,
+            returnType,
+            Modality.FINAL,
+            Visibilities.PUBLIC
         );
         return function;
     }
@@ -196,8 +196,8 @@ public class ControlStructureTypingUtils {
         public final Map<ValueArgument, DataFlowInfo> dataFlowInfoForArgumentsMap;
 
         ControlStructureDataFlowInfo(
-                @NotNull DataFlowInfo initialDataFlowInfo,
-                @NotNull Map<ValueArgument, DataFlowInfo> map
+            @NotNull DataFlowInfo initialDataFlowInfo,
+            @NotNull Map<ValueArgument, DataFlowInfo> map
         ) {
             super(initialDataFlowInfo);
             dataFlowInfoForArgumentsMap = map;
@@ -220,17 +220,17 @@ public class ControlStructureTypingUtils {
     }
 
     private static MutableDataFlowInfoForArguments createIndependentDataFlowInfoForArgumentsForCall(
-            @NotNull DataFlowInfo initialDataFlowInfo,
-            @NotNull Map<ValueArgument, DataFlowInfo> dataFlowInfoForArgumentsMap
+        @NotNull DataFlowInfo initialDataFlowInfo,
+        @NotNull Map<ValueArgument, DataFlowInfo> dataFlowInfoForArgumentsMap
     ) {
         return new ControlStructureDataFlowInfo(initialDataFlowInfo, dataFlowInfoForArgumentsMap);
     }
 
     public static MutableDataFlowInfoForArguments createDataFlowInfoForArgumentsForIfCall(
-            @NotNull Call callForIf,
-            @NotNull DataFlowInfo conditionInfo,
-            @NotNull DataFlowInfo thenInfo,
-            @NotNull DataFlowInfo elseInfo
+        @NotNull Call callForIf,
+        @NotNull DataFlowInfo conditionInfo,
+        @NotNull DataFlowInfo thenInfo,
+        @NotNull DataFlowInfo elseInfo
     ) {
         Map<ValueArgument, DataFlowInfo> dataFlowInfoForArgumentsMap = new HashMap<>();
         dataFlowInfoForArgumentsMap.put(callForIf.getValueArguments().get(0), thenInfo);
@@ -239,9 +239,9 @@ public class ControlStructureTypingUtils {
     }
 
     public static MutableDataFlowInfoForArguments createDataFlowInfoForArgumentsOfWhenCall(
-            @NotNull Call callForWhen,
-            @NotNull DataFlowInfo subjectDataFlowInfo,
-            @NotNull List<DataFlowInfo> entryDataFlowInfos
+        @NotNull Call callForWhen,
+        @NotNull DataFlowInfo subjectDataFlowInfo,
+        @NotNull List<DataFlowInfo> entryDataFlowInfos
     ) {
         Map<ValueArgument, DataFlowInfo> dataFlowInfoForArgumentsMap = new HashMap<>();
         int i = 0;
@@ -253,9 +253,9 @@ public class ControlStructureTypingUtils {
     }
 
     /*package*/ static Call createCallForSpecialConstruction(
-            @NotNull KtExpression expression,
-            @NotNull KtExpression calleeExpression,
-            @NotNull List<? extends KtExpression> arguments
+        @NotNull KtExpression expression,
+        @NotNull KtExpression calleeExpression,
+        @NotNull List<? extends KtExpression> arguments
     ) {
         List<ValueArgument> valueArguments = Lists.newArrayList();
         for (KtExpression argument : arguments) {
@@ -332,9 +332,9 @@ public class ControlStructureTypingUtils {
 
     @NotNull
     private TracingStrategy createTracingForSpecialConstruction(
-            @NotNull Call call,
-            @NotNull String constructionName,
-            @NotNull ExpressionTypingContext context
+        @NotNull Call call,
+        @NotNull String constructionName,
+        @NotNull ExpressionTypingContext context
     ) {
         class CheckTypeContext {
             public BindingTrace trace;
@@ -358,14 +358,14 @@ public class ControlStructureTypingUtils {
 
                 Ref<Boolean> hasError = Ref.create();
                 dataFlowAnalyzer.checkType(
-                        typeInfo.getType(),
-                        expression,
-                        context
-                                .replaceExpectedType(c.expectedType)
-                                .replaceDataFlowInfo(typeInfo.getDataFlowInfo())
-                                .replaceBindingTrace(c.trace),
-                        hasError,
-                        true
+                    typeInfo.getType(),
+                    expression,
+                    context
+                    .replaceExpectedType(c.expectedType)
+                    .replaceDataFlowInfo(typeInfo.getDataFlowInfo())
+                    .replaceBindingTrace(c.trace),
+                    hasError,
+                    true
                 );
                 return hasError.get();
             }
@@ -376,8 +376,8 @@ public class ControlStructureTypingUtils {
             }
 
             private boolean checkSubExpressions(
-                    KtExpression firstSub, KtExpression secondSub, KtExpression expression,
-                    CheckTypeContext firstContext, CheckTypeContext secondContext, CheckTypeContext context
+                KtExpression firstSub, KtExpression secondSub, KtExpression expression,
+                CheckTypeContext firstContext, CheckTypeContext secondContext, CheckTypeContext context
             ) {
                 boolean errorWasReported = checkExpressionTypeRecursively(firstSub, firstContext);
                 errorWasReported |= checkExpressionTypeRecursively(secondSub, secondContext);
@@ -445,7 +445,7 @@ public class ControlStructureTypingUtils {
         return new ThrowingOnErrorTracingStrategy("resolve " + constructionName + " as a call") {
             @Override
             public <D extends CallableDescriptor> void bindReference(
-                    @NotNull BindingTrace trace, @NotNull ResolvedCall<D> resolvedCall
+                @NotNull BindingTrace trace, @NotNull ResolvedCall<D> resolvedCall
             ) {
                 //do nothing
             }
@@ -457,14 +457,14 @@ public class ControlStructureTypingUtils {
 
             @Override
             public <D extends CallableDescriptor> void bindResolvedCall(
-                    @NotNull BindingTrace trace, @NotNull ResolvedCall<D> resolvedCall
+                @NotNull BindingTrace trace, @NotNull ResolvedCall<D> resolvedCall
             ) {
                 trace.record(RESOLVED_CALL, call, resolvedCall);
             }
 
             @Override
             public void typeInferenceFailed(
-                    @NotNull ResolutionContext<?> context, @NotNull InferenceErrorData data
+                @NotNull ResolutionContext<?> context, @NotNull InferenceErrorData data
             ) {
                 ConstraintSystem constraintSystem = data.constraintSystem;
                 ConstraintSystemStatus status = constraintSystem.getStatus();
@@ -493,9 +493,9 @@ public class ControlStructureTypingUtils {
             }
 
             private boolean noTypeCheckingErrorsInExpression(
-                    KtExpression expression,
-                    @NotNull BindingTrace trace,
-                    @NotNull KotlinType expectedType
+                KtExpression expression,
+                @NotNull BindingTrace trace,
+                @NotNull KotlinType expectedType
             ) {
                 return Boolean.TRUE != expression.accept(checkTypeVisitor, new CheckTypeContext(trace, expectedType));
             }
@@ -528,31 +528,31 @@ public class ControlStructureTypingUtils {
 
         @Override
         public <D extends CallableDescriptor> void unresolvedReferenceWrongReceiver(
-                @NotNull BindingTrace trace, @NotNull Collection<? extends ResolvedCall<D>> candidates
+            @NotNull BindingTrace trace, @NotNull Collection<? extends ResolvedCall<D>> candidates
         ) {
             logError();
         }
 
         @Override
         public <D extends CallableDescriptor> void recordAmbiguity(
-                @NotNull BindingTrace trace, @NotNull Collection<? extends ResolvedCall<D>> candidates
+            @NotNull BindingTrace trace, @NotNull Collection<? extends ResolvedCall<D>> candidates
         ) {
             logError();
         }
 
         @Override
         public void missingReceiver(
-                @NotNull BindingTrace trace, @NotNull ReceiverParameterDescriptor expectedReceiver
+            @NotNull BindingTrace trace, @NotNull ReceiverParameterDescriptor expectedReceiver
         ) {
             logError();
         }
 
         @Override
         public void wrongReceiverType(
-                @NotNull BindingTrace trace,
-                @NotNull ReceiverParameterDescriptor receiverParameter,
-                @NotNull ReceiverValue receiverArgument,
-                @NotNull ResolutionContext<?> c
+            @NotNull BindingTrace trace,
+            @NotNull ReceiverParameterDescriptor receiverParameter,
+            @NotNull ReceiverValue receiverArgument,
+            @NotNull ResolutionContext<?> c
         ) {
             logError();
         }
@@ -564,7 +564,7 @@ public class ControlStructureTypingUtils {
 
         @Override
         public void noValueForParameter(
-                @NotNull BindingTrace trace, @NotNull ValueParameterDescriptor valueParameter
+            @NotNull BindingTrace trace, @NotNull ValueParameterDescriptor valueParameter
         ) {
             logError();
         }
@@ -576,21 +576,21 @@ public class ControlStructureTypingUtils {
 
         @Override
         public <D extends CallableDescriptor> void ambiguity(
-                @NotNull BindingTrace trace, @NotNull Collection<? extends ResolvedCall<D>> descriptors
+            @NotNull BindingTrace trace, @NotNull Collection<? extends ResolvedCall<D>> descriptors
         ) {
             logError();
         }
 
         @Override
         public <D extends CallableDescriptor> void noneApplicable(
-                @NotNull BindingTrace trace, @NotNull Collection<? extends ResolvedCall<D>> descriptors
+            @NotNull BindingTrace trace, @NotNull Collection<? extends ResolvedCall<D>> descriptors
         ) {
             logError();
         }
 
         @Override
         public <D extends CallableDescriptor> void cannotCompleteResolve(
-                @NotNull BindingTrace trace, @NotNull Collection<? extends ResolvedCall<D>> descriptors
+            @NotNull BindingTrace trace, @NotNull Collection<? extends ResolvedCall<D>> descriptors
         ) {
             logError();
         }
@@ -607,29 +607,29 @@ public class ControlStructureTypingUtils {
 
         @Override
         public void nestedClassAccessViaInstanceReference(
-                @NotNull BindingTrace trace, @NotNull ClassDescriptor classDescriptor,
-                @NotNull ExplicitReceiverKind explicitReceiverKind
+            @NotNull BindingTrace trace, @NotNull ClassDescriptor classDescriptor,
+            @NotNull ExplicitReceiverKind explicitReceiverKind
         ) {
             logError();
         }
 
         @Override
         public void unsafeCall(
-                @NotNull BindingTrace trace, @NotNull KotlinType type, boolean isCallForImplicitInvoke
+            @NotNull BindingTrace trace, @NotNull KotlinType type, boolean isCallForImplicitInvoke
         ) {
             logError();
         }
 
         @Override
         public void invisibleMember(
-                @NotNull BindingTrace trace, @NotNull DeclarationDescriptorWithVisibility descriptor
+            @NotNull BindingTrace trace, @NotNull DeclarationDescriptorWithVisibility descriptor
         ) {
             logError();
         }
 
         @Override
         public void typeInferenceFailed(
-                @NotNull ResolutionContext<?> context, @NotNull InferenceErrorData inferenceErrorData
+            @NotNull ResolutionContext<?> context, @NotNull InferenceErrorData inferenceErrorData
         ) {
             logError();
         }

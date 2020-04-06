@@ -49,10 +49,10 @@ public class TailRecursionCodegen {
     private final GenerationState state;
 
     public TailRecursionCodegen(
-            @NotNull MethodContext context,
-            @NotNull ExpressionCodegen codegen,
-            @NotNull InstructionAdapter v,
-            @NotNull GenerationState state
+        @NotNull MethodContext context,
+        @NotNull ExpressionCodegen codegen,
+        @NotNull InstructionAdapter v,
+        @NotNull GenerationState state
     ) {
         this.context = context;
         this.codegen = codegen;
@@ -98,9 +98,9 @@ public class TailRecursionCodegen {
     }
 
     private void assignParameterValues(
-            CallableDescriptor fd,
-            CallableMethod callableMethod,
-            List<ResolvedValueArgument> valueArguments
+        CallableDescriptor fd,
+        CallableMethod callableMethod,
+        List<ResolvedValueArgument> valueArguments
     ) {
         List<Type> types = callableMethod.getValueParameterTypes();
         for (ValueParameterDescriptor parameterDescriptor : Lists.reverse(fd.getValueParameters())) {

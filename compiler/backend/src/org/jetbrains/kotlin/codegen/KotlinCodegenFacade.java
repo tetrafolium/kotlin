@@ -27,8 +27,8 @@ import java.util.Collection;
 public class KotlinCodegenFacade {
 
     public static void compileCorrectFiles(
-            @NotNull GenerationState state,
-            @NotNull CompilationErrorHandler errorHandler
+        @NotNull GenerationState state,
+        @NotNull CompilationErrorHandler errorHandler
     ) {
         ProgressIndicatorAndCompilationCanceledStatus.checkCanceled();
 
@@ -40,9 +40,9 @@ public class KotlinCodegenFacade {
     }
 
     public static void doGenerateFiles(
-            @NotNull Collection<KtFile> files,
-            @NotNull GenerationState state,
-            @NotNull CompilationErrorHandler errorHandler
+        @NotNull Collection<KtFile> files,
+        @NotNull GenerationState state,
+        @NotNull CompilationErrorHandler errorHandler
     ) {
         state.getCodegenFactory().generateModule(state, files, errorHandler);
 
@@ -51,10 +51,10 @@ public class KotlinCodegenFacade {
     }
 
     public static void generatePackage(
-            @NotNull GenerationState state,
-            @NotNull FqName packageFqName,
-            @NotNull Collection<KtFile> jetFiles,
-            @NotNull CompilationErrorHandler errorHandler
+        @NotNull GenerationState state,
+        @NotNull FqName packageFqName,
+        @NotNull Collection<KtFile> jetFiles,
+        @NotNull CompilationErrorHandler errorHandler
     ) {
         DefaultCodegenFactory.INSTANCE.generatePackage(state, packageFqName, jetFiles, errorHandler);
     }

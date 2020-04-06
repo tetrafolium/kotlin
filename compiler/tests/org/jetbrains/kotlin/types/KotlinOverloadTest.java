@@ -60,91 +60,91 @@ public class KotlinOverloadTest extends KotlinTestWithEnvironment {
 
     public void testBasic() throws Exception {
         assertNotOverloadable(
-                "fun a() : Int",
-                "fun a() : Int");
+            "fun a() : Int",
+            "fun a() : Int");
 
         assertNotOverloadable(
-                "fun a() : Int",
-                "fun a() : Any");
+            "fun a() : Int",
+            "fun a() : Any");
 
         assertNotOverloadable(
-                "fun <T1> a() : T1",
-                "fun <T> a() : T");
+            "fun <T1> a() : T1",
+            "fun <T> a() : T");
 
         assertNotOverloadable(
-                "fun <T1> a(a : T1) : T1",
-                "fun <T> a(a : T) : T");
+            "fun <T1> a(a : T1) : T1",
+            "fun <T> a(a : T) : T");
 
         assertNotOverloadable(
-                "fun <T1, X : T1> a(a : T1) : T1",
-                "fun <T, Y : T> a(a : T) : T");
+            "fun <T1, X : T1> a(a : T1) : T1",
+            "fun <T, Y : T> a(a : T) : T");
 
         assertNotOverloadable(
-                "fun <T1, X : T1> a(a : T1) : T1",
-                "fun <T, Y : T> a(a : T) : Y");
+            "fun <T1, X : T1> a(a : T1) : T1",
+            "fun <T, Y : T> a(a : T) : Y");
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
         assertNotOverloadable(
-                "fun a() : Int",
-                "fun a() : Any");
+            "fun a() : Int",
+            "fun a() : Any");
 
         assertOverloadable(
-                "fun a(a : Int) : Int",
-                "fun a() : Int");
+            "fun a(a : Int) : Int",
+            "fun a() : Int");
 
         assertOverloadable(
-                "fun a() : Int",
-                "fun a(a : Int) : Int");
+            "fun a() : Int",
+            "fun a(a : Int) : Int");
 
         assertOverloadable(
-                "fun a(a : Int?) : Int",
-                "fun a(a : Int) : Int");
+            "fun a(a : Int?) : Int",
+            "fun a(a : Int) : Int");
 
         assertOverloadable(
-                "fun <T> a(a : Int) : Int",
-                "fun a(a : Int) : Int");
+            "fun <T> a(a : Int) : Int",
+            "fun a(a : Int) : Int");
 
         assertNotOverloadable(
-                "fun <T1, X : T1> a(a : T1) : T1",
-                "fun <T, Y> a(a : T) : T");
+            "fun <T1, X : T1> a(a : T1) : T1",
+            "fun <T, Y> a(a : T) : T");
 
         assertNotOverloadable(
-                "fun <T1, X : T1> a(a : T1) : T1",
-                "fun <T, Y : T> a(a : Y) : T");
+            "fun <T1, X : T1> a(a : T1) : T1",
+            "fun <T, Y : T> a(a : Y) : T");
 
         assertNotOverloadable(
-                "fun <T1, X : T1> a(a : T1) : X",
-                "fun <T, Y : T> a(a : T) : T");
+            "fun <T1, X : T1> a(a : T1) : X",
+            "fun <T, Y : T> a(a : T) : T");
 
         assertNotOverloadable(
-                "fun <T1, X : Array<out T1>> a(a : Array<in T1>) : T1",
-                "fun <T, Y : Array<out T>> a(a : Array<in T>) : T");
+            "fun <T1, X : Array<out T1>> a(a : Array<in T1>) : T1",
+            "fun <T, Y : Array<out T>> a(a : Array<in T>) : T");
 
         assertNotOverloadable(
-                "fun <T1, X : Array<T1>> a(a : Array<in T1>) : T1",
-                "fun <T, Y : Array<out T>> a(a : Array<in T>) : T");
+            "fun <T1, X : Array<T1>> a(a : Array<in T1>) : T1",
+            "fun <T, Y : Array<out T>> a(a : Array<in T>) : T");
 
         assertNotOverloadable(
-                "fun <T1, X : Array<out T1>> a(a : Array<in T1>) : T1",
-                "fun <T, Y : Array<in T>> a(a : Array<in T>) : T");
+            "fun <T1, X : Array<out T1>> a(a : Array<in T1>) : T1",
+            "fun <T, Y : Array<in T>> a(a : Array<in T>) : T");
 
         assertNotOverloadable(
-                "fun <T1, X : Array<out T1>> a(a : Array<in T1>) : T1",
-                "fun <T, Y : Array<*>> a(a : Array<in T>) : T");
+            "fun <T1, X : Array<out T1>> a(a : Array<in T1>) : T1",
+            "fun <T, Y : Array<*>> a(a : Array<in T>) : T");
 
         assertNotOverloadable(
-                "fun <T1, X : Array<out T1>> a(a : Array<in T1>) : T1",
-                "fun <T, Y : Array<out T>> a(a : Array<out T>) : T");
+            "fun <T1, X : Array<out T1>> a(a : Array<in T1>) : T1",
+            "fun <T, Y : Array<out T>> a(a : Array<out T>) : T");
 
         assertNotOverloadable(
-                "fun <T1, X : Array<out T1>> a(a : Array<*>) : T1",
-                "fun <T, Y : Array<out T>> a(a : Array<in T>) : T");
+            "fun <T1, X : Array<out T1>> a(a : Array<*>) : T1",
+            "fun <T, Y : Array<out T>> a(a : Array<in T>) : T");
 
         assertOverloadable(
-                "fun ff() : Int",
-                "fun Int.ff() : Int"
+            "fun ff() : Int",
+            "fun Int.ff() : Int"
         );
     }
 
@@ -171,7 +171,7 @@ public class KotlinOverloadTest extends KotlinTestWithEnvironment {
         KtNamedFunction function = KtPsiFactoryKt.KtPsiFactory(getProject()).createFunction(funDecl);
         LexicalScope scope = TypeTestUtilsKt.builtInPackageAsLexicalScope(module);
         return functionDescriptorResolver.resolveFunctionDescriptor(
-                module, scope, function, KotlinTestUtils.DUMMY_TRACE, DataFlowInfoFactory.EMPTY
-        );
+                   module, scope, function, KotlinTestUtils.DUMMY_TRACE, DataFlowInfoFactory.EMPTY
+               );
     }
 }

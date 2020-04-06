@@ -51,20 +51,24 @@ public enum Nullability {
     @NotNull
     public Nullability refine(@NotNull Nullability other) {
         switch (this) {
-            case UNKNOWN:
-                return other;
-            case IMPOSSIBLE:
-                return other;
-            case NULL:
-                switch (other) {
-                    case NOT_NULL: return NOT_NULL;
-                    default: return NULL;
-                }
+        case UNKNOWN:
+            return other;
+        case IMPOSSIBLE:
+            return other;
+        case NULL:
+            switch (other) {
             case NOT_NULL:
-                switch (other) {
-                    case NULL: return NOT_NULL;
-                    default: return NOT_NULL;
-                }
+                return NOT_NULL;
+            default:
+                return NULL;
+            }
+        case NOT_NULL:
+            switch (other) {
+            case NULL:
+                return NOT_NULL;
+            default:
+                return NOT_NULL;
+            }
         }
         throw new IllegalStateException();
     }
@@ -72,14 +76,14 @@ public enum Nullability {
     @NotNull
     public Nullability invert() {
         switch (this) {
-            case NULL:
-                return NOT_NULL;
-            case NOT_NULL:
-                return UNKNOWN;
-            case UNKNOWN:
-                return UNKNOWN;
-            case IMPOSSIBLE:
-                return UNKNOWN;
+        case NULL:
+            return NOT_NULL;
+        case NOT_NULL:
+            return UNKNOWN;
+        case UNKNOWN:
+            return UNKNOWN;
+        case IMPOSSIBLE:
+            return UNKNOWN;
         }
         throw new IllegalStateException();
     }

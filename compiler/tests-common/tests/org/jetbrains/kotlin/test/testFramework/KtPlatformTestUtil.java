@@ -59,7 +59,7 @@ public class KtPlatformTestUtil {
             }
             else {
                 @SuppressWarnings({"deprecation", "UnnecessaryLocalVariable"}) String presentation =
-                        ((AbstractTreeNode) node).getTestPresentation();
+                    ((AbstractTreeNode) node).getTestPresentation();
                 return presentation;
             }
         }

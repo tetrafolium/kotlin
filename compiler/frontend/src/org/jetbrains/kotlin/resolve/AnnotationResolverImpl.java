@@ -57,9 +57,9 @@ public class AnnotationResolverImpl extends AnnotationResolver {
     @NotNull private final ConstantExpressionEvaluator constantExpressionEvaluator;
 
     public AnnotationResolverImpl(
-            @NotNull CallResolver callResolver,
-            @NotNull ConstantExpressionEvaluator constantExpressionEvaluator,
-            @NotNull StorageManager storageManager
+        @NotNull CallResolver callResolver,
+        @NotNull ConstantExpressionEvaluator constantExpressionEvaluator,
+        @NotNull StorageManager storageManager
     ) {
         this.callResolver = callResolver;
         this.constantExpressionEvaluator = constantExpressionEvaluator;
@@ -77,10 +77,10 @@ public class AnnotationResolverImpl extends AnnotationResolver {
     @NotNull
     @Override
     public Annotations resolveAnnotationEntries(
-            @NotNull LexicalScope scope,
-            @NotNull List<KtAnnotationEntry> annotationEntryElements,
-            @NotNull BindingTrace trace,
-            boolean shouldResolveArguments
+        @NotNull LexicalScope scope,
+        @NotNull List<KtAnnotationEntry> annotationEntryElements,
+        @NotNull BindingTrace trace,
+        boolean shouldResolveArguments
     ) {
         if (annotationEntryElements.isEmpty()) return Annotations.Companion.getEMPTY();
 
@@ -110,9 +110,9 @@ public class AnnotationResolverImpl extends AnnotationResolver {
     @Override
     @NotNull
     public KotlinType resolveAnnotationType(
-            @NotNull LexicalScope scope,
-            @NotNull KtAnnotationEntry entryElement,
-            @NotNull BindingTrace trace
+        @NotNull LexicalScope scope,
+        @NotNull KtAnnotationEntry entryElement,
+        @NotNull BindingTrace trace
     ) {
         KtTypeReference typeReference = entryElement.getTypeReference();
         if (typeReference == null) {
@@ -127,9 +127,9 @@ public class AnnotationResolverImpl extends AnnotationResolver {
     }
 
     public static void checkAnnotationType(
-            @NotNull KtAnnotationEntry entryElement,
-            @NotNull BindingTrace trace,
-            @NotNull OverloadResolutionResults<FunctionDescriptor> results
+        @NotNull KtAnnotationEntry entryElement,
+        @NotNull BindingTrace trace,
+        @NotNull OverloadResolutionResults<FunctionDescriptor> results
     ) {
         if (!results.isSingleResult()) return;
         FunctionDescriptor descriptor = results.getResultingDescriptor();
@@ -150,21 +150,21 @@ public class AnnotationResolverImpl extends AnnotationResolver {
     @Override
     @NotNull
     public OverloadResolutionResults<FunctionDescriptor> resolveAnnotationCall(
-            @NotNull KtAnnotationEntry annotationEntry,
-            @NotNull LexicalScope scope,
-            @NotNull BindingTrace trace
+        @NotNull KtAnnotationEntry annotationEntry,
+        @NotNull LexicalScope scope,
+        @NotNull BindingTrace trace
     ) {
         if (PsiTreeUtil.getParentOfType(annotationEntry, KtAnnotationEntry.class) != null) {
             trace.report(ANNOTATION_USED_AS_ANNOTATION_ARGUMENT.on(annotationEntry));
         }
 
         return callResolver.resolveFunctionCall(
-                trace, scope,
-                CallMaker.makeCall(null, null, annotationEntry),
-                NO_EXPECTED_TYPE,
-                DataFlowInfoFactory.EMPTY,
-                true
-        );
+                   trace, scope,
+                   CallMaker.makeCall(null, null, annotationEntry),
+                   NO_EXPECTED_TYPE,
+                   DataFlowInfoFactory.EMPTY,
+                   true
+               );
     }
 
     public static void reportUnsupportedAnnotationForTypeParameter(@NotNull KtTypeParameter jetTypeParameter, @NotNull BindingTrace trace) {
@@ -179,9 +179,9 @@ public class AnnotationResolverImpl extends AnnotationResolver {
     @Override
     @Nullable
     public ConstantValue<?> getAnnotationArgumentValue(
-            @NotNull BindingTrace trace,
-            @NotNull ValueParameterDescriptor valueParameter,
-            @NotNull ResolvedValueArgument resolvedArgument
+        @NotNull BindingTrace trace,
+        @NotNull ValueParameterDescriptor valueParameter,
+        @NotNull ResolvedValueArgument resolvedArgument
     ) {
         return constantExpressionEvaluator.getAnnotationArgumentValue(trace, valueParameter, resolvedArgument);
     }

@@ -75,14 +75,14 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
     protected Type superClassAsmType;
 
     public ClosureCodegen(
-            @NotNull GenerationState state,
-            @NotNull KtElement element,
-            @Nullable SamType samType,
-            @NotNull ClosureContext context,
-            @Nullable FunctionDescriptor functionReferenceTarget,
-            @NotNull FunctionGenerationStrategy strategy,
-            @NotNull MemberCodegen<?> parentCodegen,
-            @NotNull ClassBuilder classBuilder
+        @NotNull GenerationState state,
+        @NotNull KtElement element,
+        @Nullable SamType samType,
+        @NotNull ClosureContext context,
+        @Nullable FunctionDescriptor functionReferenceTarget,
+        @NotNull FunctionGenerationStrategy strategy,
+        @NotNull MemberCodegen<?> parentCodegen,
+        @NotNull ClassBuilder classBuilder
     ) {
         super(state, parentCodegen, context, element, classBuilder);
 
@@ -143,13 +143,13 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
         }
 
         v.defineClass(
-                element,
-                state.getClassFileVersion(),
-                ACC_FINAL | ACC_SUPER | visibilityFlag | getSyntheticAccessFlagForLambdaClass(classDescriptor),
-                asmType.getInternalName(),
-                sw.makeJavaGenericSignature(),
-                superClassAsmType.getInternalName(),
-                superInterfaceAsmTypes
+            element,
+            state.getClassFileVersion(),
+            ACC_FINAL | ACC_SUPER | visibilityFlag | getSyntheticAccessFlagForLambdaClass(classDescriptor),
+            asmType.getInternalName(),
+            sw.makeJavaGenericSignature(),
+            superClassAsmType.getInternalName(),
+            superInterfaceAsmTypes
         );
 
         initDefaultSourceMappingIfNeeded(context, this, state);
@@ -185,7 +185,7 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
         }
 
         functionCodegen.generateDefaultIfNeeded(
-                context.intoFunction(funDescriptor), funDescriptor, context.getContextKind(), DefaultParameterValueLoader.DEFAULT, null
+            context.intoFunction(funDescriptor), funDescriptor, context.getContextKind(), DefaultParameterValueLoader.DEFAULT, null
         );
     }
 
@@ -201,12 +201,12 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
         List<KotlinType> bridgeParameterKotlinTypes = CollectionsKt.map(erasedInterfaceFunction.getValueParameters(), ValueDescriptor::getType);
 
         generateBridge(
-                typeMapper.mapAsmMethod(erasedInterfaceFunction),
-                bridgeParameterKotlinTypes,
-                erasedInterfaceFunction.getReturnType(),
-                typeMapper.mapAsmMethod(funDescriptor),
-                funDescriptor.getReturnType(),
-                JvmCodegenUtil.isDeclarationOfBigArityFunctionInvoke(erasedInterfaceFunction)
+            typeMapper.mapAsmMethod(erasedInterfaceFunction),
+            bridgeParameterKotlinTypes,
+            erasedInterfaceFunction.getReturnType(),
+            typeMapper.mapAsmMethod(funDescriptor),
+            funDescriptor.getReturnType(),
+            JvmCodegenUtil.isDeclarationOfBigArityFunctionInvoke(erasedInterfaceFunction)
         );
 
         //TODO: rewrite cause ugly hack
@@ -216,9 +216,9 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
     }
 
     static void generateBridgesForSAM(
-            FunctionDescriptor erasedInterfaceFunction,
-            FunctionDescriptor descriptor,
-            FunctionCodegen codegen
+        FunctionDescriptor erasedInterfaceFunction,
+        FunctionDescriptor descriptor,
+        FunctionCodegen codegen
     ) {
         SimpleFunctionDescriptorImpl descriptorForBridges = SimpleFunctionDescriptorImpl
                 .create(descriptor.getContainingDeclaration(), descriptor.getAnnotations(),
@@ -226,9 +226,9 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
                         CallableMemberDescriptor.Kind.DECLARATION, descriptor.getSource());
 
         descriptorForBridges
-                .initialize(null, erasedInterfaceFunction.getDispatchReceiverParameter(), erasedInterfaceFunction.getTypeParameters(),
-                            erasedInterfaceFunction.getValueParameters(), erasedInterfaceFunction.getReturnType(),
-                            Modality.OPEN, erasedInterfaceFunction.getVisibility());
+        .initialize(null, erasedInterfaceFunction.getDispatchReceiverParameter(), erasedInterfaceFunction.getTypeParameters(),
+                    erasedInterfaceFunction.getValueParameters(), erasedInterfaceFunction.getReturnType(),
+                    Modality.OPEN, erasedInterfaceFunction.getVisibility());
 
         DescriptorUtilsKt.setSingleOverridden(descriptorForBridges, erasedInterfaceFunction);
         codegen.generateBridges(descriptorForBridges);
@@ -244,7 +244,7 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
         v.getSerializationBindings().put(METHOD_FOR_FUNCTION, freeLambdaDescriptor, method);
 
         DescriptorSerializer serializer =
-                DescriptorSerializer.createForLambda(new JvmSerializerExtension(v.getSerializationBindings(), state));
+            DescriptorSerializer.createForLambda(new JvmSerializerExtension(v.getSerializationBindings(), state));
 
         ProtoBuf.Function.Builder builder = serializer.functionProto(freeLambdaDescriptor);
         if (builder == null) return;
@@ -265,37 +265,37 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
     @NotNull
     public StackValue putInstanceOnStack(@NotNull ExpressionCodegen codegen, @Nullable StackValue functionReferenceReceiver) {
         return StackValue.operation(
-                functionReferenceTarget != null ? K_FUNCTION : asmType,
-                v -> {
-                    if (isConst(closure)) {
-                        v.getstatic(asmType.getInternalName(), JvmAbi.INSTANCE_FIELD, asmType.getDescriptor());
-                    }
-                    else {
-                        v.anew(asmType);
-                        v.dup();
+                   functionReferenceTarget != null ? K_FUNCTION : asmType,
+        v -> {
+            if (isConst(closure)) {
+                v.getstatic(asmType.getInternalName(), JvmAbi.INSTANCE_FIELD, asmType.getDescriptor());
+            }
+            else {
+                v.anew(asmType);
+                v.dup();
 
-                        codegen.pushClosureOnStack(classDescriptor, true, codegen.defaultCallGenerator, functionReferenceReceiver);
-                        v.invokespecial(asmType.getInternalName(), "<init>", constructor.getDescriptor(), false);
-                    }
+                codegen.pushClosureOnStack(classDescriptor, true, codegen.defaultCallGenerator, functionReferenceReceiver);
+                v.invokespecial(asmType.getInternalName(), "<init>", constructor.getDescriptor(), false);
+            }
 
-                    return Unit.INSTANCE;
-                }
-        );
+            return Unit.INSTANCE;
+        }
+               );
     }
 
     protected void generateBridge(
-            @NotNull Method bridge,
-            @NotNull List<KotlinType> bridgeParameterKotlinTypes,
-            @Nullable KotlinType bridgeReturnType,
-            @NotNull Method delegate,
-            @Nullable KotlinType delegateReturnType,
-            boolean isVarargInvoke
+        @NotNull Method bridge,
+        @NotNull List<KotlinType> bridgeParameterKotlinTypes,
+        @Nullable KotlinType bridgeReturnType,
+        @NotNull Method delegate,
+        @Nullable KotlinType delegateReturnType,
+        boolean isVarargInvoke
     ) {
         if (bridge.equals(delegate)) return;
 
         MethodVisitor mv =
-                v.newMethod(JvmDeclarationOriginKt.OtherOrigin(element, funDescriptor), ACC_PUBLIC | ACC_BRIDGE | ACC_SYNTHETIC,
-                            bridge.getName(), bridge.getDescriptor(), null, ArrayUtil.EMPTY_STRING_ARRAY);
+            v.newMethod(JvmDeclarationOriginKt.OtherOrigin(element, funDescriptor), ACC_PUBLIC | ACC_BRIDGE | ACC_SYNTHETIC,
+                        bridge.getName(), bridge.getDescriptor(), null, ArrayUtil.EMPTY_STRING_ARRAY);
 
         if (!state.getClassBuilderMode().generateBodies) return;
 
@@ -307,20 +307,20 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
         Type[] bridgeParameterTypes = bridge.getArgumentTypes();
         if (isVarargInvoke) {
             assert bridgeParameterTypes.length == 1 && bridgeParameterTypes[0].equals(AsmUtil.getArrayType(OBJECT_TYPE)) :
-                    "Vararg invoke must have one parameter of type [Ljava/lang/Object;: " + bridge;
+            "Vararg invoke must have one parameter of type [Ljava/lang/Object;: " + bridge;
             generateVarargInvokeArityAssert(iv, delegate.getArgumentTypes().length);
         }
         else {
             assert bridgeParameterTypes.length == bridgeParameterKotlinTypes.size() :
-                    "Asm parameter types should be the same length as Kotlin parameter types";
+            "Asm parameter types should be the same length as Kotlin parameter types";
         }
 
         iv.load(0, asmType);
 
         List<ParameterDescriptor> calleeParameters = CollectionsKt.plus(
-                CollectionsKt.listOfNotNull(funDescriptor.getExtensionReceiverParameter()),
-                funDescriptor.getValueParameters()
-        );
+                    CollectionsKt.listOfNotNull(funDescriptor.getExtensionReceiverParameter()),
+                    funDescriptor.getValueParameters()
+                );
 
         int slot = 1;
         for (int i = 0; i < calleeParameters.size(); i++) {
@@ -329,10 +329,10 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
             StackValue value;
             if (isVarargInvoke) {
                 value = StackValue.arrayElement(
-                        OBJECT_TYPE, null,
-                        StackValue.local(1, bridgeParameterTypes[0], bridgeParameterKotlinTypes.get(0)),
-                        StackValue.constant(i)
-                );
+                            OBJECT_TYPE, null,
+                            StackValue.local(1, bridgeParameterTypes[0], bridgeParameterKotlinTypes.get(0)),
+                            StackValue.constant(i)
+                        );
             }
             else {
                 Type type = bridgeParameterTypes[i];
@@ -345,8 +345,8 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
         iv.invokevirtual(asmType.getInternalName(), delegate.getName(), delegate.getDescriptor(), false);
 
         StackValue
-                .onStack(delegate.getReturnType(), delegateReturnType)
-                .put(bridge.getReturnType(), bridgeReturnType, iv);
+        .onStack(delegate.getReturnType(), delegateReturnType)
+        .put(bridge.getReturnType(), bridgeReturnType, iv);
 
         iv.areturn(bridge.getReturnType());
 
@@ -360,7 +360,7 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
 
         {
             MethodVisitor mv =
-                    v.newMethod(NO_ORIGIN, flags, "getOwner", Type.getMethodDescriptor(K_DECLARATION_CONTAINER_TYPE), null, null);
+                v.newMethod(NO_ORIGIN, flags, "getOwner", Type.getMethodDescriptor(K_DECLARATION_CONTAINER_TYPE), null, null);
             if (generateBody) {
                 mv.visitCode();
                 InstructionAdapter iv = new InstructionAdapter(mv);
@@ -372,7 +372,7 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
 
         {
             MethodVisitor mv =
-                    v.newMethod(NO_ORIGIN, flags, "getName", Type.getMethodDescriptor(JAVA_STRING_TYPE), null, null);
+                v.newMethod(NO_ORIGIN, flags, "getName", Type.getMethodDescriptor(JAVA_STRING_TYPE), null, null);
             if (generateBody) {
                 mv.visitCode();
                 InstructionAdapter iv = new InstructionAdapter(mv);
@@ -395,9 +395,9 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
     }
 
     public static void generateCallableReferenceDeclarationContainer(
-            @NotNull InstructionAdapter iv,
-            @NotNull CallableDescriptor descriptor,
-            @NotNull GenerationState state
+        @NotNull InstructionAdapter iv,
+        @NotNull CallableDescriptor descriptor,
+        @NotNull GenerationState state
     ) {
         DeclarationDescriptor container = descriptor.getContainingDeclaration();
 
@@ -412,8 +412,8 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
         }
         else if (descriptor instanceof VariableDescriptorWithAccessors) {
             iv.aconst(state.getBindingContext().get(
-                    CodegenBinding.DELEGATED_PROPERTY_METADATA_OWNER, ((VariableDescriptorWithAccessors) descriptor)
-            ));
+                          CodegenBinding.DELEGATED_PROPERTY_METADATA_OWNER, ((VariableDescriptorWithAccessors) descriptor)
+                      ));
         }
         else {
             iv.aconst(null);
@@ -421,9 +421,9 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
         }
 
         boolean isContainerPackage =
-                descriptor instanceof LocalVariableDescriptor
-                ? DescriptorUtils.getParentOfType(descriptor, ClassDescriptor.class) == null
-                : container instanceof PackageFragmentDescriptor;
+            descriptor instanceof LocalVariableDescriptor
+            ? DescriptorUtils.getParentOfType(descriptor, ClassDescriptor.class) == null
+            : container instanceof PackageFragmentDescriptor;
 
         if (isContainerPackage) {
             // Note that this name is not used in reflection. There should be the name of the referenced declaration's module instead,
@@ -452,7 +452,7 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
             InstructionAdapter iv = new InstructionAdapter(mv);
 
             Pair<Integer, FieldInfo> receiverIndexAndFieldInfo =
-                    CallableReferenceUtilKt.generateClosureFieldsInitializationFromParameters(iv, closure, args);
+                CallableReferenceUtilKt.generateClosureFieldsInitializationFromParameters(iv, closure, args);
             if (shouldHaveBoundReferenceReceiver && receiverIndexAndFieldInfo == null) {
                 throw new AssertionError("No bound reference receiver in constructor parameters: " + args);
             }
@@ -475,7 +475,7 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
 
             String superClassConstructorDescriptor;
             if (superClassAsmType.equals(LAMBDA) || superClassAsmType.equals(FUNCTION_REFERENCE) ||
-                CoroutineCodegenUtilKt.isCoroutineSuperClass(state.getLanguageVersionSettings(), superClassAsmType.getInternalName())) {
+                    CoroutineCodegenUtilKt.isCoroutineSuperClass(state.getLanguageVersionSettings(), superClassAsmType.getInternalName())) {
                 int arity = calculateArity();
                 iv.iconst(arity);
                 if (shouldHaveBoundReferenceReceiver) {
@@ -508,10 +508,10 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
 
     @NotNull
     public static List<FieldInfo> calculateConstructorParameters(
-            @NotNull KotlinTypeMapper typeMapper,
-            @NotNull LanguageVersionSettings languageVersionSettings,
-            @NotNull CalculatedClosure closure,
-            @NotNull Type ownerType
+        @NotNull KotlinTypeMapper typeMapper,
+        @NotNull LanguageVersionSettings languageVersionSettings,
+        @NotNull CalculatedClosure closure,
+        @NotNull Type ownerType
     ) {
         List<FieldInfo> args = Lists.newArrayList();
         ClassDescriptor captureThis = closure.getCapturedOuterClassDescriptor();
@@ -529,14 +529,14 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
         for (EnclosedValueDescriptor enclosedValueDescriptor : closure.getCaptureVariables().values()) {
             DeclarationDescriptor descriptor = enclosedValueDescriptor.getDescriptor();
             if ((descriptor instanceof VariableDescriptor && !(descriptor instanceof PropertyDescriptor)) ||
-                ExpressionTypingUtils.isLocalFunction(descriptor)) {
+                    ExpressionTypingUtils.isLocalFunction(descriptor)) {
                 args.add(
-                        FieldInfo.createForHiddenField(
-                                ownerType,
-                                enclosedValueDescriptor.getType(),
-                                enclosedValueDescriptor.getKotlinType(),
-                                enclosedValueDescriptor.getFieldName()
-                        )
+                    FieldInfo.createForHiddenField(
+                        ownerType,
+                        enclosedValueDescriptor.getType(),
+                        enclosedValueDescriptor.getKotlinType(),
+                        enclosedValueDescriptor.getFieldName()
+                    )
                 );
             }
             else if (descriptor instanceof FunctionDescriptor) {
@@ -557,8 +557,8 @@ public class ClosureCodegen extends MemberCodegen<KtElement> {
     @NotNull
     public static FunctionDescriptor getErasedInvokeFunction(@NotNull FunctionDescriptor function) {
         ClassDescriptor functionClass = DescriptorUtilsKt.getBuiltIns(function).getFunction(
-                function.getValueParameters().size() + (function.getExtensionReceiverParameter() != null ? 1 : 0)
-        );
+                                            function.getValueParameters().size() + (function.getExtensionReceiverParameter() != null ? 1 : 0)
+                                        );
         MemberScope scope = functionClass.getDefaultType().getMemberScope();
         return scope.getContributedFunctions(OperatorNameConventions.INVOKE, NoLookupLocation.FROM_BACKEND).iterator().next();
     }

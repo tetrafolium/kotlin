@@ -46,13 +46,13 @@ public class RemappingClassBuilder extends DelegatingClassBuilder {
 
     @Override
     public void defineClass(
-            @Nullable PsiElement origin,
-            int version,
-            int access,
-            @NotNull String name,
-            @Nullable String signature,
-            @NotNull String superName,
-            @NotNull String[] interfaces
+        @Nullable PsiElement origin,
+        int version,
+        int access,
+        @NotNull String name,
+        @Nullable String signature,
+        @NotNull String superName,
+        @NotNull String[] interfaces
     ) {
         super.defineClass(origin, version, access, remapper.mapType(name), remapper.mapSignature(signature, false),
                           remapper.mapType(superName), remapper.mapTypes(interfaces));
@@ -61,39 +61,39 @@ public class RemappingClassBuilder extends DelegatingClassBuilder {
     @Override
     @NotNull
     public FieldVisitor newField(
-            @NotNull JvmDeclarationOrigin origin,
-            int access,
-            @NotNull String name,
-            @NotNull String desc,
-            @Nullable String signature,
-            @Nullable Object value
+        @NotNull JvmDeclarationOrigin origin,
+        int access,
+        @NotNull String name,
+        @NotNull String desc,
+        @Nullable String signature,
+        @Nullable Object value
     ) {
         return new FieldRemapper(
-                builder.newField(origin, access, name, remapper.mapDesc(desc), remapper.mapSignature(signature, true), value), remapper
-        );
+                   builder.newField(origin, access, name, remapper.mapDesc(desc), remapper.mapSignature(signature, true), value), remapper
+               );
     }
 
     @Override
     @NotNull
     public MethodVisitor newMethod(
-            @NotNull JvmDeclarationOrigin origin,
-            int access,
-            @NotNull String name,
-            @NotNull String desc,
-            @Nullable String signature,
-            @Nullable String[] exceptions
+        @NotNull JvmDeclarationOrigin origin,
+        int access,
+        @NotNull String name,
+        @NotNull String desc,
+        @Nullable String signature,
+        @Nullable String[] exceptions
     ) {
         String newDescriptor = remapper.mapMethodDesc(desc);
         // MethodRemapper doesn't extends LocalVariablesSorter, but RemappingMethodAdapter does.
         // So wrapping with LocalVariablesSorter to keep old behavior.
         // TODO: investigate LocalVariablesSorter removing (see also same code in MethodInliner)
         return new MethodRemapper(
-                new LocalVariablesSorter(
-                        access, newDescriptor,
-                        builder.newMethod(origin, access, name, newDescriptor, remapper.mapSignature(signature, false),
-                                          exceptions)),
-                remapper
-        );
+                   new LocalVariablesSorter(
+                       access, newDescriptor,
+                       builder.newMethod(origin, access, name, newDescriptor, remapper.mapSignature(signature, false),
+                                         exceptions)),
+                   remapper
+               );
     }
 
     @Override

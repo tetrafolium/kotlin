@@ -81,11 +81,11 @@ public class DxChecker {
         DirectClassFile cf = new DirectClassFile(bytes, relativePath, true);
         cf.setAttributeFactory(StdAttributeFactory.THE_ONE);
         CfTranslator.translate(
-                cf,
-                bytes,
-                arguments.cfOptions,
-                arguments.dexOptions,
-                new DexFile(arguments.dexOptions)
+            cf,
+            bytes,
+            arguments.cfOptions,
+            arguments.dexOptions,
+            new DexFile(arguments.dexOptions)
         );
     }
 

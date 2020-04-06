@@ -21,10 +21,10 @@ import org.jetbrains.org.objectweb.asm.Type;
 
 public class MultifileClassFacadeContext extends MultifileClassContextBase {
     public MultifileClassFacadeContext(
-            PackageFragmentDescriptor descriptor,
-            CodegenContext parent,
-            Type multifileClassType,
-            Type filePartType
+        PackageFragmentDescriptor descriptor,
+        CodegenContext parent,
+        Type multifileClassType,
+        Type filePartType
     ) {
         super(descriptor, parent, multifileClassType, filePartType);
     }

@@ -38,9 +38,9 @@ public class FieldInfo {
 
     @NotNull
     public static FieldInfo createSingletonViaInstance(
-            @NotNull ClassDescriptor classDescriptor,
-            @NotNull KotlinTypeMapper typeMapper,
-            @NotNull String name
+        @NotNull ClassDescriptor classDescriptor,
+        @NotNull KotlinTypeMapper typeMapper,
+        @NotNull String name
     ) {
         Type owner = typeMapper.mapClass(classDescriptor);
         KotlinType fieldKotlinType = classDescriptor.getDefaultType();
@@ -55,10 +55,10 @@ public class FieldInfo {
 
     @NotNull
     public static FieldInfo createForHiddenField(
-            @NotNull Type owner,
-            @NotNull Type fieldType,
-            @Nullable KotlinType fieldKotlinType,
-            @NotNull String fieldName
+        @NotNull Type owner,
+        @NotNull Type fieldType,
+        @Nullable KotlinType fieldKotlinType,
+        @NotNull String fieldName
     ) {
         return new FieldInfo(owner, fieldType, fieldKotlinType, fieldName, false);
     }
@@ -70,11 +70,11 @@ public class FieldInfo {
     private final boolean isStatic;
 
     private FieldInfo(
-            @NotNull Type ownerType,
-            @NotNull Type fieldType,
-            @Nullable KotlinType fieldKotlinType,
-            @NotNull String fieldName,
-            boolean isStatic
+        @NotNull Type ownerType,
+        @NotNull Type fieldType,
+        @Nullable KotlinType fieldKotlinType,
+        @NotNull String fieldName,
+        boolean isStatic
     ) {
         this.ownerType = ownerType;
         this.fieldType = fieldType;

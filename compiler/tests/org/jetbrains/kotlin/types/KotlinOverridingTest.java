@@ -58,35 +58,35 @@ public class KotlinOverridingTest extends KotlinTestWithEnvironment {
 
     public void testBasic() throws Exception {
         assertOverridable(
-                "fun a() : Int",
-                "fun a() : Int");
+            "fun a() : Int",
+            "fun a() : Int");
 
         assertOverridable(
-                "fun <T1> a() : T1",
-                "fun <T> a() : T");
+            "fun <T1> a() : T1",
+            "fun <T> a() : T");
 
         assertOverridable(
-                "fun <T1> a(a : T1) : T1",
-                "fun <T> a(a : T) : T");
+            "fun <T1> a(a : T1) : T1",
+            "fun <T> a(a : T) : T");
 
         assertOverridable(
-                "fun <T1, X : T1> a(a : T1) : T1",
-                "fun <T, Y : T> a(a : T) : T");
+            "fun <T1, X : T1> a(a : T1) : T1",
+            "fun <T, Y : T> a(a : T) : T");
 
         assertOverridable(
-                "fun <T1, X : T1> a(a : T1) : T1",
-                "fun <T, Y : T> a(a : T) : Y");
+            "fun <T1, X : T1> a(a : T1) : T1",
+            "fun <T, Y : T> a(a : T) : Y");
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
         assertNotOverridable(
-                "fun ab() : Int",
-                "fun a() : Int");
+            "fun ab() : Int",
+            "fun a() : Int");
 
         assertOverridable(
-                "fun a() : Int",
-                "fun a() : Any");
+            "fun a() : Int",
+            "fun a() : Any");
 
         // return types are not cheked in the utility
         /*
@@ -96,56 +96,56 @@ public class KotlinOverridingTest extends KotlinTestWithEnvironment {
         */
 
         assertNotOverridable(
-                "fun a(a : Int) : Int",
-                "fun a() : Int");
+            "fun a(a : Int) : Int",
+            "fun a() : Int");
 
         assertNotOverridable(
-                "fun a() : Int",
-                "fun a(a : Int) : Int");
+            "fun a() : Int",
+            "fun a(a : Int) : Int");
 
         assertNotOverridable(
-                "fun a(a : Int?) : Int",
-                "fun a(a : Int) : Int");
+            "fun a(a : Int?) : Int",
+            "fun a(a : Int) : Int");
 
         assertNotOverridable(
-                "fun <T> a(a : Int) : Int",
-                "fun a(a : Int) : Int");
+            "fun <T> a(a : Int) : Int",
+            "fun a(a : Int) : Int");
 
         assertNotOverridable(
-                "fun <T1, X : T1> a(a : T1) : T1",
-                "fun <T, Y> a(a : T) : T");
+            "fun <T1, X : T1> a(a : T1) : T1",
+            "fun <T, Y> a(a : T) : T");
 
         assertNotOverridable(
-                "fun <T1, X : T1> a(a : T1) : T1",
-                "fun <T, Y : T> a(a : Y) : T");
+            "fun <T1, X : T1> a(a : T1) : T1",
+            "fun <T, Y : T> a(a : Y) : T");
 
         assertOverridable(
-                "fun <T1, X : T1> a(a : T1) : X",
-                "fun <T, Y : T> a(a : T) : T");
+            "fun <T1, X : T1> a(a : T1) : X",
+            "fun <T, Y : T> a(a : T) : T");
 
         assertOverridable(
-                "fun <T1, X : Array<out T1>> a(a : Array<in T1>) : T1",
-                "fun <T, Y : Array<out T>> a(a : Array<in T>) : T");
+            "fun <T1, X : Array<out T1>> a(a : Array<in T1>) : T1",
+            "fun <T, Y : Array<out T>> a(a : Array<in T>) : T");
 
         assertNotOverridable(
-                "fun <T1, X : Array<T1>> a(a : Array<in T1>) : T1",
-                "fun <T, Y : Array<out T>> a(a : Array<in T>) : T");
+            "fun <T1, X : Array<T1>> a(a : Array<in T1>) : T1",
+            "fun <T, Y : Array<out T>> a(a : Array<in T>) : T");
 
         assertNotOverridable(
-                "fun <T1, X : Array<out T1>> a(a : Array<in T1>) : T1",
-                "fun <T, Y : Array<in T>> a(a : Array<in T>) : T");
+            "fun <T1, X : Array<out T1>> a(a : Array<in T1>) : T1",
+            "fun <T, Y : Array<in T>> a(a : Array<in T>) : T");
 
         assertNotOverridable(
-                "fun <T1, X : Array<out T1>> a(a : Array<in T1>) : T1",
-                "fun <T, Y : Array<*>> a(a : Array<in T>) : T");
+            "fun <T1, X : Array<out T1>> a(a : Array<in T1>) : T1",
+            "fun <T, Y : Array<*>> a(a : Array<in T>) : T");
 
         assertNotOverridable(
-                "fun <T1, X : Array<out T1>> a(a : Array<in T1>) : T1",
-                "fun <T, Y : Array<out T>> a(a : Array<out T>) : T");
+            "fun <T1, X : Array<out T1>> a(a : Array<in T1>) : T1",
+            "fun <T, Y : Array<out T>> a(a : Array<out T>) : T");
 
         assertNotOverridable(
-                "fun <T1, X : Array<out T1>> a(a : Array<*>) : T1",
-                "fun <T, Y : Array<out T>> a(a : Array<in T>) : T");
+            "fun <T1, X : Array<out T1>> a(a : Array<*>) : T1",
+            "fun <T, Y : Array<out T>> a(a : Array<in T>) : T");
 
     }
 
@@ -162,9 +162,9 @@ public class KotlinOverridingTest extends KotlinTestWithEnvironment {
         FunctionDescriptor b = makeFunction(subFun);
         OverridingUtil.OverrideCompatibilityInfo overridableWith = OverridingUtil.DEFAULT.isOverridableBy(a, b, null);
         assertEquals(
-                overridableWith.getDebugMessage(),
-                expectedIsError,
-                overridableWith.getResult() != OverridingUtil.OverrideCompatibilityInfo.Result.OVERRIDABLE
+            overridableWith.getDebugMessage(),
+            expectedIsError,
+            overridableWith.getResult() != OverridingUtil.OverrideCompatibilityInfo.Result.OVERRIDABLE
         );
     }
 
@@ -172,7 +172,7 @@ public class KotlinOverridingTest extends KotlinTestWithEnvironment {
         KtNamedFunction function = KtPsiFactoryKt.KtPsiFactory(getProject()).createFunction(funDecl);
         LexicalScope scope = TypeTestUtilsKt.builtInPackageAsLexicalScope(module);
         return functionDescriptorResolver.resolveFunctionDescriptor(
-                module, scope, function, KotlinTestUtils.DUMMY_TRACE, DataFlowInfoFactory.EMPTY
-        );
+                   module, scope, function, KotlinTestUtils.DUMMY_TRACE, DataFlowInfoFactory.EMPTY
+               );
     }
 }

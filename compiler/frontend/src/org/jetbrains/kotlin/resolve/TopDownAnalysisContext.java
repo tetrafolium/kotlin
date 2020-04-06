@@ -54,9 +54,9 @@ public class TopDownAnalysisContext implements BodiesResolveContext {
     private StringBuilder debugOutput;
 
     public TopDownAnalysisContext(
-            @NotNull TopDownAnalysisMode topDownAnalysisMode,
-            @NotNull DataFlowInfo outerDataFlowInfo,
-            @NotNull DeclarationScopeProvider declarationScopeProvider
+        @NotNull TopDownAnalysisMode topDownAnalysisMode,
+        @NotNull DataFlowInfo outerDataFlowInfo,
+        @NotNull DeclarationScopeProvider declarationScopeProvider
     ) {
         this.topDownAnalysisMode = topDownAnalysisMode;
         this.outerDataFlowInfo = outerDataFlowInfo;
@@ -81,7 +81,7 @@ public class TopDownAnalysisContext implements BodiesResolveContext {
             debugOutput = new StringBuilder();
         }
     }
-    
+
     /*package*/ void printDebugOutput(PrintStream out) {
         if (debugOutput != null) {
             out.print(debugOutput);

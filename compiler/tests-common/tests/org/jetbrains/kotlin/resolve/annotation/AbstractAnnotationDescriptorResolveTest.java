@@ -54,14 +54,14 @@ import static org.jetbrains.kotlin.resolve.DescriptorUtils.isNonCompanionObject;
 
 public abstract class AbstractAnnotationDescriptorResolveTest extends KotlinTestWithEnvironment {
     private static final DescriptorRenderer WITH_ANNOTATION_ARGUMENT_TYPES = DescriptorRenderer.Companion.withOptions(
-            options -> {
-                options.setVerbose(true);
-                options.setAnnotationArgumentsRenderingPolicy(AnnotationArgumentsRenderingPolicy.UNLESS_EMPTY);
-                options.setClassifierNamePolicy(ClassifierNamePolicy.SHORT.INSTANCE);
-                options.setModifiers(DescriptorRendererModifier.ALL);
-                return Unit.INSTANCE;
-            }
-    );
+    options -> {
+        options.setVerbose(true);
+        options.setAnnotationArgumentsRenderingPolicy(AnnotationArgumentsRenderingPolicy.UNLESS_EMPTY);
+        options.setClassifierNamePolicy(ClassifierNamePolicy.SHORT.INSTANCE);
+        options.setModifiers(DescriptorRendererModifier.ALL);
+        return Unit.INSTANCE;
+    }
+            );
 
     private static final String PATH = "compiler/testData/resolveAnnotations/testFile.kt";
 
@@ -134,7 +134,7 @@ public abstract class AbstractAnnotationDescriptorResolveTest extends KotlinTest
 
             if (target != null) {
                 return WITH_ANNOTATION_ARGUMENT_TYPES.renderAnnotation(
-                        annotationDescriptor, target.getAnnotationUseSiteTarget());
+                    annotationDescriptor, target.getAnnotationUseSiteTarget());
             }
 
             return WITH_ANNOTATION_ARGUMENT_TYPES.renderAnnotation(annotationDescriptor, null);
@@ -170,7 +170,7 @@ public abstract class AbstractAnnotationDescriptorResolveTest extends KotlinTest
         Name functionName = Name.identifier(name);
         MemberScope memberScope = packageView.getMemberScope();
         Collection<? extends SimpleFunctionDescriptor> functions =
-                memberScope.getContributedFunctions(functionName, NoLookupLocation.FROM_TEST);
+            memberScope.getContributedFunctions(functionName, NoLookupLocation.FROM_TEST);
         assert functions.size() == 1 : "Failed to find function " + functionName + " in class" + "." + packageView.getName();
         return functions.iterator().next();
     }
@@ -180,7 +180,7 @@ public abstract class AbstractAnnotationDescriptorResolveTest extends KotlinTest
         Name functionName = Name.identifier(name);
         MemberScope memberScope = classDescriptor.getMemberScope(Collections.emptyList());
         Collection<? extends SimpleFunctionDescriptor> functions =
-                memberScope.getContributedFunctions(functionName, NoLookupLocation.FROM_TEST);
+            memberScope.getContributedFunctions(functionName, NoLookupLocation.FROM_TEST);
         assert functions.size() == 1 : "Failed to find function " + functionName + " in class" + "." + classDescriptor.getName();
         return functions.iterator().next();
     }
@@ -194,8 +194,8 @@ public abstract class AbstractAnnotationDescriptorResolveTest extends KotlinTest
             for (DeclarationDescriptor descriptor : DescriptorUtils.getAllDescriptors(memberScope)) {
                 if (descriptor instanceof ClassDescriptor) {
                     Collection<? extends PropertyDescriptor> classProperties =
-                            ((ClassDescriptor) descriptor).getMemberScope(Collections.emptyList())
-                                    .getContributedVariables(propertyName, NoLookupLocation.FROM_TEST);
+                        ((ClassDescriptor) descriptor).getMemberScope(Collections.emptyList())
+                        .getContributedVariables(propertyName, NoLookupLocation.FROM_TEST);
                     if (!classProperties.isEmpty()) {
                         properties = classProperties;
                         break;
@@ -236,9 +236,9 @@ public abstract class AbstractAnnotationDescriptorResolveTest extends KotlinTest
         MemberScope memberScope = classDescriptor.getMemberScope(Collections.emptyList());
         ClassifierDescriptor innerClass = memberScope.getContributedClassifier(propertyName, NoLookupLocation.FROM_TEST);
         assert innerClass instanceof ClassDescriptor : "Failed to find inner class " +
-                                                       propertyName +
-                                                       " in class " +
-                                                       classDescriptor.getName();
+        propertyName +
+        " in class " +
+        classDescriptor.getName();
         return (ClassDescriptor) innerClass;
     }
 
@@ -303,8 +303,8 @@ public abstract class AbstractAnnotationDescriptorResolveTest extends KotlinTest
 
     @NotNull
     private static ValueParameterDescriptor getConstructorParameterDescriptor(
-            @NotNull ClassDescriptor classDescriptor,
-            @NotNull String name
+        @NotNull ClassDescriptor classDescriptor,
+        @NotNull String name
     ) {
         ConstructorDescriptor constructorDescriptor = getConstructorDescriptor(classDescriptor);
         ValueParameterDescriptor parameter = findValueParameter(constructorDescriptor.getValueParameters(), name);
@@ -330,8 +330,8 @@ public abstract class AbstractAnnotationDescriptorResolveTest extends KotlinTest
 
     @NotNull
     private static ValueParameterDescriptor getFunctionParameterDescriptor(
-            @NotNull FunctionDescriptor functionDescriptor,
-            @NotNull String name
+        @NotNull FunctionDescriptor functionDescriptor,
+        @NotNull String name
     ) {
         ValueParameterDescriptor parameter = findValueParameter(functionDescriptor.getValueParameters(), name);
         assertNotNull("Cannot find function parameter with name " + name, parameter);
@@ -349,7 +349,7 @@ public abstract class AbstractAnnotationDescriptorResolveTest extends KotlinTest
     @NotNull
     protected PackageFragmentDescriptor getPackage(@NotNull KtFile ktFile) {
         PackageFragmentDescriptor packageFragment =
-                PackageDescriptorUtilKt.findPackageFragmentForFile(analysisResult.getModuleDescriptor(), ktFile);
+            PackageDescriptorUtilKt.findPackageFragmentForFile(analysisResult.getModuleDescriptor(), ktFile);
         assertNotNull("Failed to find package: " + PACKAGE, packageFragment);
         return packageFragment;
     }

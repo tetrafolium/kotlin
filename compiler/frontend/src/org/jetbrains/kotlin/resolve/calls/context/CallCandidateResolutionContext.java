@@ -32,27 +32,27 @@ public final class CallCandidateResolutionContext<D extends CallableDescriptor> 
     public final CandidateResolveMode candidateResolveMode;
 
     private CallCandidateResolutionContext(
-            @NotNull MutableResolvedCall<D> candidateCall,
-            @NotNull TracingStrategy tracing,
-            @NotNull BindingTrace trace,
-            @NotNull LexicalScope scope,
-            @NotNull Call call,
-            @NotNull KotlinType expectedType,
-            @NotNull DataFlowInfo dataFlowInfo,
-            @NotNull ContextDependency contextDependency,
-            @NotNull CheckArgumentTypesMode checkArguments,
-            @NotNull ResolutionResultsCache resolutionResultsCache,
-            @Nullable MutableDataFlowInfoForArguments dataFlowInfoForArguments,
-            @NotNull StatementFilter statementFilter,
-            @NotNull CandidateResolveMode candidateResolveMode,
-            boolean isAnnotationContext,
-            boolean isDebuggerContext,
-            boolean collectAllCandidates,
-            @NotNull CallPosition callPosition,
-            @NotNull Function1<KtExpression, KtExpression> expressionContextProvider,
-            @NotNull LanguageVersionSettings languageVersionSettings,
-            @NotNull DataFlowValueFactory dataFlowValueFactory,
-            @NotNull InferenceSession inferenceSession
+        @NotNull MutableResolvedCall<D> candidateCall,
+        @NotNull TracingStrategy tracing,
+        @NotNull BindingTrace trace,
+        @NotNull LexicalScope scope,
+        @NotNull Call call,
+        @NotNull KotlinType expectedType,
+        @NotNull DataFlowInfo dataFlowInfo,
+        @NotNull ContextDependency contextDependency,
+        @NotNull CheckArgumentTypesMode checkArguments,
+        @NotNull ResolutionResultsCache resolutionResultsCache,
+        @Nullable MutableDataFlowInfoForArguments dataFlowInfoForArguments,
+        @NotNull StatementFilter statementFilter,
+        @NotNull CandidateResolveMode candidateResolveMode,
+        boolean isAnnotationContext,
+        boolean isDebuggerContext,
+        boolean collectAllCandidates,
+        @NotNull CallPosition callPosition,
+        @NotNull Function1<KtExpression, KtExpression> expressionContextProvider,
+        @NotNull LanguageVersionSettings languageVersionSettings,
+        @NotNull DataFlowValueFactory dataFlowValueFactory,
+        @NotNull InferenceSession inferenceSession
     ) {
         super(trace, scope, call, expectedType, dataFlowInfo, contextDependency, checkArguments, resolutionResultsCache,
               dataFlowInfoForArguments, statementFilter, isAnnotationContext, isDebuggerContext,
@@ -64,53 +64,53 @@ public final class CallCandidateResolutionContext<D extends CallableDescriptor> 
     }
 
     public static <D extends CallableDescriptor> CallCandidateResolutionContext<D> create(
-            @NotNull MutableResolvedCall<D> candidateCall, @NotNull CallResolutionContext<?> context, @NotNull BindingTrace trace,
-            @NotNull TracingStrategy tracing, @NotNull Call call,
-            @NotNull CandidateResolveMode candidateResolveMode
+        @NotNull MutableResolvedCall<D> candidateCall, @NotNull CallResolutionContext<?> context, @NotNull BindingTrace trace,
+        @NotNull TracingStrategy tracing, @NotNull Call call,
+        @NotNull CandidateResolveMode candidateResolveMode
     ) {
         return new CallCandidateResolutionContext<>(
-                candidateCall, tracing, trace, context.scope, call, context.expectedType,
-                context.dataFlowInfo, context.contextDependency, context.checkArguments,
-                context.resolutionResultsCache, context.dataFlowInfoForArguments,
-                context.statementFilter,
-                candidateResolveMode, context.isAnnotationContext, context.isDebuggerContext, context.collectAllCandidates,
-                context.callPosition, context.expressionContextProvider, context.languageVersionSettings, context.dataFlowValueFactory,
-                context.inferenceSession);
+                   candidateCall, tracing, trace, context.scope, call, context.expectedType,
+                   context.dataFlowInfo, context.contextDependency, context.checkArguments,
+                   context.resolutionResultsCache, context.dataFlowInfoForArguments,
+                   context.statementFilter,
+                   candidateResolveMode, context.isAnnotationContext, context.isDebuggerContext, context.collectAllCandidates,
+                   context.callPosition, context.expressionContextProvider, context.languageVersionSettings, context.dataFlowValueFactory,
+                   context.inferenceSession);
     }
 
     @NotNull
     public static <D extends CallableDescriptor> CallCandidateResolutionContext<D> createForCallBeingAnalyzed(
-            @NotNull MutableResolvedCall<D> candidateCall, @NotNull BasicCallResolutionContext context, @NotNull TracingStrategy tracing
+        @NotNull MutableResolvedCall<D> candidateCall, @NotNull BasicCallResolutionContext context, @NotNull TracingStrategy tracing
     ) {
         return new CallCandidateResolutionContext<>(
-                candidateCall, tracing, context.trace, context.scope, context.call, context.expectedType,
-                context.dataFlowInfo, context.contextDependency, context.checkArguments, context.resolutionResultsCache,
-                context.dataFlowInfoForArguments, context.statementFilter,
-                CandidateResolveMode.FULLY, context.isAnnotationContext, context.isDebuggerContext, context.collectAllCandidates,
-                context.callPosition, context.expressionContextProvider, context.languageVersionSettings, context.dataFlowValueFactory,
-                context.inferenceSession);
+                   candidateCall, tracing, context.trace, context.scope, context.call, context.expectedType,
+                   context.dataFlowInfo, context.contextDependency, context.checkArguments, context.resolutionResultsCache,
+                   context.dataFlowInfoForArguments, context.statementFilter,
+                   CandidateResolveMode.FULLY, context.isAnnotationContext, context.isDebuggerContext, context.collectAllCandidates,
+                   context.callPosition, context.expressionContextProvider, context.languageVersionSettings, context.dataFlowValueFactory,
+                   context.inferenceSession);
     }
 
     @Override
     protected CallCandidateResolutionContext<D> create(
-            @NotNull BindingTrace trace,
-            @NotNull LexicalScope scope,
-            @NotNull DataFlowInfo dataFlowInfo,
-            @NotNull KotlinType expectedType,
-            @NotNull ContextDependency contextDependency,
-            @NotNull ResolutionResultsCache resolutionResultsCache,
-            @NotNull StatementFilter statementFilter,
-            boolean collectAllCandidates,
-            @NotNull CallPosition callPosition,
-            @NotNull Function1<KtExpression, KtExpression> expressionContextProvider,
-            @NotNull LanguageVersionSettings languageVersionSettings,
-            @NotNull DataFlowValueFactory dataFlowValueFactory,
-            @NotNull InferenceSession inferenceSession
+        @NotNull BindingTrace trace,
+        @NotNull LexicalScope scope,
+        @NotNull DataFlowInfo dataFlowInfo,
+        @NotNull KotlinType expectedType,
+        @NotNull ContextDependency contextDependency,
+        @NotNull ResolutionResultsCache resolutionResultsCache,
+        @NotNull StatementFilter statementFilter,
+        boolean collectAllCandidates,
+        @NotNull CallPosition callPosition,
+        @NotNull Function1<KtExpression, KtExpression> expressionContextProvider,
+        @NotNull LanguageVersionSettings languageVersionSettings,
+        @NotNull DataFlowValueFactory dataFlowValueFactory,
+        @NotNull InferenceSession inferenceSession
     ) {
         return new CallCandidateResolutionContext<>(
-                candidateCall, tracing, trace, scope, call, expectedType, dataFlowInfo, contextDependency, checkArguments,
-                resolutionResultsCache, dataFlowInfoForArguments, statementFilter,
-                candidateResolveMode, isAnnotationContext, isDebuggerContext, collectAllCandidates, callPosition, expressionContextProvider,
-                languageVersionSettings, dataFlowValueFactory, inferenceSession);
+                   candidateCall, tracing, trace, scope, call, expectedType, dataFlowInfo, contextDependency, checkArguments,
+                   resolutionResultsCache, dataFlowInfoForArguments, statementFilter,
+                   candidateResolveMode, isAnnotationContext, isDebuggerContext, collectAllCandidates, callPosition, expressionContextProvider,
+                   languageVersionSettings, dataFlowValueFactory, inferenceSession);
     }
 }

@@ -50,17 +50,17 @@ import static org.jetbrains.kotlin.resolve.DescriptorUtils.isEnumClass;
 public class CompileTimeConstantUtils {
 
     private final static Set<String> ARRAY_CALL_NAMES = SetsKt.hashSetOf(
-            "kotlin.arrayOf",
-            "kotlin.doubleArrayOf",
-            "kotlin.floatArrayOf",
-            "kotlin.longArrayOf",
-            "kotlin.intArrayOf",
-            "kotlin.charArrayOf",
-            "kotlin.shortArrayOf",
-            "kotlin.byteArrayOf",
-            "kotlin.booleanArrayOf",
-            "kotlin.emptyArray"
-    );
+                "kotlin.arrayOf",
+                "kotlin.doubleArrayOf",
+                "kotlin.floatArrayOf",
+                "kotlin.longArrayOf",
+                "kotlin.intArrayOf",
+                "kotlin.charArrayOf",
+                "kotlin.shortArrayOf",
+                "kotlin.byteArrayOf",
+                "kotlin.booleanArrayOf",
+                "kotlin.emptyArray"
+            );
 
     public static void checkConstructorParametersType(@NotNull List<KtParameter> parameters, @NotNull BindingTrace trace) {
         for (KtParameter parameter : parameters) {
@@ -86,12 +86,12 @@ public class CompileTimeConstantUtils {
         if (typeDescriptor == null) return false;
 
         if (isEnumClass(typeDescriptor) ||
-            isAnnotationClass(typeDescriptor) ||
-            KotlinBuiltIns.isKClass(typeDescriptor) ||
-            KotlinBuiltIns.isPrimitiveArray(parameterType) ||
-            KotlinBuiltIns.isPrimitiveType(parameterType) ||
-            KotlinBuiltIns.isString(parameterType) ||
-            UnsignedTypes.INSTANCE.isUnsignedType(parameterType)) {
+                isAnnotationClass(typeDescriptor) ||
+                KotlinBuiltIns.isKClass(typeDescriptor) ||
+                KotlinBuiltIns.isPrimitiveArray(parameterType) ||
+                KotlinBuiltIns.isPrimitiveType(parameterType) ||
+                KotlinBuiltIns.isString(parameterType) ||
+                UnsignedTypes.INSTANCE.isUnsignedType(parameterType)) {
             return true;
         }
 
@@ -120,9 +120,9 @@ public class CompileTimeConstantUtils {
     }
 
     public static boolean canBeReducedToBooleanConstant(
-            @Nullable KtExpression expression,
-            @NotNull BindingContext context,
-            @Nullable Boolean expectedValue
+        @Nullable KtExpression expression,
+        @NotNull BindingContext context,
+        @Nullable Boolean expectedValue
     ) {
         KtExpression effectiveExpression = KtPsiUtil.deparenthesize(expression);
 

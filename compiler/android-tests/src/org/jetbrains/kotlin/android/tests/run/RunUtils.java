@@ -46,11 +46,11 @@ public class RunUtils {
         public final boolean printOutputAtAppearance;
 
         public RunSettings(
-                GeneralCommandLine commandLine,
-                @Nullable String input,
-                boolean waitForEnd,
-                @Nullable String outputPrefix,
-                boolean printOutputAtAppearance
+            GeneralCommandLine commandLine,
+            @Nullable String input,
+            boolean waitForEnd,
+            @Nullable String outputPrefix,
+            boolean printOutputAtAppearance
         ) {
             this.commandLine = commandLine;
             this.input = input;

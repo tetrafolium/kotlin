@@ -38,17 +38,17 @@ public class StringSwitchCodegen extends SwitchCodegen {
     private int tempVarIndex;
 
     public StringSwitchCodegen(
-            @NotNull KtWhenExpression expression,
-            boolean isStatement,
-            boolean isExhaustive,
-            @NotNull ExpressionCodegen codegen
+        @NotNull KtWhenExpression expression,
+        boolean isStatement,
+        boolean isExhaustive,
+        @NotNull ExpressionCodegen codegen
     ) {
         super(expression, isStatement, isExhaustive, codegen, null);
     }
 
     @Override
     protected void processConstant(
-            @NotNull ConstantValue<?> constant, @NotNull Label entryLabel
+        @NotNull ConstantValue<?> constant, @NotNull Label entryLabel
     ) {
         assert constant instanceof StringValue : "guaranteed by usage contract";
         int hashCode = constant.hashCode();
@@ -76,8 +76,8 @@ public class StringSwitchCodegen extends SwitchCodegen {
         v.load(tempVarIndex, subjectType);
 
         v.invokevirtual(
-                subjectType.getInternalName(),
-                "hashCode", HASH_CODE_METHOD_DESC, false
+            subjectType.getInternalName(),
+            "hashCode", HASH_CODE_METHOD_DESC, false
         );
     }
 
@@ -99,10 +99,10 @@ public class StringSwitchCodegen extends SwitchCodegen {
                 v.load(tempVarIndex, subjectType);
                 v.aconst(stringAndEntryLabel.first);
                 v.invokevirtual(
-                        subjectType.getInternalName(),
-                        "equals",
-                        EQUALS_METHOD_DESC,
-                        false
+                    subjectType.getInternalName(),
+                    "equals",
+                    EQUALS_METHOD_DESC,
+                    false
                 );
 
                 if (i + 1 < items.size()) {

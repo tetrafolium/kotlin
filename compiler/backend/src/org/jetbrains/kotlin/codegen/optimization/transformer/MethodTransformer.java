@@ -23,9 +23,9 @@ import org.jetbrains.org.objectweb.asm.tree.analysis.*;
 public abstract class MethodTransformer {
     @NotNull
     protected static <V extends Value> Frame<V>[] runAnalyzer(
-            @NotNull Analyzer<V> analyzer,
-            @NotNull String internalClassName,
-            @NotNull MethodNode node
+        @NotNull Analyzer<V> analyzer,
+        @NotNull String internalClassName,
+        @NotNull MethodNode node
     ) {
         try {
             return analyzer.analyze(internalClassName, node);
@@ -37,9 +37,9 @@ public abstract class MethodTransformer {
 
     @NotNull
     public static <V extends Value> Frame<V>[] analyze(
-            @NotNull String internalClassName,
-            @NotNull MethodNode node,
-            @NotNull Interpreter<V> interpreter
+        @NotNull String internalClassName,
+        @NotNull MethodNode node,
+        @NotNull Interpreter<V> interpreter
     ) {
         return runAnalyzer(new Analyzer<>(interpreter), internalClassName, node);
     }

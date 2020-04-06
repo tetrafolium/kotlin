@@ -25,10 +25,10 @@ public class MultifileClassContextBase extends FieldOwnerContext<PackageFragment
     private final Type filePartType;
 
     public MultifileClassContextBase(
-            PackageFragmentDescriptor descriptor,
-            CodegenContext parent,
-            Type multifileClassType,
-            Type filePartType
+        PackageFragmentDescriptor descriptor,
+        CodegenContext parent,
+        Type multifileClassType,
+        Type filePartType
     ) {
         super(descriptor, OwnerKind.PACKAGE, parent, null, null, null);
         this.multifileClassType = multifileClassType;

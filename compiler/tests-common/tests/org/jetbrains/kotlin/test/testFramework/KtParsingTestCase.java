@@ -137,8 +137,8 @@ public abstract class KtParsingTestCase extends KtPlatformLiteFixture {
         myFileExt = extension;
         addExplicitExtension(LanguageParserDefinitions.INSTANCE, this.myLanguage, definition);
         registerComponentInstance(
-                getApplication().getPicoContainer(), FileTypeManager.class,
-                new MockFileTypeManager(new MockLanguageFileType(myLanguage, myFileExt)));
+            getApplication().getPicoContainer(), FileTypeManager.class,
+            new MockFileTypeManager(new MockLanguageFileType(myLanguage, myFileExt)));
     }
 
     protected <T> void addExplicitExtension(final LanguageExtension<T> instance, final Language language, final T object) {
@@ -220,10 +220,10 @@ public abstract class KtParsingTestCase extends KtPlatformLiteFixture {
             assertEquals("doc text mismatch", text, myFile.getViewProvider().getDocument().getText());
             assertEquals("psi text mismatch", text, myFile.getText());
             ensureCorrectReparse(myFile);
-            if (checkResult){
+            if (checkResult) {
                 checkResult(name, myFile);
             }
-            else{
+            else {
                 toParseTreeText(myFile, skipSpaces(), includeRanges());
             }
         }
@@ -268,11 +268,11 @@ public abstract class KtParsingTestCase extends KtPlatformLiteFixture {
     }
 
     public static void doCheckResult(String testDataDir,
-            PsiFile file,
-            boolean checkAllPsiRoots,
-            String targetDataName,
-            boolean skipSpaces,
-            boolean printRanges) throws IOException {
+                                     PsiFile file,
+                                     boolean checkAllPsiRoots,
+                                     String targetDataName,
+                                     boolean skipSpaces,
+                                     boolean printRanges) throws IOException {
         FileViewProvider provider = file.getViewProvider();
         Set<Language> languages = provider.getLanguages();
 
@@ -327,7 +327,7 @@ public abstract class KtParsingTestCase extends KtPlatformLiteFixture {
         String psiToStringDefault = DebugUtil.psiToString(file, false, false);
         String fileText = file.getText();
         DiffLog diffLog = (new BlockSupportImpl(file.getProject())).reparseRange(
-                file, file.getNode(), TextRange.allOf(fileText), fileText, new EmptyProgressIndicator(), fileText);
+                              file, file.getNode(), TextRange.allOf(fileText), fileText, new EmptyProgressIndicator(), fileText);
         diffLog.performActualPsiChange(file);
 
         TestCase.assertEquals(psiToStringDefault, DebugUtil.psiToString(file, false, false));

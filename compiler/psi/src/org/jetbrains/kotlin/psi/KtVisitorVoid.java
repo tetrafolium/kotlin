@@ -606,7 +606,7 @@ public class KtVisitorVoid extends KtVisitor<Void, Void> {
 
     @Override
     public final Void visitDelegatedSuperTypeEntry(
-            @NotNull KtDelegatedSuperTypeEntry specifier, Void data
+        @NotNull KtDelegatedSuperTypeEntry specifier, Void data
     ) {
         visitDelegatedSuperTypeEntry(specifier);
         return null;

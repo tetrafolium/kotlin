@@ -25,15 +25,15 @@ public class MethodData extends MemberData {
     private final int allArgsParameterIndex;
 
     MethodData(
-            FieldData ownerField,
-            String declaringClass,
-            String name,
-            String desc,
-            int thisParameterIndex,
-            int classNameParameterIndex,
-            int methodNameParameterIndex,
-            int methodDescParameterIndex,
-            int allArgsParameterIndex
+        FieldData ownerField,
+        String declaringClass,
+        String name,
+        String desc,
+        int thisParameterIndex,
+        int classNameParameterIndex,
+        int methodNameParameterIndex,
+        int methodDescParameterIndex,
+        int allArgsParameterIndex
     ) {
         super(declaringClass, name, desc);
         this.ownerField = ownerField;

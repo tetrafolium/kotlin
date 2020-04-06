@@ -68,7 +68,7 @@ public final class KtNamedDeclarationUtil {
             }
         }
         else if (parent instanceof KtObjectDeclaration) {
-             return getFQName((KtNamedDeclaration) parent);
+            return getFQName((KtNamedDeclaration) parent);
         }
         return null;
     }

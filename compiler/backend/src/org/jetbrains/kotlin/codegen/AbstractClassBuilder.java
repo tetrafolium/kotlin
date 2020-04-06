@@ -61,12 +61,12 @@ public abstract class AbstractClassBuilder implements ClassBuilder {
     @Override
     @NotNull
     public FieldVisitor newField(
-            @NotNull JvmDeclarationOrigin origin,
-            int access,
-            @NotNull String name,
-            @NotNull String desc,
-            @Nullable String signature,
-            @Nullable Object value
+        @NotNull JvmDeclarationOrigin origin,
+        int access,
+        @NotNull String name,
+        @NotNull String desc,
+        @Nullable String signature,
+        @Nullable Object value
     ) {
         FieldVisitor visitor = getVisitor().visitField(access, name, desc, signature, value);
         if (visitor == null) {
@@ -78,12 +78,12 @@ public abstract class AbstractClassBuilder implements ClassBuilder {
     @Override
     @NotNull
     public MethodVisitor newMethod(
-            @NotNull JvmDeclarationOrigin origin,
-            int access,
-            @NotNull String name,
-            @NotNull String desc,
-            @Nullable String signature,
-            @Nullable String[] exceptions
+        @NotNull JvmDeclarationOrigin origin,
+        int access,
+        @NotNull String name,
+        @NotNull String desc,
+        @Nullable String signature,
+        @Nullable String[] exceptions
     ) {
         MethodVisitor visitor = getVisitor().visitMethod(access, name, desc, signature, exceptions);
         if (visitor == null) {
@@ -120,13 +120,13 @@ public abstract class AbstractClassBuilder implements ClassBuilder {
 
     @Override
     public void defineClass(
-            @Nullable PsiElement origin,
-            int version,
-            int access,
-            @NotNull String name,
-            @Nullable String signature,
-            @NotNull String superName,
-            @NotNull String[] interfaces
+        @Nullable PsiElement origin,
+        int version,
+        int access,
+        @NotNull String name,
+        @Nullable String signature,
+        @NotNull String superName,
+        @NotNull String[] interfaces
     ) {
         thisName = name;
         getVisitor().visit(version, access, name, signature, superName, interfaces);

@@ -52,26 +52,26 @@ import static org.jetbrains.kotlin.test.util.DescriptorValidator.ValidationVisit
 public class RecursiveDescriptorComparator {
 
     private static final DescriptorRenderer DEFAULT_RENDERER = DescriptorRenderer.Companion.withOptions(
-            options -> {
-                options.setWithDefinedIn(false);
-                options.setExcludedAnnotationClasses(Collections.singleton(new FqName(ExpectedLoadErrorsUtil.ANNOTATION_CLASS_NAME)));
-                options.setOverrideRenderingPolicy(OverrideRenderingPolicy.RENDER_OPEN_OVERRIDE);
-                options.setIncludePropertyConstant(true);
-                options.setClassifierNamePolicy(ClassifierNamePolicy.FULLY_QUALIFIED.INSTANCE);
-                options.setVerbose(true);
-                options.setAnnotationArgumentsRenderingPolicy(AnnotationArgumentsRenderingPolicy.UNLESS_EMPTY);
-                options.setModifiers(DescriptorRendererModifier.ALL);
-                return Unit.INSTANCE;
-            }
-    );
+    options -> {
+        options.setWithDefinedIn(false);
+        options.setExcludedAnnotationClasses(Collections.singleton(new FqName(ExpectedLoadErrorsUtil.ANNOTATION_CLASS_NAME)));
+        options.setOverrideRenderingPolicy(OverrideRenderingPolicy.RENDER_OPEN_OVERRIDE);
+        options.setIncludePropertyConstant(true);
+        options.setClassifierNamePolicy(ClassifierNamePolicy.FULLY_QUALIFIED.INSTANCE);
+        options.setVerbose(true);
+        options.setAnnotationArgumentsRenderingPolicy(AnnotationArgumentsRenderingPolicy.UNLESS_EMPTY);
+        options.setModifiers(DescriptorRendererModifier.ALL);
+        return Unit.INSTANCE;
+    }
+            );
 
     public static final Configuration DONT_INCLUDE_METHODS_OF_OBJECT = new Configuration(false, false, false, false,
-                                                                                         false, descriptor -> true, errorTypesForbidden(), DEFAULT_RENDERER);
+            false, descriptor -> true, errorTypesForbidden(), DEFAULT_RENDERER);
     public static final Configuration RECURSIVE = new Configuration(false, false, true, false,
-                                                                    false, descriptor -> true, errorTypesForbidden(), DEFAULT_RENDERER);
+            false, descriptor -> true, errorTypesForbidden(), DEFAULT_RENDERER);
 
     public static final Configuration RECURSIVE_ALL = new Configuration(true, true, true, false,
-                                                                        true, descriptor -> true, errorTypesForbidden(), DEFAULT_RENDERER);
+            true, descriptor -> true, errorTypesForbidden(), DEFAULT_RENDERER);
 
     public static final Predicate<DeclarationDescriptor> SKIP_BUILT_INS_PACKAGES = descriptor -> {
         if (descriptor instanceof PackageViewDescriptor) {
@@ -96,16 +96,16 @@ public class RecursiveDescriptorComparator {
     }
 
     private void appendDeclarationRecursively(
-            @NotNull DeclarationDescriptor descriptor,
-            @NotNull ModuleDescriptor module,
-            @NotNull Printer printer,
-            boolean topLevel
+        @NotNull DeclarationDescriptor descriptor,
+        @NotNull ModuleDescriptor module,
+        @NotNull Printer printer,
+        boolean topLevel
     ) {
         if (!isFromModule(descriptor, module)) return;
 
         boolean isEnumEntry = isEnumEntry(descriptor);
         boolean isClassOrPackage =
-                (descriptor instanceof ClassOrPackageFragmentDescriptor || descriptor instanceof PackageViewDescriptor) && !isEnumEntry;
+            (descriptor instanceof ClassOrPackageFragmentDescriptor || descriptor instanceof PackageViewDescriptor) && !isEnumEntry;
 
         StringBuilder content = new StringBuilder();
         if (isClassOrPackage) {
@@ -138,8 +138,8 @@ public class RecursiveDescriptorComparator {
 
             if (!topLevel) {
                 if (child.isEmpty() && (
-                        descriptor instanceof PackageFragmentDescriptor || descriptor instanceof PackageViewDescriptor
-                )) {
+                            descriptor instanceof PackageFragmentDescriptor || descriptor instanceof PackageViewDescriptor
+                        )) {
                     return;
                 }
 
@@ -187,8 +187,8 @@ public class RecursiveDescriptorComparator {
     }
 
     private void printDescriptor(
-            @NotNull DeclarationDescriptor descriptor,
-            @NotNull Printer printer
+        @NotNull DeclarationDescriptor descriptor,
+        @NotNull Printer printer
     ) {
         boolean isPrimaryConstructor = conf.checkPrimaryConstructors &&
                                        descriptor instanceof ConstructorDescriptor && ((ConstructorDescriptor) descriptor).isPrimary();
@@ -243,7 +243,7 @@ public class RecursiveDescriptorComparator {
 
         // 'expected' declarations do not belong to the platform-specific module, even though they participate in the analysis
         if (descriptor instanceof MemberDescriptor && ((MemberDescriptor) descriptor).isExpect() &&
-            module.getCapability(MultiTargetPlatform.CAPABILITY) != MultiTargetPlatform.Common.INSTANCE) return false;
+                module.getCapability(MultiTargetPlatform.CAPABILITY) != MultiTargetPlatform.Common.INSTANCE) return false;
 
         return module.equals(DescriptorUtils.getContainingModule(descriptor));
     }
@@ -256,11 +256,11 @@ public class RecursiveDescriptorComparator {
     }
 
     private void appendSubDescriptors(
-            @NotNull DeclarationDescriptor descriptor,
-            @NotNull ModuleDescriptor module,
-            @NotNull MemberScope memberScope,
-            @NotNull Collection<? extends DeclarationDescriptor> extraSubDescriptors,
-            @NotNull Printer printer
+        @NotNull DeclarationDescriptor descriptor,
+        @NotNull ModuleDescriptor module,
+        @NotNull MemberScope memberScope,
+        @NotNull Collection<? extends DeclarationDescriptor> extraSubDescriptors,
+        @NotNull Printer printer
     ) {
         if (!isFromModule(descriptor, module)) return;
 
@@ -279,18 +279,18 @@ public class RecursiveDescriptorComparator {
     }
 
     private static void compareDescriptorWithFile(
-            @NotNull DeclarationDescriptor actual,
-            @NotNull Configuration configuration,
-            @NotNull File txtFile
+        @NotNull DeclarationDescriptor actual,
+        @NotNull Configuration configuration,
+        @NotNull File txtFile
     ) {
         doCompareDescriptors(null, actual, configuration, txtFile);
     }
 
     public static void compareDescriptors(
-            @NotNull DeclarationDescriptor expected,
-            @NotNull DeclarationDescriptor actual,
-            @NotNull Configuration configuration,
-            @Nullable File txtFile
+        @NotNull DeclarationDescriptor expected,
+        @NotNull DeclarationDescriptor actual,
+        @NotNull Configuration configuration,
+        @Nullable File txtFile
     ) {
         if (expected == actual) {
             throw new IllegalArgumentException("Don't invoke this method with expected == actual." +
@@ -300,19 +300,19 @@ public class RecursiveDescriptorComparator {
     }
 
     public static void validateAndCompareDescriptorWithFile(
-            @NotNull DeclarationDescriptor actual,
-            @NotNull Configuration configuration,
-            @NotNull File txtFile
+        @NotNull DeclarationDescriptor actual,
+        @NotNull Configuration configuration,
+        @NotNull File txtFile
     ) {
         DescriptorValidator.validate(configuration.validationStrategy, actual);
         compareDescriptorWithFile(actual, configuration, txtFile);
     }
 
     public static void validateAndCompareDescriptors(
-            @NotNull DeclarationDescriptor expected,
-            @NotNull DeclarationDescriptor actual,
-            @NotNull Configuration configuration,
-            @Nullable File txtFile
+        @NotNull DeclarationDescriptor expected,
+        @NotNull DeclarationDescriptor actual,
+        @NotNull Configuration configuration,
+        @Nullable File txtFile
     ) {
         DescriptorValidator.validate(configuration.validationStrategy, expected);
         DescriptorValidator.validate(configuration.validationStrategy, actual);
@@ -320,10 +320,10 @@ public class RecursiveDescriptorComparator {
     }
 
     private static void doCompareDescriptors(
-            @Nullable DeclarationDescriptor expected,
-            @NotNull DeclarationDescriptor actual,
-            @NotNull Configuration configuration,
-            @Nullable File txtFile
+        @Nullable DeclarationDescriptor expected,
+        @NotNull DeclarationDescriptor actual,
+        @NotNull Configuration configuration,
+        @Nullable File txtFile
     ) {
         RecursiveDescriptorComparator comparator = new RecursiveDescriptorComparator(configuration);
 
@@ -351,14 +351,14 @@ public class RecursiveDescriptorComparator {
         private final DescriptorValidator.ValidationVisitor validationStrategy;
 
         public Configuration(
-                boolean checkPrimaryConstructors,
-                boolean checkPropertyAccessors,
-                boolean includeMethodsOfKotlinAny,
-                boolean renderDeclarationsFromOtherModules,
-                boolean checkFunctionContracts,
-                Predicate<DeclarationDescriptor> recursiveFilter,
-                DescriptorValidator.ValidationVisitor validationStrategy,
-                DescriptorRenderer renderer
+            boolean checkPrimaryConstructors,
+            boolean checkPropertyAccessors,
+            boolean includeMethodsOfKotlinAny,
+            boolean renderDeclarationsFromOtherModules,
+            boolean checkFunctionContracts,
+            Predicate<DeclarationDescriptor> recursiveFilter,
+            DescriptorValidator.ValidationVisitor validationStrategy,
+            DescriptorRenderer renderer
         ) {
             this.checkPrimaryConstructors = checkPrimaryConstructors;
             this.checkPropertyAccessors = checkPropertyAccessors;
@@ -383,10 +383,10 @@ public class RecursiveDescriptorComparator {
 
         public Configuration checkPropertyAccessors(boolean checkPropertyAccessors) {
             return new Configuration(
-                    checkPrimaryConstructors, checkPropertyAccessors, includeMethodsOfKotlinAny, renderDeclarationsFromOtherModules,
-                    checkFunctionContracts, recursiveFilter, validationStrategy,
-                    rendererWithPropertyAccessors(renderer, checkPropertyAccessors)
-            );
+                       checkPrimaryConstructors, checkPropertyAccessors, includeMethodsOfKotlinAny, renderDeclarationsFromOtherModules,
+                       checkFunctionContracts, recursiveFilter, validationStrategy,
+                       rendererWithPropertyAccessors(renderer, checkPropertyAccessors)
+                   );
         }
 
         public Configuration checkFunctionContracts(boolean checkFunctionContracts) {
@@ -416,18 +416,18 @@ public class RecursiveDescriptorComparator {
 
         @NotNull
         private static DescriptorRenderer rendererWithPropertyAccessors(
-                @NotNull DescriptorRenderer renderer, boolean checkPropertyAccessors
+            @NotNull DescriptorRenderer renderer, boolean checkPropertyAccessors
         ) {
             return newRenderer(renderer, options ->
-                    options.setPropertyAccessorRenderingPolicy(
-                            checkPropertyAccessors ? PropertyAccessorRenderingPolicy.DEBUG : PropertyAccessorRenderingPolicy.NONE
-                    )
-            );
+                               options.setPropertyAccessorRenderingPolicy(
+                                   checkPropertyAccessors ? PropertyAccessorRenderingPolicy.DEBUG : PropertyAccessorRenderingPolicy.NONE
+                               )
+                              );
         }
 
         @NotNull
         private static DescriptorRenderer newRenderer(
-                @NotNull DescriptorRenderer renderer, @NotNull Consumer<DescriptorRendererOptions> configure
+            @NotNull DescriptorRenderer renderer, @NotNull Consumer<DescriptorRendererOptions> configure
         ) {
             return renderer.withOptions(options -> {
                 configure.accept(options);

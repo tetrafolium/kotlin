@@ -37,19 +37,19 @@ public abstract class AbstractDataFlowTest extends AbstractPseudocodeTest {
 
     @Override
     public void dumpInstructions(
-            @NotNull PseudocodeImpl pseudocode,
-            @NotNull StringBuilder out,
-            @NotNull BindingContext bindingContext
+        @NotNull PseudocodeImpl pseudocode,
+        @NotNull StringBuilder out,
+        @NotNull BindingContext bindingContext
     ) {
         PseudocodeVariablesData pseudocodeVariablesData = new PseudocodeVariablesData(pseudocode.getRootPseudocode(), bindingContext);
         Map<Instruction, Edges<VariableInitReadOnlyControlFlowInfo>> variableInitializers =
-                pseudocodeVariablesData.getVariableInitializers();
+            pseudocodeVariablesData.getVariableInitializers();
         Map<Instruction, Edges<ReadOnlyControlFlowInfo<VariableDescriptor, VariableUseState>>> useStatusData =
-                pseudocodeVariablesData.getVariableUseStatusData();
+            pseudocodeVariablesData.getVariableUseStatusData();
         String initPrefix = "    INIT:";
         String usePrefix = "    USE:";
         int initializersColumnWidth = countDataColumnWidth(initPrefix, pseudocode.getInstructionsIncludingDeadCode(), variableInitializers,
-                                                           pseudocodeVariablesData);
+                                      pseudocodeVariablesData);
 
         dumpInstructions(pseudocode, out, (instruction, next, prev) -> {
             StringBuilder result = new StringBuilder();
@@ -71,10 +71,10 @@ public abstract class AbstractDataFlowTest extends AbstractPseudocodeTest {
     }
 
     private static int countDataColumnWidth(
-            @NotNull String prefix,
-            @NotNull List<Instruction> instructions,
-            @NotNull Map<Instruction, Edges<VariableInitReadOnlyControlFlowInfo>> data,
-            @NotNull PseudocodeVariablesData variablesData
+        @NotNull String prefix,
+        @NotNull List<Instruction> instructions,
+        @NotNull Map<Instruction, Edges<VariableInitReadOnlyControlFlowInfo>> data,
+        @NotNull PseudocodeVariablesData variablesData
     ) {
         int maxWidth = 0;
         for (Instruction instruction : instructions) {
@@ -91,9 +91,9 @@ public abstract class AbstractDataFlowTest extends AbstractPseudocodeTest {
 
     @NotNull
     private static <S, I extends ReadOnlyControlFlowInfo<VariableDescriptor, S>> String dumpEdgesData(
-            String prefix,
-            @NotNull Edges<I> edges,
-            @NotNull PseudocodeVariablesData variablesData
+        String prefix,
+        @NotNull Edges<I> edges,
+        @NotNull PseudocodeVariablesData variablesData
     ) {
         return prefix +
                " in: " + renderVariableMap(edges.getIncoming().asMap(), variablesData) +
@@ -101,8 +101,8 @@ public abstract class AbstractDataFlowTest extends AbstractPseudocodeTest {
     }
 
     private static <S> String renderVariableMap(
-            javaslang.collection.Map<VariableDescriptor, S> map,
-            PseudocodeVariablesData variablesData
+        javaslang.collection.Map<VariableDescriptor, S> map,
+        PseudocodeVariablesData variablesData
     ) {
         List<String> result = Lists.newArrayList();
         for (Tuple2<VariableDescriptor, S> entry : map) {

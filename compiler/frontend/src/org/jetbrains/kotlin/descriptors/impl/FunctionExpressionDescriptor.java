@@ -24,11 +24,11 @@ import org.jetbrains.kotlin.name.Name;
 
 public class FunctionExpressionDescriptor extends SimpleFunctionDescriptorImpl {
     public FunctionExpressionDescriptor(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull Annotations annotations,
-            @NotNull Name name,
-            @NotNull Kind kind,
-            @NotNull SourceElement source
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull Annotations annotations,
+        @NotNull Name name,
+        @NotNull Kind kind,
+        @NotNull SourceElement source
     ) {
         super(containingDeclaration, null, annotations, name, kind, source);
     }

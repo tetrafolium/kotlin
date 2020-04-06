@@ -78,10 +78,10 @@ public class AsmUtil {
     public static final boolean IS_BUILT_WITH_ASM6 = Opcodes.API_VERSION <= Opcodes.ASM6;
 
     private static final Set<Type> STRING_BUILDER_OBJECT_APPEND_ARG_TYPES = Sets.newHashSet(
-            getType(String.class),
-            getType(StringBuffer.class),
-            getType(CharSequence.class)
-    );
+                getType(String.class),
+                getType(StringBuffer.class),
+                getType(CharSequence.class)
+            );
 
     private static final int NO_FLAG_LOCAL = 0;
     public static final int NO_FLAG_PACKAGE_PRIVATE = 0;
@@ -142,9 +142,9 @@ public class AsmUtil {
 
     @NotNull
     public static String getLabeledThisNameForReceiver(
-            @NotNull CallableDescriptor descriptor,
-            @NotNull BindingContext bindingContext,
-            @NotNull LanguageVersionSettings languageVersionSettings
+        @NotNull CallableDescriptor descriptor,
+        @NotNull BindingContext bindingContext,
+        @NotNull LanguageVersionSettings languageVersionSettings
     ) {
         if (!languageVersionSettings.supportsFeature(LanguageFeature.NewCapturedReceiverFieldNamingConvention)) {
             return CAPTURED_RECEIVER_FIELD;
@@ -334,7 +334,7 @@ public class AsmUtil {
         if (functionDescriptor.getModality() == Modality.FINAL && !(functionDescriptor instanceof ConstructorDescriptor)) {
             DeclarationDescriptor containingDeclaration = functionDescriptor.getContainingDeclaration();
             if (!(containingDeclaration instanceof ClassDescriptor) ||
-                ((ClassDescriptor) containingDeclaration).getKind() != ClassKind.INTERFACE) {
+                    ((ClassDescriptor) containingDeclaration).getKind() != ClassKind.INTERFACE) {
                 flags |= ACC_FINAL;
             }
         }
@@ -348,11 +348,11 @@ public class AsmUtil {
         }
 
         if (KotlinTypeMapper.isAccessor(functionDescriptor) ||
-            hasJvmSyntheticAnnotation(functionDescriptor) ||
-            isInlineClassWrapperConstructor(functionDescriptor, kind) ||
-            InlineClassDescriptorResolver.isSynthesizedBoxMethod(functionDescriptor) ||
-            InlineClassDescriptorResolver.isSynthesizedUnboxMethod(functionDescriptor)
-        ) {
+                hasJvmSyntheticAnnotation(functionDescriptor) ||
+                isInlineClassWrapperConstructor(functionDescriptor, kind) ||
+                InlineClassDescriptorResolver.isSynthesizedBoxMethod(functionDescriptor) ||
+                InlineClassDescriptorResolver.isSynthesizedUnboxMethod(functionDescriptor)
+           ) {
             flags |= ACC_SYNTHETIC;
         }
 
@@ -370,15 +370,15 @@ public class AsmUtil {
     }
 
     private static int getCommonCallableFlags(
-            FunctionDescriptor functionDescriptor,
-            @Nullable OwnerKind kind,
-            @NotNull DeprecationResolver deprecationResolver
+        FunctionDescriptor functionDescriptor,
+        @Nullable OwnerKind kind,
+        @NotNull DeprecationResolver deprecationResolver
     ) {
         int flags = getVisibilityAccessFlag(functionDescriptor, kind);
         flags |= getVarargsFlag(functionDescriptor);
         flags |= getDeprecatedAccessFlag(functionDescriptor);
         if (deprecationResolver.isDeprecatedHidden(functionDescriptor) ||
-            (functionDescriptor.isSuspend()) && functionDescriptor.getVisibility().equals(Visibilities.PRIVATE)) {
+                (functionDescriptor.isSuspend()) && functionDescriptor.getVisibility().equals(Visibilities.PRIVATE)) {
             flags |= ACC_SYNTHETIC;
         }
         return flags;
@@ -422,10 +422,10 @@ public class AsmUtil {
             return NO_FLAG_PACKAGE_PRIVATE;
         }
         if (descriptor.getVisibility() == Visibilities.PUBLIC ||
-            descriptor.getVisibility() == Visibilities.PROTECTED ||
-            // TODO: should be package private, but for now Kotlin's reflection can't access members of such classes
-            descriptor.getVisibility() == Visibilities.LOCAL ||
-            descriptor.getVisibility() == Visibilities.INTERNAL) {
+                descriptor.getVisibility() == Visibilities.PROTECTED ||
+                // TODO: should be package private, but for now Kotlin's reflection can't access members of such classes
+                descriptor.getVisibility() == Visibilities.LOCAL ||
+                descriptor.getVisibility() == Visibilities.INTERNAL) {
             return ACC_PUBLIC;
         }
         return NO_FLAG_PACKAGE_PRIVATE;
@@ -442,11 +442,11 @@ public class AsmUtil {
 
     public static int calculateInnerClassAccessFlags(@NotNull ClassDescriptor innerClass) {
         int visibility =
-                innerClass instanceof SyntheticClassDescriptorForLambda
-                ? getVisibilityAccessFlagForAnonymous(innerClass)
-                : innerClass.getVisibility() == Visibilities.LOCAL
-                  ? ACC_PUBLIC
-                  : getVisibilityAccessFlag(innerClass);
+            innerClass instanceof SyntheticClassDescriptorForLambda
+            ? getVisibilityAccessFlagForAnonymous(innerClass)
+            : innerClass.getVisibility() == Visibilities.LOCAL
+            ? ACC_PUBLIC
+            : getVisibilityAccessFlag(innerClass);
         return visibility |
                getSyntheticAccessFlagForLambdaClass(innerClass) |
                innerAccessFlagsForModalityAndKind(innerClass) |
@@ -455,20 +455,20 @@ public class AsmUtil {
 
     private static int innerAccessFlagsForModalityAndKind(@NotNull ClassDescriptor innerClass) {
         switch (innerClass.getKind()) {
-            case INTERFACE:
-                return ACC_ABSTRACT | ACC_INTERFACE;
-            case ENUM_CLASS:
-                return ACC_FINAL | ACC_ENUM;
-            case ANNOTATION_CLASS:
-                return ACC_ABSTRACT | ACC_ANNOTATION | ACC_INTERFACE;
-            default:
-                Modality modality = innerClass.getModality();
-                if (modality == Modality.FINAL) {
-                    return ACC_FINAL;
-                }
-                else if (modality == Modality.ABSTRACT || modality == Modality.SEALED) {
-                    return ACC_ABSTRACT;
-                }
+        case INTERFACE:
+            return ACC_ABSTRACT | ACC_INTERFACE;
+        case ENUM_CLASS:
+            return ACC_FINAL | ACC_ENUM;
+        case ANNOTATION_CLASS:
+            return ACC_ABSTRACT | ACC_ANNOTATION | ACC_INTERFACE;
+        default:
+            Modality modality = innerClass.getModality();
+            if (modality == Modality.FINAL) {
+                return ACC_FINAL;
+            }
+            else if (modality == Modality.ABSTRACT || modality == Modality.SEALED) {
+                return ACC_ABSTRACT;
+            }
         }
         return 0;
     }
@@ -487,8 +487,8 @@ public class AsmUtil {
 
     private static int getVarargsFlag(FunctionDescriptor functionDescriptor) {
         if (!functionDescriptor.getValueParameters().isEmpty()
-            && functionDescriptor.getValueParameters().get(functionDescriptor.getValueParameters().size() - 1)
-                       .getVarargElementType() != null) {
+                && functionDescriptor.getValueParameters().get(functionDescriptor.getValueParameters().size() - 1)
+                .getVarargElementType() != null) {
             return ACC_VARARGS;
         }
         return 0;
@@ -504,15 +504,15 @@ public class AsmUtil {
         }
 
         if (memberDescriptor instanceof FunctionDescriptor &&
-            isInlineClassWrapperConstructor((FunctionDescriptor) memberDescriptor, kind)) {
+                isInlineClassWrapperConstructor((FunctionDescriptor) memberDescriptor, kind)) {
             return ACC_PRIVATE;
         }
 
         if (kind != OwnerKind.ERASED_INLINE_CLASS &&
-            memberDescriptor instanceof ConstructorDescriptor &&
-            !(memberDescriptor instanceof AccessorForConstructorDescriptor) &&
-            InlineClassManglingRulesKt.shouldHideConstructorDueToInlineClassTypeValueParameters((ConstructorDescriptor) memberDescriptor)
-        ) {
+                memberDescriptor instanceof ConstructorDescriptor &&
+                !(memberDescriptor instanceof AccessorForConstructorDescriptor) &&
+                InlineClassManglingRulesKt.shouldHideConstructorDueToInlineClassTypeValueParameters((ConstructorDescriptor) memberDescriptor)
+           ) {
             return ACC_PRIVATE;
         }
 
@@ -586,15 +586,15 @@ public class AsmUtil {
 
     private static Type stringBuilderAppendType(Type type) {
         switch (type.getSort()) {
-            case Type.OBJECT:
-                return STRING_BUILDER_OBJECT_APPEND_ARG_TYPES.contains(type) ? type : OBJECT_TYPE;
-            case Type.ARRAY:
-                return OBJECT_TYPE;
-            case Type.BYTE:
-            case Type.SHORT:
-                return Type.INT_TYPE;
-            default:
-                return type;
+        case Type.OBJECT:
+            return STRING_BUILDER_OBJECT_APPEND_ARG_TYPES.contains(type) ? type : OBJECT_TYPE;
+        case Type.ARRAY:
+            return OBJECT_TYPE;
+        case Type.BYTE:
+        case Type.SHORT:
+            return Type.INT_TYPE;
+        default:
+            return type;
         }
     }
 
@@ -612,10 +612,10 @@ public class AsmUtil {
     }
 
     public static void genClosureFields(
-            @NotNull CalculatedClosure closure,
-            ClassBuilder v,
-            KotlinTypeMapper typeMapper,
-            @NotNull LanguageVersionSettings languageVersionSettings
+        @NotNull CalculatedClosure closure,
+        ClassBuilder v,
+        KotlinTypeMapper typeMapper,
+        @NotNull LanguageVersionSettings languageVersionSettings
     ) {
         List<Pair<String, Type>> allFields = new ArrayList<>();
 
@@ -646,11 +646,11 @@ public class AsmUtil {
     }
 
     public static int genAssignInstanceFieldFromParam(
-            FieldInfo info,
-            int index,
-            InstructionAdapter iv,
-            int ownerIndex,
-            boolean cast
+        FieldInfo info,
+        int index,
+        InstructionAdapter iv,
+        int ownerIndex,
+        boolean cast
     ) {
         assert !info.isStatic();
         Type fieldType = info.getFieldType();
@@ -685,10 +685,10 @@ public class AsmUtil {
     }
 
     public static void genInvokeAppendMethod(
-            @NotNull InstructionAdapter v,
-            @NotNull Type type,
-            @Nullable KotlinType kotlinType,
-            @Nullable KotlinTypeMapper typeMapper
+        @NotNull InstructionAdapter v,
+        @NotNull Type type,
+        @Nullable KotlinType kotlinType,
+        @Nullable KotlinTypeMapper typeMapper
     ) {
         Type appendParameterType;
 
@@ -710,10 +710,10 @@ public class AsmUtil {
     }
 
     public static StackValue genToString(
-            @NotNull StackValue receiver,
-            @NotNull Type receiverType,
-            @Nullable KotlinType receiverKotlinType,
-            @Nullable KotlinTypeMapper typeMapper
+        @NotNull StackValue receiver,
+        @NotNull Type receiverType,
+        @Nullable KotlinType receiverKotlinType,
+        @Nullable KotlinTypeMapper typeMapper
     ) {
         return StackValue.operation(JAVA_STRING_TYPE, v -> {
             CallableMethod specializedToString = getSpecializedToStringCallableMethodOrNull(receiverKotlinType, typeMapper);
@@ -742,8 +742,8 @@ public class AsmUtil {
 
     @Nullable
     private static CallableMethod getSpecializedToStringCallableMethodOrNull(
-            @Nullable KotlinType receiverKotlinType,
-            @Nullable KotlinTypeMapper typeMapper
+        @Nullable KotlinType receiverKotlinType,
+        @Nullable KotlinTypeMapper typeMapper
     ) {
         if (typeMapper == null) return null;
 
@@ -753,19 +753,19 @@ public class AsmUtil {
 
         DeclarationDescriptor receiverTypeDescriptor = receiverKotlinType.getConstructor().getDeclarationDescriptor();
         assert receiverTypeDescriptor instanceof ClassDescriptor && ((ClassDescriptor) receiverTypeDescriptor).isInline() :
-                "Inline class type expected: " + receiverKotlinType;
+        "Inline class type expected: " + receiverKotlinType;
         ClassDescriptor receiverClassDescriptor = (ClassDescriptor) receiverTypeDescriptor;
         FunctionDescriptor toStringDescriptor = receiverClassDescriptor.getUnsubstitutedMemberScope()
-                .getContributedFunctions(Name.identifier("toString"), NoLookupLocation.FROM_BACKEND)
-                .stream()
-                .filter(
-                        f -> f.getValueParameters().size() == 0
-                             && KotlinBuiltIns.isString(f.getReturnType())
-                             && f.getDispatchReceiverParameter() != null
-                             && f.getExtensionReceiverParameter() == null
-                )
-                .findFirst()
-                .orElseThrow(() -> new AssertionError("'toString' not found in member scope of " + receiverClassDescriptor));
+                                                .getContributedFunctions(Name.identifier("toString"), NoLookupLocation.FROM_BACKEND)
+                                                .stream()
+                                                .filter(
+                                                        f -> f.getValueParameters().size() == 0
+                                                        && KotlinBuiltIns.isString(f.getReturnType())
+                                                        && f.getDispatchReceiverParameter() != null
+                                                        && f.getExtensionReceiverParameter() == null
+                                                )
+                                                .findFirst()
+                                                .orElseThrow(() -> new AssertionError("'toString' not found in member scope of " + receiverClassDescriptor));
 
         return typeMapper.mapToCallableMethod(toStringDescriptor, false, OwnerKind.ERASED_INLINE_CLASS);
     }
@@ -827,9 +827,9 @@ public class AsmUtil {
 
     @NotNull
     public static StackValue genEqualsForExpressionsOnStack(
-            @NotNull IElementType opToken,
-            @NotNull StackValue left,
-            @NotNull StackValue right
+        @NotNull IElementType opToken,
+        @NotNull StackValue left,
+        @NotNull StackValue right
     ) {
         Type leftType = left.type;
         Type rightType = right.type;
@@ -904,10 +904,10 @@ public class AsmUtil {
     }
 
     static void genNotNullAssertionsForParameters(
-            @NotNull InstructionAdapter v,
-            @NotNull GenerationState state,
-            @NotNull FunctionDescriptor descriptor,
-            @NotNull FrameMap frameMap
+        @NotNull InstructionAdapter v,
+        @NotNull GenerationState state,
+        @NotNull FunctionDescriptor descriptor,
+        @NotNull FrameMap frameMap
     ) {
         if (state.isParamAssertionsDisabled()) return;
         // currently when resuming a suspend function we pass default values instead of real arguments (i.e. nulls for references)
@@ -942,12 +942,12 @@ public class AsmUtil {
     }
 
     private static void genParamAssertion(
-            @NotNull InstructionAdapter v,
-            @NotNull KotlinTypeMapper typeMapper,
-            @NotNull FrameMap frameMap,
-            @NotNull ParameterDescriptor parameter,
-            @NotNull String name,
-            @NotNull FunctionDescriptor containingDeclaration
+        @NotNull InstructionAdapter v,
+        @NotNull KotlinTypeMapper typeMapper,
+        @NotNull FrameMap frameMap,
+        @NotNull ParameterDescriptor parameter,
+        @NotNull String name,
+        @NotNull FunctionDescriptor containingDeclaration
     ) {
         KotlinType type = parameter.getType();
         if (isNullableType(type) || InlineClassesUtilsKt.isNullableUnderlyingType(type)) return;
@@ -956,11 +956,11 @@ public class AsmUtil {
         if (asmType.getSort() == Type.OBJECT || asmType.getSort() == Type.ARRAY) {
             StackValue value;
             if (JvmCodegenUtil.isDeclarationOfBigArityFunctionInvoke(containingDeclaration) ||
-                JvmCodegenUtil.isDeclarationOfBigArityCreateCoroutineMethod(containingDeclaration)) {
+                    JvmCodegenUtil.isDeclarationOfBigArityCreateCoroutineMethod(containingDeclaration)) {
                 int index = getIndexOfParameterInVarargInvokeArray(parameter);
                 value = StackValue.arrayElement(
-                        OBJECT_TYPE, null, StackValue.local(1, getArrayType(OBJECT_TYPE)), StackValue.constant(index)
-                );
+                            OBJECT_TYPE, null, StackValue.local(1, getArrayType(OBJECT_TYPE)), StackValue.constant(index)
+                        );
             }
             else {
                 int index = frameMap.getIndex(parameter);
@@ -969,16 +969,16 @@ public class AsmUtil {
             value.put(asmType, v);
             v.visitLdcInsn(name);
             v.invokestatic(
-                    IntrinsicMethods.INTRINSICS_CLASS_NAME, "checkParameterIsNotNull", "(Ljava/lang/Object;Ljava/lang/String;)V", false
+                IntrinsicMethods.INTRINSICS_CLASS_NAME, "checkParameterIsNotNull", "(Ljava/lang/Object;Ljava/lang/String;)V", false
             );
         }
     }
 
     @NotNull
     public static StackValue genNotNullAssertions(
-            @NotNull GenerationState state,
-            @NotNull StackValue stackValue,
-            @Nullable RuntimeAssertionInfo runtimeAssertionInfo
+        @NotNull GenerationState state,
+        @NotNull StackValue stackValue,
+        @Nullable RuntimeAssertionInfo runtimeAssertionInfo
     ) {
         if (state.isCallAssertionsDisabled()) return stackValue;
         if (runtimeAssertionInfo == null || !runtimeAssertionInfo.getNeedNotNullAssertion()) return stackValue;
@@ -1178,21 +1178,21 @@ public class AsmUtil {
     }
 
     public static void writeAnnotationData(
-            @NotNull AnnotationVisitor av,
-            @NotNull DescriptorSerializer serializer,
-            @NotNull MessageLite message
+        @NotNull AnnotationVisitor av,
+        @NotNull DescriptorSerializer serializer,
+        @NotNull MessageLite message
     ) {
         writeAnnotationData(av, message, (JvmStringTable) serializer.getStringTable());
     }
 
     public static void writeAnnotationData(
-            @NotNull AnnotationVisitor av, @NotNull MessageLite message, @NotNull JvmStringTable stringTable
+        @NotNull AnnotationVisitor av, @NotNull MessageLite message, @NotNull JvmStringTable stringTable
     ) {
         writeAnnotationData(av, JvmProtoBufUtil.writeData(message, stringTable), ArrayUtil.toStringArray(stringTable.getStrings()));
     }
 
     public static void writeAnnotationData(
-            @NotNull AnnotationVisitor av, @NotNull String[] data, @NotNull String[] strings
+        @NotNull AnnotationVisitor av, @NotNull String[] data, @NotNull String[] strings
     ) {
         AnnotationVisitor dataVisitor = av.visitArray(JvmAnnotationNames.METADATA_DATA_FIELD_NAME);
         for (String string : data) {
@@ -1223,10 +1223,10 @@ public class AsmUtil {
     }
 
     public static void putJavaLangClassInstance(
-            @NotNull InstructionAdapter v,
-            @NotNull Type type,
-            @Nullable KotlinType kotlinType,
-            @NotNull GenerationState state
+        @NotNull InstructionAdapter v,
+        @NotNull Type type,
+        @Nullable KotlinType kotlinType,
+        @NotNull GenerationState state
     ) {
         if (kotlinType != null && InlineClassesUtilsKt.isInlineClassType(kotlinType)) {
             v.aconst(boxType(type, kotlinType, state));

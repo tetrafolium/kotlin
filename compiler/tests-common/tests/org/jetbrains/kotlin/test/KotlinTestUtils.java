@@ -99,13 +99,13 @@ public class KotlinTestUtils {
     private static final String PLEASE_REGENERATE_TESTS = "Please regenerate tests (GenerateTests.kt)";
 
     private static final boolean RUN_IGNORED_TESTS_AS_REGULAR =
-            Boolean.getBoolean("org.jetbrains.kotlin.run.ignored.tests.as.regular");
+        Boolean.getBoolean("org.jetbrains.kotlin.run.ignored.tests.as.regular");
 
     private static final boolean PRINT_STACKTRACE_FOR_IGNORED_TESTS =
-            Boolean.getBoolean("org.jetbrains.kotlin.print.stacktrace.for.ignored.tests");
+        Boolean.getBoolean("org.jetbrains.kotlin.print.stacktrace.for.ignored.tests");
 
     private static final boolean DONT_IGNORE_TESTS_WORKING_ON_COMPATIBLE_BACKEND =
-            Boolean.getBoolean("org.jetbrains.kotlin.dont.ignore.tests.working.on.compatible.backend");
+        Boolean.getBoolean("org.jetbrains.kotlin.dont.ignore.tests.working.on.compatible.backend");
 
 
     private static final boolean AUTOMATICALLY_UNMUTE_PASSED_TESTS = false;
@@ -125,8 +125,8 @@ public class KotlinTestUtils {
     private static final String MODULE_DELIMITER = ",\\s*";
 
     private static final Pattern FILE_OR_MODULE_PATTERN = Pattern.compile(
-            "(?://\\s*MODULE:\\s*([^()\\n]+)(?:\\(([^()]+(?:" + MODULE_DELIMITER + "[^()]+)*)\\))?\\s*(?:\\(([^()]+(?:" + MODULE_DELIMITER + "[^()]+)*)\\))?\\s*)?" +
-            "//\\s*FILE:\\s*(.*)$", Pattern.MULTILINE);
+                "(?://\\s*MODULE:\\s*([^()\\n]+)(?:\\(([^()]+(?:" + MODULE_DELIMITER + "[^()]+)*)\\))?\\s*(?:\\(([^()]+(?:" + MODULE_DELIMITER + "[^()]+)*)\\))?\\s*)?" +
+                "//\\s*FILE:\\s*(.*)$", Pattern.MULTILINE);
     private static final Pattern DIRECTIVE_PATTERN = Pattern.compile("^//\\s*!([\\w_]+)(:\\s*(.*)$)?", Pattern.MULTILINE);
     private static final Pattern LINE_SEPARATOR_PATTERN = Pattern.compile("\\r\\n|\\r|\\n");
 
@@ -327,13 +327,13 @@ public class KotlinTestUtils {
 
     @NotNull
     public static KotlinCoreEnvironment createEnvironmentWithJdkAndNullabilityAnnotationsFromIdea(
-            @NotNull Disposable disposable,
-            @NotNull ConfigurationKind configurationKind,
-            @NotNull TestJdkKind jdkKind
+        @NotNull Disposable disposable,
+        @NotNull ConfigurationKind configurationKind,
+        @NotNull TestJdkKind jdkKind
     ) {
         return KotlinCoreEnvironment.createForTests(
-                disposable, newConfiguration(configurationKind, jdkKind, getAnnotationsJar()), EnvironmentConfigFiles.JVM_CONFIG_FILES
-        );
+                   disposable, newConfiguration(configurationKind, jdkKind, getAnnotationsJar()), EnvironmentConfigFiles.JVM_CONFIG_FILES
+               );
     }
 
     @NotNull
@@ -375,9 +375,9 @@ public class KotlinTestUtils {
         File androidJarFile = androidJarProp == null ? null : new File(androidJarProp);
         if (androidJarFile == null || !androidJarFile.isFile()) {
             throw new RuntimeException(
-                    "Unable to get a valid path from 'android.jar' property (" +
-                    androidJarProp +
-                    "), please point it to the 'android.jar' file location");
+                "Unable to get a valid path from 'android.jar' property (" +
+                androidJarProp +
+                "), please point it to the 'android.jar' file location");
         }
         return androidJarFile;
     }
@@ -388,9 +388,9 @@ public class KotlinTestUtils {
         File androidSdkDir = androidSdkProp == null ? null : new File(androidSdkProp);
         if (androidSdkDir == null || !androidSdkDir.isDirectory()) {
             throw new RuntimeException(
-                    "Unable to get a valid path from 'android.sdk' property (" +
-                    androidSdkProp +
-                    "), please point it to the android SDK location");
+                "Unable to get a valid path from 'android.sdk' property (" +
+                androidSdkProp +
+                "), please point it to the android SDK location");
         }
         return androidSdkDir;
     }
@@ -489,10 +489,10 @@ public class KotlinTestUtils {
              */
             String messageWithFullPath = file.getAbsolutePath() + " (No such file or directory)";
             throw new IOException(
-                    "Ensure you have your 'Working Directory' configured correctly as the root " +
-                    "Kotlin project directory in your test configuration\n\t" +
-                    messageWithFullPath,
-                    fileNotFoundException);
+                "Ensure you have your 'Working Directory' configured correctly as the root " +
+                "Kotlin project directory in your test configuration\n\t" +
+                messageWithFullPath,
+                fileNotFoundException);
         }
     }
 
@@ -508,11 +508,11 @@ public class KotlinTestUtils {
         if ("true".equals(System.getProperty("kotlin.ni"))) {
             // Enable new inference for tests which do not declare their own language version settings
             CommonConfigurationKeysKt.setLanguageVersionSettings(configuration, new CompilerTestLanguageVersionSettings(
-                    Collections.emptyMap(),
-                    LanguageVersionSettingsImpl.DEFAULT.getApiVersion(),
-                    LanguageVersionSettingsImpl.DEFAULT.getLanguageVersion(),
-                    Collections.emptyMap()
-            ));
+                        Collections.emptyMap(),
+                        LanguageVersionSettingsImpl.DEFAULT.getApiVersion(),
+                        LanguageVersionSettingsImpl.DEFAULT.getLanguageVersion(),
+                        Collections.emptyMap()
+                    ));
         }
 
         configuration.put(CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY, new MessageCollector() {
@@ -522,12 +522,12 @@ public class KotlinTestUtils {
 
             @Override
             public void report(
-                    @NotNull CompilerMessageSeverity severity, @NotNull String message, @Nullable CompilerMessageLocation location
+                @NotNull CompilerMessageSeverity severity, @NotNull String message, @Nullable CompilerMessageLocation location
             ) {
                 if (severity == CompilerMessageSeverity.ERROR) {
                     String prefix = location == null
-                                  ? ""
-                                  : "(" + location.getPath() + ":" + location.getLine() + ":" + location.getColumn() + ") ";
+                                    ? ""
+                                    : "(" + location.getPath() + ":" + location.getLine() + ":" + location.getColumn() + ") ";
                     throw new AssertionError(prefix + message);
                 }
             }
@@ -543,19 +543,19 @@ public class KotlinTestUtils {
 
     @NotNull
     public static CompilerConfiguration newConfiguration(
-            @NotNull ConfigurationKind configurationKind,
-            @NotNull TestJdkKind jdkKind,
-            @NotNull File... extraClasspath
+        @NotNull ConfigurationKind configurationKind,
+        @NotNull TestJdkKind jdkKind,
+        @NotNull File... extraClasspath
     ) {
         return newConfiguration(configurationKind, jdkKind, Arrays.asList(extraClasspath), Collections.emptyList());
     }
 
     @NotNull
     public static CompilerConfiguration newConfiguration(
-            @NotNull ConfigurationKind configurationKind,
-            @NotNull TestJdkKind jdkKind,
-            @NotNull List<File> classpath,
-            @NotNull List<File> javaSource
+        @NotNull ConfigurationKind configurationKind,
+        @NotNull TestJdkKind jdkKind,
+        @NotNull List<File> classpath,
+        @NotNull List<File> javaSource
     ) {
         CompilerConfiguration configuration = newConfiguration();
         JvmContentRootsKt.addJavaSourceRoots(configuration, javaSource);
@@ -642,7 +642,7 @@ public class KotlinTestUtils {
         Caret caret = editor.getCaretModel().getCurrentCaret();
         List<TagsTestDataUtil.TagInfo> tags = Lists.newArrayList(
                 new TagsTestDataUtil.TagInfo<>(caret.getOffset(), true, "caret")
-        );
+                                              );
 
         if (enableSelectionTags) {
             int selectionStart = caret.getSelectionStart();
@@ -692,11 +692,11 @@ public class KotlinTestUtils {
     }
 
     public static boolean compileKotlinWithJava(
-            @NotNull List<File> javaFiles,
-            @NotNull List<File> ktFiles,
-            @NotNull File outDir,
-            @NotNull Disposable disposable,
-            @Nullable File javaErrorFile
+        @NotNull List<File> javaFiles,
+        @NotNull List<File> ktFiles,
+        @NotNull File outDir,
+        @NotNull Disposable disposable,
+        @Nullable File javaErrorFile
     ) throws IOException {
         if (!ktFiles.isEmpty()) {
             KotlinCoreEnvironment environment = createEnvironmentWithFullJdkAndIdeaAnnotations(disposable);
@@ -710,9 +710,9 @@ public class KotlinTestUtils {
         if (javaFiles.isEmpty()) return true;
 
         return compileJavaFiles(javaFiles, Arrays.asList(
-                "-classpath", outDir.getPath() + File.pathSeparator + ForTestCompileRuntime.runtimeJarForTests(),
-                "-d", outDir.getPath()
-        ), javaErrorFile);
+                                    "-classpath", outDir.getPath() + File.pathSeparator + ForTestCompileRuntime.runtimeJarForTests(),
+                                    "-d", outDir.getPath()
+                                ), javaErrorFile);
     }
 
     public interface TestFileFactory<M, F> {
@@ -723,10 +723,10 @@ public class KotlinTestUtils {
     public static abstract class TestFileFactoryNoModules<F> implements TestFileFactory<Void, F> {
         @Override
         public final F createFile(
-                @Nullable Void module,
-                @NotNull String fileName,
-                @NotNull String text,
-                @NotNull Map<String, String> directives
+            @Nullable Void module,
+            @NotNull String fileName,
+            @NotNull String text,
+            @NotNull Map<String, String> directives
         ) {
             return create(fileName, text, directives);
         }
@@ -798,23 +798,23 @@ public class KotlinTestUtils {
                 if (!nextFileExists) break;
             }
             assert processedChars == expectedText.length() : "Characters skipped from " +
-                                                             processedChars +
-                                                             " to " +
-                                                             (expectedText.length() - 1);
+            processedChars +
+            " to " +
+            (expectedText.length() - 1);
         }
 
         if (isDirectiveDefined(expectedText, "WITH_COROUTINES")) {
             M supportModule = hasModules ? factory.createModule("support", Collections.emptyList(), Collections.emptyList()) : null;
 
             boolean isReleaseCoroutines =
-                    !coroutinesPackage.contains("experimental") &&
-                    !isDirectiveDefined(expectedText, "!LANGUAGE: -ReleaseCoroutines");
+                !coroutinesPackage.contains("experimental") &&
+                !isDirectiveDefined(expectedText, "!LANGUAGE: -ReleaseCoroutines");
 
             testFiles.add(factory.createFile(supportModule,
                                              "CoroutineUtil.kt",
                                              CoroutineTestUtilKt.createTextForHelpers(isReleaseCoroutines),
                                              directives
-            ));
+                                            ));
         }
 
         return testFiles;
@@ -949,7 +949,7 @@ public class KotlinTestUtils {
 
         if (comments.isEmpty() && assertMustExist) {
             throw new AssertionError(String.format(
-                    "Test file '%s' should end in a comment of type %s; last node was: %s", file.getName(), commentType, lastChild));
+                                         "Test file '%s' should end in a comment of type %s; last node was: %s", file.getName(), commentType, lastChild));
         }
 
         return comments;
@@ -963,16 +963,16 @@ public class KotlinTestUtils {
         JavaCompiler javaCompiler = ToolProvider.getSystemJavaCompiler();
         DiagnosticCollector<JavaFileObject> diagnosticCollector = new DiagnosticCollector<>();
         try (StandardJavaFileManager fileManager =
-                     javaCompiler.getStandardFileManager(diagnosticCollector, Locale.ENGLISH, Charset.forName("utf-8"))) {
+                        javaCompiler.getStandardFileManager(diagnosticCollector, Locale.ENGLISH, Charset.forName("utf-8"))) {
             Iterable<? extends JavaFileObject> javaFileObjectsFromFiles = fileManager.getJavaFileObjectsFromFiles(files);
 
             JavaCompiler.CompilationTask task = javaCompiler.getTask(
-                    new StringWriter(), // do not write to System.err
-                    fileManager,
-                    diagnosticCollector,
-                    options,
-                    null,
-                    javaFileObjectsFromFiles);
+                                                    new StringWriter(), // do not write to System.err
+                                                    fileManager,
+                                                    diagnosticCollector,
+                                                    options,
+                                                    null,
+                                                    javaFileObjectsFromFiles);
 
             Boolean success = task.call(); // do NOT inline this variable, call() should complete before errorsToString()
             if (javaErrorFile == null || !javaErrorFile.exists()) {
@@ -1014,9 +1014,9 @@ public class KotlinTestUtils {
             }
             else {
                 builder.append(new File(diagnostic.getSource().toUri()).getName()).append(":")
-                        .append(diagnostic.getLineNumber()).append(":")
-                        .append(diagnostic.getColumnNumber()).append(":")
-                        .append(diagnostic.getCode()).append("\n");
+                .append(diagnostic.getLineNumber()).append(":")
+                .append(diagnostic.getColumnNumber()).append(":")
+                .append(diagnostic.getCode()).append("\n");
             }
         }
         return builder.toString();
@@ -1136,12 +1136,12 @@ public class KotlinTestUtils {
     }
 
     public static void assertAllTestsPresentByMetadata(
-            @NotNull Class<?> testCaseClass,
-            @NotNull File testDataDir,
-            @NotNull Pattern filenamePattern,
-            @NotNull TargetBackend targetBackend,
-            boolean recursive,
-            @NotNull String... excludeDirs
+        @NotNull Class<?> testCaseClass,
+        @NotNull File testDataDir,
+        @NotNull Pattern filenamePattern,
+        @NotNull TargetBackend targetBackend,
+        boolean recursive,
+        @NotNull String... excludeDirs
     ) {
         File rootFile = new File(getTestsRoot(testCaseClass));
 
@@ -1164,10 +1164,10 @@ public class KotlinTestUtils {
     }
 
     public static void assertAllTestsPresentInSingleGeneratedClass(
-            @NotNull Class<?> testCaseClass,
-            @NotNull File testDataDir,
-            @NotNull Pattern filenamePattern,
-            @NotNull TargetBackend targetBackend
+        @NotNull Class<?> testCaseClass,
+        @NotNull File testDataDir,
+        @NotNull Pattern filenamePattern,
+        @NotNull TargetBackend targetBackend
     ) {
         File rootFile = new File(getTestsRoot(testCaseClass));
 

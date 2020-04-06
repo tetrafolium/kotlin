@@ -50,7 +50,7 @@ public class CFGraphToDotFilePrinter {
         Map<Instruction, String> nodeToName = new HashMap<>();
         for (Pseudocode pseudocode : pseudocodes) {
             dumpNodes(pseudocode.getInstructionsIncludingDeadCode(), out, count, nodeToName, Sets
-                    .newHashSet(pseudocode.getInstructions()));
+                      .newHashSet(pseudocode.getInstructions()));
         }
         int i = 0;
         for (Pseudocode pseudocode : pseudocodes) {

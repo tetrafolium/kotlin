@@ -141,12 +141,12 @@ public class TypeIntersector {
         IntersectionTypeConstructor constructor = new IntersectionTypeConstructor(resultingTypes);
 
         return KotlinTypeFactory.simpleTypeWithNonTrivialMemberScope(
-                Annotations.Companion.getEMPTY(),
-                constructor,
-                Collections.emptyList(),
-                allNullable,
-                constructor.createScopeForKotlinType()
-        );
+                   Annotations.Companion.getEMPTY(),
+                   constructor,
+                   Collections.emptyList(),
+                   allNullable,
+                   constructor.createScopeForKotlinType()
+               );
     }
 
     /**
@@ -202,10 +202,10 @@ public class TypeIntersector {
         }
 
         private static void processAllTypeParameters(
-                KotlinType type,
-                Variance howThisTypeIsUsed,
-                Function1<TypeParameterUsage, Unit> result,
-                Function1<TypeParameterDescriptor, Boolean> containsParameter
+            KotlinType type,
+            Variance howThisTypeIsUsed,
+            Function1<TypeParameterUsage, Unit> result,
+            Function1<TypeParameterDescriptor, Boolean> containsParameter
         ) {
             ClassifierDescriptor descriptor = type.getConstructor().getDeclarationDescriptor();
             if (descriptor instanceof TypeParameterDescriptor) {

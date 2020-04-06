@@ -45,9 +45,9 @@ public class KtObjectElementType extends KtStubElementType<KotlinObjectStub, KtO
         FqName fqName = KtPsiUtilKt.safeFqNameForLazyResolve(psi);
         List<String> superNames = KtPsiUtilKt.getSuperNames(psi);
         return new KotlinObjectStubImpl(
-                (StubElement<?>) parentStub, StringRef.fromString(name), fqName, Utils.INSTANCE.wrapStrings(superNames),
-                psi.isTopLevel(), psi.isCompanion(), psi.isLocal(), psi.isObjectLiteral()
-        );
+                   (StubElement<?>) parentStub, StringRef.fromString(name), fqName, Utils.INSTANCE.wrapStrings(superNames),
+                   psi.isTopLevel(), psi.isCompanion(), psi.isLocal(), psi.isObjectLiteral()
+               );
     }
 
     @Override
@@ -88,8 +88,8 @@ public class KtObjectElementType extends KtStubElementType<KotlinObjectStub, KtO
         }
 
         return new KotlinObjectStubImpl(
-                (StubElement<?>) parentStub, name, fqName, superNames, isTopLevel, isCompanion, isLocal, isObjectLiteral
-        );
+                   (StubElement<?>) parentStub, name, fqName, superNames, isTopLevel, isCompanion, isLocal, isObjectLiteral
+               );
     }
 
     @Override

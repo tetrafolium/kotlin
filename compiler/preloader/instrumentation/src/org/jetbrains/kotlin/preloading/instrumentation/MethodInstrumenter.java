@@ -32,15 +32,15 @@ class MethodInstrumenter {
     private final boolean dumpByteCode;
 
     public MethodInstrumenter(
-            String debugName,
-            Pattern classPattern, Pattern namePattern,
-            Pattern descPattern,
-            boolean allowMultipleMatches,
-            List<MethodData> enterData,
-            List<MethodData> normalReturnData,
-            List<MethodData> exceptionData,
-            boolean logApplications,
-            boolean dumpByteCode
+        String debugName,
+        Pattern classPattern, Pattern namePattern,
+        Pattern descPattern,
+        boolean allowMultipleMatches,
+        List<MethodData> enterData,
+        List<MethodData> normalReturnData,
+        List<MethodData> exceptionData,
+        boolean logApplications,
+        boolean dumpByteCode
     ) {
         this.debugName = debugName;
         this.classPattern = classPattern;

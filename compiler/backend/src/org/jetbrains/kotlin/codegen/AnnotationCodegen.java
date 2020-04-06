@@ -63,14 +63,14 @@ public abstract class AnnotationCodegen {
     }
 
     public static final List<JvmFlagAnnotation> FIELD_FLAGS = Arrays.asList(
-            new JvmFlagAnnotation(JvmAnnotationUtilKt.VOLATILE_ANNOTATION_FQ_NAME.asString(), Opcodes.ACC_VOLATILE),
-            new JvmFlagAnnotation(JvmAnnotationUtilKt.TRANSIENT_ANNOTATION_FQ_NAME.asString(), Opcodes.ACC_TRANSIENT)
-    );
+                new JvmFlagAnnotation(JvmAnnotationUtilKt.VOLATILE_ANNOTATION_FQ_NAME.asString(), Opcodes.ACC_VOLATILE),
+                new JvmFlagAnnotation(JvmAnnotationUtilKt.TRANSIENT_ANNOTATION_FQ_NAME.asString(), Opcodes.ACC_TRANSIENT)
+            );
 
     public static final List<JvmFlagAnnotation> METHOD_FLAGS = Arrays.asList(
-            new JvmFlagAnnotation(JvmAnnotationUtilKt.STRICTFP_ANNOTATION_FQ_NAME.asString(), Opcodes.ACC_STRICT),
-            new JvmFlagAnnotation(JvmAnnotationUtilKt.SYNCHRONIZED_ANNOTATION_FQ_NAME.asString(), Opcodes.ACC_SYNCHRONIZED)
-    );
+                new JvmFlagAnnotation(JvmAnnotationUtilKt.STRICTFP_ANNOTATION_FQ_NAME.asString(), Opcodes.ACC_STRICT),
+                new JvmFlagAnnotation(JvmAnnotationUtilKt.SYNCHRONIZED_ANNOTATION_FQ_NAME.asString(), Opcodes.ACC_SYNCHRONIZED)
+            );
 
     private static final AnnotationVisitor NO_ANNOTATION_VISITOR = new AnnotationVisitor(Opcodes.API_VERSION) {
         @Override
@@ -107,20 +107,20 @@ public abstract class AnnotationCodegen {
         for (AnnotationDescriptor annotation : annotations) {
             Set<KotlinTarget> applicableTargets = AnnotationChecker.applicableTargetSet(annotation);
             if (annotated instanceof AnonymousFunctionDescriptor
-                && !applicableTargets.contains(KotlinTarget.FUNCTION)
-                && !applicableTargets.contains(KotlinTarget.PROPERTY_GETTER)
-                && !applicableTargets.contains(KotlinTarget.PROPERTY_SETTER)) {
+                    && !applicableTargets.contains(KotlinTarget.FUNCTION)
+                    && !applicableTargets.contains(KotlinTarget.PROPERTY_GETTER)
+                    && !applicableTargets.contains(KotlinTarget.PROPERTY_SETTER)) {
                 assert (applicableTargets.contains(KotlinTarget.EXPRESSION)) :
-                        "Inconsistent target list for lambda annotation: " + applicableTargets + " on " + annotated;
+                "Inconsistent target list for lambda annotation: " + applicableTargets + " on " + annotated;
                 continue;
             }
             if (annotated instanceof ClassDescriptor
-                && !applicableTargets.contains(KotlinTarget.CLASS)
-                && !applicableTargets.contains(KotlinTarget.ANNOTATION_CLASS)) {
+                    && !applicableTargets.contains(KotlinTarget.CLASS)
+                    && !applicableTargets.contains(KotlinTarget.ANNOTATION_CLASS)) {
                 ClassDescriptor classDescriptor = (ClassDescriptor) annotated;
                 if (classDescriptor.getVisibility() == Visibilities.LOCAL) {
                     assert applicableTargets.contains(KotlinTarget.EXPRESSION) :
-                            "Inconsistent target list for object literal annotation: " + applicableTargets + " on " + annotated;
+                    "Inconsistent target list for object literal annotation: " + applicableTargets + " on " + annotated;
                     continue;
                 }
             }
@@ -135,16 +135,16 @@ public abstract class AnnotationCodegen {
     }
 
     private void generateAdditionalAnnotations(
-            @NotNull Annotated annotated,
-            @Nullable Type returnType,
-            @NotNull Set<String> annotationDescriptorsAlreadyPresent
+        @NotNull Annotated annotated,
+        @Nullable Type returnType,
+        @NotNull Set<String> annotationDescriptorsAlreadyPresent
     ) {
         if (annotated instanceof CallableDescriptor) {
             generateAdditionalCallableAnnotations((CallableDescriptor) annotated, returnType, annotationDescriptorsAlreadyPresent);
         }
         else if (annotated instanceof FieldDescriptor) {
             generateAdditionalCallableAnnotations(
-                    ((FieldDescriptor) annotated).getCorrespondingProperty(), returnType, annotationDescriptorsAlreadyPresent
+                ((FieldDescriptor) annotated).getCorrespondingProperty(), returnType, annotationDescriptorsAlreadyPresent
             );
         }
         else if (annotated instanceof ClassDescriptor) {
@@ -153,9 +153,9 @@ public abstract class AnnotationCodegen {
     }
 
     private void generateAdditionalCallableAnnotations(
-            @NotNull CallableDescriptor descriptor,
-            @Nullable Type returnType,
-            @NotNull Set<String> annotationDescriptorsAlreadyPresent
+        @NotNull CallableDescriptor descriptor,
+        @Nullable Type returnType,
+        @NotNull Set<String> annotationDescriptorsAlreadyPresent
     ) {
         // No need to annotate privates, synthetic accessors and their parameters
         if (isInvisibleFromTheOutside(descriptor)) return;
@@ -163,7 +163,7 @@ public abstract class AnnotationCodegen {
 
         // No need to annotate annotation methods since they're always non-null
         if (descriptor instanceof PropertyGetterDescriptor &&
-            DescriptorUtils.isAnnotationClass(descriptor.getContainingDeclaration())) {
+                DescriptorUtils.isAnnotationClass(descriptor.getContainingDeclaration())) {
             return;
         }
 
@@ -173,8 +173,8 @@ public abstract class AnnotationCodegen {
     }
 
     private void generateAdditionalClassAnnotations(
-            @NotNull Set<String> annotationDescriptorsAlreadyPresent,
-            @NotNull ClassDescriptor descriptor
+        @NotNull Set<String> annotationDescriptorsAlreadyPresent,
+        @NotNull ClassDescriptor descriptor
     ) {
         if (descriptor.getKind() == ClassKind.ANNOTATION_CLASS) {
             generateDocumentedAnnotation(descriptor, annotationDescriptorsAlreadyPresent);
@@ -247,7 +247,7 @@ public abstract class AnnotationCodegen {
     }
 
     private void generateTargetAnnotation(
-            @NotNull ClassDescriptor classDescriptor, @NotNull Set<String> annotationDescriptorsAlreadyPresent
+        @NotNull ClassDescriptor classDescriptor, @NotNull Set<String> annotationDescriptorsAlreadyPresent
     ) {
         String descriptor = Type.getType(Target.class).getDescriptor();
         if (!annotationDescriptorsAlreadyPresent.add(descriptor)) return;
@@ -353,16 +353,16 @@ public abstract class AnnotationCodegen {
         if (annotationClass == null) return parameterName.asString();
 
         Collection<? extends PropertyDescriptor> variables =
-                annotationClass.getUnsubstitutedMemberScope().getContributedVariables(parameterName, NoLookupLocation.FROM_BACKEND);
+            annotationClass.getUnsubstitutedMemberScope().getContributedVariables(parameterName, NoLookupLocation.FROM_BACKEND);
         if (variables.size() != 1) return parameterName.asString();
 
         return typeMapper.mapAnnotationParameterName(variables.iterator().next());
     }
 
     private void genCompileTimeValue(
-            @Nullable String name,
-            @NotNull ConstantValue<?> value,
-            @NotNull AnnotationVisitor annotationVisitor
+        @Nullable String name,
+        @NotNull ConstantValue<?> value,
+        @NotNull AnnotationVisitor annotationVisitor
     ) {
         AnnotationArgumentVisitor<Void, Void> argumentVisitor = new AnnotationArgumentVisitor<Void, Void>() {
             @Override
@@ -548,9 +548,9 @@ public abstract class AnnotationCodegen {
     abstract AnnotationVisitor visitAnnotation(String descr, boolean visible);
 
     public static AnnotationCodegen forClass(
-            @NotNull ClassVisitor cv,
-            @NotNull InnerClassConsumer innerClassConsumer,
-            @NotNull GenerationState state
+        @NotNull ClassVisitor cv,
+        @NotNull InnerClassConsumer innerClassConsumer,
+        @NotNull GenerationState state
     ) {
         return new AnnotationCodegen(innerClassConsumer, state) {
             @NotNull
@@ -562,9 +562,9 @@ public abstract class AnnotationCodegen {
     }
 
     public static AnnotationCodegen forMethod(
-            @NotNull MethodVisitor mv,
-            @NotNull InnerClassConsumer innerClassConsumer,
-            @NotNull GenerationState state
+        @NotNull MethodVisitor mv,
+        @NotNull InnerClassConsumer innerClassConsumer,
+        @NotNull GenerationState state
     ) {
         return new AnnotationCodegen(innerClassConsumer, state) {
             @NotNull
@@ -576,9 +576,9 @@ public abstract class AnnotationCodegen {
     }
 
     public static AnnotationCodegen forField(
-            @NotNull FieldVisitor fv,
-            @NotNull InnerClassConsumer innerClassConsumer,
-            @NotNull GenerationState state
+        @NotNull FieldVisitor fv,
+        @NotNull InnerClassConsumer innerClassConsumer,
+        @NotNull GenerationState state
     ) {
         return new AnnotationCodegen(innerClassConsumer, state) {
             @NotNull
@@ -590,10 +590,10 @@ public abstract class AnnotationCodegen {
     }
 
     public static AnnotationCodegen forParameter(
-            int parameter,
-            @NotNull MethodVisitor mv,
-            @NotNull InnerClassConsumer innerClassConsumer,
-            @NotNull GenerationState state
+        int parameter,
+        @NotNull MethodVisitor mv,
+        @NotNull InnerClassConsumer innerClassConsumer,
+        @NotNull GenerationState state
     ) {
         return new AnnotationCodegen(innerClassConsumer, state) {
             @NotNull
@@ -605,9 +605,9 @@ public abstract class AnnotationCodegen {
     }
 
     public static AnnotationCodegen forAnnotationDefaultValue(
-            @NotNull MethodVisitor mv,
-            @NotNull InnerClassConsumer innerClassConsumer,
-            @NotNull GenerationState state
+        @NotNull MethodVisitor mv,
+        @NotNull InnerClassConsumer innerClassConsumer,
+        @NotNull GenerationState state
     ) {
         return new AnnotationCodegen(innerClassConsumer, state) {
             @NotNull

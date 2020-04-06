@@ -43,10 +43,10 @@ public abstract class FileBasedKotlinClass implements KotlinJvmBinaryClass {
     private final InnerClassesInfo innerClasses;
 
     protected FileBasedKotlinClass(
-            @NotNull ClassId classId,
-            int classVersion,
-            @NotNull KotlinClassHeader classHeader,
-            @NotNull InnerClassesInfo innerClasses
+        @NotNull ClassId classId,
+        int classVersion,
+        @NotNull KotlinClassHeader classHeader,
+        @NotNull InnerClassesInfo innerClasses
     ) {
         this.classId = classId;
         this.classVersion = classVersion;
@@ -86,8 +86,8 @@ public abstract class FileBasedKotlinClass implements KotlinJvmBinaryClass {
     // TODO public to be accessible in companion object of subclass, workaround for KT-3974
     @Nullable
     public static <T> T create(
-            @NotNull byte[] fileContents,
-            @NotNull Function4<ClassId, Integer, KotlinClassHeader, InnerClassesInfo, T> factory
+        @NotNull byte[] fileContents,
+        @NotNull Function4<ClassId, Integer, KotlinClassHeader, InnerClassesInfo, T> factory
     ) {
         ReadKotlinClassHeaderAnnotationVisitor readHeaderVisitor = new ReadKotlinClassHeaderAnnotationVisitor();
         Ref<String> classNameRef = Ref.create();
@@ -160,7 +160,7 @@ public abstract class FileBasedKotlinClass implements KotlinJvmBinaryClass {
 
     @Nullable
     public static org.jetbrains.org.objectweb.asm.AnnotationVisitor convertAnnotationVisitor(
-            @NotNull AnnotationVisitor visitor, @NotNull String desc, @NotNull InnerClassesInfo innerClasses
+        @NotNull AnnotationVisitor visitor, @NotNull String desc, @NotNull InnerClassesInfo innerClasses
     ) {
         AnnotationArgumentVisitor v = visitor.visitAnnotation(resolveNameByDesc(desc, innerClasses), SourceElement.NO_SOURCE);
         return v == null ? null : convertAnnotationVisitor(v, innerClasses);
@@ -168,7 +168,7 @@ public abstract class FileBasedKotlinClass implements KotlinJvmBinaryClass {
 
     @NotNull
     private static org.jetbrains.org.objectweb.asm.AnnotationVisitor convertAnnotationVisitor(
-            @NotNull AnnotationArgumentVisitor v, @NotNull InnerClassesInfo innerClasses
+        @NotNull AnnotationArgumentVisitor v, @NotNull InnerClassesInfo innerClasses
     ) {
         return new org.jetbrains.org.objectweb.asm.AnnotationVisitor(API_VERSION) {
             @Override
@@ -321,7 +321,7 @@ public abstract class FileBasedKotlinClass implements KotlinJvmBinaryClass {
 
         List<String> classes = new ArrayList<>(1);
         boolean local = false;
-        
+
         while (true) {
             OuterAndInnerName outer = innerClasses.get(name);
             if (outer == null) break;

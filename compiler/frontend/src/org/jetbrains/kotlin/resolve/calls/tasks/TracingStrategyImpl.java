@@ -102,7 +102,7 @@ public class TracingStrategyImpl extends AbstractTracingStrategy {
 
     @Nullable
     private static <D extends CallableDescriptor> VariableDescriptor isFunctionExpectedError(
-            @NotNull Collection<? extends ResolvedCall<D>> candidates
+        @NotNull Collection<? extends ResolvedCall<D>> candidates
     ) {
         List<VariableDescriptor> variables = CollectionsKt.map(candidates, TracingStrategyImpl::variableIfFunctionExpectedError);
         List<VariableDescriptor> distinctVariables = CollectionsKt.distinct(variables);
@@ -111,7 +111,7 @@ public class TracingStrategyImpl extends AbstractTracingStrategy {
 
     @Nullable
     private static <D extends CallableDescriptor> VariableDescriptor variableIfFunctionExpectedError(
-            @NotNull ResolvedCall<D> candidate
+        @NotNull ResolvedCall<D> candidate
     ) {
         if (!(candidate instanceof VariableAsFunctionResolvedCall)) return null;
 

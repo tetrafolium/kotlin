@@ -27,7 +27,7 @@ import static org.junit.Assert.assertArrayEquals;
 
 public class BitEncodingTest extends KtUsefulTestCase {
     private static final int[] BIG_LENGTHS = new int[]
-            {1000, 32000, 33000, 65000, 65534, 65535, 65536, 65537, 100000, 131074, 239017, 314159, 1000000};
+    {1000, 32000, 33000, 65000, 65534, 65535, 65536, 65537, 100000, 131074, 239017, 314159, 1000000};
 
     private static void doTest(int randSeed, int length) throws Exception {
         byte[] a = new byte[length];

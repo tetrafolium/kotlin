@@ -33,10 +33,10 @@ public class DelegationFieldsInfo {
     private final BindingContext bindingContext;
 
     public DelegationFieldsInfo(
-            @NotNull Type type,
-            @NotNull ClassDescriptor descriptor,
-            @NotNull GenerationState state,
-            @NotNull BindingContext context
+        @NotNull Type type,
+        @NotNull ClassDescriptor descriptor,
+        @NotNull GenerationState state,
+        @NotNull BindingContext context
     ) {
         this.classAsmType = type;
         this.classDescriptor = descriptor;
@@ -98,8 +98,8 @@ public class DelegationFieldsInfo {
                     KotlinType expressionType = bindingContext.getType(expression);
                     ClassDescriptor superClass = JvmCodegenUtil.getSuperClass(specifier, state, bindingContext);
                     Type asmType =
-                            expressionType != null ? typeMapper.mapType(expressionType) :
-                            superClass != null ? typeMapper.mapType(superClass) : null;
+                        expressionType != null ? typeMapper.mapType(expressionType) :
+                        superClass != null ? typeMapper.mapType(superClass) : null;
 
                     if (asmType == null) continue;
 

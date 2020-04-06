@@ -181,41 +181,41 @@ public abstract class ExpectedResolveData {
             DeclarationDescriptor referenceTarget = bindingContext.get(REFERENCE_TARGET, referenceExpression);
             if ("!".equals(name)) {
                 assertTrue(
-                        "Must have been unresolved: " +
-                        renderReferenceInContext(referenceExpression) +
-                        " but was resolved to " + renderNullableDescriptor(referenceTarget),
-                        unresolvedReferences.contains(referenceExpression));
+                    "Must have been unresolved: " +
+                    renderReferenceInContext(referenceExpression) +
+                    " but was resolved to " + renderNullableDescriptor(referenceTarget),
+                    unresolvedReferences.contains(referenceExpression));
 
                 assertTrue(
-                        String.format("Reference =%s= has a reference target =%s= but expected to be unresolved",
-                                      renderReferenceInContext(referenceExpression), renderNullableDescriptor(referenceTarget)),
-                        referenceTarget == null);
+                    String.format("Reference =%s= has a reference target =%s= but expected to be unresolved",
+                                  renderReferenceInContext(referenceExpression), renderNullableDescriptor(referenceTarget)),
+                    referenceTarget == null);
 
                 continue;
             }
             if ("!!".equals(name)) {
                 assertTrue(
-                        "Must have been resolved to multiple descriptors: " +
-                        renderReferenceInContext(referenceExpression) +
-                        " but was resolved to " + renderNullableDescriptor(referenceTarget),
-                        bindingContext.get(AMBIGUOUS_REFERENCE_TARGET, referenceExpression) != null);
+                    "Must have been resolved to multiple descriptors: " +
+                    renderReferenceInContext(referenceExpression) +
+                    " but was resolved to " + renderNullableDescriptor(referenceTarget),
+                    bindingContext.get(AMBIGUOUS_REFERENCE_TARGET, referenceExpression) != null);
                 continue;
             }
             else if ("!null".equals(name)) {
                 assertTrue(
-                       "Must have been resolved to null: " +
-                        renderReferenceInContext(referenceExpression) +
-                        " but was resolved to " + renderNullableDescriptor(referenceTarget),
-                        referenceTarget == null
+                    "Must have been resolved to null: " +
+                    renderReferenceInContext(referenceExpression) +
+                    " but was resolved to " + renderNullableDescriptor(referenceTarget),
+                    referenceTarget == null
                 );
                 continue;
             }
             else if ("!error".equals(name)) {
                 assertTrue(
-                       "Must have been resolved to error: " +
-                        renderReferenceInContext(referenceExpression) +
-                        " but was resolved to " + renderNullableDescriptor(referenceTarget),
-                       ErrorUtils.isError(referenceTarget)
+                    "Must have been resolved to error: " +
+                    renderReferenceInContext(referenceExpression) +
+                    " but was resolved to " + renderNullableDescriptor(referenceTarget),
+                    ErrorUtils.isError(referenceTarget)
                 );
                 continue;
             }
@@ -233,8 +233,8 @@ public abstract class ExpectedResolveData {
                     DeclarationDescriptor actual = bindingContext.get(REFERENCE_TARGET, reference);
 
                     assertDescriptorsEqual("Expected: " + name, expectedDescriptor.getOriginal(), actual == null
-                                                                                      ? null
-                                                                                      : actual.getOriginal());
+                                           ? null
+                                           : actual.getOriginal());
                     continue;
                 }
 
@@ -281,8 +281,8 @@ public abstract class ExpectedResolveData {
             assertNotNull(element.getText(), reference);
 
             assertEquals(
-                    "Reference `" + name + "`" + renderReferenceInContext(reference) + " is resolved into " + actualName + ".",
-                    expected, actual);
+                "Reference `" + name + "`" + renderReferenceInContext(reference) + " is resolved into " + actualName + ".",
+                expected, actual);
         }
 
         for (Map.Entry<Position, String> entry : positionToType.entrySet()) {
@@ -344,9 +344,9 @@ public abstract class ExpectedResolveData {
     @NotNull
     private static ClassDescriptor getBuiltinClass(@NotNull ModuleDescriptor module, @NotNull String nameOrFqName) {
         FqName fqName =
-                nameOrFqName.contains(".")
-                ? new FqName(nameOrFqName)
-                : KotlinBuiltIns.BUILT_INS_PACKAGE_FQ_NAME.child(Name.identifier(nameOrFqName));
+            nameOrFqName.contains(".")
+            ? new FqName(nameOrFqName)
+            : KotlinBuiltIns.BUILT_INS_PACKAGE_FQ_NAME.child(Name.identifier(nameOrFqName));
         ClassDescriptor expectedClass = DescriptorUtilKt.resolveClassByFqName(module, fqName, NoLookupLocation.FROM_TEST);
         assertNotNull("Expected class not found: " + nameOrFqName, expectedClass);
 

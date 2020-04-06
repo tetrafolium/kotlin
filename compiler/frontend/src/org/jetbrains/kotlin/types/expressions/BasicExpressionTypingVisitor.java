@@ -113,7 +113,7 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
         if (parent instanceof KtBinaryExpression) {
             KtBinaryExpression binaryExpression = (KtBinaryExpression) parent;
             if (!OperatorConventions.BINARY_OPERATION_NAMES.containsKey(binaryExpression.getOperationToken()) &&
-                !KtTokens.ALL_ASSIGNMENTS.contains(binaryExpression.getOperationToken())) {
+                    !KtTokens.ALL_ASSIGNMENTS.contains(binaryExpression.getOperationToken())) {
                 return false;
             }
             return PsiTreeUtil.isAncestor(binaryExpression.getLeft(), expression, false);
@@ -139,9 +139,9 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
     }
 
     private void checkNull(
-            @NotNull KtSimpleNameExpression expression,
-            @NotNull ExpressionTypingContext context,
-            @Nullable KotlinType type
+        @NotNull KtSimpleNameExpression expression,
+        @NotNull ExpressionTypingContext context,
+        @Nullable KotlinType type
     ) {
         // Receivers are normally analyzed at resolve, with an exception of KT-10175
         if (type != null && !KotlinTypeKt.isError(type) && !isLValueOrUnsafeReceiver(expression)) {
@@ -184,7 +184,7 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
             DataFlowValue innerValue = components.dataFlowValueFactory.createDataFlowValue(innerExpression, resultType, context);
             DataFlowValue resultValue = components.dataFlowValueFactory.createDataFlowValue(expression, resultType, context);
             result = result.replaceDataFlowInfo(result.getDataFlowInfo().assign(resultValue, innerValue,
-                                                                                components.languageVersionSettings));
+                                                components.languageVersionSettings));
         }
         return result;
     }
@@ -193,8 +193,8 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
     public KotlinTypeInfo visitConstantExpression(@NotNull KtConstantExpression expression, ExpressionTypingContext context) {
         IElementType elementType = expression.getNode().getElementType();
         if (elementType == KtNodeTypes.CHARACTER_CONSTANT
-            || elementType == KtNodeTypes.INTEGER_CONSTANT
-            || elementType == KtNodeTypes.FLOAT_CONSTANT) {
+                || elementType == KtNodeTypes.INTEGER_CONSTANT
+                || elementType == KtNodeTypes.FLOAT_CONSTANT) {
             checkLiteralPrefixAndSuffix(expression, context);
         }
 
@@ -203,8 +203,8 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
         }
 
         CompileTimeConstant<?> compileTimeConstant = components.constantExpressionEvaluator.evaluateExpression(
-                expression, context.trace, context.expectedType
-        );
+                    expression, context.trace, context.expectedType
+                );
 
         if (compileTimeConstant instanceof UnsignedErrorValueTypeConstant) {
             ErrorValue.ErrorValueWithMessage value = ((UnsignedErrorValueTypeConstant) compileTimeConstant).getErrorValue();
@@ -215,28 +215,28 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
         else if (!(compileTimeConstant instanceof IntegerValueTypeConstant)) {
             CompileTimeConstantChecker constantChecker = new CompileTimeConstantChecker(context, components.moduleDescriptor, false);
             ConstantValue constantValue =
-                    compileTimeConstant != null ? ((TypedCompileTimeConstant) compileTimeConstant).getConstantValue() : null;
+                compileTimeConstant != null ? ((TypedCompileTimeConstant) compileTimeConstant).getConstantValue() : null;
             boolean hasError = constantChecker.checkConstantExpressionType(constantValue, expression, context.expectedType);
             if (hasError) {
                 return TypeInfoFactoryKt.createTypeInfo(
-                        constantValue != null ? constantValue.getType(components.moduleDescriptor) : getDefaultType(elementType),
-                        context
-                );
+                           constantValue != null ? constantValue.getType(components.moduleDescriptor) : getDefaultType(elementType),
+                           context
+                       );
             }
         }
 
         assert compileTimeConstant != null :
-                "CompileTimeConstant should be evaluated for constant expression or an error should be recorded " +
-                expression.getText();
+        "CompileTimeConstant should be evaluated for constant expression or an error should be recorded " +
+        expression.getText();
         return components.dataFlowAnalyzer.createCompileTimeConstantTypeInfo(compileTimeConstant, expression, context);
     }
 
     private static final Pattern FP_LITERAL_PARTS = Pattern.compile("(?:([_\\d]*)\\.?([_\\d]*)e?[+-]?([_\\d]*))[f]?");
 
     private void checkUnderscores(
-            @NotNull KtConstantExpression expression,
-            @NotNull IElementType elementType,
-            @NotNull ExpressionTypingContext context
+        @NotNull KtConstantExpression expression,
+        @NotNull IElementType elementType,
+        @NotNull ExpressionTypingContext context
     ) {
         String text = expression.getText().toLowerCase();
 
@@ -244,7 +244,7 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
 
         if (!components.languageVersionSettings.supportsFeature(LanguageFeature.UnderscoresInNumericLiterals)) {
             context.trace.report(Errors.UNSUPPORTED_FEATURE.on(expression,
-                                                               TuplesKt.to(LanguageFeature.UnderscoresInNumericLiterals, components.languageVersionSettings)));
+                                 TuplesKt.to(LanguageFeature.UnderscoresInNumericLiterals, components.languageVersionSettings)));
             return;
         }
 
@@ -300,11 +300,11 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
 
     @Override
     public KotlinTypeInfo visitBinaryWithTypeRHSExpression(
-            @NotNull KtBinaryExpressionWithTypeRHS expression,
-            ExpressionTypingContext context
+        @NotNull KtBinaryExpressionWithTypeRHS expression,
+        ExpressionTypingContext context
     ) {
         ExpressionTypingContext contextWithNoExpectedType =
-                context.replaceExpectedType(NO_EXPECTED_TYPE).replaceContextDependency(INDEPENDENT);
+            context.replaceExpectedType(NO_EXPECTED_TYPE).replaceContextDependency(INDEPENDENT);
         KtExpression left = expression.getLeft();
         KtTypeReference right = expression.getRight();
         if (right == null) {
@@ -328,7 +328,7 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
             if (operationType == AS_KEYWORD) {
                 DataFlowValue value = components.dataFlowValueFactory.createDataFlowValue(left, subjectType, context);
                 typeInfo = typeInfo.replaceDataFlowInfo(dataFlowInfo.establishSubtyping(value, targetType,
-                                                                                        components.languageVersionSettings));
+                                                        components.languageVersionSettings));
             }
         }
 
@@ -336,10 +336,10 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
         KotlinTypeInfo resultTypeInfo = components.dataFlowAnalyzer.checkType(typeInfo.replaceType(result), expression, context);
 
         RttiExpressionInformation rttiInformation = new RttiExpressionInformation(
-                expression.getLeft(),
-                subjectType,
-                result,
-                operationType == AS_SAFE ? RttiOperation.SAFE_AS : RttiOperation.AS
+            expression.getLeft(),
+            subjectType,
+            result,
+            operationType == AS_SAFE ? RttiOperation.SAFE_AS : RttiOperation.AS
         );
         for (RttiExpressionChecker checker : components.rttiExpressionCheckers) {
             checker.check(rttiInformation, expression, context.trace);
@@ -349,10 +349,10 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
     }
 
     private void checkBinaryWithTypeRHS(
-            @NotNull KtBinaryExpressionWithTypeRHS expression,
-            @NotNull ExpressionTypingContext context,
-            @NotNull KotlinType targetType,
-            @Nullable KotlinType actualType
+        @NotNull KtBinaryExpressionWithTypeRHS expression,
+        @NotNull ExpressionTypingContext context,
+        @NotNull KotlinType targetType,
+        @Nullable KotlinType actualType
     ) {
         if (actualType == null) return;
         KtSimpleNameExpression operationSign = expression.getOperationReference();
@@ -365,10 +365,10 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
     }
 
     private void checkForCastImpossibilityOrRedundancy(
-            KtBinaryExpressionWithTypeRHS expression,
-            KotlinType actualType,
-            KotlinType targetType,
-            ExpressionTypingContext context
+        KtBinaryExpressionWithTypeRHS expression,
+        KotlinType actualType,
+        KotlinType targetType,
+        ExpressionTypingContext context
     ) {
         if (actualType == null || noExpectedType(targetType) || KotlinTypeKt.isError(targetType)) return;
 
@@ -402,16 +402,16 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
         LabelResolver.LabeledReceiverResolutionResult resolutionResult = resolveToReceiver(expression, context, false);
 
         switch (resolutionResult.getCode()) {
-            case LABEL_RESOLUTION_ERROR:
-                // Do nothing, the error is already reported
-                break;
-            case NO_THIS:
-                context.trace.report(NO_THIS.on(expression));
-                break;
-            case SUCCESS:
-                result = resolutionResult.getReceiverParameterDescriptor().getType();
-                context.trace.recordType(expression.getInstanceReference(), result);
-                break;
+        case LABEL_RESOLUTION_ERROR:
+            // Do nothing, the error is already reported
+            break;
+        case NO_THIS:
+            context.trace.report(NO_THIS.on(expression));
+            break;
+        case SUCCESS:
+            result = resolutionResult.getReceiverParameterDescriptor().getType();
+            context.trace.recordType(expression.getInstanceReference(), result);
+            break;
         }
         return components.dataFlowAnalyzer.createCheckedTypeInfo(result, context, expression);
     }
@@ -426,18 +426,18 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
         }
 
         switch (resolutionResult.getCode()) {
-            case LABEL_RESOLUTION_ERROR:
-                // The error is already reported
-                return errorInSuper(expression, context);
-            case NO_THIS:
-                context.trace.report(SUPER_NOT_AVAILABLE.on(expression));
-                return errorInSuper(expression, context);
-            case SUCCESS:
-                KotlinType result = checkPossiblyQualifiedSuper(expression, context, resolutionResult.getReceiverParameterDescriptor());
-                if (result != null) {
-                    context.trace.recordType(expression.getInstanceReference(), result);
-                }
-                return components.dataFlowAnalyzer.createCheckedTypeInfo(result, context, expression);
+        case LABEL_RESOLUTION_ERROR:
+            // The error is already reported
+            return errorInSuper(expression, context);
+        case NO_THIS:
+            context.trace.report(SUPER_NOT_AVAILABLE.on(expression));
+            return errorInSuper(expression, context);
+        case SUCCESS:
+            KotlinType result = checkPossiblyQualifiedSuper(expression, context, resolutionResult.getReceiverParameterDescriptor());
+            if (result != null) {
+                context.trace.recordType(expression.getInstanceReference(), result);
+            }
+            return components.dataFlowAnalyzer.createCheckedTypeInfo(result, context, expression);
         }
         throw new IllegalStateException("Unknown code: " + resolutionResult.getCode());
     }
@@ -451,9 +451,9 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
     }
 
     private KotlinType checkPossiblyQualifiedSuper(
-            KtSuperExpression expression,
-            ExpressionTypingContext context,
-            ReceiverParameterDescriptor thisReceiver
+        KtSuperExpression expression,
+        ExpressionTypingContext context,
+        ReceiverParameterDescriptor thisReceiver
     ) {
         KotlinType result = null;
         KotlinType thisType = thisReceiver.getType();
@@ -518,8 +518,8 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
         else {
             if (UnqualifiedSuperKt.isPossiblyAmbiguousUnqualifiedSuper(expression, supertypes)) {
                 Collection<KotlinType> supertypesResolvedFromContext =
-                        UnqualifiedSuperKt.resolveUnqualifiedSuperFromExpressionContext(
-                                expression, supertypes, components.builtIns.getAnyType());
+                    UnqualifiedSuperKt.resolveUnqualifiedSuperFromExpressionContext(
+                        expression, supertypes, components.builtIns.getAnyType());
                 if (supertypesResolvedFromContext.size() == 1) {
                     KotlinType singleResolvedType = supertypesResolvedFromContext.iterator().next();
                     result = substitutor.substitute(singleResolvedType, Variance.INVARIANT);
@@ -558,10 +558,10 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
     }
 
     private static void checkResolvedExplicitlyQualifiedSupertype(
-            @NotNull BindingTrace trace,
-            @NotNull KotlinType result,
-            @NotNull Collection<KotlinType> supertypes,
-            @NotNull KtTypeReference superTypeQualifier
+        @NotNull BindingTrace trace,
+        @NotNull KotlinType result,
+        @NotNull Collection<KotlinType> supertypes,
+        @NotNull KtTypeReference superTypeQualifier
     ) {
         if (supertypes.size() > 1) {
             ClassifierDescriptor resultClassifierDescriptor = result.getConstructor().getDeclarationDescriptor();
@@ -580,14 +580,14 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
 
     @NotNull // No class receivers
     private LabelResolver.LabeledReceiverResolutionResult resolveToReceiver(
-            KtInstanceExpressionWithLabel expression,
-            ExpressionTypingContext context,
-            boolean onlyClassReceivers
+        KtInstanceExpressionWithLabel expression,
+        ExpressionTypingContext context,
+        boolean onlyClassReceivers
     ) {
         Name labelName = expression.getLabelNameAsName();
         if (labelName != null) {
             LabelResolver.LabeledReceiverResolutionResult resolutionResult =
-                    LabelResolver.INSTANCE.resolveThisOrSuperLabel(expression, context, labelName);
+                LabelResolver.INSTANCE.resolveThisOrSuperLabel(expression, context, labelName);
             if (resolutionResult.success()) {
                 ReceiverParameterDescriptor receiverParameterDescriptor = resolutionResult.getReceiverParameterDescriptor();
                 recordThisOrSuperCallInTraceAndCallExtension(context, receiverParameterDescriptor, expression);
@@ -620,21 +620,21 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
     }
 
     private void recordThisOrSuperCallInTraceAndCallExtension(
-            ExpressionTypingContext context,
-            ReceiverParameterDescriptor descriptor,
-            KtExpression expression
+        ExpressionTypingContext context,
+        ReceiverParameterDescriptor descriptor,
+        KtExpression expression
     ) {
         BindingTrace trace = context.trace;
         Call call = CallMaker.makeCall(expression, null, null, expression, Collections.emptyList());
         ResolutionCandidate<ReceiverParameterDescriptor> resolutionCandidate =
-                ResolutionCandidate.create(
-                        call, descriptor, null, ExplicitReceiverKind.NO_EXPLICIT_RECEIVER, null);
+            ResolutionCandidate.create(
+                call, descriptor, null, ExplicitReceiverKind.NO_EXPLICIT_RECEIVER, null);
 
         ResolvedCallImpl<ReceiverParameterDescriptor> resolvedCall =
-                ResolvedCallImpl.create(resolutionCandidate,
-                                        TemporaryBindingTrace.create(trace, "Fake trace for fake 'this' or 'super' resolved call"),
-                                        TracingStrategy.EMPTY,
-                                        new DataFlowInfoForArgumentsImpl(context.dataFlowInfo, call));
+            ResolvedCallImpl.create(resolutionCandidate,
+                                    TemporaryBindingTrace.create(trace, "Fake trace for fake 'this' or 'super' resolved call"),
+                                    TracingStrategy.EMPTY,
+                                    new DataFlowInfoForArgumentsImpl(context.dataFlowInfo, call));
         resolvedCall.markCallAsCompleted();
 
         trace.record(RESOLVED_CALL, call, resolvedCall);
@@ -642,7 +642,7 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
 
         if (context.trace.wantsDiagnostics()) {
             CallCheckerContext callCheckerContext =
-                    createCallCheckerContext(context);
+                createCallCheckerContext(context);
             for (CallChecker checker : components.callCheckers) {
                 checker.check(resolvedCall, expression, callCheckerContext);
             }
@@ -670,12 +670,12 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
 
     @Override
     public KotlinTypeInfo visitObjectLiteralExpression(
-            @NotNull KtObjectLiteralExpression expression,
-            ExpressionTypingContext context
+        @NotNull KtObjectLiteralExpression expression,
+        ExpressionTypingContext context
     ) {
         KotlinType[] result = new KotlinType[1];
         TemporaryBindingTrace temporaryTrace = TemporaryBindingTrace.create(context.trace,
-                                                                            "trace to resolve object literal expression", expression);
+                                               "trace to resolve object literal expression", expression);
         ObservableBindingTrace traceAdapter = new ObservableBindingTrace(temporaryTrace);
         traceAdapter.addHandler(CLASS, (slice, declaration, descriptor) -> {
             if (slice == CLASS && declaration == expression.getObjectDeclaration()) {
@@ -683,10 +683,10 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
             }
         });
         components.localClassifierAnalyzer.processClassOrObject(null, // don't need to add classifier of object literal to any scope
-                                                                context.replaceBindingTrace(traceAdapter)
-                                                                       .replaceContextDependency(INDEPENDENT),
-                                                                context.scope.getOwnerDescriptor(),
-                                                                expression.getObjectDeclaration());
+                context.replaceBindingTrace(traceAdapter)
+                .replaceContextDependency(INDEPENDENT),
+                context.scope.getOwnerDescriptor(),
+                expression.getObjectDeclaration());
         temporaryTrace.commit();
         DataFlowInfo resultFlowInfo = context.dataFlowInfo;
         for (KtSuperTypeListEntry specifier : expression.getObjectDeclaration().getSuperTypeListEntries()) {
@@ -700,8 +700,8 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
         }
         // Breaks are not possible inside constructor arguments, so jumpPossible or jumpFlowInfo are not necessary here
         KotlinTypeInfo resultTypeInfo = components.dataFlowAnalyzer.checkType(TypeInfoFactoryKt.createTypeInfo(result[0], resultFlowInfo),
-                                                                              expression,
-                                                                              context);
+                                        expression,
+                                        context);
         // We have to record it here,
         // otherwise ExpressionTypingVisitorDispatcher records wrong information
         context.trace.record(EXPRESSION_TYPE_INFO, expression, resultTypeInfo);
@@ -726,7 +726,7 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
         ExpressionTypingContext context = isUnaryExpressionDependentOnExpectedType(expression)
                                           ? contextWithExpectedType
                                           : contextWithExpectedType.replaceContextDependency(INDEPENDENT)
-                                                                   .replaceExpectedType(NO_EXPECTED_TYPE);
+                                          .replaceExpectedType(NO_EXPECTED_TYPE);
 
         KtExpression baseExpression = expression.getBaseExpression();
         if (baseExpression == null) return TypeInfoFactoryKt.noTypeInfo(context);
@@ -756,18 +756,18 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
 
         // a[i]++/-- takes special treatment because it is actually let j = i, arr = a in arr.set(j, a.get(j).inc())
         if ((operationType == KtTokens.PLUSPLUS || operationType == KtTokens.MINUSMINUS) &&
-            baseExpression instanceof KtArrayAccessExpression) {
+                baseExpression instanceof KtArrayAccessExpression) {
             KtExpression stubExpression = ExpressionTypingUtils.createFakeExpressionOfType(
-                    baseExpression.getProject(), context.trace, "e", type);
+                                              baseExpression.getProject(), context.trace, "e", type);
             TemporaryBindingTrace temporaryBindingTrace = TemporaryBindingTrace.create(
-                    context.trace, "trace to resolve array access set method for unary expression", expression);
+                        context.trace, "trace to resolve array access set method for unary expression", expression);
             ExpressionTypingContext newContext = context.replaceBindingTrace(temporaryBindingTrace);
             resolveImplicitArrayAccessSetMethod((KtArrayAccessExpression) baseExpression, stubExpression, newContext, context.trace);
         }
 
         // Resolve the operation reference
         OverloadResolutionResults<FunctionDescriptor> resolutionResults = components.callResolver.resolveCallWithGivenName(
-                context, call, expression.getOperationReference(), name);
+                    context, call, expression.getOperationReference(), name);
 
         if (!resolutionResults.isSuccess()) {
             return typeInfo.clearType();
@@ -790,12 +790,12 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
                 else {
                     context.trace.record(BindingContext.VARIABLE_REASSIGNMENT, expression);
                     KtExpression stubExpression = ExpressionTypingUtils.createFakeExpressionOfType(
-                            baseExpression.getProject(), context.trace, "e", type);
+                                                      baseExpression.getProject(), context.trace, "e", type);
                     checkLValue(context.trace, context, baseExpression, stubExpression, expression);
                 }
                 // x++ type is x type, but ++x type is x.inc() type
                 DataFlowValue receiverValue = components.dataFlowValueFactory.createDataFlowValue(
-                        (ReceiverValue) call.getExplicitReceiver(), contextWithExpectedType);
+                                                  (ReceiverValue) call.getExplicitReceiver(), contextWithExpectedType);
                 if (expression instanceof KtPrefixExpression) {
                     result = returnType;
                 }
@@ -804,7 +804,7 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
                     // Also record data flow information for x++ value (= x)
                     DataFlowValue returnValue = components.dataFlowValueFactory.createDataFlowValue(expression, receiverType, contextWithExpectedType);
                     typeInfo = typeInfo.replaceDataFlowInfo(typeInfo.getDataFlowInfo().assign(returnValue, receiverValue,
-                                                                                              components.languageVersionSettings));
+                                                            components.languageVersionSettings));
                 }
             }
         }
@@ -813,15 +813,15 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
         }
 
         CompileTimeConstant<?> value = components.constantExpressionEvaluator.evaluateExpression(
-                expression, contextWithExpectedType.trace, contextWithExpectedType.expectedType
-        );
+                                           expression, contextWithExpectedType.trace, contextWithExpectedType.expectedType
+                                       );
         if (value != null) {
             return components.dataFlowAnalyzer.createCompileTimeConstantTypeInfo(value, expression, contextWithExpectedType);
         }
 
         return components.dataFlowAnalyzer.checkType(typeInfo.replaceType(result),
-                                                     expression,
-                                                     contextWithExpectedType.replaceDataFlowInfo(typeInfo.getDataFlowInfo()));
+                expression,
+                contextWithExpectedType.replaceDataFlowInfo(typeInfo.getDataFlowInfo()));
     }
 
     private KotlinTypeInfo visitExclExclExpression(@NotNull KtUnaryExpression expression, @NotNull ExpressionTypingContext context) {
@@ -833,16 +833,16 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
         // TODO: something must be done for not to lose safe call chain information here
         // See also CallExpressionResolver.getSimpleNameExpressionTypeInfo, .getQualifiedExpressionTypeInfo
         Call call = createCallForSpecialConstruction(
-                expression, expression.getOperationReference(), Collections.singletonList(baseExpression));
+                        expression, expression.getOperationReference(), Collections.singletonList(baseExpression));
         ResolvedCall<FunctionDescriptor> resolvedCall = components.controlStructureTypingUtils.resolveSpecialConstructionAsCall(
-                call, ResolveConstruct.EXCL_EXCL, Collections.singletonList("baseExpr"), Collections.singletonList(true), context, null);
+                    call, ResolveConstruct.EXCL_EXCL, Collections.singletonList("baseExpr"), Collections.singletonList(true), context, null);
         KotlinTypeInfo baseTypeInfo = BindingContextUtils.getRecordedTypeInfo(baseExpression, context.trace.getBindingContext());
 
         boolean isFunctionLiteral = ArgumentTypeResolver.isFunctionLiteralArgument(baseExpression, context);
         boolean isCallableReference = ArgumentTypeResolver.isCallableReferenceArgument(baseExpression, context);
         if (isFunctionLiteral || isCallableReference) {
             DiagnosticFactory0<PsiElement> diagnosticFactory =
-                    isFunctionLiteral ? NOT_NULL_ASSERTION_ON_LAMBDA_EXPRESSION : NOT_NULL_ASSERTION_ON_CALLABLE_REFERENCE;
+                isFunctionLiteral ? NOT_NULL_ASSERTION_ON_LAMBDA_EXPRESSION : NOT_NULL_ASSERTION_ON_CALLABLE_REFERENCE;
             context.trace.report(diagnosticFactory.on(operationSign));
             if (baseTypeInfo == null) {
                 return TypeInfoFactoryKt.createTypeInfo(ErrorUtils.createErrorType("Unresolved lambda expression"), context);
@@ -861,7 +861,7 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
         else {
             DataFlowValue value = components.dataFlowValueFactory.createDataFlowValue(baseExpression, baseType, context);
             baseTypeInfo = baseTypeInfo.replaceDataFlowInfo(dataFlowInfo.disequate(value, DataFlowValue.nullValue(components.builtIns),
-                                                                                   components.languageVersionSettings));
+                           components.languageVersionSettings));
         }
         KotlinType resultingType = components.languageVersionSettings.supportsFeature(LanguageFeature.NewInference)
                                    ? resolvedCall.getResultingDescriptor().getReturnType()
@@ -872,21 +872,21 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
 
         // The call to checkType() is only needed here to execute additionalTypeCheckers, hence the NO_EXPECTED_TYPE
         return components.dataFlowAnalyzer.checkType(
-                baseTypeInfo.replaceType(resultingType), expression, context.replaceExpectedType(NO_EXPECTED_TYPE));
+                   baseTypeInfo.replaceType(resultingType), expression, context.replaceExpectedType(NO_EXPECTED_TYPE));
     }
 
     @Override
     public KotlinTypeInfo visitLabeledExpression(
-            @NotNull KtLabeledExpression expression, ExpressionTypingContext context
+        @NotNull KtLabeledExpression expression, ExpressionTypingContext context
     ) {
         return visitLabeledExpression(expression, context, false);
     }
 
     @NotNull
     public KotlinTypeInfo visitLabeledExpression(
-            @NotNull KtLabeledExpression expression,
-            @NotNull ExpressionTypingContext context,
-            boolean isStatement
+        @NotNull KtLabeledExpression expression,
+        @NotNull ExpressionTypingContext context,
+        boolean isStatement
     ) {
         KtSimpleNameExpression labelExpression = expression.getTargetLabel();
         ReservedCheckingKt.checkReservedYield(labelExpression, context.trace);
@@ -902,9 +902,9 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
 
     // Returns `true` if warnings should be reported for left-hand side of elvis and not-null (!!) assertion
     private boolean isKnownToBeNotNull(
-            @NotNull KtExpression expression,
-            @Nullable KotlinType ktType,
-            @NotNull ExpressionTypingContext context
+        @NotNull KtExpression expression,
+        @Nullable KotlinType ktType,
+        @NotNull ExpressionTypingContext context
     ) {
         if (ktType == null) return false;
 
@@ -920,11 +920,11 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
      * @return {@code true} iff expression can be assigned to
      */
     public boolean checkLValue(
-            @NotNull BindingTrace trace,
-            @NotNull ExpressionTypingContext context,
-            @NotNull KtExpression expressionWithParenthesis,
-            @Nullable KtExpression rightHandSide,
-            @NotNull KtOperationExpression operationExpression
+        @NotNull BindingTrace trace,
+        @NotNull ExpressionTypingContext context,
+        @NotNull KtExpression expressionWithParenthesis,
+        @Nullable KtExpression rightHandSide,
+        @NotNull KtOperationExpression operationExpression
     ) {
         KtExpression expression = KtPsiUtil.deparenthesize(expressionWithParenthesis);
         if (expression instanceof KtArrayAccessExpression) {
@@ -944,7 +944,7 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
                     // Call must be validated with the actual, not temporary trace in order to report operator diagnostic
                     // Only unary assignment expressions (++, --) and +=/... must be checked, normal assignments have the proper trace
                     CallCheckerContext callCheckerContext =
-                            new CallCheckerContext(context, components.deprecationResolver, components.moduleDescriptor, trace);
+                        new CallCheckerContext(context, components.deprecationResolver, components.moduleDescriptor, trace);
                     for (CallChecker checker : components.callCheckers) {
                         checker.check(resolvedCall, expression, callCheckerContext);
                     }
@@ -974,7 +974,7 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
             else if (setter != null) {
                 ResolvedCall<?> resolvedCall = CallUtilKt.getResolvedCall(expressionWithParenthesis, context.trace.getBindingContext());
                 assert resolvedCall != null
-                        : "Call is not resolved for property setter: " + PsiUtilsKt.getElementTextWithContext(expressionWithParenthesis);
+                : "Call is not resolved for property setter: " + PsiUtilsKt.getElementTextWithContext(expressionWithParenthesis);
                 checkPropertySetterCall(context.replaceBindingTrace(trace), setter, resolvedCall, reportOn);
             }
         }
@@ -991,28 +991,28 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
     }
 
     private void checkPropertySetterCall(
-            @NotNull ExpressionTypingContext context,
-            @NotNull PropertySetterDescriptor descriptor,
-            @NotNull ResolvedCall<?> propertyResolvedCall,
-            @NotNull KtExpression expression
+        @NotNull ExpressionTypingContext context,
+        @NotNull PropertySetterDescriptor descriptor,
+        @NotNull ResolvedCall<?> propertyResolvedCall,
+        @NotNull KtExpression expression
     ) {
         Call call = propertyResolvedCall.getCall();
 
         ResolutionCandidate<PropertySetterDescriptor> resolutionCandidate = ResolutionCandidate.create(
-                call, descriptor, propertyResolvedCall.getDispatchReceiver(), propertyResolvedCall.getExplicitReceiverKind(), null
-        );
+                    call, descriptor, propertyResolvedCall.getDispatchReceiver(), propertyResolvedCall.getExplicitReceiverKind(), null
+                );
 
         ResolvedCallImpl<PropertySetterDescriptor> resolvedCall = ResolvedCallImpl.create(
-                resolutionCandidate,
-                TemporaryBindingTrace.create(context.trace, "Trace for fake property setter resolved call"),
-                TracingStrategy.EMPTY,
-                new DataFlowInfoForArgumentsImpl(propertyResolvedCall.getDataFlowInfoForArguments().getResultInfo(), call)
-        );
+                    resolutionCandidate,
+                    TemporaryBindingTrace.create(context.trace, "Trace for fake property setter resolved call"),
+                    TracingStrategy.EMPTY,
+                    new DataFlowInfoForArgumentsImpl(propertyResolvedCall.getDataFlowInfoForArguments().getResultInfo(), call)
+                );
         resolvedCall.markCallAsCompleted();
 
         if (context.trace.wantsDiagnostics()) {
             CallCheckerContext callCheckerContext =
-                    createCallCheckerContext(context);
+                createCallCheckerContext(context);
             for (CallChecker checker : components.callCheckers) {
                 checker.check(resolvedCall, expression, callCheckerContext);
             }
@@ -1029,7 +1029,7 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
         ExpressionTypingContext context = isBinaryExpressionDependentOnExpectedType(expression)
                                           ? contextWithExpectedType
                                           : contextWithExpectedType.replaceContextDependency(INDEPENDENT)
-                                                                   .replaceExpectedType(NO_EXPECTED_TYPE);
+                                          .replaceExpectedType(NO_EXPECTED_TYPE);
 
         KtSimpleNameExpression operationSign = expression.getOperationReference();
         KtExpression left = expression.getLeft();
@@ -1083,8 +1083,8 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
             result = TypeInfoFactoryKt.noTypeInfo(context);
         }
         CompileTimeConstant<?> value = components.constantExpressionEvaluator.evaluateExpression(
-                expression, contextWithExpectedType.trace, contextWithExpectedType.expectedType
-        );
+                                           expression, contextWithExpectedType.trace, contextWithExpectedType.expectedType
+                                       );
         if (value != null) {
             return components.dataFlowAnalyzer.createCompileTimeConstantTypeInfo(value, expression, contextWithExpectedType);
         }
@@ -1092,8 +1092,8 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
     }
 
     private static void checkIdentityOnPrimitiveOrInlineClassTypes(
-            @NotNull KtBinaryExpression expression,
-            @NotNull ExpressionTypingContext context
+        @NotNull KtBinaryExpression expression,
+        @NotNull ExpressionTypingContext context
     ) {
         if (expression.getLeft() == null || expression.getRight() == null) return;
 
@@ -1121,11 +1121,11 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
     }
 
     private KotlinTypeInfo visitEquality(
-            KtBinaryExpression expression,
-            ExpressionTypingContext context,
-            KtSimpleNameExpression operationSign,
-            KtExpression left,
-            KtExpression right
+        KtBinaryExpression expression,
+        ExpressionTypingContext context,
+        KtSimpleNameExpression operationSign,
+        KtExpression left,
+        KtExpression right
     ) {
         if (right == null || left == null) {
             ExpressionTypingUtils.getTypeInfoOrNullType(right, context, facade);
@@ -1142,18 +1142,18 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
         Collection<FunctionDescriptor> equalsFunctions = findEqualsWithNullableAnyParameter(receiver, expression);
 
         Call call = CallMaker.makeCallWithExpressions(
-                expression,
-                receiver,
-                null,
-                operationSign,
-                Collections.singletonList(right),
-                Call.CallType.DEFAULT,
-                // semantically, a call to `==` is a safe call
-                true
-        );
+                        expression,
+                        receiver,
+                        null,
+                        operationSign,
+                        Collections.singletonList(right),
+                        Call.CallType.DEFAULT,
+                        // semantically, a call to `==` is a safe call
+                        true
+                    );
 
         OverloadResolutionResults<FunctionDescriptor> resolutionResults =
-                components.callResolver.resolveEqualsCallWithGivenDescriptors(contextWithDataFlow, operationSign, receiver, call, equalsFunctions);
+            components.callResolver.resolveEqualsCallWithGivenDescriptors(contextWithDataFlow, operationSign, receiver, call, equalsFunctions);
 
         if (resolutionResults.isSuccess()) {
             FunctionDescriptor equals = resolutionResults.getResultingCall().getResultingDescriptor();
@@ -1182,15 +1182,15 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
     }
 
     private List<FunctionDescriptor> findEqualsWithNullableAnyParameter(
-            @NotNull ExpressionReceiver receiver,
-            @NotNull KtBinaryExpression expression
+        @NotNull ExpressionReceiver receiver,
+        @NotNull KtBinaryExpression expression
     ) {
         KotlinType refinedType = KotlinBuiltIns.isNothingOrNullableNothing(receiver.getType()) ?
                                  components.builtIns.getNullableAnyType() :
                                  receiver.getType();
         Collection<? extends SimpleFunctionDescriptor> equalsMembers = refinedType.getMemberScope().getContributedFunctions(
-                OperatorNameConventions.EQUALS, new KotlinLookupLocation(expression.getOperationReference())
-        );
+                    OperatorNameConventions.EQUALS, new KotlinLookupLocation(expression.getOperationReference())
+                );
 
         return CollectionsKt.filter(equalsMembers, descriptor -> {
             if (ErrorUtils.isError(descriptor)) return true;
@@ -1203,9 +1203,9 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
 
     @NotNull
     private KotlinTypeInfo visitComparison(
-            @NotNull KtBinaryExpression expression,
-            @NotNull ExpressionTypingContext context,
-            @NotNull KtSimpleNameExpression operationSign
+        @NotNull KtBinaryExpression expression,
+        @NotNull ExpressionTypingContext context,
+        @NotNull KtSimpleNameExpression operationSign
     ) {
         KotlinTypeInfo typeInfo = getTypeInfoForBinaryCall(OperatorNameConventions.COMPARE_TO, context, expression);
         KotlinType compareToReturnType = typeInfo.getType();
@@ -1223,10 +1223,10 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
 
     @NotNull
     private KotlinTypeInfo visitBooleanOperationExpression(
-            @Nullable IElementType operationType,
-            @Nullable KtExpression left,
-            @Nullable KtExpression right,
-            @NotNull ExpressionTypingContext context
+        @Nullable IElementType operationType,
+        @Nullable KtExpression left,
+        @Nullable KtExpression right,
+        @NotNull ExpressionTypingContext context
     ) {
         KotlinType booleanType = components.builtIns.getBooleanType();
         KotlinTypeInfo leftTypeInfo = getTypeInfoOrNullType(left, context.replaceExpectedType(booleanType), facade);
@@ -1237,10 +1237,10 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
         boolean isAnd = operationType == KtTokens.ANDAND;
         DataFlowInfo flowInfoLeft = components.dataFlowAnalyzer.extractDataFlowInfoFromCondition(left, isAnd, context).and(dataFlowInfo);
         LexicalWritableScope rightScope = isAnd ? leftScope : newWritableScopeImpl(context, LexicalScopeKind.RIGHT_BOOLEAN_EXPRESSION,
-                                                                                   facade.getComponents().overloadChecker);
+                                          facade.getComponents().overloadChecker);
 
         ExpressionTypingContext contextForRightExpr =
-                context.replaceDataFlowInfo(flowInfoLeft).replaceScope(rightScope).replaceExpectedType(booleanType);
+            context.replaceDataFlowInfo(flowInfoLeft).replaceScope(rightScope).replaceExpectedType(booleanType);
         if (right != null) {
             facade.getTypeInfo(right, contextForRightExpr);
         }
@@ -1249,8 +1249,8 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
 
     @NotNull
     private KotlinTypeInfo visitElvisExpression(
-            @NotNull KtBinaryExpression expression,
-            @NotNull ExpressionTypingContext contextWithExpectedType
+        @NotNull KtBinaryExpression expression,
+        @NotNull ExpressionTypingContext contextWithExpectedType
     ) {
         ExpressionTypingContext context = contextWithExpectedType.replaceExpectedType(NO_EXPECTED_TYPE);
         KtExpression left = expression.getLeft();
@@ -1263,8 +1263,8 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
 
         Call call = createCallForSpecialConstruction(expression, expression.getOperationReference(), Lists.newArrayList(left, right));
         ResolvedCall<FunctionDescriptor> resolvedCall = components.controlStructureTypingUtils.resolveSpecialConstructionAsCall(
-                call, ResolveConstruct.ELVIS, Lists.newArrayList("left", "right"),
-                Lists.newArrayList(true, false), contextWithExpectedType, null);
+                    call, ResolveConstruct.ELVIS, Lists.newArrayList("left", "right"),
+                    Lists.newArrayList(true, false), contextWithExpectedType, null);
         KotlinTypeInfo leftTypeInfo = BindingContextUtils.getRecordedTypeInfo(left, context.trace.getBindingContext());
         boolean isLeftFunctionLiteral = ArgumentTypeResolver.isFunctionLiteralArgument(left, context);
         boolean isLeftCallableReference = ArgumentTypeResolver.isCallableReferenceArgument(left, context);
@@ -1288,8 +1288,8 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
 
         KotlinType type = resolvedCall.getResultingDescriptor().getReturnType();
         if (type == null ||
-            rightType == null ||
-            leftType == null && KotlinBuiltIns.isNothing(rightType)) return TypeInfoFactoryKt.noTypeInfo(dataFlowInfo);
+                rightType == null ||
+                leftType == null && KotlinBuiltIns.isNothing(rightType)) return TypeInfoFactoryKt.noTypeInfo(dataFlowInfo);
 
         if (leftType != null) {
             DataFlowValue leftValue = components.dataFlowValueFactory.createDataFlowValue(left, leftType, context);
@@ -1301,13 +1301,13 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
                 dataFlowInfo = dataFlowInfo.disequate(leftValue, nullValue, components.languageVersionSettings);
                 if (left instanceof KtBinaryExpressionWithTypeRHS) {
                     dataFlowInfo = establishSubtypingForTypeRHS((KtBinaryExpressionWithTypeRHS) left, dataFlowInfo, context,
-                                                                components.languageVersionSettings);
+                                   components.languageVersionSettings);
                 }
             }
             DataFlowValue resultValue = components.dataFlowValueFactory.createDataFlowValue(expression, type, context);
             dataFlowInfo =
-                    dataFlowInfo.assign(resultValue, leftValue, components.languageVersionSettings)
-                    .disequate(resultValue, nullValue, components.languageVersionSettings);
+                dataFlowInfo.assign(resultValue, leftValue, components.languageVersionSettings)
+                .disequate(resultValue, nullValue, components.languageVersionSettings);
             if (!jumpInRight) {
                 DataFlowValue rightValue = components.dataFlowValueFactory.createDataFlowValue(right, rightType, context);
                 rightDataFlowInfo = rightDataFlowInfo.assign(resultValue, rightValue, components.languageVersionSettings);
@@ -1333,10 +1333,10 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
 
     @NotNull
     private DataFlowInfo establishSubtypingForTypeRHS(
-            @NotNull KtBinaryExpressionWithTypeRHS left,
-            @NotNull DataFlowInfo dataFlowInfo,
-            @NotNull ExpressionTypingContext context,
-            @NotNull LanguageVersionSettings languageVersionSettings
+        @NotNull KtBinaryExpressionWithTypeRHS left,
+        @NotNull DataFlowInfo dataFlowInfo,
+        @NotNull ExpressionTypingContext context,
+        @NotNull LanguageVersionSettings languageVersionSettings
     ) {
         IElementType operationType = left.getOperationReference().getReferencedNameElementType();
         if (operationType == AS_SAFE) {
@@ -1355,11 +1355,11 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
 
     @NotNull
     public KotlinTypeInfo checkInExpression(
-            @NotNull KtElement callElement,
-            @NotNull KtSimpleNameExpression operationSign,
-            @NotNull ValueArgument leftArgument,
-            @Nullable KtExpression right,
-            @NotNull ExpressionTypingContext context
+        @NotNull KtElement callElement,
+        @NotNull KtSimpleNameExpression operationSign,
+        @NotNull ValueArgument leftArgument,
+        @Nullable KtExpression right,
+        @NotNull ExpressionTypingContext context
     ) {
         KtExpression left = leftArgument.getArgumentExpression();
         ExpressionTypingContext contextWithNoExpectedType = context.replaceExpectedType(NO_EXPECTED_TYPE);
@@ -1375,10 +1375,10 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
         ExpressionTypingContext contextWithDataFlow = context.replaceDataFlowInfo(dataFlowInfo);
 
         OverloadResolutionResults<FunctionDescriptor> resolutionResult = components.callResolver.resolveCallWithGivenName(
-                contextWithDataFlow,
-                CallMaker.makeCall(callElement, receiver, null, operationSign, Collections.singletonList(leftArgument)),
-                operationSign,
-                OperatorNameConventions.CONTAINS);
+                    contextWithDataFlow,
+                    CallMaker.makeCall(callElement, receiver, null, operationSign, Collections.singletonList(leftArgument)),
+                    operationSign,
+                    OperatorNameConventions.CONTAINS);
         KotlinType containsType = OverloadResolutionResultsUtil.getResultingType(resolutionResult, context);
         ensureBooleanResult(operationSign, OperatorNameConventions.CONTAINS, containsType, context);
 
@@ -1401,10 +1401,10 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
     }
 
     private boolean ensureBooleanResultWithCustomSubject(
-            KtExpression operationSign,
-            KotlinType resultType,
-            String subjectName,
-            ExpressionTypingContext context
+        KtExpression operationSign,
+        KotlinType resultType,
+        String subjectName,
+        ExpressionTypingContext context
     ) {
         if (resultType != null) {
             // TODO : Relax?
@@ -1436,9 +1436,9 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
                 }
 
                 SenselessComparisonChecker.checkSenselessComparisonWithNull(
-                        expression, left, right, context,
-                        expr -> facade.getTypeInfo(expr, context).getType(),
-                        context.dataFlowInfo::getStableNullability
+                    expression, left, right, context,
+                    expr -> facade.getTypeInfo(expr, context).getType(),
+                    context.dataFlowInfo::getStableNullability
                 );
             }
         }
@@ -1468,7 +1468,7 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
 
     @Override
     public KotlinTypeInfo visitCollectionLiteralExpression(
-            @NotNull KtCollectionLiteralExpression expression, ExpressionTypingContext context
+        @NotNull KtCollectionLiteralExpression expression, ExpressionTypingContext context
     ) {
         return components.collectionLiteralResolver.resolveCollectionLiteral(expression, context);
     }
@@ -1477,17 +1477,17 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
     public KotlinTypeInfo visitClass(@NotNull KtClass klass, ExpressionTypingContext context) {
         // analyze class in illegal position and write descriptor to trace but do not write to any scope
         components.localClassifierAnalyzer.processClassOrObject(
-                null, context.replaceContextDependency(INDEPENDENT),
-                context.scope.getOwnerDescriptor(),
-                klass
+            null, context.replaceContextDependency(INDEPENDENT),
+            context.scope.getOwnerDescriptor(),
+            klass
         );
         return declarationInIllegalContext(klass, context);
     }
 
     @NotNull
     private static KotlinTypeInfo declarationInIllegalContext(
-            @NotNull KtDeclaration declaration,
-            @NotNull ExpressionTypingContext context
+        @NotNull KtDeclaration declaration,
+        @NotNull ExpressionTypingContext context
     ) {
         context.trace.report(DECLARATION_IN_ILLEGAL_CONTEXT.on(declaration));
         return TypeInfoFactoryKt.noTypeInfo(context);
@@ -1501,9 +1501,9 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
 
     @NotNull
     private KotlinTypeInfo getTypeInfoForBinaryCall(
-            @NotNull Name name,
-            @NotNull ExpressionTypingContext context,
-            @NotNull KtBinaryExpression binaryExpression
+        @NotNull Name name,
+        @NotNull ExpressionTypingContext context,
+        @NotNull KtBinaryExpression binaryExpression
     ) {
         KtExpression left = binaryExpression.getLeft();
         KotlinTypeInfo typeInfo;
@@ -1539,12 +1539,12 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
 
     @Override
     public KotlinTypeInfo visitStringTemplateExpression(
-            @NotNull KtStringTemplateExpression expression,
-            ExpressionTypingContext contextWithExpectedType
+        @NotNull KtStringTemplateExpression expression,
+        ExpressionTypingContext contextWithExpectedType
     ) {
         ExpressionTypingContext context = contextWithExpectedType
-                .replaceExpectedType(NO_EXPECTED_TYPE)
-                .replaceContextDependency(INDEPENDENT);
+                                          .replaceExpectedType(NO_EXPECTED_TYPE)
+                                          .replaceContextDependency(INDEPENDENT);
 
         checkLiteralPrefixAndSuffix(expression, context);
 
@@ -1562,7 +1562,7 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
             @Override
             public void visitEscapeStringTemplateEntry(@NotNull KtEscapeStringTemplateEntry entry) {
                 CompileTimeConstantChecker.CharacterWithDiagnostic value =
-                        CompileTimeConstantChecker.escapedStringToCharacter(entry.getText(), entry);
+                    CompileTimeConstantChecker.escapedStringToCharacter(entry.getText(), entry);
                 Diagnostic diagnostic = value.getDiagnostic();
                 if (diagnostic != null) {
                     context.trace.report(diagnostic);
@@ -1575,8 +1575,8 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
         }
         components.constantExpressionEvaluator.evaluateExpression(expression, context.trace, contextWithExpectedType.expectedType);
         return components.dataFlowAnalyzer.checkType(visitor.typeInfo.replaceType(components.builtIns.getStringType()),
-                                                     expression,
-                                                     contextWithExpectedType);
+                expression,
+                contextWithExpectedType);
     }
 
     private static void checkLiteralPrefixAndSuffix(@NotNull PsiElement expression, ExpressionTypingContext context) {
@@ -1663,47 +1663,47 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
 
     @NotNull
     /*package*/ KotlinTypeInfo resolveArrayAccessSetMethod(
-            @NotNull KtArrayAccessExpression arrayAccessExpression,
-            @NotNull KtExpression rightHandSide,
-            @NotNull ExpressionTypingContext context,
-            @NotNull BindingTrace traceForResolveResult
+        @NotNull KtArrayAccessExpression arrayAccessExpression,
+        @NotNull KtExpression rightHandSide,
+        @NotNull ExpressionTypingContext context,
+        @NotNull BindingTrace traceForResolveResult
     ) {
         return resolveArrayAccessSpecialMethod(arrayAccessExpression, rightHandSide, context, traceForResolveResult, false, false);
     }
 
     @NotNull
     /*package*/ KotlinTypeInfo resolveImplicitArrayAccessSetMethod(
-            @NotNull KtArrayAccessExpression arrayAccessExpression,
-            @NotNull KtExpression rightHandSide,
-            @NotNull ExpressionTypingContext context,
-            @NotNull BindingTrace traceForResolveResult
+        @NotNull KtArrayAccessExpression arrayAccessExpression,
+        @NotNull KtExpression rightHandSide,
+        @NotNull ExpressionTypingContext context,
+        @NotNull BindingTrace traceForResolveResult
     ) {
         return resolveArrayAccessSpecialMethod(arrayAccessExpression, rightHandSide, context, traceForResolveResult, false, true);
     }
 
     @NotNull
     /*package*/ KotlinTypeInfo resolveArrayAccessGetMethod(
-            @NotNull KtArrayAccessExpression arrayAccessExpression,
-            @NotNull ExpressionTypingContext context
+        @NotNull KtArrayAccessExpression arrayAccessExpression,
+        @NotNull ExpressionTypingContext context
     ) {
         return resolveArrayAccessSpecialMethod(arrayAccessExpression, null, context, context.trace, true, false);
     }
 
     @NotNull
     private KotlinTypeInfo resolveArrayAccessSpecialMethod(
-            @NotNull KtArrayAccessExpression arrayAccessExpression,
-            @Nullable KtExpression rightHandSide, //only for 'set' method
-            @NotNull ExpressionTypingContext oldContext,
-            @NotNull BindingTrace traceForResolveResult,
-            boolean isGet,
-            boolean isImplicit
+        @NotNull KtArrayAccessExpression arrayAccessExpression,
+        @Nullable KtExpression rightHandSide, //only for 'set' method
+        @NotNull ExpressionTypingContext oldContext,
+        @NotNull BindingTrace traceForResolveResult,
+        boolean isGet,
+        boolean isImplicit
     ) {
         KtExpression arrayExpression = arrayAccessExpression.getArrayExpression();
         if (arrayExpression == null) return TypeInfoFactoryKt.noTypeInfo(oldContext);
 
 
         KotlinTypeInfo arrayTypeInfo = facade.safeGetTypeInfo(arrayExpression, oldContext.replaceExpectedType(NO_EXPECTED_TYPE)
-                .replaceContextDependency(INDEPENDENT));
+                                       .replaceContextDependency(INDEPENDENT));
         KotlinType arrayType = ExpressionTypingUtils.safeGetType(arrayTypeInfo);
 
         ExpressionTypingContext context = oldContext.replaceDataFlowInfo(arrayTypeInfo.getDataFlowInfo());
@@ -1714,7 +1714,7 @@ public class BasicExpressionTypingVisitor extends ExpressionTypingVisitor {
                     ? CallMaker.makeArrayGetCall(receiver, arrayAccessExpression, Call.CallType.ARRAY_GET_METHOD)
                     : CallMaker.makeArraySetCall(receiver, arrayAccessExpression, rightHandSide, Call.CallType.ARRAY_SET_METHOD);
         OverloadResolutionResults<FunctionDescriptor> functionResults = components.callResolver.resolveCallWithGivenName(
-                context, call, arrayAccessExpression, isGet ? OperatorNameConventions.GET : OperatorNameConventions.SET);
+                    context, call, arrayAccessExpression, isGet ? OperatorNameConventions.GET : OperatorNameConventions.SET);
 
         List<KtExpression> indices = arrayAccessExpression.getIndexExpressions();
         // The accumulated data flow info of all index expressions is saved on the last index

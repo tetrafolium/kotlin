@@ -40,9 +40,9 @@ public class TracingStrategyForInvoke extends AbstractTracingStrategy {
     private final KotlinType calleeType;
 
     public TracingStrategyForInvoke(
-            @NotNull KtExpression reference,
-            @NotNull Call call,
-            @NotNull KotlinType calleeType
+        @NotNull KtExpression reference,
+        @NotNull Call call,
+        @NotNull KotlinType calleeType
     ) {
         super(reference, call);
         this.calleeType = calleeType;
@@ -58,7 +58,7 @@ public class TracingStrategyForInvoke extends AbstractTracingStrategy {
 
     @Override
     public <D extends CallableDescriptor> void bindReference(
-            @NotNull BindingTrace trace, @NotNull ResolvedCall<D> resolvedCall
+        @NotNull BindingTrace trace, @NotNull ResolvedCall<D> resolvedCall
     ) {
         PsiElement callElement = call.getCallElement();
         if (callElement instanceof KtReferenceExpression) {
@@ -68,7 +68,7 @@ public class TracingStrategyForInvoke extends AbstractTracingStrategy {
 
     @Override
     public <D extends CallableDescriptor> void bindResolvedCall(
-            @NotNull BindingTrace trace, @NotNull ResolvedCall<D> resolvedCall
+        @NotNull BindingTrace trace, @NotNull ResolvedCall<D> resolvedCall
     ) {
         if (reference instanceof KtSimpleNameExpression) return;
         trace.record(RESOLVED_CALL, call, resolvedCall);
@@ -81,7 +81,7 @@ public class TracingStrategyForInvoke extends AbstractTracingStrategy {
 
     @Override
     public <D extends CallableDescriptor> void unresolvedReferenceWrongReceiver(
-            @NotNull BindingTrace trace, @NotNull Collection<? extends ResolvedCall<D>> candidates
+        @NotNull BindingTrace trace, @NotNull Collection<? extends ResolvedCall<D>> candidates
     ) {
         functionExpectedOrNoReceiverAllowed(trace);
     }

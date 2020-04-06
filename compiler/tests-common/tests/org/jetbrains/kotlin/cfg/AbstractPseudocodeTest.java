@@ -110,10 +110,10 @@ public abstract class AbstractPseudocodeTest extends KotlinTestWithEnvironmentMa
             KtElement correspondingElement = pseudocode.getCorrespondingElement();
             String label;
             assert (correspondingElement instanceof KtNamedDeclaration || correspondingElement instanceof KtPropertyAccessor) :
-                    "Unexpected element class is pseudocode: " + correspondingElement.getClass();
+            "Unexpected element class is pseudocode: " + correspondingElement.getClass();
             boolean isAnonymousFunction =
-                    correspondingElement instanceof KtFunctionLiteral
-                    || (correspondingElement instanceof KtNamedFunction && correspondingElement.getName() == null);
+                correspondingElement instanceof KtFunctionLiteral
+                || (correspondingElement instanceof KtNamedFunction && correspondingElement.getName() == null);
             if (isAnonymousFunction) {
                 label = "anonymous_" + i++;
             }
@@ -151,8 +151,8 @@ public abstract class AbstractPseudocodeTest extends KotlinTestWithEnvironmentMa
     }
 
     private static String getIsDeadInstructionPrefix(
-            @NotNull Instruction instruction,
-            @NotNull Set<Instruction> remainedAfterPostProcessInstructions
+        @NotNull Instruction instruction,
+        @NotNull Set<Instruction> remainedAfterPostProcessInstructions
     ) {
         boolean isRemovedThroughPostProcess = !remainedAfterPostProcessInstructions.contains(instruction);
         assert isRemovedThroughPostProcess == ((InstructionImpl)instruction).getMarkedAsDead();
@@ -184,15 +184,15 @@ public abstract class AbstractPseudocodeTest extends KotlinTestWithEnvironmentMa
     }
 
     protected abstract void dumpInstructions(
-            @NotNull PseudocodeImpl pseudocode,
-            @NotNull StringBuilder out,
-            @NotNull BindingContext bindingContext
+        @NotNull PseudocodeImpl pseudocode,
+        @NotNull StringBuilder out,
+        @NotNull BindingContext bindingContext
     );
 
     protected void dumpInstructions(
-            @NotNull PseudocodeImpl pseudocode,
-            @NotNull StringBuilder out,
-            @NotNull Function3<Instruction, /*next*/Instruction, /*prev*/Instruction, String> getInstructionData
+        @NotNull PseudocodeImpl pseudocode,
+        @NotNull StringBuilder out,
+        @NotNull Function3<Instruction, /*next*/Instruction, /*prev*/Instruction, String> getInstructionData
     ) {
         List<Instruction> instructions = pseudocode.getInstructionsIncludingDeadCode();
         Set<Instruction> remainedAfterPostProcessInstructions = Sets.newHashSet(pseudocode.getInstructions());
@@ -214,7 +214,7 @@ public abstract class AbstractPseudocodeTest extends KotlinTestWithEnvironmentMa
             Instruction prev = i == 0 ? null : instructions.get(i - 1);
 
             String prefix = getIsDeadInstructionPrefix(instruction, remainedAfterPostProcessInstructions) +
-                    getDepthInstructionPrefix(instruction, prev);
+                            getDepthInstructionPrefix(instruction, prev);
             line.append(formatInstruction(instruction, instructionColumnWidth, prefix));
 
             line.append(getInstructionData.invoke(instruction, next, prev));

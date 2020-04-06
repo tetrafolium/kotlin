@@ -37,7 +37,7 @@ public interface KDocTokens {
             PsiElement parentElement = chameleon.getTreeParent().getPsi();
             Project project = parentElement.getProject();
             PsiBuilder builder = PsiBuilderFactory.getInstance().createBuilder(project, chameleon, new KDocLexer(), getLanguage(),
-                                                                               chameleon.getText());
+                                 chameleon.getText());
             PsiParser parser = new KDocParser();
 
             return parser.parse(this, builder).getFirstChildNode();

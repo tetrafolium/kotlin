@@ -64,7 +64,7 @@ public class Emulator {
         return commandLine;
     }
 
-    private String getEmulatorAbi(){
+    private String getEmulatorAbi() {
         return platform == X86 ? "x86" : "armeabi-v7a";
     }
 

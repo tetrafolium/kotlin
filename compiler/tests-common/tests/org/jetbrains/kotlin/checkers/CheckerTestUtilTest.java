@@ -128,7 +128,9 @@ public class CheckerTestUtilTest extends KotlinTestWithEnvironment {
 
     public void testAbstractJetDiagnosticsTest() throws Exception {
         AbstractDiagnosticsTest test = new AbstractDiagnosticsTest() {
-            {setUp();}
+            {
+                setUp();
+            }
         };
         test.doTest(getTestDataPath() + File.separatorChar + "test_with_diagnostic.kt");
     }
@@ -142,18 +144,18 @@ public class CheckerTestUtilTest extends KotlinTestWithEnvironment {
 
         public void test(@NotNull PsiFile psiFile, @NotNull KotlinCoreEnvironment environment) {
             BindingContext bindingContext =
-                    JvmResolveUtil.analyze((KtFile) psiFile, environment).getBindingContext();
+                JvmResolveUtil.analyze((KtFile) psiFile, environment).getBindingContext();
 
             String expectedText = CheckerTestUtil.addDiagnosticMarkersToText(
-                    psiFile,
-                    CheckerTestUtil.getDiagnosticsIncludingSyntaxErrors(bindingContext, psiFile, false, null, null, false)
-            ).toString();
+                                      psiFile,
+                                      CheckerTestUtil.getDiagnosticsIncludingSyntaxErrors(bindingContext, psiFile, false, null, null, false)
+                                  ).toString();
 
             List<DiagnosedRange> diagnosedRanges = Lists.newArrayList();
             CheckerTestUtil.parseDiagnosedRanges(expectedText, diagnosedRanges);
 
             List<ActualDiagnostic> actualDiagnostics =
-                    CheckerTestUtil.getDiagnosticsIncludingSyntaxErrors(bindingContext, psiFile, false, null, null, false);
+                CheckerTestUtil.getDiagnosticsIncludingSyntaxErrors(bindingContext, psiFile, false, null, null, false);
             actualDiagnostics.sort(CheckerTestUtil.DIAGNOSTIC_COMPARATOR);
 
             makeTestData(actualDiagnostics, diagnosedRanges);
@@ -169,10 +171,10 @@ public class CheckerTestUtilTest extends KotlinTestWithEnvironment {
 
                 @Override
                 public void wrongParametersDiagnostic(
-                        CheckerTestUtil.TextDiagnostic expectedDiagnostic,
-                        CheckerTestUtil.TextDiagnostic actualDiagnostic,
-                        int start,
-                        int end
+                    CheckerTestUtil.TextDiagnostic expectedDiagnostic,
+                    CheckerTestUtil.TextDiagnostic actualDiagnostic,
+                    int start,
+                    int end
                 ) {
                     actualMessages.add(wrongParameters(expectedDiagnostic.asString(), actualDiagnostic.asString(), start, end));
                 }
@@ -246,13 +248,13 @@ public class CheckerTestUtilTest extends KotlinTestWithEnvironment {
     }
 
     private final List<DiagnosticData> diagnostics = Lists.newArrayList(
-            new DiagnosticData(0, 0, "UNUSED_PARAMETER", 8, 9),
-            new DiagnosticData(1, 1, "CONSTANT_EXPECTED_TYPE_MISMATCH", 56, 57),
-            new DiagnosticData(2, 2, "UNUSED_VARIABLE", 67, 68),
-            new DiagnosticData(3, 3, "TYPE_MISMATCH", 98, 99),
-            new DiagnosticData(4, 4, "NONE_APPLICABLE", 120, 121),
-            new DiagnosticData(5, 5, "TYPE_MISMATCH", 159, 167),
-            new DiagnosticData(6, 6, "UNRESOLVED_REFERENCE", 164, 166),
-            new DiagnosticData(7, 6, "TOO_MANY_ARGUMENTS", 164, 166)
-    );
+                new DiagnosticData(0, 0, "UNUSED_PARAMETER", 8, 9),
+                new DiagnosticData(1, 1, "CONSTANT_EXPECTED_TYPE_MISMATCH", 56, 57),
+                new DiagnosticData(2, 2, "UNUSED_VARIABLE", 67, 68),
+                new DiagnosticData(3, 3, "TYPE_MISMATCH", 98, 99),
+                new DiagnosticData(4, 4, "NONE_APPLICABLE", 120, 121),
+                new DiagnosticData(5, 5, "TYPE_MISMATCH", 159, 167),
+                new DiagnosticData(6, 6, "UNRESOLVED_REFERENCE", 164, 166),
+                new DiagnosticData(7, 6, "TOO_MANY_ARGUMENTS", 164, 166)
+            );
 }

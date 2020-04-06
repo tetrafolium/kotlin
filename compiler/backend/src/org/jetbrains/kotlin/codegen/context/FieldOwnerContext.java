@@ -35,12 +35,12 @@ public abstract class FieldOwnerContext<T extends DeclarationDescriptor> extends
     private final Map<String, Map<PropertyDescriptor, String>> fieldNames = new HashMap<>();
 
     public FieldOwnerContext(
-            @NotNull T contextDescriptor,
-            @NotNull OwnerKind contextKind,
-            @Nullable CodegenContext parentContext,
-            @Nullable MutableClosure closure,
-            @Nullable ClassDescriptor thisDescriptor,
-            @Nullable LocalLookup expressionCodegen
+        @NotNull T contextDescriptor,
+        @NotNull OwnerKind contextKind,
+        @Nullable CodegenContext parentContext,
+        @Nullable MutableClosure closure,
+        @Nullable ClassDescriptor thisDescriptor,
+        @Nullable LocalLookup expressionCodegen
     ) {
         super(contextDescriptor, contextKind, parentContext, closure, thisDescriptor, expressionCodegen);
     }

@@ -39,14 +39,14 @@ public class AsmTypes {
     public static final Type RESULT_FAILURE = Type.getObjectType("kotlin/Result$Failure");
 
     public static final Type[] PROPERTY_REFERENCE_IMPL = {
-            Type.getObjectType("kotlin/jvm/internal/PropertyReference0Impl"),
-            Type.getObjectType("kotlin/jvm/internal/PropertyReference1Impl"),
-            Type.getObjectType("kotlin/jvm/internal/PropertyReference2Impl")
+        Type.getObjectType("kotlin/jvm/internal/PropertyReference0Impl"),
+        Type.getObjectType("kotlin/jvm/internal/PropertyReference1Impl"),
+        Type.getObjectType("kotlin/jvm/internal/PropertyReference2Impl")
     };
     public static final Type[] MUTABLE_PROPERTY_REFERENCE_IMPL = {
-            Type.getObjectType("kotlin/jvm/internal/MutablePropertyReference0Impl"),
-            Type.getObjectType("kotlin/jvm/internal/MutablePropertyReference1Impl"),
-            Type.getObjectType("kotlin/jvm/internal/MutablePropertyReference2Impl")
+        Type.getObjectType("kotlin/jvm/internal/MutablePropertyReference0Impl"),
+        Type.getObjectType("kotlin/jvm/internal/MutablePropertyReference1Impl"),
+        Type.getObjectType("kotlin/jvm/internal/MutablePropertyReference2Impl")
     };
 
     public static final Type K_CLASS_TYPE = reflect("KClass");
@@ -90,24 +90,24 @@ public class AsmTypes {
     @NotNull
     public static Type valueTypeForPrimitive(PrimitiveType primitiveType) {
         switch (primitiveType) {
-            case BOOLEAN:
-                return Type.BOOLEAN_TYPE;
-            case CHAR:
-                return Type.CHAR_TYPE;
-            case BYTE:
-                return Type.BYTE_TYPE;
-            case SHORT:
-                return Type.SHORT_TYPE;
-            case INT:
-                return Type.INT_TYPE;
-            case FLOAT:
-                return Type.FLOAT_TYPE;
-            case LONG:
-                return Type.LONG_TYPE;
-            case DOUBLE:
-                return Type.DOUBLE_TYPE;
-            default:
-                throw new UnsupportedOperationException();
+        case BOOLEAN:
+            return Type.BOOLEAN_TYPE;
+        case CHAR:
+            return Type.CHAR_TYPE;
+        case BYTE:
+            return Type.BYTE_TYPE;
+        case SHORT:
+            return Type.SHORT_TYPE;
+        case INT:
+            return Type.INT_TYPE;
+        case FLOAT:
+            return Type.FLOAT_TYPE;
+        case LONG:
+            return Type.LONG_TYPE;
+        case DOUBLE:
+            return Type.DOUBLE_TYPE;
+        default:
+            throw new UnsupportedOperationException();
         }
     }
 

@@ -42,8 +42,8 @@ public class OverloadResolutionResultsUtil {
 
     @Nullable
     public static <D extends CallableDescriptor> KotlinType getResultingType(
-            @NotNull OverloadResolutionResults<D> results,
-            @NotNull ResolutionContext<?> context
+        @NotNull OverloadResolutionResults<D> results,
+        @NotNull ResolutionContext<?> context
     ) {
         ResolvedCall<D> resultingCall = getResultingCall(results, context);
         return resultingCall != null ? resultingCall.getResultingDescriptor().getReturnType() : null;
@@ -51,8 +51,8 @@ public class OverloadResolutionResultsUtil {
 
     @Nullable
     public static <D extends CallableDescriptor> ResolvedCall<D> getResultingCall(
-            @NotNull OverloadResolutionResults<D> results,
-            @NotNull ResolutionContext<?> context
+        @NotNull OverloadResolutionResults<D> results,
+        @NotNull ResolutionContext<?> context
     ) {
         if (results.isSingleResult() && context.contextDependency == ContextDependency.INDEPENDENT) {
             ResolvedCall<D> resultingCall = results.getResultingCall();

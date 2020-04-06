@@ -34,11 +34,11 @@ public interface LocalLookup {
 
             @Override
             public StackValue.StackValueWithSimpleReceiver innerValue(
-                    DeclarationDescriptor d,
-                    LocalLookup localLookup,
-                    GenerationState state,
-                    MutableClosure closure,
-                    Type classType
+                DeclarationDescriptor d,
+                LocalLookup localLookup,
+                GenerationState state,
+                MutableClosure closure,
+                Type classType
             ) {
                 VariableDescriptor vd = (VariableDescriptor) d;
 
@@ -46,9 +46,9 @@ public interface LocalLookup {
                 if (!idx) return null;
 
                 KotlinType delegateType =
-                        vd instanceof VariableDescriptorWithAccessors
-                        ? JvmCodegenUtil.getPropertyDelegateType((VariableDescriptorWithAccessors) vd, state.getBindingContext())
-                        : null;
+                vd instanceof VariableDescriptorWithAccessors
+                ? JvmCodegenUtil.getPropertyDelegateType((VariableDescriptorWithAccessors) vd, state.getBindingContext())
+                : null;
                 Type sharedVarType = state.getTypeMapper().getSharedVarType(vd);
                 KotlinType localKotlinType = delegateType != null ? delegateType : vd.getType();
                 Type localType = state.getTypeMapper().mapType(localKotlinType);
@@ -84,11 +84,11 @@ public interface LocalLookup {
 
             @Override
             public StackValue.StackValueWithSimpleReceiver innerValue(
-                    DeclarationDescriptor d,
-                    LocalLookup localLookup,
-                    GenerationState state,
-                    MutableClosure closure,
-                    Type classType
+                DeclarationDescriptor d,
+                LocalLookup localLookup,
+                GenerationState state,
+                MutableClosure closure,
+                Type classType
             ) {
                 FunctionDescriptor vd = (FunctionDescriptor) d;
 
@@ -115,8 +115,8 @@ public interface LocalLookup {
 
                 String fieldName = "$" + vd.getName() + localFunSuffix;
                 StackValue.StackValueWithSimpleReceiver innerValue = StackValue.field(
-                        localType, null, classType, fieldName, false, StackValue.LOCAL_0, vd
-                );
+                            localType, null, classType, fieldName, false, StackValue.LOCAL_0, vd
+                        );
 
                 closure.captureVariable(new EnclosedValueDescriptor(fieldName, d, innerValue, localType, null));
 
@@ -132,11 +132,11 @@ public interface LocalLookup {
 
             @Override
             public StackValue.StackValueWithSimpleReceiver innerValue(
-                    DeclarationDescriptor d,
-                    LocalLookup enclosingLocalLookup,
-                    GenerationState state,
-                    MutableClosure closure,
-                    Type classType
+                DeclarationDescriptor d,
+                LocalLookup enclosingLocalLookup,
+                GenerationState state,
+                MutableClosure closure,
+                Type classType
             ) {
                 ReceiverParameterDescriptor enclosingReceiverDescriptor = closure.getEnclosingReceiverDescriptor();
                 if (enclosingReceiverDescriptor != d) {
@@ -149,8 +149,8 @@ public interface LocalLookup {
                 Type type = state.getTypeMapper().mapType(receiverType);
                 String fieldName = closure.getCapturedReceiverFieldName(state.getBindingContext(), state.getLanguageVersionSettings());
                 StackValue.StackValueWithSimpleReceiver innerValue = StackValue.field(
-                        type, receiverType, classType, fieldName, false, StackValue.LOCAL_0, d
-                );
+                            type, receiverType, classType, fieldName, false, StackValue.LOCAL_0, d
+                        );
                 closure.setNeedsCaptureReceiverFromOuterContext();
 
                 return innerValue;
@@ -167,11 +167,11 @@ public interface LocalLookup {
         public abstract boolean isCase(DeclarationDescriptor d);
 
         public abstract StackValue.StackValueWithSimpleReceiver innerValue(
-                DeclarationDescriptor d,
-                LocalLookup localLookup,
-                GenerationState state,
-                MutableClosure closure,
-                Type classType
+            DeclarationDescriptor d,
+            LocalLookup localLookup,
+            GenerationState state,
+            MutableClosure closure,
+            Type classType
         );
 
         @NotNull

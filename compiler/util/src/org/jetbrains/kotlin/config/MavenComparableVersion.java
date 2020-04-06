@@ -121,17 +121,17 @@ public class MavenComparableVersion
 
             switch ( item.getType() )
             {
-                case INTEGER_ITEM:
-                    return value.compareTo( ( (IntegerItem) item ).value );
+            case INTEGER_ITEM:
+                return value.compareTo( ( (IntegerItem) item ).value );
 
-                case STRING_ITEM:
-                    return 1; // 1.1 > 1-sp
+            case STRING_ITEM:
+                return 1; // 1.1 > 1-sp
 
-                case LIST_ITEM:
-                    return 1; // 1.1 > 1-1
+            case LIST_ITEM:
+                return 1; // 1.1 > 1-1
 
-                default:
-                    throw new RuntimeException( "invalid item: " + item.getClass() );
+            default:
+                throw new RuntimeException( "invalid item: " + item.getClass() );
             }
         }
 
@@ -175,19 +175,19 @@ public class MavenComparableVersion
                 // a1 = alpha-1, b1 = beta-1, m1 = milestone-1
                 switch ( value.charAt( 0 ) )
                 {
-                    case 'a':
-                        value = "alpha";
-                        break;
-                    case 'b':
-                        value = "beta";
-                        break;
-                    case 'm':
-                        value = "milestone";
-                        break;
-                    default:
+                case 'a':
+                    value = "alpha";
+                    break;
+                case 'b':
+                    value = "beta";
+                    break;
+                case 'm':
+                    value = "milestone";
+                    break;
+                default:
                 }
             }
-            this.value = ALIASES.getProperty( value , value );
+            this.value = ALIASES.getProperty( value, value );
         }
 
         public int getType()
@@ -229,17 +229,17 @@ public class MavenComparableVersion
             }
             switch ( item.getType() )
             {
-                case INTEGER_ITEM:
-                    return -1; // 1.any < 1.1 ?
+            case INTEGER_ITEM:
+                return -1; // 1.any < 1.1 ?
 
-                case STRING_ITEM:
-                    return comparableQualifier( value ).compareTo( comparableQualifier( ( (StringItem) item ).value ) );
+            case STRING_ITEM:
+                return comparableQualifier( value ).compareTo( comparableQualifier( ( (StringItem) item ).value ) );
 
-                case LIST_ITEM:
-                    return -1; // 1.any < 1-1
+            case LIST_ITEM:
+                return -1; // 1.any < 1-1
 
-                default:
-                    throw new RuntimeException( "invalid item: " + item.getClass() );
+            default:
+                throw new RuntimeException( "invalid item: " + item.getClass() );
             }
         }
 
@@ -298,34 +298,34 @@ public class MavenComparableVersion
             }
             switch ( item.getType() )
             {
-                case INTEGER_ITEM:
-                    return -1; // 1-1 < 1.0.x
+            case INTEGER_ITEM:
+                return -1; // 1-1 < 1.0.x
 
-                case STRING_ITEM:
-                    return 1; // 1-1 > 1-sp
+            case STRING_ITEM:
+                return 1; // 1-1 > 1-sp
 
-                case LIST_ITEM:
-                    Iterator<Item> left = iterator();
-                    Iterator<Item> right = ( (ListItem) item ).iterator();
+            case LIST_ITEM:
+                Iterator<Item> left = iterator();
+                Iterator<Item> right = ( (ListItem) item ).iterator();
 
-                    while ( left.hasNext() || right.hasNext() )
+                while ( left.hasNext() || right.hasNext() )
+                {
+                    Item l = left.hasNext() ? left.next() : null;
+                    Item r = right.hasNext() ? right.next() : null;
+
+                    // if this is shorter, then invert the compare and mul with -1
+                    int result = l == null ? ( r == null ? 0 : -1 * r.compareTo( l ) ) : l.compareTo( r );
+
+                    if ( result != 0 )
                     {
-                        Item l = left.hasNext() ? left.next() : null;
-                        Item r = right.hasNext() ? right.next() : null;
-
-                        // if this is shorter, then invert the compare and mul with -1
-                        int result = l == null ? ( r == null ? 0 : -1 * r.compareTo( l ) ) : l.compareTo( r );
-
-                        if ( result != 0 )
-                        {
-                            return result;
-                        }
+                        return result;
                     }
+                }
 
-                    return 0;
+                return 0;
 
-                default:
-                    throw new RuntimeException( "invalid item: " + item.getClass() );
+            default:
+                throw new RuntimeException( "invalid item: " + item.getClass() );
             }
         }
 
@@ -493,7 +493,7 @@ public class MavenComparableVersion
             {
                 int compare = prev.compareTo( c );
                 System.out.println( "   " + prev.toString() + ' '
-                    + ( ( compare == 0 ) ? "==" : ( ( compare < 0 ) ? "<" : ">" ) ) + ' ' + version );
+                                    + ( ( compare == 0 ) ? "==" : ( ( compare < 0 ) ? "<" : ">" ) ) + ' ' + version );
             }
 
             System.out.println( String.valueOf( i++ ) + ". " + version + " == " + c.getCanonical() );

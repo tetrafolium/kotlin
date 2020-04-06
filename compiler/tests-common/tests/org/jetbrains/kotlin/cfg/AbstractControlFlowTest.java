@@ -29,9 +29,9 @@ public abstract class AbstractControlFlowTest extends AbstractPseudocodeTest {
 
     @Override
     protected void dumpInstructions(
-            @NotNull PseudocodeImpl pseudocode,
-            @NotNull StringBuilder out,
-            @NotNull BindingContext bindingContext
+        @NotNull PseudocodeImpl pseudocode,
+        @NotNull StringBuilder out,
+        @NotNull BindingContext bindingContext
     ) {
         int nextInstructionsColumnWidth = countNextInstructionsColumnWidth(pseudocode.getInstructionsIncludingDeadCode());
 
@@ -41,7 +41,7 @@ public abstract class AbstractControlFlowTest extends AbstractPseudocodeTest {
 
             if (!sameContents(next, nextInstructions)) {
                 result.append("    NEXT:").append(
-                        String.format("%1$-" + nextInstructionsColumnWidth + "s", formatInstructionList(nextInstructions)));
+                    String.format("%1$-" + nextInstructionsColumnWidth + "s", formatInstructionList(nextInstructions)));
             }
             Collection<Instruction> previousInstructions = instruction.getPreviousInstructions();
             if (!sameContents(prev, previousInstructions)) {

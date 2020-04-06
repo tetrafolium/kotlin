@@ -38,7 +38,7 @@ public class BasicWritableSlice<K, V> extends AbstractWritableSlice<K, V> {
         }
         return null;
     }
-    
+
     private String debugName;
     private final RewritePolicy rewritePolicy;
     private final boolean isCollective;

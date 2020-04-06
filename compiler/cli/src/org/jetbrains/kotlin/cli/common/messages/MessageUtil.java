@@ -40,9 +40,9 @@ public class MessageUtil {
 
     @Nullable
     public static CompilerMessageLocation psiFileToMessageLocation(
-            @NotNull PsiFile file,
-            @Nullable String defaultValue,
-            @NotNull PsiDiagnosticUtils.LineAndColumn lineAndColumn
+        @NotNull PsiFile file,
+        @Nullable String defaultValue,
+        @NotNull PsiDiagnosticUtils.LineAndColumn lineAndColumn
     ) {
         VirtualFile virtualFile = file.getVirtualFile();
         String path = virtualFile != null ? virtualFileToPath(virtualFile) : defaultValue;

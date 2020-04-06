@@ -86,27 +86,27 @@ public class TypeSubstitutorTest extends KotlinTestWithEnvironment {
 
         LexicalScope topLevelScope = analysisResult.getBindingContext().get(BindingContext.LEXICAL_SCOPE, ktFile);
         ClassifierDescriptor contextClass =
-                ScopeUtilsKt.findClassifier(topLevelScope, Name.identifier("___Context"), NoLookupLocation.FROM_TEST);
+            ScopeUtilsKt.findClassifier(topLevelScope, Name.identifier("___Context"), NoLookupLocation.FROM_TEST);
         assert contextClass instanceof ClassDescriptor;
         LocalRedeclarationChecker redeclarationChecker =
-                new ThrowingLocalRedeclarationChecker(new OverloadChecker(TypeSpecificityComparator.NONE.INSTANCE));
+            new ThrowingLocalRedeclarationChecker(new OverloadChecker(TypeSpecificityComparator.NONE.INSTANCE));
         LexicalScope typeParameters = new LexicalScopeImpl(
-                topLevelScope, module, false, null, LexicalScopeKind.SYNTHETIC,
-                redeclarationChecker,
-                handler -> {
-                    for (TypeParameterDescriptor parameterDescriptor : contextClass.getTypeConstructor().getParameters()) {
-                        handler.addClassifierDescriptor(parameterDescriptor);
-                    }
-                    return Unit.INSTANCE;
-                }
+            topLevelScope, module, false, null, LexicalScopeKind.SYNTHETIC,
+            redeclarationChecker,
+        handler -> {
+            for (TypeParameterDescriptor parameterDescriptor : contextClass.getTypeConstructor().getParameters()) {
+                handler.addClassifierDescriptor(parameterDescriptor);
+            }
+            return Unit.INSTANCE;
+        }
         );
         return new LexicalChainedScope(
-                typeParameters, module, false, null, LexicalScopeKind.SYNTHETIC,
-                Arrays.asList(
-                        contextClass.getDefaultType().getMemberScope(),
-                        module.getBuiltIns().getBuiltInsPackageScope()
-                )
-        );
+                   typeParameters, module, false, null, LexicalScopeKind.SYNTHETIC,
+                   Arrays.asList(
+                       contextClass.getDefaultType().getMemberScope(),
+                       module.getBuiltIns().getBuiltInsPackageScope()
+                   )
+               );
     }
 
     private void doTest(@Nullable String expectedTypeStr, String initialTypeStr, Pair<String, String>... substitutionStrs) {
@@ -163,219 +163,219 @@ public class TypeSubstitutorTest extends KotlinTestWithEnvironment {
 
     public void testNoOccurrence() throws Exception {
         doTest(
-                "C<Int>",
-                "C<Int>",
-                map("T", "String")
+            "C<Int>",
+            "C<Int>",
+            map("T", "String")
         );
     }
 
     public void testSimpleOccurrence() throws Exception {
         doTest(
-                "C<String>",
-                "C<T>",
-                map("T", "String")
+            "C<String>",
+            "C<T>",
+            map("T", "String")
         );
     }
 
     public void testSimpleOutProjectionInReplacement() throws Exception {
         doTest(
-                "C<out String>",
-                "C<T>",
-                map("T", "out String")
+            "C<out String>",
+            "C<T>",
+            map("T", "out String")
         );
     }
 
     public void testSimpleInProjectionInReplacement() throws Exception {
         doTest(
-                "C<in String>",
-                "C<T>",
-                map("T", "in String")
+            "C<in String>",
+            "C<T>",
+            map("T", "in String")
         );
     }
 
     public void testSimpleOutProjectionInSubject() throws Exception {
         doTest(
-                "C<out String>",
-                "C<out T>",
-                map("T", "String")
+            "C<out String>",
+            "C<out T>",
+            map("T", "String")
         );
     }
 
     public void testSimpleInProjectionInSubject() throws Exception {
         doTest(
-                "C<in String>",
-                "C<in T>",
-                map("T", "String")
+            "C<in String>",
+            "C<in T>",
+            map("T", "String")
         );
     }
 
     public void testOutOutProjection() throws Exception {
         doTest(
-                "C<out String>",
-                "C<out T>",
-                map("T", "out String")
+            "C<out String>",
+            "C<out T>",
+            map("T", "out String")
         );
     }
 
     public void testInInProjection() throws Exception {
         doTest(
-                "C<in String>",
-                "C<in T>",
-                map("T", "in String")
+            "C<in String>",
+            "C<in T>",
+            map("T", "in String")
         );
     }
 
     public void testInOutProjection() throws Exception {
         doTest(
-                null,
-                "C<in T>",
-                map("T", "out String")
+            null,
+            "C<in T>",
+            map("T", "out String")
         );
     }
 
     public void testOutInProjection() throws Exception {
         doTest(
-                "C<out Any?>",
-                "C<out T>",
-                map("T", "in String")
+            "C<out Any?>",
+            "C<out T>",
+            map("T", "in String")
         );
     }
 
     public void testOutOutProjectionDeclarationSite() throws Exception {
         doTest(
-                "Out<String>",
-                "Out<T>",
-                map("T", "out String")
+            "Out<String>",
+            "Out<T>",
+            map("T", "out String")
         );
     }
 
     public void testInInProjectionDeclarationSite() throws Exception {
         doTest(
-                "In<String>",
-                "In<T>",
-                map("T", "in String")
+            "In<String>",
+            "In<T>",
+            map("T", "in String")
         );
     }
 
     public void testInOutProjectionDeclarationSite() throws Exception {
         doTest(
-                "In<*>",
-                "In<T>",
-                map("T", "out String")
+            "In<*>",
+            "In<T>",
+            map("T", "out String")
         );
     }
 
     public void testOutInProjectionDeclarationSite() throws Exception {
         doTest(
-                "Out<*>",
-                "Out<T>",
-                map("T", "in String")
+            "Out<*>",
+            "Out<T>",
+            map("T", "in String")
         );
     }
 
     public void testTwoParameters() throws Exception {
         doTest(
-                "P<Int, String>",
-                "P<T, R>",
-                map("T", "Int"),
-                map("R", "String")
+            "P<Int, String>",
+            "P<T, R>",
+            map("T", "Int"),
+            map("R", "String")
         );
     }
 
     public void testDeepType() throws Exception {
         doTest(
-                "C<P<Int, P<Int, String>>>",
-                "C<P<T,   P<T,   R>>>",
-                map("T", "Int"),
-                map("R", "String")
+            "C<P<Int, P<Int, String>>>",
+            "C<P<T,   P<T,   R>>>",
+            map("T", "Int"),
+            map("R", "String")
         );
     }
 
     public void testShallowType() throws Exception {
         doTest(
-                "String",
-                "T",
-                map("T", "String")
+            "String",
+            "T",
+            map("T", "String")
         );
     }
 
     public void testShallowTypeNullable() throws Exception {
         doTest(
-                "String?",
-                "T?",
-                map("T", "String")
+            "String?",
+            "T?",
+            map("T", "String")
         );
     }
 
     public void testShallowTypeNullableReplacement() throws Exception {
         doTest(
-                "String?",
-                "T",
-                map("T", "String?")
+            "String?",
+            "T",
+            map("T", "String?")
         );
     }
 
     public void testShallowTypeNullableOnBothEnds() throws Exception {
         doTest(
-                "String?",
-                "T?",
-                map("T", "String?")
+            "String?",
+            "T?",
+            map("T", "String?")
         );
     }
 
     public void testNothingType() throws Exception {
         doTest(
-                "Nothing",
-                "Nothing",
-                map("T", "String")
+            "Nothing",
+            "Nothing",
+            map("T", "String")
         );
     }
 
     public void testCallSiteNullable() throws Exception {
         doTest(
-                "C<String?>",
-                "C<T?>",
-                map("T", "String")
+            "C<String?>",
+            "C<T?>",
+            map("T", "String")
         );
     }
 
     public void testReplacementNullable() throws Exception {
         doTest(
-                "C<String?>",
-                "C<T>",
-                map("T", "String?")
+            "C<String?>",
+            "C<T>",
+            map("T", "String?")
         );
     }
 
     public void testCallSiteNullableWithProjection() throws Exception {
         doTest(
-                "C<out String?>",
-                "C<T?>",
-                map("T", "out String")
+            "C<out String?>",
+            "C<T?>",
+            map("T", "out String")
         );
     }
 
     public void testReplacementNullableWithProjection() throws Exception {
         doTest(
-                "C<out String?>",
-                "C<out T>",
-                map("T", "String?")
+            "C<out String?>",
+            "C<out T>",
+            map("T", "String?")
         );
     }
 
     public void testCallSiteNullableWithConsumedProjection() throws Exception {
         doTest(
-                "Out<String?>",
-                "Out<T?>",
-                map("T", "out String")
+            "Out<String?>",
+            "Out<T?>",
+            map("T", "out String")
         );
     }
 
     public void testReplacementNullableConsumedProjection() throws Exception {
         doTest(
-                "In<String?>",
-                "In<T>",
-                map("T", "in String?")
+            "In<String?>",
+            "In<T>",
+            map("T", "in String?")
         );
     }
 
@@ -390,17 +390,17 @@ public class TypeSubstitutorTest extends KotlinTestWithEnvironment {
 
     public void testStarProjection() throws Exception {
         doTest(
-                "Rec<*>",
-                "Rec<*>",
-                map("T", "String")
+            "Rec<*>",
+            "Rec<*>",
+            map("T", "String")
         );
     }
 
     public void testStarProjectionOut() throws Exception {
         doTest(
-                "Out<*>",
-                "Out<*>",
-                map("T", "String")
+            "Out<*>",
+            "Out<*>",
+            map("T", "String")
         );
     }
 

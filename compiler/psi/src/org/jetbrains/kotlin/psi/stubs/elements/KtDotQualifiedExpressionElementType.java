@@ -34,10 +34,10 @@ public class KtDotQualifiedExpressionElementType extends KtPlaceHolderStubElemen
 
         IElementType parentElementType = treeParent.getElementType();
         if (parentElementType == KtStubElementTypes.IMPORT_DIRECTIVE ||
-            parentElementType == KtStubElementTypes.PACKAGE_DIRECTIVE ||
-            parentElementType == KtStubElementTypes.VALUE_ARGUMENT ||
-            parentElementType == KtStubElementTypes.DOT_QUALIFIED_EXPRESSION
-        ) {
+                parentElementType == KtStubElementTypes.PACKAGE_DIRECTIVE ||
+                parentElementType == KtStubElementTypes.VALUE_ARGUMENT ||
+                parentElementType == KtStubElementTypes.DOT_QUALIFIED_EXPRESSION
+           ) {
             return super.shouldCreateStub(node);
         }
 

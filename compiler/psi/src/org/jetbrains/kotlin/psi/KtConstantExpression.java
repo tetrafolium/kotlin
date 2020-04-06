@@ -24,7 +24,7 @@ import org.jetbrains.kotlin.psi.stubs.KotlinConstantExpressionStub;
 import org.jetbrains.kotlin.psi.stubs.elements.KtConstantExpressionElementType;
 
 public class KtConstantExpression
-        extends KtElementImplStub<KotlinConstantExpressionStub> implements KtExpression {
+    extends KtElementImplStub<KotlinConstantExpressionStub> implements KtExpression {
     public KtConstantExpression(@NotNull ASTNode node) {
         super(node);
     }

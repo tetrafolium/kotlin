@@ -28,10 +28,10 @@ public class PackageContext extends FieldOwnerContext<PackageFragmentDescriptor>
     private final KtFile sourceFile;
 
     public PackageContext(
-            @NotNull PackageFragmentDescriptor contextDescriptor,
-            @NotNull CodegenContext parent,
-            @Nullable Type packagePartType,
-            @Nullable KtFile sourceFile
+        @NotNull PackageFragmentDescriptor contextDescriptor,
+        @NotNull CodegenContext parent,
+        @Nullable Type packagePartType,
+        @Nullable KtFile sourceFile
     ) {
         super(contextDescriptor, OwnerKind.PACKAGE, parent, null, null, null);
         this.packagePartType = packagePartType;

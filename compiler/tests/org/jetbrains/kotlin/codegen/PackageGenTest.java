@@ -62,8 +62,8 @@ public class PackageGenTest extends CodegenTestCase {
         long expected = System.currentTimeMillis();
         long diff = Math.abs(actual - expected);
         assertTrue(
-                "Difference with current time: " + diff + " (this test is a bad one: it may fail even if the generated code is correct)",
-                diff <= 100
+            "Difference with current time: " + diff + " (this test is a bad one: it may fail even if the generated code is correct)",
+            diff <= 100
         );
     }
 
@@ -86,7 +86,7 @@ public class PackageGenTest extends CodegenTestCase {
         loadText("fun foo(a: Int?) = if (a != null) a else 239");
         Method main = generateFunction();
         assertEquals(610, main.invoke(null, 610));
-        assertEquals(239, main.invoke(null, new Object[]{null}));
+        assertEquals(239, main.invoke(null, new Object[] {null}));
     }
 
     public void testIntBoxed() throws Exception {
@@ -257,7 +257,7 @@ public class PackageGenTest extends CodegenTestCase {
         loadText("fun foo(a: Int?): Int = a ?: 239");
         Method main = generateFunction();
         assertEquals(610, main.invoke(null, 610));
-        assertEquals(239, main.invoke(null, new Object[]{null}));
+        assertEquals(239, main.invoke(null, new Object[] {null}));
     }
 
     public void testVarargs() throws Exception {
@@ -309,7 +309,7 @@ public class PackageGenTest extends CodegenTestCase {
     public void testArrayRead() throws Exception {
         loadText("fun foo(c: Array<String>) = c[0]");
         Method main = generateFunction();
-        assertEquals("main", main.invoke(null, new Object[]{new String[]{"main"}}));
+        assertEquals("main", main.invoke(null, new Object[] {new String[]{"main"}}));
     }
 
     public void testArrayWrite() throws Exception {

@@ -93,8 +93,8 @@ public abstract class AbstractCliTest extends TestCaseWithTmpdir {
         System.setProperty("java.awt.headless", "true");
         Pair<String, ExitCode> outputAndExitCode = executeCompilerGrabOutput(compiler, readArgs(fileName, tmpdir.getPath()));
         String actual = getNormalizedCompilerOutput(
-                outputAndExitCode.getFirst(), outputAndExitCode.getSecond(), new File(fileName).getParent()
-        );
+                            outputAndExitCode.getFirst(), outputAndExitCode.getSecond(), new File(fileName).getParent()
+                        );
 
         File outFile = new File(fileName.replaceFirst("\\.args$", ".out"));
         KotlinTestUtils.assertEqualsToFile(outFile, actual);
@@ -197,9 +197,9 @@ public abstract class AbstractCliTest extends TestCaseWithTmpdir {
         }
 
         String argWithColonsReplaced = arg
-                .replace("\\:", "$COLON$")
-                .replace(":", File.pathSeparator)
-                .replace("$COLON$", ":");
+                                       .replace("\\:", "$COLON$")
+                                       .replace(":", File.pathSeparator)
+                                       .replace("$COLON$", ":");
 
         String argWithTestPathsReplaced = replaceTestPaths(argWithColonsReplaced, testDataDir, tempDir);
 
@@ -222,11 +222,11 @@ public abstract class AbstractCliTest extends TestCaseWithTmpdir {
     // Create new temporary file with all test paths replaced and return the new argument value with the new file path
     @NotNull
     private static String createTempFileWithPathsReplaced(
-            @NotNull String argument,
-            @NotNull String argumentPrefix,
-            @NotNull String tempFileSuffix,
-            @NotNull String testDataDir,
-            @NotNull String tempDir
+        @NotNull String argument,
+        @NotNull String argumentPrefix,
+        @NotNull String tempFileSuffix,
+        @NotNull String testDataDir,
+        @NotNull String tempDir
     ) {
         String filePath = kotlin.text.StringsKt.substringAfter(argument, argumentPrefix, argument);
         File file = new File(filePath);
@@ -242,12 +242,12 @@ public abstract class AbstractCliTest extends TestCaseWithTmpdir {
 
     private static String replaceTestPaths(@NotNull String str, @NotNull String testDataDir, @NotNull String tempDir) {
         return str
-                .replace("$TEMP_DIR$", tempDir)
-                .replace(TESTDATA_DIR, testDataDir)
-                .replace(
-                        "$FOREIGN_ANNOTATIONS_DIR$",
-                        new File(AbstractForeignAnnotationsTestKt.getFOREIGN_ANNOTATIONS_SOURCES_PATH()).getPath()
-                );
+               .replace("$TEMP_DIR$", tempDir)
+               .replace(TESTDATA_DIR, testDataDir)
+               .replace(
+                   "$FOREIGN_ANNOTATIONS_DIR$",
+                   new File(AbstractForeignAnnotationsTestKt.getFOREIGN_ANNOTATIONS_SOURCES_PATH()).getPath()
+               );
     }
 
     protected void doJvmTest(@NotNull String fileName) {

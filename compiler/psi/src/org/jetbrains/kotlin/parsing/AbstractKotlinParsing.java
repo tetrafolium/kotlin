@@ -104,9 +104,9 @@ import static org.jetbrains.kotlin.lexer.KtTokens.*;
     protected void errorWithRecovery(String message, TokenSet recoverySet) {
         IElementType tt = tt();
         if (recoverySet == null ||
-            recoverySet.contains(tt) ||
-            tt == LBRACE || tt == RBRACE ||
-            (recoverySet.contains(EOL_OR_SEMICOLON) && (eof() || tt == SEMICOLON || myBuilder.newlineBeforeCurrentToken()))) {
+                recoverySet.contains(tt) ||
+                tt == LBRACE || tt == RBRACE ||
+                (recoverySet.contains(EOL_OR_SEMICOLON) && (eof() || tt == SEMICOLON || myBuilder.newlineBeforeCurrentToken()))) {
             error(message);
         }
         else {
@@ -309,8 +309,8 @@ import static org.jetbrains.kotlin.lexer.KtTokens.*;
         int openBrackets = 0;
         while (!eof()) {
             if (pattern.processToken(
-                    myBuilder.getCurrentOffset(),
-                    pattern.isTopLevel(openAngleBrackets, openBrackets, openBraces, openParentheses))) {
+                        myBuilder.getCurrentOffset(),
+                        pattern.isTopLevel(openAngleBrackets, openBrackets, openBraces, openParentheses))) {
                 break;
             }
             if (at(LPAR)) {
