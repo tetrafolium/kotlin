@@ -26,9 +26,9 @@ public class ExtensionReceiver extends AbstractReceiverValue implements Implicit
     private final CallableDescriptor descriptor;
 
     public ExtensionReceiver(
-            @NotNull CallableDescriptor callableDescriptor,
-            @NotNull KotlinType receiverType,
-            @Nullable ReceiverValue original
+        @NotNull CallableDescriptor callableDescriptor,
+        @NotNull KotlinType receiverType,
+        @Nullable ReceiverValue original
     ) {
         super(receiverType, original);
         this.descriptor = callableDescriptor;

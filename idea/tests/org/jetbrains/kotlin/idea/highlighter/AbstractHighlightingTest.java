@@ -31,7 +31,7 @@ public abstract class AbstractHighlightingTest extends KotlinLightCodeInsightFix
         }
         catch (FileComparisonFailure e) {
             List<HighlightInfo> highlights =
-                    DaemonCodeAnalyzerImpl.getHighlights(myFixture.getDocument(myFixture.getFile()), null, myFixture.getProject());
+                DaemonCodeAnalyzerImpl.getHighlights(myFixture.getDocument(myFixture.getFile()), null, myFixture.getProject());
             String text = myFixture.getFile().getText();
 
             System.out.println(TagsTestDataUtil.insertInfoTags(highlights, text));

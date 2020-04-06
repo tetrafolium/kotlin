@@ -32,12 +32,12 @@ public abstract class VariableDescriptorWithInitializerImpl extends VariableDesc
     protected NullableLazyValue<ConstantValue<?>> compileTimeInitializer;
 
     public VariableDescriptorWithInitializerImpl(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull Annotations annotations,
-            @NotNull Name name,
-            @Nullable KotlinType outType,
-            boolean isVar,
-            @NotNull SourceElement source
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull Annotations annotations,
+        @NotNull Name name,
+        @Nullable KotlinType outType,
+        boolean isVar,
+        @NotNull SourceElement source
     ) {
         super(containingDeclaration, annotations, name, outType, source);
 

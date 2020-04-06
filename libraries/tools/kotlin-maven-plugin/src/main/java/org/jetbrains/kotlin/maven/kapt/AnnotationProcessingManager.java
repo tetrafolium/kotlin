@@ -90,13 +90,13 @@ public class AnnotationProcessingManager {
     @NotNull
     static File getGeneratedClassesDirectory(@NotNull MavenProject project, @NotNull String sourceSetName) {
         switch (sourceSetName) {
-            case COMPILE_SOURCE_SET_NAME:
-                return new File(project.getModel().getBuild().getOutputDirectory());
-            case TEST_SOURCE_SET_NAME:
-                return new File(project.getModel().getBuild().getTestOutputDirectory());
-            default:
-                throw new IllegalArgumentException("'" + COMPILE_SOURCE_SET_NAME + "' or '" +
-                        TEST_SOURCE_SET_NAME + "' expected");
+        case COMPILE_SOURCE_SET_NAME:
+            return new File(project.getModel().getBuild().getOutputDirectory());
+        case TEST_SOURCE_SET_NAME:
+            return new File(project.getModel().getBuild().getTestOutputDirectory());
+        default:
+            throw new IllegalArgumentException("'" + COMPILE_SOURCE_SET_NAME + "' or '" +
+                                               TEST_SOURCE_SET_NAME + "' expected");
         }
     }
 
@@ -120,12 +120,12 @@ public class AnnotationProcessingManager {
         }
 
         ArtifactResolutionRequest request = new ArtifactResolutionRequest()
-                .setArtifact(requiredArtifacts.iterator().next())
-                .setResolveRoot(true)
-                .setResolveTransitively(true)
-                .setArtifactDependencies(requiredArtifacts)
-                .setLocalRepository(session.getLocalRepository())
-                .setRemoteRepositories(project.getRemoteArtifactRepositories());
+        .setArtifact(requiredArtifacts.iterator().next())
+        .setResolveRoot(true)
+        .setResolveTransitively(true)
+        .setArtifactDependencies(requiredArtifacts)
+        .setLocalRepository(session.getLocalRepository())
+        .setRemoteRepositories(project.getRemoteArtifactRepositories());
 
         ArtifactResolutionResult resolutionResult = repositorySystem.resolve(request);
         resolutionErrorHandler.throwErrors(request, resolutionResult);
@@ -160,26 +160,26 @@ public class AnnotationProcessingManager {
 
     @NotNull
     private Artifact getArtifact(
-            @NotNull ArtifactHandlerManager artifactHandlerManager,
-            @NotNull DependencyCoordinate dependency) throws Exception {
+        @NotNull ArtifactHandlerManager artifactHandlerManager,
+        @NotNull DependencyCoordinate dependency) throws Exception {
         ArtifactHandler handler = artifactHandlerManager.getArtifactHandler(dependency.getType());
 
         return new DefaultArtifact(
-                dependency.getGroupId(),
-                dependency.getArtifactId(),
-                VersionRange.createFromVersionSpec(dependency.getVersion()),
-                Artifact.SCOPE_RUNTIME,
-                dependency.getType(),
-                dependency.getClassifier(),
-                handler,
-                false);
+                   dependency.getGroupId(),
+                   dependency.getArtifactId(),
+                   VersionRange.createFromVersionSpec(dependency.getVersion()),
+                   Artifact.SCOPE_RUNTIME,
+                   dependency.getType(),
+                   dependency.getClassifier(),
+                   handler,
+                   false);
     }
 
     @NotNull
     private static String getMavenPluginVersion() throws MojoExecutionException {
         ClassLoader classLoader = AnnotationProcessingManager.class.getClassLoader();
         InputStream pomPropertiesIs = classLoader.getResourceAsStream(
-                "META-INF/maven/org.jetbrains.kotlin/kotlin-maven-plugin/pom.properties");
+                                          "META-INF/maven/org.jetbrains.kotlin/kotlin-maven-plugin/pom.properties");
         if (pomPropertiesIs == null) {
             throw new MojoExecutionException("Can't resolve the version of kotlin-maven-plugin");
         }

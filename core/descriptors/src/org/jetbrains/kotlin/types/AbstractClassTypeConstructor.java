@@ -83,7 +83,7 @@ public abstract class AbstractClassTypeConstructor extends AbstractTypeConstruct
         ClassifierDescriptor otherDescriptor = ((TypeConstructor) other).getDeclarationDescriptor();
 
         if (!hasMeaningfulFqName(myDescriptor) ||
-            otherDescriptor != null && !hasMeaningfulFqName(otherDescriptor)) {
+                otherDescriptor != null && !hasMeaningfulFqName(otherDescriptor)) {
             // All error types and local classes have the same descriptor,
             // but we've already checked identity equality in the beginning of the method
             return false;

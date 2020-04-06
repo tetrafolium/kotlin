@@ -80,7 +80,7 @@ public abstract class AbstractUnwrapRemoveTest extends LightCodeInsightTestCase 
         Integer optionIndex = option != null ? Integer.parseInt(option) : 0;
 
         List<Pair<PsiElement, Unwrapper>> unwrappersWithPsi =
-                new KotlinUnwrapDescriptor().collectUnwrappers(getProject(), getEditor(), getFile());
+            new KotlinUnwrapDescriptor().collectUnwrappers(getProject(), getEditor(), getFile());
 
         if (isApplicableExpected) {
             final Pair<PsiElement, Unwrapper> selectedUnwrapperWithPsi = unwrappersWithPsi.get(optionIndex);
@@ -98,12 +98,12 @@ public abstract class AbstractUnwrapRemoveTest extends LightCodeInsightTestCase 
             checkResultByFile(path + ".after");
         } else {
             assertTrue(
-                    ContainerUtil.and(unwrappersWithPsi, new Condition<Pair<PsiElement, Unwrapper>>() {
-                        @Override
-                        public boolean value(Pair<PsiElement, Unwrapper> pair) {
-                            return pair.second.getClass() != unwrapperClass;
-                        }
-                    })
+            ContainerUtil.and(unwrappersWithPsi, new Condition<Pair<PsiElement, Unwrapper>>() {
+                @Override
+                public boolean value(Pair<PsiElement, Unwrapper> pair) {
+                    return pair.second.getClass() != unwrapperClass;
+                }
+            })
             );
         }
     }

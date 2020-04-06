@@ -16,7 +16,7 @@ abstract public class KotlinCompletionTestCase extends CompletionTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         VfsRootAccess.allowRootAccess(KotlinTestUtils.getHomeDirectory());
-        CodeInsightSettings.getInstance().EXCLUDED_PACKAGES = new String[]{"excludedPackage", "somePackage.ExcludedClass"};
+        CodeInsightSettings.getInstance().EXCLUDED_PACKAGES = new String[] {"excludedPackage", "somePackage.ExcludedClass"};
     }
 
     @Override

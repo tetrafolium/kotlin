@@ -36,7 +36,7 @@ public enum PrimitiveType {
     ;
 
     public static final Set<PrimitiveType> NUMBER_TYPES =
-            Collections.unmodifiableSet(EnumSet.of(CHAR, BYTE, SHORT, INT, FLOAT, LONG, DOUBLE));
+    Collections.unmodifiableSet(EnumSet.of(CHAR, BYTE, SHORT, INT, FLOAT, LONG, DOUBLE));
 
     private final Name typeName;
     private final Name arrayTypeName;

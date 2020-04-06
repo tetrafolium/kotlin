@@ -66,7 +66,7 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
         VfsRootAccess.allowRootAccess(PathManager.getConfigPath());
         super.setUp();
         myGlobalSettingsFile =
-                MavenWorkspaceSettingsComponent.getInstance(myProject).getSettings().generalSettings.getEffectiveGlobalSettingsIoFile();
+            MavenWorkspaceSettingsComponent.getInstance(myProject).getSettings().generalSettings.getEffectiveGlobalSettingsIoFile();
         if (myGlobalSettingsFile != null) {
             VfsRootAccess.allowRootAccess(myGlobalSettingsFile.getAbsolutePath());
         }
@@ -221,11 +221,11 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
     }
 
     protected void assertModuleLibDep(
-            String moduleName,
-            String depName,
-            List<String> classesPaths,
-            List<String> sourcePaths,
-            List<String> javadocPaths
+        String moduleName,
+        String depName,
+        List<String> classesPaths,
+        List<String> sourcePaths,
+        List<String> javadocPaths
     ) {
         LibraryOrderEntry lib = getModuleLibDep(moduleName, depName);
 
@@ -258,19 +258,19 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
         final List<String> actual = new ArrayList<String>();
 
         getRootManager(moduleName).orderEntries().withoutSdk().withoutModuleSourceEntries().exportedOnly()
-                .process(new RootPolicy<Object>() {
-                    @Override
-                    public Object visitModuleOrderEntry(ModuleOrderEntry e, Object value) {
-                        actual.add(e.getModuleName());
-                        return null;
-                    }
+        .process(new RootPolicy<Object>() {
+            @Override
+            public Object visitModuleOrderEntry(ModuleOrderEntry e, Object value) {
+                actual.add(e.getModuleName());
+                return null;
+            }
 
-                    @Override
-                    public Object visitLibraryOrderEntry(LibraryOrderEntry e, Object value) {
-                        actual.add(e.getLibraryName());
-                        return null;
-                    }
-                }, null);
+            @Override
+            public Object visitLibraryOrderEntry(LibraryOrderEntry e, Object value) {
+                actual.add(e.getLibraryName());
+                return null;
+            }
+        }, null);
 
         assertOrderedElementsAreEqual(actual, expectedDeps);
     }
@@ -493,8 +493,8 @@ public abstract class MavenImportingTestCase extends MavenTestCase {
     }
 
     protected MavenArtifactDownloader.DownloadResult downloadArtifacts(
-            Collection<MavenProject> projects,
-            List<MavenArtifact> artifacts
+        Collection<MavenProject> projects,
+        List<MavenArtifact> artifacts
     ) {
         final MavenArtifactDownloader.DownloadResult[] unresolved = new MavenArtifactDownloader.DownloadResult[1];
 

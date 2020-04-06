@@ -12,35 +12,35 @@ import org.jetbrains.kotlin.js.common.Symbol;
  * An abstract base class for named JavaScript objects.
  */
 public class JsName extends HasMetadata implements Symbol {
-  @NotNull
-  private final String ident;
+    @NotNull
+    private final String ident;
 
-  private final boolean temporary;
+    private final boolean temporary;
 
-  /**
-   * @param ident the unmangled ident to use for this name
-   */
-  JsName(@NotNull String ident, boolean temporary) {
-    this.ident = ident;
-    this.temporary = temporary;
-  }
+    /**
+     * @param ident the unmangled ident to use for this name
+     */
+    JsName(@NotNull String ident, boolean temporary) {
+        this.ident = ident;
+        this.temporary = temporary;
+    }
 
-  public boolean isTemporary() {
-    return temporary;
-  }
+    public boolean isTemporary() {
+        return temporary;
+    }
 
-  @NotNull
-  public String getIdent() {
-    return ident;
-  }
+    @NotNull
+    public String getIdent() {
+        return ident;
+    }
 
-  @NotNull
-  public JsNameRef makeRef() {
-    return new JsNameRef(this);
-  }
+    @NotNull
+    public JsNameRef makeRef() {
+        return new JsNameRef(this);
+    }
 
-  @Override
-  public String toString() {
-    return ident;
-  }
+    @Override
+    public String toString() {
+        return ident;
+    }
 }

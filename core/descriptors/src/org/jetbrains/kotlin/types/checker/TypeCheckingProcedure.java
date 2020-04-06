@@ -132,12 +132,12 @@ public class TypeCheckingProcedure {
         @NotNull
         public static EnrichedProjectionKind fromVariance(@NotNull Variance variance) {
             switch (variance) {
-                case INVARIANT:
-                    return INV;
-                case IN_VARIANCE:
-                    return IN;
-                case OUT_VARIANCE:
-                    return OUT;
+            case INVARIANT:
+                return INV;
+            case IN_VARIANCE:
+                return IN;
+            case OUT_VARIANCE:
+                return OUT;
             }
             throw new IllegalStateException("Unknown variance");
         }
@@ -156,8 +156,8 @@ public class TypeCheckingProcedure {
     // inv * in  = out
     // inv * inv = inv
     public static EnrichedProjectionKind getEffectiveProjectionKind(
-            @NotNull TypeParameterDescriptor typeParameter,
-            @NotNull TypeProjection typeArgument
+        @NotNull TypeParameterDescriptor typeParameter,
+        @NotNull TypeProjection typeArgument
     ) {
         Variance a = typeParameter.getVariance();
         Variance b = typeArgument.getProjectionKind();
@@ -242,7 +242,7 @@ public class TypeCheckingProcedure {
 
             boolean argumentIsErrorType = KotlinTypeKt.isError(subArgument.getType()) || KotlinTypeKt.isError(superArgument.getType());
             if (!argumentIsErrorType && parameter.getVariance() == INVARIANT &&
-                subArgument.getProjectionKind() == INVARIANT && superArgument.getProjectionKind() == INVARIANT) {
+                    subArgument.getProjectionKind() == INVARIANT && superArgument.getProjectionKind() == INVARIANT) {
                 if (!constraints.assertEqualTypes(subArgument.getType(), superArgument.getType(), this)) return false;
                 continue;
             }
@@ -265,9 +265,9 @@ public class TypeCheckingProcedure {
     }
 
     private boolean capture(
-            @NotNull TypeProjection subtypeArgumentProjection,
-            @NotNull TypeProjection supertypeArgumentProjection,
-            @NotNull TypeParameterDescriptor parameter
+        @NotNull TypeProjection subtypeArgumentProjection,
+        @NotNull TypeProjection supertypeArgumentProjection,
+        @NotNull TypeParameterDescriptor parameter
     ) {
         // Capturing makes sense only for invariant classes
         if (parameter.getVariance() != INVARIANT) return false;

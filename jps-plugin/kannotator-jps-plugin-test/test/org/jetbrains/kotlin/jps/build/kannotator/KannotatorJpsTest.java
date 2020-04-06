@@ -77,7 +77,7 @@ public class KannotatorJpsTest extends AbstractKotlinJpsBuildTestCase {
             System.out.println("Checking output directories after make and rebuild");
 
             ClassFilesComparisonKt
-                    .assertEqualDirectories(new File(getOutDirAfterRebuild(), "production"), new File(getOutDir(), "production"), false);
+            .assertEqualDirectories(new File(getOutDirAfterRebuild(), "production"), new File(getOutDir(), "production"), false);
             ClassFilesComparisonKt.assertEqualDirectories(new File(getOutDirAfterRebuild(), "test"), new File(getOutDir(), "test"), false);
 
             System.out.println("Test successfully finished. File: " + root.getName());

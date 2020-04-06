@@ -46,10 +46,10 @@ public abstract class AbstractQuickDocProviderTest extends KotlinLightCodeInsigh
 
         if (directives.isEmpty()) {
             throw new FileComparisonFailure(
-                    "'// INFO:' directive was expected",
-                    textData,
-                    textData + "\n\n//INFO: " + info,
-                    testDataFile.getAbsolutePath());
+                "'// INFO:' directive was expected",
+                textData,
+                textData + "\n\n//INFO: " + info,
+                testDataFile.getAbsolutePath());
         }
         else {
             StringBuilder expectedInfoBuilder = new StringBuilder();
@@ -59,11 +59,11 @@ public abstract class AbstractQuickDocProviderTest extends KotlinLightCodeInsigh
             String expectedInfo = expectedInfoBuilder.toString();
 
             String cleanedInfo = info == null ? "" : StringUtil.join(
-                    StringUtil.split(info, "\n", false)
-                            .stream()
-                            .map(s -> StringUtil.isEmptyOrSpaces(s) ? "\n" : s)
-                            .collect(Collectors.toList()),
-                    "");
+                                     StringUtil.split(info, "\n", false)
+                                     .stream()
+                                     .map(s -> StringUtil.isEmptyOrSpaces(s) ? "\n" : s)
+                                     .collect(Collectors.toList()),
+                                     "");
 
             if (expectedInfo.endsWith("...\n")) {
                 if (!cleanedInfo.startsWith(StringUtil.trimEnd(expectedInfo, "...\n"))) {

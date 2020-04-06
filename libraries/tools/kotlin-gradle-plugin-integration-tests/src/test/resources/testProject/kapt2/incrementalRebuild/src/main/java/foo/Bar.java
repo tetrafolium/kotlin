@@ -11,6 +11,6 @@ import javax.inject.Singleton;
 @Singleton
 public class Bar {
     @Inject
-    public Bar(){
+    public Bar() {
     }
 }

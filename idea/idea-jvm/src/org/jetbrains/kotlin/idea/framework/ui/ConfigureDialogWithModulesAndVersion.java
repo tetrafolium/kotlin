@@ -55,7 +55,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ConfigureDialogWithModulesAndVersion extends DialogWrapper {
     private static final String VERSIONS_LIST_URL =
-            "http://search.maven.org/solrsearch/select?q=g:%22org.jetbrains.kotlin%22+AND+a:%22kotlin-stdlib%22&core=gav&rows=20&wt=json";
+        "http://search.maven.org/solrsearch/select?q=g:%22org.jetbrains.kotlin%22+AND+a:%22kotlin-stdlib%22&core=gav&rows=20&wt=json";
 
     @NotNull private final String minimumVersion;
 
@@ -69,10 +69,10 @@ public class ConfigureDialogWithModulesAndVersion extends DialogWrapper {
     private final AsyncProcessIcon processIcon = new AsyncProcessIcon("loader");
 
     public ConfigureDialogWithModulesAndVersion(
-            @NotNull Project project,
-            @NotNull KotlinProjectConfigurator configurator,
-            @NotNull Collection<Module> excludeModules,
-            @NotNull String minimumVersion
+        @NotNull Project project,
+        @NotNull KotlinProjectConfigurator configurator,
+        @NotNull Collection<Module> excludeModules,
+        @NotNull String minimumVersion
     ) {
         super(project);
 
@@ -224,7 +224,7 @@ public class ConfigureDialogWithModulesAndVersion extends DialogWrapper {
 
         // Handle the case when the new version has just been released and the Maven search index hasn't been updated yet
         if (!VersioningKt.isEap(bundledRuntimeVersion) && !KotlinPluginUtil.isSnapshotVersion() &&
-            !bundledRuntimeVersion.contains("dev") && !versions.contains(bundledRuntimeVersion)) {
+                !bundledRuntimeVersion.contains("dev") && !versions.contains(bundledRuntimeVersion)) {
             versions.add(0, bundledRuntimeVersion);
         }
 

@@ -178,8 +178,8 @@ public class MemberMatching {
     }
 
     static boolean typeParametersMatch(
-            @NotNull KtTypeParameterListOwner typeParameterListOwner,
-            @NotNull List<TypeParameterDescriptor> typeParameterDescriptors
+        @NotNull KtTypeParameterListOwner typeParameterListOwner,
+        @NotNull List<TypeParameterDescriptor> typeParameterDescriptors
     ) {
         List<KtTypeParameter> decompiledParameters = typeParameterListOwner.getTypeParameters();
         if (decompiledParameters.size() != typeParameterDescriptors.size()) {
@@ -215,7 +215,7 @@ public class MemberMatching {
             }
 
             Set<String> descriptorUpperBounds = Sets.newHashSet(ContainerUtil.map(
-                    descriptor.getUpperBounds(), new Function<KotlinType, String>() {
+            descriptor.getUpperBounds(), new Function<KotlinType, String>() {
                 @Override
                 public String fun(KotlinType type) {
                     return DescriptorRenderer.FQ_NAMES_IN_TYPES.renderType(type);
@@ -224,8 +224,8 @@ public class MemberMatching {
 
             KotlinBuiltIns builtIns = DescriptorUtilsKt.getBuiltIns(descriptor);
             Set<String> decompiledUpperBounds = decompiledParameterToBounds.get(descriptor.getName()).isEmpty()
-                    ? Sets.newHashSet(DescriptorRenderer.FQ_NAMES_IN_TYPES.renderType(builtIns.getDefaultBound()))
-                    : Sets.newHashSet(decompiledParameterToBounds.get(descriptor.getName()));
+                                                ? Sets.newHashSet(DescriptorRenderer.FQ_NAMES_IN_TYPES.renderType(builtIns.getDefaultBound()))
+                                                : Sets.newHashSet(decompiledParameterToBounds.get(descriptor.getName()));
             if (!descriptorUpperBounds.equals(decompiledUpperBounds)) {
                 return false;
             }

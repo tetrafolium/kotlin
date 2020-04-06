@@ -40,7 +40,7 @@ public abstract class AbstractConfigureProjectByChangingFileTest<C extends Kotli
     protected void setUp() throws Exception {
         super.setUp();
         ApplicationManager.getApplication().runWriteAction(
-                () -> FileTypeManager.getInstance().associateExtension(GroovyFileType.GROOVY_FILE_TYPE, "gradle")
+            () -> FileTypeManager.getInstance().associateExtension(GroovyFileType.GROOVY_FILE_TYPE, "gradle")
         );
         ScriptDependenciesUpdaterKt.setScriptDependenciesUpdaterDisabled(ApplicationManager.getApplication(), true);
     }
@@ -81,7 +81,7 @@ public abstract class AbstractConfigureProjectByChangingFileTest<C extends Kotli
             createAndSaveFile(PsiJavaModule.MODULE_INFO_FILE, fileText);
 
             PsiFile[] moduleInfoFiles =
-                    FilenameIndex.getFilesByName(getProject(), PsiJavaModule.MODULE_INFO_FILE, GlobalSearchScope.allScope(getProject()));
+                FilenameIndex.getFilesByName(getProject(), PsiJavaModule.MODULE_INFO_FILE, GlobalSearchScope.allScope(getProject()));
             assertTrue(PsiJavaModule.MODULE_INFO_FILE + " should be present in index", moduleInfoFiles.length == 1);
             moduleInfoFile = moduleInfoFiles[0];
         }
@@ -99,10 +99,10 @@ public abstract class AbstractConfigureProjectByChangingFileTest<C extends Kotli
     }
 
     protected abstract void runConfigurator(
-            Module module, @NotNull PsiFile file,
-            @NotNull C configurator,
-            @NotNull String version,
-            @NotNull NotificationMessageCollector collector
+        Module module, @NotNull PsiFile file,
+        @NotNull C configurator,
+        @NotNull String version,
+        @NotNull NotificationMessageCollector collector
     );
 
     @NotNull

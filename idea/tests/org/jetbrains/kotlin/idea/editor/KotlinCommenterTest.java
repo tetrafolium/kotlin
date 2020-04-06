@@ -18,7 +18,7 @@ import java.io.File;
 
 public class KotlinCommenterTest extends LightCodeInsightTestCase {
     private static final String BASE_PATH =
-            new File(PluginTestCaseBase.getTestDataPathBase(), "/editor/commenter/").getAbsolutePath();
+        new File(PluginTestCaseBase.getTestDataPathBase(), "/editor/commenter/").getAbsolutePath();
 
     public void testGenerateDocComment() throws Exception {
         doNewLineTypingTest();

@@ -33,16 +33,16 @@ public interface SignaturePropagator {
         @NotNull
         @Override
         public PropagatedSignature resolvePropagatedSignature(
-                @NotNull JavaMethod method,
-                @NotNull ClassDescriptor owner,
-                @NotNull KotlinType returnType,
-                @Nullable KotlinType receiverType,
-                @NotNull List<ValueParameterDescriptor> valueParameters,
-                @NotNull List<TypeParameterDescriptor> typeParameters
+            @NotNull JavaMethod method,
+            @NotNull ClassDescriptor owner,
+            @NotNull KotlinType returnType,
+            @Nullable KotlinType receiverType,
+            @NotNull List<ValueParameterDescriptor> valueParameters,
+            @NotNull List<TypeParameterDescriptor> typeParameters
         ) {
             return new PropagatedSignature(
-                    returnType, receiverType, valueParameters, typeParameters, Collections.<String>emptyList(), false
-            );
+                       returnType, receiverType, valueParameters, typeParameters, Collections.<String>emptyList(), false
+                   );
         }
 
         @Override
@@ -60,12 +60,12 @@ public interface SignaturePropagator {
         private final boolean hasStableParameterNames;
 
         public PropagatedSignature(
-                @NotNull KotlinType returnType,
-                @Nullable KotlinType receiverType,
-                @NotNull List<ValueParameterDescriptor> valueParameters,
-                @NotNull List<TypeParameterDescriptor> typeParameters,
-                @NotNull List<String> signatureErrors,
-                boolean hasStableParameterNames
+            @NotNull KotlinType returnType,
+            @Nullable KotlinType receiverType,
+            @NotNull List<ValueParameterDescriptor> valueParameters,
+            @NotNull List<TypeParameterDescriptor> typeParameters,
+            @NotNull List<String> signatureErrors,
+            boolean hasStableParameterNames
         ) {
             this.returnType = returnType;
             this.receiverType = receiverType;
@@ -107,12 +107,12 @@ public interface SignaturePropagator {
 
     @NotNull
     PropagatedSignature resolvePropagatedSignature(
-            @NotNull JavaMethod method,
-            @NotNull ClassDescriptor owner,
-            @NotNull KotlinType returnType,
-            @Nullable KotlinType receiverType,
-            @NotNull List<ValueParameterDescriptor> valueParameters,
-            @NotNull List<TypeParameterDescriptor> typeParameters
+        @NotNull JavaMethod method,
+        @NotNull ClassDescriptor owner,
+        @NotNull KotlinType returnType,
+        @Nullable KotlinType receiverType,
+        @NotNull List<ValueParameterDescriptor> valueParameters,
+        @NotNull List<TypeParameterDescriptor> typeParameters
     );
 
     void reportSignatureErrors(@NotNull CallableMemberDescriptor descriptor, @NotNull List<String> signatureErrors);

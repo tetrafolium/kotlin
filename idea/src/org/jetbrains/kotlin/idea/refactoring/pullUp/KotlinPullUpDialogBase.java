@@ -33,13 +33,13 @@ import java.util.List;
 
 // TODO: This is workaround which allows KotlinPullUpDialog to be compiled against both Java 6 and 8
 public abstract class KotlinPullUpDialogBase extends
-                                    PullUpDialogBase<KotlinMemberInfoStorage, KotlinMemberInfo, KtNamedDeclaration, PsiNamedElement> {
+    PullUpDialogBase<KotlinMemberInfoStorage, KotlinMemberInfo, KtNamedDeclaration, PsiNamedElement> {
     protected KotlinPullUpDialogBase(
-            Project project,
-            KtClassOrObject object,
-            List<PsiNamedElement> superClasses,
-            KotlinMemberInfoStorage memberInfoStorage,
-            String title
+        Project project,
+        KtClassOrObject object,
+        List<PsiNamedElement> superClasses,
+        KotlinMemberInfoStorage memberInfoStorage,
+        String title
     ) {
         super(project, object, superClasses, memberInfoStorage, title);
     }
@@ -49,18 +49,18 @@ public abstract class KotlinPullUpDialogBase extends
     protected void initClassCombo(JComboBox classCombo) {
         classCombo.setRenderer(new KotlinOrJavaClassCellRenderer());
         classCombo.addItemListener(
-                new ItemListener() {
-                    @Override
-                    public void itemStateChanged(ItemEvent e) {
-                        if (e.getStateChange() == ItemEvent.SELECTED) {
-                            if (myMemberSelectionPanel == null) return;
-                            AbstractMemberSelectionTable<KtNamedDeclaration, KotlinMemberInfo> table = myMemberSelectionPanel.getTable();
-                            if (table == null) return;
-                            table.setMemberInfos(myMemberInfos);
-                            table.fireExternalDataChange();
-                        }
-                    }
+        new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    if (myMemberSelectionPanel == null) return;
+                    AbstractMemberSelectionTable<KtNamedDeclaration, KotlinMemberInfo> table = myMemberSelectionPanel.getTable();
+                    if (table == null) return;
+                    table.setMemberInfos(myMemberInfos);
+                    table.fireExternalDataChange();
                 }
+            }
+        }
         );
     }
 }

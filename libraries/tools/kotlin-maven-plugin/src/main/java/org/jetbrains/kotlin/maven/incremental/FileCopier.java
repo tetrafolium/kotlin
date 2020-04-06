@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license 
+ * Copyright 2000-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license
  * that can be found in the license/LICENSE.txt file.
  */
 
@@ -34,9 +34,9 @@ public class FileCopier {
     }
 
     private void syncDirsImpl(
-            @NotNull File sourceBaseFile,
-            @NotNull File targetBaseFile,
-            @NotNull File snapshotsStorageFile
+        @NotNull File sourceBaseFile,
+        @NotNull File targetBaseFile,
+        @NotNull File snapshotsStorageFile
     ) throws IOException {
         // snapshots are stored as relative paths (to source or target base)
         Map<String, FileSnapshot> previousSnapshots = readFileSnapshots(snapshotsStorageFile);

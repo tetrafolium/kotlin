@@ -37,13 +37,13 @@ public abstract class TranslatorTestCaseBuilder {
 
     @NotNull
     public static TestSuite suiteForDirectory(@NotNull String dataPath,
-                                              @NotNull NamedTestFactory factory) {
+            @NotNull NamedTestFactory factory) {
         return suiteForDirectory(dataPath, true, EMPTY_FILTER, factory);
     }
 
     @NotNull
     public static TestSuite suiteForDirectory(@NotNull String dataPath, boolean recursive,
-                                              FilenameFilter filter, @NotNull NamedTestFactory factory) {
+            FilenameFilter filter, @NotNull NamedTestFactory factory) {
         TestSuite suite = new TestSuite(dataPath);
         suite.setName(dataPath);
         appendTestsInDirectory(dataPath, recursive, filter, factory, suite);
@@ -51,7 +51,7 @@ public abstract class TranslatorTestCaseBuilder {
     }
 
     public static void appendTestsInDirectory(String dataPath, boolean recursive,
-                                              FilenameFilter filter, NamedTestFactory factory, TestSuite suite) {
+            FilenameFilter filter, NamedTestFactory factory, TestSuite suite) {
         String extensionKt = ".kt";
         FilenameFilter extensionFilter = (dir, name) -> name.endsWith(extensionKt);
         FilenameFilter resultFilter;

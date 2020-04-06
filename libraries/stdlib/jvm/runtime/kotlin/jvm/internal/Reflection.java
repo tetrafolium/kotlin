@@ -22,10 +22,18 @@ public class Reflection {
             Class<?> implClass = Class.forName("kotlin.reflect.jvm.internal.ReflectionFactoryImpl");
             impl = (ReflectionFactory) implClass.newInstance();
         }
-        catch (ClassCastException e) { impl = null; }
-        catch (ClassNotFoundException e) { impl = null; }
-        catch (InstantiationException e) { impl = null; }
-        catch (IllegalAccessException e) { impl = null; }
+        catch (ClassCastException e) {
+            impl = null;
+        }
+        catch (ClassNotFoundException e) {
+            impl = null;
+        }
+        catch (InstantiationException e) {
+            impl = null;
+        }
+        catch (IllegalAccessException e) {
+            impl = null;
+        }
 
         factory = impl != null ? impl : new ReflectionFactory();
     }

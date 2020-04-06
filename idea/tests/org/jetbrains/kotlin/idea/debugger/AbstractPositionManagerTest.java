@@ -81,9 +81,9 @@ public abstract class AbstractPositionManagerTest extends KotlinLightCodeInsight
 
     @NotNull
     private static KotlinPositionManager createPositionManager(
-            @NotNull DebugProcess process,
-            @NotNull List<KtFile> files,
-            @NotNull GenerationState state
+        @NotNull DebugProcess process,
+        @NotNull List<KtFile> files,
+        @NotNull GenerationState state
     ) {
         KotlinPositionManager positionManager = (KotlinPositionManager) new KotlinPositionManagerFactory().createPositionManager(process);
         assertNotNull(positionManager);
@@ -136,7 +136,7 @@ public abstract class AbstractPositionManagerTest extends KotlinLightCodeInsight
         configuration.put(JVMConfigurationKeys.ADD_BUILT_INS_FROM_COMPILER_TO_DEPENDENCIES, true);
 
         GenerationState state =
-                GenerationUtils.compileFiles(files, configuration, ClassBuilderFactories.TEST, scope -> PackagePartProvider.Empty.INSTANCE);
+            GenerationUtils.compileFiles(files, configuration, ClassBuilderFactories.TEST, scope -> PackagePartProvider.Empty.INSTANCE);
 
         Map<String, ReferenceType> referencesByName = getReferenceMap(state.getFactory());
 

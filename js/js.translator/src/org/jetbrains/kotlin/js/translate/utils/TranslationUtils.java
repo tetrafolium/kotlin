@@ -55,20 +55,20 @@ import static org.jetbrains.kotlin.js.translate.utils.UtilsKt.hasOrInheritsParam
 
 public final class TranslationUtils {
     private static final Set<FqNameUnsafe> CLASSES_WITH_NON_BOXED_CHARS = new HashSet<>(Arrays.asList(
-            new FqNameUnsafe("kotlin.collections.CharIterator"),
-            new FqNameUnsafe("kotlin.ranges.CharProgression"),
-            new FqNameUnsafe("kotlin.js.internal.CharCompanionObject"),
-            new FqNameUnsafe("kotlin.Char.Companion"),
-            KotlinBuiltIns.FQ_NAMES.charSequence, KotlinBuiltIns.FQ_NAMES.number
-    ));
+                new FqNameUnsafe("kotlin.collections.CharIterator"),
+                new FqNameUnsafe("kotlin.ranges.CharProgression"),
+                new FqNameUnsafe("kotlin.js.internal.CharCompanionObject"),
+                new FqNameUnsafe("kotlin.Char.Companion"),
+                KotlinBuiltIns.FQ_NAMES.charSequence, KotlinBuiltIns.FQ_NAMES.number
+            ));
 
     private TranslationUtils() {
     }
 
     @NotNull
     public static JsPropertyInitializer translateFunctionAsEcma5PropertyDescriptor(
-            @NotNull JsFunction function, @NotNull FunctionDescriptor descriptor,
-            @NotNull TranslationContext context
+        @NotNull JsFunction function, @NotNull FunctionDescriptor descriptor,
+        @NotNull TranslationContext context
     ) {
         JsExpression functionExpression = function;
         if (InlineUtil.isInline(descriptor)) {
@@ -78,9 +78,9 @@ public final class TranslationUtils {
         }
 
         if (DescriptorUtils.isExtension(descriptor) ||
-            descriptor instanceof PropertyAccessorDescriptor &&
-            shouldAccessViaFunctions(((PropertyAccessorDescriptor) descriptor).getCorrespondingProperty())
-        ) {
+                descriptor instanceof PropertyAccessorDescriptor &&
+                shouldAccessViaFunctions(((PropertyAccessorDescriptor) descriptor).getCorrespondingProperty())
+           ) {
             return translateExtensionFunctionAsEcma5DataDescriptor(functionExpression, descriptor, context);
         }
         else {
@@ -123,16 +123,16 @@ public final class TranslationUtils {
     @Nullable
     private static JsBinaryOperator notOperator(@NotNull JsBinaryOperator operator) {
         switch (operator) {
-            case REF_EQ:
-                return REF_NEQ;
-            case REF_NEQ:
-                return REF_EQ;
-            case EQ:
-                return NEQ;
-            case NEQ:
-                return EQ;
-            default:
-                return null;
+        case REF_EQ:
+            return REF_NEQ;
+        case REF_NEQ:
+            return REF_EQ;
+        case EQ:
+            return NEQ;
+        case NEQ:
+            return EQ;
+        default:
+            return null;
         }
     }
 
@@ -154,9 +154,9 @@ public final class TranslationUtils {
 
     @NotNull
     private static JsExpression prepareForNullCheck(
-            @NotNull KtExpression ktSubject,
-            @NotNull JsExpression expression,
-            @NotNull TranslationContext context
+        @NotNull KtExpression ktSubject,
+        @NotNull JsExpression expression,
+        @NotNull TranslationContext context
     ) {
         KotlinType type = context.bindingContext().getType(ktSubject);
         if (type == null) {
@@ -168,29 +168,29 @@ public final class TranslationUtils {
 
     @NotNull
     public static JsBinaryOperation nullCheck(
-            @NotNull KtExpression ktSubject,
-            @NotNull JsExpression expressionToCheck,
-            @NotNull TranslationContext context,
-            boolean isNegated
+        @NotNull KtExpression ktSubject,
+        @NotNull JsExpression expressionToCheck,
+        @NotNull TranslationContext context,
+        boolean isNegated
     ) {
         return nullCheck(prepareForNullCheck(ktSubject, expressionToCheck, context), isNegated);
     }
 
     @NotNull
     public static JsBinaryOperation nullCheck(
-            @NotNull KotlinType expressionType,
-            @NotNull JsExpression expressionToCheck,
-            @NotNull TranslationContext context,
-            boolean isNegated
+        @NotNull KotlinType expressionType,
+        @NotNull JsExpression expressionToCheck,
+        @NotNull TranslationContext context,
+        boolean isNegated
     ) {
         return nullCheck(coerce(context, expressionToCheck, TypeUtils.makeNullable(expressionType)), isNegated);
     }
 
     @NotNull
     public static JsConditional notNullConditional(
-            @NotNull JsExpression expression,
-            @NotNull JsExpression elseExpression,
-            @NotNull TranslationContext context
+        @NotNull JsExpression expression,
+        @NotNull JsExpression elseExpression,
+        @NotNull TranslationContext context
     ) {
         JsExpression testExpression;
         JsExpression thenExpression;
@@ -215,8 +215,8 @@ public final class TranslationUtils {
 
         DeclarationDescriptor containingDescriptor = descriptor.getContainingDeclaration();
         return containingDescriptor instanceof PackageFragmentDescriptor ?
-                                  context.getInnerNameForDescriptor(descriptor) :
-                                  context.getNameForDescriptor(descriptor);
+               context.getInnerNameForDescriptor(descriptor) :
+               context.getNameForDescriptor(descriptor);
     }
 
     public static boolean isReferenceToSyntheticBackingField(@NotNull PropertyDescriptor descriptor) {
@@ -259,7 +259,7 @@ public final class TranslationUtils {
             jsInitExpression = Translation.translateAsExpression(initializer, context);
 
             KotlinType propertyType = BindingContextUtils.getNotNull(
-                    context.bindingContext(), BindingContext.VARIABLE, declaration).getType();
+                                          context.bindingContext(), BindingContext.VARIABLE, declaration).getType();
             jsInitExpression = coerce(context, jsInitExpression, propertyType);
         }
         return jsInitExpression;
@@ -274,9 +274,9 @@ public final class TranslationUtils {
 
     @NotNull
     public static JsExpression translateRightExpression(
-            @NotNull TranslationContext context,
-            @NotNull KtBinaryExpression expression,
-            @NotNull JsBlock block) {
+        @NotNull TranslationContext context,
+        @NotNull KtBinaryExpression expression,
+        @NotNull JsBlock block) {
         KtExpression rightExpression = expression.getRight();
         assert rightExpression != null : "Binary expression should have a right expression";
         return Translation.translateAsExpression(rightExpression, context, block);
@@ -290,7 +290,7 @@ public final class TranslationUtils {
 
         KotlinType returnType = operationDescriptor.getReturnType();
         if (returnType != null &&
-            (KotlinBuiltIns.isChar(returnType) || KotlinBuiltIns.isLong(returnType) || KotlinBuiltIns.isInt(returnType))) {
+                (KotlinBuiltIns.isChar(returnType) || KotlinBuiltIns.isLong(returnType) || KotlinBuiltIns.isInt(returnType))) {
             return false;
         }
 
@@ -301,8 +301,8 @@ public final class TranslationUtils {
 
     @NotNull
     public static List<JsExpression> generateInvocationArguments(
-            @NotNull JsExpression receiver,
-            @NotNull List<? extends JsExpression> arguments
+        @NotNull JsExpression receiver,
+        @NotNull List<? extends JsExpression> arguments
     ) {
         List<JsExpression> argumentList = new ArrayList<>(1 + arguments.size());
         argumentList.add(receiver);
@@ -323,15 +323,15 @@ public final class TranslationUtils {
             JsUnaryOperation operation = (JsUnaryOperation) expression;
             JsUnaryOperator operator = operation.getOperator();
             switch (operator) {
-                case BIT_NOT:
-                case NEG:
-                case POS:
-                case NOT:
-                case TYPEOF:
-                case VOID:
-                    return isCacheNeeded(operation.getArg());
-                default:
-                    return true;
+            case BIT_NOT:
+            case NEG:
+            case POS:
+            case NOT:
+            case TYPEOF:
+            case VOID:
+                return isCacheNeeded(operation.getArg());
+            default:
+                return true;
             }
         }
 
@@ -350,7 +350,7 @@ public final class TranslationUtils {
         }
         DeclarationDescriptor descriptor = context.bindingContext().get(BindingContext.REFERENCE_TARGET, ((KtSimpleNameExpression) expression));
         return !((descriptor instanceof LocalVariableDescriptor) && ((LocalVariableDescriptor) descriptor).isDelegated()) &&
-                !((descriptor instanceof PropertyDescriptor) && propertyAccessedByFunctionsInternally((PropertyDescriptor) descriptor, context));
+               !((descriptor instanceof PropertyDescriptor) && propertyAccessedByFunctionsInternally((PropertyDescriptor) descriptor, context));
     }
 
     private static boolean propertyAccessedByFunctionsInternally(@NotNull PropertyDescriptor p, @NotNull TranslationContext context) {
@@ -396,9 +396,9 @@ public final class TranslationUtils {
     @NotNull
     public static ClassDescriptor getCoroutineBaseClass(@NotNull TranslationContext context) {
         FqName className = CoroutineLanguageVersionSettingsUtilKt.coroutinesPackageFqName(context.getLanguageVersionSettings())
-                .child(Name.identifier("CoroutineImpl"));
+                           .child(Name.identifier("CoroutineImpl"));
         ClassDescriptor descriptor = FindClassInModuleKt.findClassAcrossModuleDependencies(
-                context.getCurrentModule(), ClassId.topLevel(className));
+                                         context.getCurrentModule(), ClassId.topLevel(className));
         assert descriptor != null;
         return descriptor;
     }
@@ -406,23 +406,23 @@ public final class TranslationUtils {
     @NotNull
     public static PropertyDescriptor getCoroutineProperty(@NotNull TranslationContext context, @NotNull String name) {
         return getCoroutineBaseClass(context).getUnsubstitutedMemberScope()
-                .getContributedVariables(Name.identifier(name), NoLookupLocation.FROM_DESERIALIZATION)
-                .iterator().next();
+               .getContributedVariables(Name.identifier(name), NoLookupLocation.FROM_DESERIALIZATION)
+               .iterator().next();
     }
 
 
     @NotNull
     public static FunctionDescriptor getCoroutineDoResumeFunction(@NotNull TranslationContext context) {
         return getCoroutineBaseClass(context).getUnsubstitutedMemberScope()
-                .getContributedFunctions(Name.identifier("doResume"), NoLookupLocation.FROM_DESERIALIZATION)
-                .iterator().next();
+               .getContributedFunctions(Name.identifier("doResume"), NoLookupLocation.FROM_DESERIALIZATION)
+               .iterator().next();
     }
 
     public static boolean isOverridableFunctionWithDefaultParameters(@NotNull FunctionDescriptor descriptor) {
         return hasOrInheritsParametersWithDefaultValue(descriptor) &&
-                !(descriptor instanceof ConstructorDescriptor) &&
-                descriptor.getContainingDeclaration() instanceof ClassDescriptor &&
-                ModalityKt.isOverridable(descriptor);
+               !(descriptor instanceof ConstructorDescriptor) &&
+               descriptor.getContainingDeclaration() instanceof ClassDescriptor &&
+               ModalityKt.isOverridable(descriptor);
     }
 
     @NotNull
@@ -451,9 +451,9 @@ public final class TranslationUtils {
                 ClassDescriptor containingClass = (ClassDescriptor) container;
                 FqNameUnsafe containingClassName = DescriptorUtilsKt.getFqNameUnsafe(containingClass);
                 if (!CLASSES_WITH_NON_BOXED_CHARS.contains(containingClassName) &&
-                    !KotlinBuiltIns.isPrimitiveType(containingClass.getDefaultType()) &&
-                    !KotlinBuiltIns.isPrimitiveArray(containingClassName)
-                ) {
+                        !KotlinBuiltIns.isPrimitiveType(containingClass.getDefaultType()) &&
+                        !KotlinBuiltIns.isPrimitiveArray(containingClassName)
+                   ) {
                     return getAnyTypeFromSameModule(descriptor);
                 }
             }
@@ -530,17 +530,17 @@ public final class TranslationUtils {
         if (signedPrimitiveFromUnsigned != null) {
             if (KotlinBuiltIns.isInt(from)) {
                 switch (signedPrimitiveFromUnsigned) {
-                    case BYTE:
-                        value = AstUtilsKt.toByte(context, value);
-                        break;
-                    case SHORT:
-                        value = AstUtilsKt.toShort(context, value);
-                        break;
+                case BYTE:
+                    value = AstUtilsKt.toByte(context, value);
+                    break;
+                case SHORT:
+                    value = AstUtilsKt.toShort(context, value);
+                    break;
                 }
                 DeclarationDescriptor d = to.getConstructor().getDeclarationDescriptor();
                 if (d instanceof ClassDescriptor) {
                     value =  new JsNew(ReferenceTranslator.translateAsTypeReference((ClassDescriptor) d, context),
-                                     Collections.singletonList(value));
+                                       Collections.singletonList(value));
                 }
             }
         }
@@ -573,12 +573,12 @@ public final class TranslationUtils {
             JsInvocation invocation = (JsInvocation) expression;
             BoxingKind existingKind = MetadataProperties.getBoxing(invocation);
             switch (existingKind) {
-                case UNBOXING:
-                    return invocation.getArguments().get(0);
-                case BOXING:
-                    return expression;
-                case NONE:
-                    break;
+            case UNBOXING:
+                return invocation.getArguments().get(0);
+            case BOXING:
+                return expression;
+            case NONE:
+                break;
             }
         }
 
@@ -594,12 +594,12 @@ public final class TranslationUtils {
             JsInvocation invocation = (JsInvocation) expression;
             BoxingKind existingKind = MetadataProperties.getBoxing(invocation);
             switch (existingKind) {
-                case BOXING:
-                    return invocation.getArguments().get(0);
-                case UNBOXING:
-                    return expression;
-                case NONE:
-                    break;
+            case BOXING:
+                return invocation.getArguments().get(0);
+            case UNBOXING:
+                return expression;
+            case NONE:
+                break;
             }
         }
 
@@ -611,8 +611,8 @@ public final class TranslationUtils {
 
     @NotNull
     public static JsInvocation invokeSpecialFunction(
-            @NotNull TranslationContext context,
-            @NotNull SpecialFunction function, @NotNull JsExpression... arguments
+        @NotNull TranslationContext context,
+        @NotNull SpecialFunction function, @NotNull JsExpression... arguments
     ) {
         JsName name = context.getNameForSpecialFunction(function);
         return new JsInvocation(pureFqn(name, null), arguments);

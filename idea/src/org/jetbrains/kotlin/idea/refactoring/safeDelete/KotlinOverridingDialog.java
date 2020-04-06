@@ -100,16 +100,16 @@ class KotlinOverridingDialog extends DialogWrapper {
                 DeclarationDescriptor containingDescriptor = declarationDescriptor.getContainingDeclaration();
                 if (containingDescriptor instanceof ClassDescriptor) {
                     return KotlinBundle.message(
-                            "x.in.y",
-                            DescriptorRenderer.COMPACT.render(declarationDescriptor),
-                            IdeDescriptorRenderers.SOURCE_CODE_SHORT_NAMES_NO_ANNOTATIONS.render(containingDescriptor)
-                    );
+                               "x.in.y",
+                               DescriptorRenderer.COMPACT.render(declarationDescriptor),
+                               IdeDescriptorRenderers.SOURCE_CODE_SHORT_NAMES_NO_ANNOTATIONS.render(containingDescriptor)
+                           );
                 }
             }
         }
 
         assert element instanceof PsiMethod
-                : "Method accepts only kotlin functions/properties and java methods, but '" + element.getText() + "' was found";
+        : "Method accepts only kotlin functions/properties and java methods, but '" + element.getText() + "' was found";
         return RenderingUtilsKt.formatPsiMethod((PsiMethod) element, true, false);
     }
 
@@ -248,20 +248,20 @@ class KotlinOverridingDialog extends DialogWrapper {
         @Override
         public String getColumnName(int column) {
             switch (column) {
-                case CHECK_COLUMN:
-                    return " ";
-                default:
-                    return KotlinBundle.message("method.column");
+            case CHECK_COLUMN:
+                return " ";
+            default:
+                return KotlinBundle.message("method.column");
             }
         }
 
         @Override
         public Class getColumnClass(int columnIndex) {
             switch (columnIndex) {
-                case CHECK_COLUMN:
-                    return Boolean.class;
-                default:
-                    return String.class;
+            case CHECK_COLUMN:
+                return Boolean.class;
+            default:
+                return String.class;
             }
         }
 

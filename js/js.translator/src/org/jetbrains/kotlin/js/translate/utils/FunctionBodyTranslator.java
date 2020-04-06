@@ -51,9 +51,9 @@ public final class FunctionBodyTranslator extends AbstractTranslator {
 
     @NotNull
     public static JsBlock translateFunctionBody(
-            @NotNull FunctionDescriptor descriptor,
-            @NotNull KtDeclarationWithBody declarationWithBody,
-            @NotNull TranslationContext functionBodyContext
+        @NotNull FunctionDescriptor descriptor,
+        @NotNull KtDeclarationWithBody declarationWithBody,
+        @NotNull TranslationContext functionBodyContext
     ) {
         Map<DeclarationDescriptor, JsExpression> aliases = new HashMap<>();
         LocalFunctionCollector functionCollector = new LocalFunctionCollector(functionBodyContext.bindingContext());
@@ -76,12 +76,12 @@ public final class FunctionBodyTranslator extends AbstractTranslator {
 
     @NotNull
     public static List<JsStatement> setDefaultValueForArguments(
-            @NotNull FunctionDescriptor descriptor,
-            @NotNull TranslationContext context
+        @NotNull FunctionDescriptor descriptor,
+        @NotNull TranslationContext context
     ) {
         List<ValueParameterDescriptor> valueParameters = descriptor.getValueParameters();
         List<ValueParameterDescriptor> valueParametersForDefaultValue =
-                CodegenUtil.getFunctionParametersForDefaultValueGeneration(descriptor, context.bindingTrace());
+            CodegenUtil.getFunctionParametersForDefaultValueGeneration(descriptor, context.bindingTrace());
 
         List<JsStatement> result = new ArrayList<>(valueParameters.size());
         for (int i = 0; i < valueParameters.size(); i++) {
@@ -141,8 +141,8 @@ public final class FunctionBodyTranslator extends AbstractTranslator {
         jsBlock.getStatements().addAll(mayBeWrapWithReturn(jsBody).getStatements());
 
         if (jetBodyExpression instanceof KtBlockExpression &&
-            descriptor.getReturnType() != null && KotlinBuiltIns.isUnit(descriptor.getReturnType()) &&
-            !KotlinBuiltIns.isUnit(TranslationUtils.getReturnTypeForCoercion(descriptor))) {
+                descriptor.getReturnType() != null && KotlinBuiltIns.isUnit(descriptor.getReturnType()) &&
+                !KotlinBuiltIns.isUnit(TranslationUtils.getReturnTypeForCoercion(descriptor))) {
             ClassDescriptor unit = context().getCurrentModule().getBuiltIns().getUnit();
             JsReturn jsReturn = new JsReturn(ReferenceTranslator.translateAsValueReference(unit, context()));
             jsReturn.setSource(UtilsKt.getFinalElement(declaration));

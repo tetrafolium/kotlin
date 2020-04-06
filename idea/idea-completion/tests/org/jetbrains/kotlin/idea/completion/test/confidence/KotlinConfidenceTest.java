@@ -104,9 +104,9 @@ public class KotlinConfidenceTest extends LightCompletionTestCase {
                     for (Method method : CodeCompletionHandlerBase.class.getDeclaredMethods()) {
                         Class<?>[] parameterTypes = method.getParameterTypes();
                         if (method.getReturnType().equals(Boolean.TYPE) &&
-                            parameterTypes.length == 2 &&
-                            parameterTypes[0].equals(Editor.class) &&
-                            parameterTypes[1].equals(PsiFile.class)) {
+                                parameterTypes.length == 2 &&
+                                parameterTypes[0].equals(Editor.class) &&
+                                parameterTypes[1].equals(PsiFile.class)) {
                             assertNull("Only one method with such signature should exist", m);
                             m = method;
                         }
@@ -167,7 +167,7 @@ public class KotlinConfidenceTest extends LightCompletionTestCase {
     protected void complete() {
         if (skipComplete.get()) return;
         new CodeCompletionHandlerBase(CompletionType.BASIC, false, true, true).invokeCompletion(
-                getProject(), getEditor(), 0, false, false);
+            getProject(), getEditor(), 0, false, false);
 
         LookupImpl lookup = (LookupImpl) LookupManager.getActiveLookup(myEditor);
         myItems = lookup == null ? null : lookup.getItems().toArray(LookupElement.EMPTY_ARRAY);

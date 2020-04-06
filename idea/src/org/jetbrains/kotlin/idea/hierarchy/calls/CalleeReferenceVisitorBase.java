@@ -64,9 +64,9 @@ public abstract class CalleeReferenceVisitorBase extends KtTreeVisitorVoid {
         if (callElement == null || !PsiTreeUtil.isAncestor(callElement.getCalleeExpression(), reference, false)) return false;
 
         return descriptor instanceof FunctionDescriptor
-                 && (declaration instanceof KtClassOrObject
-                     || declaration instanceof KtNamedFunction
-                     || declaration instanceof PsiMethod);
+               && (declaration instanceof KtClassOrObject
+                   || declaration instanceof KtNamedFunction
+                   || declaration instanceof PsiMethod);
     }
 
     // Accept only properties (not local variables or references to Java fields)

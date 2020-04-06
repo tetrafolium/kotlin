@@ -81,7 +81,7 @@ public abstract class AbstractSearcherTest extends LightCodeInsightFixtureTestCa
     protected void checkClassWithDirectives(@NotNull String path) throws IOException {
         myFixture.configureByFile(path);
         List<String> directives = InTextDirectivesUtils.findListWithPrefixes(
-                FileUtil.loadFile(new File(path), true), "// CLASS: ");
+                                      FileUtil.loadFile(new File(path), true), "// CLASS: ");
         assertFalse("Specify CLASS directive in test file", directives.isEmpty());
         String superClassName = directives.get(0);
         PsiClass psiClass = getPsiClass(superClassName);

@@ -78,19 +78,19 @@ public final class K2JSTranslator {
 
     @NotNull
     public TranslationResult translate(
-            @NotNull JsConfig.Reporter reporter,
-            @NotNull List<KtFile> files,
-            @NotNull MainCallParameters mainCallParameters
+        @NotNull JsConfig.Reporter reporter,
+        @NotNull List<KtFile> files,
+        @NotNull MainCallParameters mainCallParameters
     ) throws TranslationException {
         return translate(reporter, files, mainCallParameters, null);
     }
 
     @NotNull
     public TranslationResult translate(
-            @NotNull JsConfig.Reporter reporter,
-            @NotNull List<KtFile> files,
-            @NotNull MainCallParameters mainCallParameters,
-            @Nullable JsAnalysisResult analysisResult
+        @NotNull JsConfig.Reporter reporter,
+        @NotNull List<KtFile> files,
+        @NotNull MainCallParameters mainCallParameters,
+        @Nullable JsAnalysisResult analysisResult
     ) throws TranslationException {
         List<TranslationUnit> units = new ArrayList<>();
         for (KtFile file : files) {
@@ -101,19 +101,19 @@ public final class K2JSTranslator {
 
     @NotNull
     public TranslationResult translateUnits(
-            @NotNull JsConfig.Reporter reporter,
-            @NotNull List<TranslationUnit> units,
-            @NotNull MainCallParameters mainCallParameters
+        @NotNull JsConfig.Reporter reporter,
+        @NotNull List<TranslationUnit> units,
+        @NotNull MainCallParameters mainCallParameters
     ) throws TranslationException {
         return translateUnits(reporter, units, mainCallParameters, null);
     }
 
     @NotNull
     public TranslationResult translateUnits(
-            @NotNull JsConfig.Reporter reporter,
-            @NotNull List<TranslationUnit> units,
-            @NotNull MainCallParameters mainCallParameters,
-            @Nullable JsAnalysisResult analysisResult
+        @NotNull JsConfig.Reporter reporter,
+        @NotNull List<TranslationUnit> units,
+        @NotNull MainCallParameters mainCallParameters,
+        @Nullable JsAnalysisResult analysisResult
     ) throws TranslationException {
         List<KtFile> files = new ArrayList<>();
         for (TranslationUnit unit : units) {
@@ -184,7 +184,7 @@ public final class K2JSTranslator {
                         bindingTrace.getBindingContext(), moduleDescriptor, scope, file.getPackageFqName(),
                         CommonConfigurationKeysKt.getLanguageVersionSettings(config.getConfiguration()),
                         metadataVersion != null ? metadataVersion : JsMetadataVersion.INSTANCE
-                );
+                                                       );
 
                 File ioFile = VfsUtilCore.virtualToIoFile(file.getVirtualFile());
                 incrementalResults.processPackagePart(ioFile, packagePart.toByteArray(), binaryAst);

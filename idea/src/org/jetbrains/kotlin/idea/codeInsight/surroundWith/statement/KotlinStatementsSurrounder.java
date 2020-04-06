@@ -51,9 +51,9 @@ public abstract class KotlinStatementsSurrounder implements Surrounder {
     @Override
     @Nullable
     public TextRange surroundElements(
-            @NotNull Project project,
-            @NotNull Editor editor,
-            @NotNull PsiElement[] elements) throws IncorrectOperationException {
+        @NotNull Project project,
+        @NotNull Editor editor,
+        @NotNull PsiElement[] elements) throws IncorrectOperationException {
         PsiElement container = elements[0].getParent();
         if (container == null) return null;
         return surroundStatements(project, editor, container, elements);
@@ -61,9 +61,9 @@ public abstract class KotlinStatementsSurrounder implements Surrounder {
 
     @Nullable
     protected abstract TextRange surroundStatements(
-            Project project,
-            Editor editor,
-            PsiElement container,
-            PsiElement[] statements
+        Project project,
+        Editor editor,
+        PsiElement container,
+        PsiElement[] statements
     );
 }

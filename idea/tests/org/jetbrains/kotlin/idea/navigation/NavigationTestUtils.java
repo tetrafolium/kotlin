@@ -126,7 +126,7 @@ public final class NavigationTestUtils {
 
             Document annotated = EditorFactory.getInstance().createDocument(resultForFile);
             String filePart = annotated.getText().substring(annotated.getLineStartOffset(minLine),
-                                                             annotated.getLineEndOffset(maxLine));
+                              annotated.getLineEndOffset(maxLine));
             result.append(" ").append(file.getName()).append("\n");
             result.append(filePart).append("\n");
         }

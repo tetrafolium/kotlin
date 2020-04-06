@@ -49,7 +49,7 @@ public abstract class AbstractOutOfBlockModificationTest extends KotlinLightCode
 
 
         PsiModificationTrackerImpl tracker =
-                (PsiModificationTrackerImpl) PsiManager.getInstance(myFixture.getProject()).getModificationTracker();
+            (PsiModificationTrackerImpl) PsiManager.getInstance(myFixture.getProject()).getModificationTracker();
 
         PsiElement element = myFixture.getFile().findElementAt(myFixture.getCaretOffset());
         assertNotNull("Should be valid element", element);
@@ -78,7 +78,7 @@ public abstract class AbstractOutOfBlockModificationTest extends KotlinLightCode
             @Override
             public void run() {
                 ((PsiModificationTrackerImpl) PsiManager.getInstance(myFixture.getProject()).getModificationTracker())
-                        .incOutOfCodeBlockModificationCounter();
+                .incOutOfCodeBlockModificationCounter();
             }
         });
 
@@ -98,8 +98,8 @@ public abstract class AbstractOutOfBlockModificationTest extends KotlinLightCode
         if (ktExpression != null && ktExpression != ktDeclaration) {
             @SuppressWarnings("ConstantConditions")
             boolean expressionProcessed = context.get(
-                    BindingContext.PROCESSED,
-                    ktExpression instanceof KtFunctionLiteral ? (KtLambdaExpression) ktExpression.getParent() : ktExpression) == Boolean.TRUE;
+                                              BindingContext.PROCESSED,
+                                              ktExpression instanceof KtFunctionLiteral ? (KtLambdaExpression) ktExpression.getParent() : ktExpression) == Boolean.TRUE;
 
             assertEquals("Expected out-of-block should result expression analyzed and vise versa", expectedOutOfBlock,
                          expressionProcessed);

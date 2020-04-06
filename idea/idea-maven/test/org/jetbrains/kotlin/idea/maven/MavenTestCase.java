@@ -56,9 +56,9 @@ import java.util.concurrent.TimeUnit;
 public abstract class MavenTestCase extends UsefulTestCase {
 
     private static final String mavenMirrorUrl = System.getProperty("idea.maven.test.mirror",
-                                                                    // use JB maven proxy server for internal use by default, see details at
-                                                                    // https://confluence.jetbrains.com/display/JBINT/Maven+proxy+server
-                                                                    "http://maven.labs.intellij.net/repo1");
+            // use JB maven proxy server for internal use by default, see details at
+            // https://confluence.jetbrains.com/display/JBINT/Maven+proxy+server
+            "http://maven.labs.intellij.net/repo1");
     private static boolean mirrorDiscoverable = false;
 
     static {
@@ -217,8 +217,8 @@ public abstract class MavenTestCase extends UsefulTestCase {
         for (Field field : fields) {
             final int modifiers = field.getModifiers();
             if ((modifiers & Modifier.FINAL) == 0
-                && (modifiers & Modifier.STATIC) == 0
-                && !field.getType().isPrimitive()) {
+                    && (modifiers & Modifier.STATIC) == 0
+                    && !field.getType().isPrimitive()) {
                 field.setAccessible(true);
                 try {
                     field.set(this, null);
@@ -242,7 +242,7 @@ public abstract class MavenTestCase extends UsefulTestCase {
                     protected void run(@NotNull Result result) throws Throwable {
                         MavenTestCase.super.runTest();
                     }
-                }.executeSilently().throwException();
+                } .executeSilently().throwException();
             }
             else {
                 MavenTestCase.super.runTest();
@@ -340,7 +340,7 @@ public abstract class MavenTestCase extends UsefulTestCase {
                 VirtualFile f = LocalFileSystem.getInstance().refreshAndFindFileByIoFile(new File(myDir, "settings.xml"));
                 if (f != null) f.delete(this);
             }
-        }.execute().throwException();
+        } .execute().throwException();
     }
 
     private static String createSettingsXmlContent(String content) {
@@ -383,7 +383,7 @@ public abstract class MavenTestCase extends UsefulTestCase {
                 PsiTestUtil.addContentRoot(module, f.getParent());
                 moduleResult.setResult(module);
             }
-        }.execute().getResultObject();
+        } .execute().getResultObject();
     }
 
     protected VirtualFile createProjectPom(@NonNls String xml) throws IOException {
@@ -403,7 +403,7 @@ public abstract class MavenTestCase extends UsefulTestCase {
                     VirtualFile res = dir.createChildData(null, "pom.xml");
                     result.setResult(res);
                 }
-            }.execute().getResultObject();
+            } .execute().getResultObject();
             myAllPoms.add(f);
         }
         setFileContent(f, createPomXml(xml), true);
@@ -459,7 +459,7 @@ public abstract class MavenTestCase extends UsefulTestCase {
                     VirtualFile res = dir.createChildData(null, "profiles.xml");
                     result.setResult(res);
                 }
-            }.execute().getResultObject();
+            } .execute().getResultObject();
         }
         setFileContent(f, content, true);
         return f;
@@ -488,7 +488,7 @@ public abstract class MavenTestCase extends UsefulTestCase {
                 VirtualFile f = myProjectRoot.findChild("profiles.xml");
                 if (f != null) f.delete(this);
             }
-        }.execute().throwException();
+        } .execute().throwException();
     }
 
     protected void createStdProjectFolders() {
@@ -534,7 +534,7 @@ public abstract class MavenTestCase extends UsefulTestCase {
                     file.setBinaryContent(content.getBytes(), file.getModificationStamp(), file.getTimeStamp());
                 }
             }
-        }.execute().getResultObject();
+        } .execute().getResultObject();
     }
 
     protected static <T, U> void assertOrderedElementsAreEqual(Collection<U> actual, Collection<T> expected) {

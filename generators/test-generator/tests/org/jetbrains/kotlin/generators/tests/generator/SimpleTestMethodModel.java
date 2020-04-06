@@ -34,12 +34,12 @@ public class SimpleTestMethodModel implements TestMethodModel {
     private final boolean skipIgnored;
 
     public SimpleTestMethodModel(
-            @NotNull File rootDir,
-            @NotNull File file,
-            @NotNull Pattern filenamePattern,
-            @Nullable Boolean checkFilenameStartsLowerCase,
-            @NotNull TargetBackend targetBackend,
-            boolean skipIgnored
+        @NotNull File rootDir,
+        @NotNull File file,
+        @NotNull Pattern filenamePattern,
+        @Nullable Boolean checkFilenameStartsLowerCase,
+        @NotNull TargetBackend targetBackend,
+        boolean skipIgnored
     ) {
         this.rootDir = rootDir;
         this.file = file;

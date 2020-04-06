@@ -190,8 +190,8 @@ public abstract class ExternalSystemTestCase extends UsefulTestCase {
         for (Field field : fields) {
             final int modifiers = field.getModifiers();
             if ((modifiers & Modifier.FINAL) == 0
-                && (modifiers & Modifier.STATIC) == 0
-                && !field.getType().isPrimitive()) {
+                    && (modifiers & Modifier.STATIC) == 0
+                    && !field.getType().isPrimitive()) {
                 field.setAccessible(true);
                 try {
                     field.set(this, null);
@@ -252,7 +252,7 @@ public abstract class ExternalSystemTestCase extends UsefulTestCase {
                     VirtualFile res = dir.createChildData(null, configFileName);
                     result.setResult(res);
                 }
-            }.execute().getResultObject();
+            } .execute().getResultObject();
             myAllConfigs.add(f);
         }
         setFileContent(f, config, true);
@@ -301,7 +301,7 @@ public abstract class ExternalSystemTestCase extends UsefulTestCase {
                     file.setBinaryContent(content.getBytes(CharsetToolkit.UTF8_CHARSET), file.getModificationStamp(), file.getTimeStamp());
                 }
             }
-        }.execute().getResultObject();
+        } .execute().getResultObject();
     }
 
     private void printIgnoredMessage(String message) {

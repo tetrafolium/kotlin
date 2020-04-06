@@ -76,7 +76,7 @@ public abstract class ExternalSystemImportingTestCase extends ExternalSystemTest
         ExternalProjectSettings projectSettings = getCurrentExternalProjectSettings();
         projectSettings.setExternalProjectPath(getProjectPath());
         @SuppressWarnings("unchecked") Set<ExternalProjectSettings> projects =
-                ContainerUtilRt.newHashSet(systemSettings.getLinkedProjectsSettings());
+            ContainerUtilRt.newHashSet(systemSettings.getLinkedProjectsSettings());
         projects.remove(projectSettings);
         projects.add(projectSettings);
         //noinspection unchecked
@@ -84,25 +84,25 @@ public abstract class ExternalSystemImportingTestCase extends ExternalSystemTest
 
         final Ref<Couple<String>> error = Ref.create();
         ExternalSystemUtil.refreshProjects(
-                new ImportSpecBuilder(myProject, getExternalSystemId())
-                        .use(ProgressExecutionMode.MODAL_SYNC)
-                        .callback(new ExternalProjectRefreshCallback() {
-                            @Override
-                            public void onSuccess(@Nullable DataNode<ProjectData> externalProject) {
-                                if (externalProject == null) {
-                                    System.err.println("Got null External project after import");
-                                    return;
-                                }
-                                ServiceManager.getService(ProjectDataManager.class).importData(externalProject, myProject, true);
-                                System.out.println("External project was successfully imported");
-                            }
+            new ImportSpecBuilder(myProject, getExternalSystemId())
+            .use(ProgressExecutionMode.MODAL_SYNC)
+        .callback(new ExternalProjectRefreshCallback() {
+            @Override
+            public void onSuccess(@Nullable DataNode<ProjectData> externalProject) {
+                if (externalProject == null) {
+                    System.err.println("Got null External project after import");
+                    return;
+                }
+                ServiceManager.getService(ProjectDataManager.class).importData(externalProject, myProject, true);
+                System.out.println("External project was successfully imported");
+            }
 
-                            @Override
-                            public void onFailure(@NotNull String errorMessage, @Nullable String errorDetails) {
-                                error.set(Couple.of(errorMessage, errorDetails));
-                            }
-                        })
-                        .forceWhenUptodate()
+            @Override
+            public void onFailure(@NotNull String errorMessage, @Nullable String errorDetails) {
+                error.set(Couple.of(errorMessage, errorDetails));
+            }
+        })
+        .forceWhenUptodate()
         );
 
         if (!error.isNull()) {

@@ -30,7 +30,7 @@ public class HierarchyViewTestFixtureCompat {
     private static final String BASE_ATTR_NAME = "base";
 
     public void doHierarchyTest(@NotNull HierarchyTreeStructure treeStructure,
-            @NotNull String expectedStructure) {
+                                @NotNull String expectedStructure) {
         try {
             checkHierarchyTreeStructure(treeStructure, JDOMUtil.load(expectedStructure));
         }
@@ -44,17 +44,17 @@ public class HierarchyViewTestFixtureCompat {
 
     @NotNull
     public static String dump(@NotNull HierarchyTreeStructure treeStructure,
-            @Nullable HierarchyNodeDescriptor descriptor,
-            int level) {
+                              @Nullable HierarchyNodeDescriptor descriptor,
+                              int level) {
         StringBuilder s = new StringBuilder();
         dump(treeStructure, descriptor, level, s);
         return s.toString();
     }
 
     private static void dump(@NotNull HierarchyTreeStructure treeStructure,
-            @Nullable HierarchyNodeDescriptor descriptor,
-            int level,
-            @NotNull StringBuilder b) {
+                             @Nullable HierarchyNodeDescriptor descriptor,
+                             int level,
+                             @NotNull StringBuilder b) {
         if (level > 10) {
             for (int i = 0; i < level; i++) b.append("  ");
             b.append("<Probably infinite part skipped>\n");
@@ -64,7 +64,7 @@ public class HierarchyViewTestFixtureCompat {
         for (int i = 0; i < level; i++) b.append("  ");
         descriptor.update();
         b.append("<node text=\"").append(descriptor.getHighlightedText().getText()).append("\"")
-                .append(treeStructure.getBaseDescriptor() == descriptor ? " base=\"true\"" : "");
+        .append(treeStructure.getBaseDescriptor() == descriptor ? " base=\"true\"" : "");
 
         Object[] children = treeStructure.getChildElements(descriptor);
         if (children.length > 0) {
@@ -100,8 +100,8 @@ public class HierarchyViewTestFixtureCompat {
     }
 
     private static void checkBaseNode(@NotNull HierarchyTreeStructure treeStructure,
-            @NotNull HierarchyNodeDescriptor descriptor,
-            @NotNull Element expectedElement) {
+                                      @NotNull HierarchyNodeDescriptor descriptor,
+                                      @NotNull Element expectedElement) {
         String baseAttrValue = expectedElement.getAttributeValue(BASE_ATTR_NAME);
         HierarchyNodeDescriptor baseDescriptor = treeStructure.getBaseDescriptor();
         boolean mustBeBase = "true".equalsIgnoreCase(baseAttrValue);
@@ -109,13 +109,13 @@ public class HierarchyViewTestFixtureCompat {
     }
 
     private static void checkContent(@NotNull HierarchyNodeDescriptor descriptor,
-            @NotNull Element expectedElement) {
+                                     @NotNull Element expectedElement) {
         Assert.assertEquals(expectedElement.getAttributeValue(TEXT_ATTR_NAME), descriptor.getHighlightedText().getText());
     }
 
     private static void checkChildren(@NotNull HierarchyTreeStructure treeStructure,
-            @NotNull HierarchyNodeDescriptor descriptor,
-            @NotNull Element element) {
+                                      @NotNull HierarchyNodeDescriptor descriptor,
+                                      @NotNull Element element) {
         if (element.getChild(ANY_NODES_ELEMENT_NAME) != null) {
             return;
         }

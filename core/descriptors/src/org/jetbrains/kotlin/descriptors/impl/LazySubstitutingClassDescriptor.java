@@ -43,8 +43,8 @@ public class LazySubstitutingClassDescriptor implements ClassDescriptor {
                 List<TypeParameterDescriptor> originalTypeParameters = original.getTypeConstructor().getParameters();
                 typeConstructorParameters = new ArrayList<TypeParameterDescriptor>(originalTypeParameters.size());
                 newSubstitutor = DescriptorSubstitutor.substituteTypeParameters(
-                        originalTypeParameters, originalSubstitutor.getSubstitution(), this, typeConstructorParameters
-                );
+                                     originalTypeParameters, originalSubstitutor.getSubstitution(), this, typeConstructorParameters
+                                 );
 
                 declaredTypeParameters = CollectionsKt.filter(typeConstructorParameters, new Function1<TypeParameterDescriptor, Boolean>() {
                     @Override
@@ -136,7 +136,7 @@ public class LazySubstitutingClassDescriptor implements ClassDescriptor {
         Collection<ClassConstructorDescriptor> result = new ArrayList<ClassConstructorDescriptor>(originalConstructors.size());
         for (ClassConstructorDescriptor constructor : originalConstructors) {
             ClassConstructorDescriptor copy =
-                    constructor.copy(this, constructor.getModality(), constructor.getVisibility(), constructor.getKind(), false);
+                constructor.copy(this, constructor.getModality(), constructor.getVisibility(), constructor.getKind(), false);
             result.add(copy.substitute(getSubstitutor()));
         }
         return result;

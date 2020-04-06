@@ -102,8 +102,8 @@ public abstract class AbstractModelBuilderTest {
         InputStream buildScriptStream = getClass().getResourceAsStream("/" + methodName + "/" + GradleConstants.DEFAULT_SCRIPT_NAME);
         try {
             FileUtil.writeToFile(
-                    new File(testDir, GradleConstants.DEFAULT_SCRIPT_NAME),
-                    FileUtil.loadTextAndClose(buildScriptStream)
+                new File(testDir, GradleConstants.DEFAULT_SCRIPT_NAME),
+                FileUtil.loadTextAndClose(buildScriptStream)
             );
         }
         finally {
@@ -114,8 +114,8 @@ public abstract class AbstractModelBuilderTest {
         try {
             if (settingsStream != null) {
                 FileUtil.writeToFile(
-                        new File(testDir, GradleConstants.SETTINGS_FILE_NAME),
-                        FileUtil.loadTextAndClose(settingsStream)
+                    new File(testDir, GradleConstants.SETTINGS_FILE_NAME),
+                    FileUtil.loadTextAndClose(settingsStream)
                 );
             }
         }
@@ -148,7 +148,7 @@ public abstract class AbstractModelBuilderTest {
             buildActionExecutor.setJavaHome(new File(jdkHome));
             buildActionExecutor.setJvmArguments("-Xmx128m", "-XX:MaxPermSize=64m");
             buildActionExecutor
-                    .withArguments("--info", "--recompile-scripts", GradleConstants.INIT_SCRIPT_CMD_OPTION, initScript.getAbsolutePath());
+            .withArguments("--info", "--recompile-scripts", GradleConstants.INIT_SCRIPT_CMD_OPTION, initScript.getAbsolutePath());
             allModels = buildActionExecutor.run();
             assertNotNull(allModels);
         }
@@ -160,14 +160,14 @@ public abstract class AbstractModelBuilderTest {
     @NotNull
     private static Set<Class> getToolingExtensionClasses() {
         Set<Class> classes = ContainerUtil.<Class>set(
-                ExternalProject.class,
-                // gradle-tooling-extension-api jar
-                ProjectImportAction.class,
-                // gradle-tooling-extension-impl jar
-                ModelBuildScriptClasspathBuilderImpl.class,
-                Multimap.class,
-                ShortTypeHandling.class
-        );
+                                 ExternalProject.class,
+                                 // gradle-tooling-extension-api jar
+                                 ProjectImportAction.class,
+                                 // gradle-tooling-extension-impl jar
+                                 ModelBuildScriptClasspathBuilderImpl.class,
+                                 Multimap.class,
+                                 ShortTypeHandling.class
+                             );
 
         ContainerUtil.addAllNotNull(classes, doGetToolingExtensionClasses());
         return classes;
@@ -242,10 +242,10 @@ public abstract class AbstractModelBuilderTest {
         }
 
         private static URI getDistribution(
-                @NotNull String repositoryUrl,
-                @NotNull GradleVersion version,
-                @NotNull String archiveName,
-                @NotNull String archiveClassifier
+            @NotNull String repositoryUrl,
+            @NotNull GradleVersion version,
+            @NotNull String archiveName,
+            @NotNull String archiveClassifier
         ) throws URISyntaxException {
             return new URI(String.format("%s/%s-%s-%s.zip", repositoryUrl, archiveName, version.getVersion(), archiveClassifier));
         }

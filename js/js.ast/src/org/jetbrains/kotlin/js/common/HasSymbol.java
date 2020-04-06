@@ -5,9 +5,9 @@
 package org.jetbrains.kotlin.js.common;
 
 public interface HasSymbol {
-  /**
-   * @return Return the original user visible name for a Object represented
-   * in a source map.
-   */
-  Symbol getSymbol();
+    /**
+     * @return Return the original user visible name for a Object represented
+     * in a source map.
+     */
+    Symbol getSymbol();
 }

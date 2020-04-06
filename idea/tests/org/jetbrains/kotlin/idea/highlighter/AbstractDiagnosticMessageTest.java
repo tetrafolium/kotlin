@@ -68,8 +68,8 @@ public abstract class AbstractDiagnosticMessageTest extends KotlinTestWithEnviro
         CompilerConfiguration configuration = getEnvironment().getConfiguration();
         if (explicitLanguageVersion != null) {
             CommonConfigurationKeysKt.setLanguageVersionSettings(
-                    configuration,
-                    new LanguageVersionSettingsImpl(explicitLanguageVersion, LanguageVersionSettingsImpl.DEFAULT.getApiVersion())
+                configuration,
+                new LanguageVersionSettingsImpl(explicitLanguageVersion, LanguageVersionSettingsImpl.DEFAULT.getApiVersion())
             );
         }
         return JvmResolveUtil.analyze(Collections.singleton(file), getEnvironment(), configuration);

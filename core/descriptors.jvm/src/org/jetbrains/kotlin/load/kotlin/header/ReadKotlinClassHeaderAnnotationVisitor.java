@@ -67,7 +67,7 @@ public class ReadKotlinClassHeaderAnnotationVisitor implements AnnotationVisitor
         }
 
         JvmMetadataVersion metadataVersion =
-                new JvmMetadataVersion(metadataVersionArray, (extraInt & JvmAnnotationNames.METADATA_STRICT_VERSION_SEMANTICS_FLAG) != 0);
+            new JvmMetadataVersion(metadataVersionArray, (extraInt & JvmAnnotationNames.METADATA_STRICT_VERSION_SEMANTICS_FLAG) != 0);
 
         if (!metadataVersion.isCompatible()) {
             incompatibleData = data;
@@ -80,16 +80,16 @@ public class ReadKotlinClassHeaderAnnotationVisitor implements AnnotationVisitor
         }
 
         return new KotlinClassHeader(
-                headerKind,
-                metadataVersion,
-                bytecodeVersion != null ? bytecodeVersion : JvmBytecodeBinaryVersion.INVALID_VERSION,
-                data,
-                incompatibleData,
-                strings,
-                extraString,
-                extraInt,
-                packageName
-        );
+                   headerKind,
+                   metadataVersion,
+                   bytecodeVersion != null ? bytecodeVersion : JvmBytecodeBinaryVersion.INVALID_VERSION,
+                   data,
+                   incompatibleData,
+                   strings,
+                   extraString,
+                   extraInt,
+                   packageName
+               );
     }
 
     private boolean shouldHaveData() {

@@ -31,8 +31,8 @@ public final class OverloadedIncrementTranslator extends IncrementTranslator {
     private final ResolvedCall<? extends FunctionDescriptor> resolvedCall;
 
     /*package*/ OverloadedIncrementTranslator(
-            @NotNull KtUnaryExpression expression,
-            @NotNull TranslationContext context
+        @NotNull KtUnaryExpression expression,
+        @NotNull TranslationContext context
     ) {
         super(expression, context);
         this.resolvedCall = CallUtilKt.getFunctionResolvedCallWithAssert(expression, context.bindingContext());

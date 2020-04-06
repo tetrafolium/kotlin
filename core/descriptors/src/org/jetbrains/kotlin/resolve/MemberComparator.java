@@ -36,16 +36,16 @@ public class MemberComparator implements Comparator<DeclarationDescriptor> {
     public static final MemberComparator INSTANCE = new MemberComparator();
 
     private static final DescriptorRenderer RENDERER = DescriptorRenderer.Companion.withOptions(
-            new Function1<DescriptorRendererOptions, Unit>() {
-                @Override
-                public Unit invoke(DescriptorRendererOptions options) {
-                    options.setWithDefinedIn(false);
-                    options.setVerbose(true);
-                    options.setAnnotationArgumentsRenderingPolicy(AnnotationArgumentsRenderingPolicy.UNLESS_EMPTY);
-                    options.setModifiers(DescriptorRendererModifier.ALL);
-                    return Unit.INSTANCE;
-                }
-            });
+    new Function1<DescriptorRendererOptions, Unit>() {
+        @Override
+        public Unit invoke(DescriptorRendererOptions options) {
+            options.setWithDefinedIn(false);
+            options.setVerbose(true);
+            options.setAnnotationArgumentsRenderingPolicy(AnnotationArgumentsRenderingPolicy.UNLESS_EMPTY);
+            options.setModifiers(DescriptorRendererModifier.ALL);
+            return Unit.INSTANCE;
+        }
+    });
 
     private MemberComparator() {
     }
@@ -212,10 +212,10 @@ public class MemberComparator implements Comparator<DeclarationDescriptor> {
         }
         else {
             throw new AssertionError(String.format(
-                    "Unsupported pair of descriptors:\n'" +
-                    "%s' Class: %s\n" +
-                    "%s' Class: %s",
-                    o1, o1.getClass(), o2, o2.getClass()));
+                                         "Unsupported pair of descriptors:\n'" +
+                                         "%s' Class: %s\n" +
+                                         "%s' Class: %s",
+                                         o1, o1.getClass(), o2, o2.getClass()));
         }
 
         int renderDiff = RENDERER.render(o1).compareTo(RENDERER.render(o2));

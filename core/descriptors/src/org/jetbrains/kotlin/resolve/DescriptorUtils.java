@@ -40,13 +40,13 @@ public class DescriptorUtils {
     public static final Name ENUM_VALUE_OF = Name.identifier("valueOf");
     public static final FqName COROUTINES_PACKAGE_FQ_NAME_RELEASE = new FqName("kotlin.coroutines");
     public static final FqName COROUTINES_PACKAGE_FQ_NAME_EXPERIMENTAL =
-            COROUTINES_PACKAGE_FQ_NAME_RELEASE.child(Name.identifier("experimental"));
+        COROUTINES_PACKAGE_FQ_NAME_RELEASE.child(Name.identifier("experimental"));
     public static final FqName COROUTINES_INTRINSICS_PACKAGE_FQ_NAME_EXPERIMENTAL =
-            COROUTINES_PACKAGE_FQ_NAME_EXPERIMENTAL.child(Name.identifier("intrinsics"));
+        COROUTINES_PACKAGE_FQ_NAME_EXPERIMENTAL.child(Name.identifier("intrinsics"));
     public static final FqName CONTINUATION_INTERFACE_FQ_NAME_EXPERIMENTAL =
-            COROUTINES_PACKAGE_FQ_NAME_EXPERIMENTAL.child(Name.identifier("Continuation"));
+        COROUTINES_PACKAGE_FQ_NAME_EXPERIMENTAL.child(Name.identifier("Continuation"));
     public static final FqName CONTINUATION_INTERFACE_FQ_NAME_RELEASE =
-            COROUTINES_PACKAGE_FQ_NAME_RELEASE.child(Name.identifier("Continuation"));
+        COROUTINES_PACKAGE_FQ_NAME_RELEASE.child(Name.identifier("Continuation"));
     public static final FqName RESULT_FQ_NAME = new FqName("kotlin.Result");
 
     // This JVM-specific class FQ name is declared here only because it's used in MainFunctionDetector which is in frontend
@@ -80,7 +80,7 @@ public class DescriptorUtils {
 
     public static boolean isDescriptorWithLocalVisibility(DeclarationDescriptor current) {
         return current instanceof DeclarationDescriptorWithVisibility &&
-         ((DeclarationDescriptorWithVisibility) current).getVisibility() == Visibilities.LOCAL;
+               ((DeclarationDescriptorWithVisibility) current).getVisibility() == Visibilities.LOCAL;
     }
 
     @NotNull
@@ -161,8 +161,8 @@ public class DescriptorUtils {
 
     @Nullable
     public static <D extends DeclarationDescriptor> D getParentOfType(
-            @Nullable DeclarationDescriptor descriptor,
-            @NotNull Class<D> aClass
+        @Nullable DeclarationDescriptor descriptor,
+        @NotNull Class<D> aClass
     ) {
         return getParentOfType(descriptor, aClass, true);
     }
@@ -170,9 +170,9 @@ public class DescriptorUtils {
     @Nullable
     @SuppressWarnings("unchecked")
     public static <D extends DeclarationDescriptor> D getParentOfType(
-            @Nullable DeclarationDescriptor descriptor,
-            @NotNull Class<D> aClass,
-            boolean strict
+        @Nullable DeclarationDescriptor descriptor,
+        @NotNull Class<D> aClass,
+        boolean strict
     ) {
         if (descriptor == null) return null;
         if (strict) {
@@ -230,9 +230,9 @@ public class DescriptorUtils {
     }
 
     public static boolean isAncestor(
-            @Nullable DeclarationDescriptor ancestor,
-            @NotNull DeclarationDescriptor declarationDescriptor,
-            boolean strict
+        @Nullable DeclarationDescriptor ancestor,
+        @NotNull DeclarationDescriptor declarationDescriptor,
+        boolean strict
     ) {
         if (ancestor == null) return false;
         DeclarationDescriptor descriptor = strict ? declarationDescriptor.getContainingDeclaration() : declarationDescriptor;
@@ -261,9 +261,9 @@ public class DescriptorUtils {
         if (descriptor != null) {
             DeclarationDescriptor originalDescriptor = descriptor.getOriginal();
             if (originalDescriptor instanceof ClassifierDescriptor
-                && other instanceof ClassifierDescriptor
-                && ((ClassifierDescriptor) other).getTypeConstructor().equals(
-                    ((ClassifierDescriptor) originalDescriptor).getTypeConstructor())) {
+                    && other instanceof ClassifierDescriptor
+                    && ((ClassifierDescriptor) other).getTypeConstructor().equals(
+                        ((ClassifierDescriptor) originalDescriptor).getTypeConstructor())) {
                 return true;
             }
         }
@@ -337,7 +337,7 @@ public class DescriptorUtils {
     public static boolean hasAbstractMembers(@NotNull ClassDescriptor classDescriptor) {
         for (DeclarationDescriptor member : getAllDescriptors(classDescriptor.getDefaultType().getMemberScope())) {
             if (member instanceof CallableMemberDescriptor &&
-                ((CallableMemberDescriptor) member).getModality() == ABSTRACT) {
+                    ((CallableMemberDescriptor) member).getModality() == ABSTRACT) {
                 return true;
             }
         }
@@ -390,7 +390,7 @@ public class DescriptorUtils {
     public static ClassDescriptor getClassDescriptorForTypeConstructor(@NotNull TypeConstructor typeConstructor) {
         ClassifierDescriptor descriptor = typeConstructor.getDeclarationDescriptor();
         assert descriptor instanceof ClassDescriptor
-            : "Classifier descriptor of a type should be of type ClassDescriptor: " + typeConstructor;
+        : "Classifier descriptor of a type should be of type ClassDescriptor: " + typeConstructor;
         return (ClassDescriptor) descriptor;
     }
 
@@ -411,10 +411,10 @@ public class DescriptorUtils {
     @Nullable
     public static ClassDescriptor getInnerClassByName(@NotNull ClassDescriptor classDescriptor, @NotNull String innerClassName, @NotNull LookupLocation location) {
         ClassifierDescriptor classifier =
-                classDescriptor.getDefaultType().getMemberScope().getContributedClassifier(Name.identifier(innerClassName), location);
+            classDescriptor.getDefaultType().getMemberScope().getContributedClassifier(Name.identifier(innerClassName), location);
         assert classifier instanceof ClassDescriptor :
-                "Inner class " + innerClassName + " in " + classDescriptor + " should be instance of ClassDescriptor, but was: "
-                + (classifier == null ? "null" : classifier.getClass());
+        "Inner class " + innerClassName + " in " + classDescriptor + " should be instance of ClassDescriptor, but was: "
+        + (classifier == null ? "null" : classifier.getClass());
         return (ClassDescriptor) classifier;
     }
 

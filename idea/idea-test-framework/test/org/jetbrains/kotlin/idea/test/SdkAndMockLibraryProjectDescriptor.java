@@ -51,12 +51,12 @@ public class SdkAndMockLibraryProjectDescriptor extends KotlinLightProjectDescri
     }
 
     public SdkAndMockLibraryProjectDescriptor(
-            String sourcesPath, boolean withSources, boolean withRuntime, boolean isJsLibrary, boolean allowKotlinPackage) {
+        String sourcesPath, boolean withSources, boolean withRuntime, boolean isJsLibrary, boolean allowKotlinPackage) {
         this(sourcesPath, withSources, withRuntime, isJsLibrary, allowKotlinPackage, emptyList());
     }
 
     public SdkAndMockLibraryProjectDescriptor(
-            String sourcesPath, boolean withSources, boolean withRuntime, boolean isJsLibrary, boolean allowKotlinPackage, List<String> classpath
+        String sourcesPath, boolean withSources, boolean withRuntime, boolean isJsLibrary, boolean allowKotlinPackage, List<String> classpath
     ) {
         this.sourcesPath = sourcesPath;
         this.withSources = withSources;
@@ -70,9 +70,9 @@ public class SdkAndMockLibraryProjectDescriptor extends KotlinLightProjectDescri
     public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model) {
         List<String> extraOptions = allowKotlinPackage ? Collections.singletonList("-Xallow-kotlin-package") : emptyList();
         File libraryJar =
-                isJsLibrary
-                ? MockLibraryUtil.compileJsLibraryToJar(sourcesPath, LIBRARY_NAME, withSources, Collections.emptyList())
-                : MockLibraryUtil.compileJvmLibraryToJar(sourcesPath, LIBRARY_NAME, withSources, true, extraOptions, classpath);
+            isJsLibrary
+            ? MockLibraryUtil.compileJsLibraryToJar(sourcesPath, LIBRARY_NAME, withSources, Collections.emptyList())
+            : MockLibraryUtil.compileJvmLibraryToJar(sourcesPath, LIBRARY_NAME, withSources, true, extraOptions, classpath);
         String jarUrl = getJarUrl(libraryJar);
 
         Library.ModifiableModel libraryModel = model.getModuleLibraryTable().getModifiableModel().createLibrary(LIBRARY_NAME).getModifiableModel();

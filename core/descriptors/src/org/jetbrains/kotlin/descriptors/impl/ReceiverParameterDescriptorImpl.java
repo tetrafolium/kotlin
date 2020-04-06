@@ -27,9 +27,9 @@ public class ReceiverParameterDescriptorImpl extends AbstractReceiverParameterDe
     private final ReceiverValue value;
 
     public ReceiverParameterDescriptorImpl(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull ReceiverValue value,
-            @NotNull Annotations annotations
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull ReceiverValue value,
+        @NotNull Annotations annotations
     ) {
         super(annotations);
         this.containingDeclaration = containingDeclaration;

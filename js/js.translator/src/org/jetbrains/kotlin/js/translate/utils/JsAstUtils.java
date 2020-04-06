@@ -44,7 +44,7 @@ public final class JsAstUtils {
     private static final JsNameRef VALUE = new JsNameRef("value");
     private static final JsPropertyInitializer WRITABLE = new JsPropertyInitializer(pureFqn("writable", null), new JsBooleanLiteral(true));
     private static final JsPropertyInitializer ENUMERABLE = new JsPropertyInitializer(pureFqn("enumerable", null),
-                                                                                      new JsBooleanLiteral(false));
+            new JsBooleanLiteral(false));
 
     static {
         JsNameRef globalObjectReference = new JsNameRef("Object");
@@ -57,7 +57,7 @@ public final class JsAstUtils {
     @NotNull
     public static JsStatement convertToStatement(@NotNull JsNode jsNode) {
         assert (jsNode instanceof JsExpression) || (jsNode instanceof JsStatement)
-                : "Unexpected node of type: " + jsNode.getClass().toString();
+        : "Unexpected node of type: " + jsNode.getClass().toString();
         if (jsNode instanceof JsExpression) {
             JsExpression expression = (JsExpression) jsNode;
             JsExpressionStatement statement = new JsExpressionStatement(expression);
@@ -91,9 +91,9 @@ public final class JsAstUtils {
 
     @NotNull
     public static JsIf newJsIf(
-            @NotNull JsExpression ifExpression,
-            @NotNull JsStatement thenStatement,
-            @Nullable JsStatement elseStatement
+        @NotNull JsExpression ifExpression,
+        @NotNull JsStatement thenStatement,
+        @Nullable JsStatement elseStatement
     ) {
         elseStatement = elseStatement != null ? deBlockIfPossible(elseStatement) : null;
         return new JsIf(ifExpression, deBlockIfPossible(thenStatement), elseStatement);
@@ -249,9 +249,9 @@ public final class JsAstUtils {
     }
 
     private static JsExpression toUnsignedNumber(
-            @NotNull JsExpression expression,
-            @NotNull TranslationContext context,
-            @NotNull ClassId unsignedClassId
+        @NotNull JsExpression expression,
+        @NotNull TranslationContext context,
+        @NotNull ClassId unsignedClassId
     ) {
         ClassDescriptor classDescriptor = findClassAcrossModuleDependencies(context.getCurrentModule(), unsignedClassId);
         assert classDescriptor != null : "Class descriptor is null for " + unsignedClassId;
@@ -273,28 +273,28 @@ public final class JsAstUtils {
         else if (expression instanceof JsBinaryOperation) {
             JsBinaryOperation binary = (JsBinaryOperation) expression;
             switch (binary.getOperator()) {
-                case AND:
-                    return or(notOptimized(binary.getArg1()), notOptimized(binary.getArg2()));
-                case OR:
-                    return and(notOptimized(binary.getArg1()), notOptimized(binary.getArg2()));
-                case EQ:
-                    return new JsBinaryOperation(JsBinaryOperator.NEQ, binary.getArg1(), binary.getArg2());
-                case NEQ:
-                    return new JsBinaryOperation(JsBinaryOperator.EQ, binary.getArg1(), binary.getArg2());
-                case REF_EQ:
-                    return inequality(binary.getArg1(), binary.getArg2());
-                case REF_NEQ:
-                    return equality(binary.getArg1(), binary.getArg2());
-                case LT:
-                    return greaterThanEq(binary.getArg1(), binary.getArg2());
-                case LTE:
-                    return greaterThan(binary.getArg1(), binary.getArg2());
-                case GT:
-                    return lessThanEq(binary.getArg1(), binary.getArg2());
-                case GTE:
-                    return lessThan(binary.getArg1(), binary.getArg2());
-                default:
-                    break;
+            case AND:
+                return or(notOptimized(binary.getArg1()), notOptimized(binary.getArg2()));
+            case OR:
+                return and(notOptimized(binary.getArg1()), notOptimized(binary.getArg2()));
+            case EQ:
+                return new JsBinaryOperation(JsBinaryOperator.NEQ, binary.getArg1(), binary.getArg2());
+            case NEQ:
+                return new JsBinaryOperation(JsBinaryOperator.EQ, binary.getArg1(), binary.getArg2());
+            case REF_EQ:
+                return inequality(binary.getArg1(), binary.getArg2());
+            case REF_NEQ:
+                return equality(binary.getArg1(), binary.getArg2());
+            case LT:
+                return greaterThanEq(binary.getArg1(), binary.getArg2());
+            case LTE:
+                return greaterThan(binary.getArg1(), binary.getArg2());
+            case GT:
+                return lessThanEq(binary.getArg1(), binary.getArg2());
+            case GTE:
+                return lessThan(binary.getArg1(), binary.getArg2());
+            default:
+                break;
             }
         }
 
@@ -475,9 +475,9 @@ public final class JsAstUtils {
 
     @NotNull
     public static JsInvocation defineProperty(
-            @NotNull JsExpression receiver,
-            @NotNull String name,
-            @NotNull JsExpression value
+        @NotNull JsExpression receiver,
+        @NotNull String name,
+        @NotNull JsExpression value
     ) {
         return new JsInvocation(DEFINE_PROPERTY.deepCopy(), receiver, new JsStringLiteral(name), value);
     }
@@ -546,9 +546,9 @@ public final class JsAstUtils {
 
     @NotNull
     public static JsExpression defineGetter(
-            @NotNull JsExpression receiver,
-            @NotNull String name,
-            @NotNull JsExpression body
+        @NotNull JsExpression receiver,
+        @NotNull String name,
+        @NotNull JsExpression body
     ) {
         JsObjectLiteral propertyLiteral = new JsObjectLiteral(true);
         propertyLiteral.getPropertyInitializers().add(new JsPropertyInitializer(new JsNameRef("get"), body));

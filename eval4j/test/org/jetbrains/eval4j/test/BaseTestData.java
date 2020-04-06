@@ -21,5 +21,7 @@ class BaseTestData {
         return "Base";
     }
 
-    private String invokeSpecialPrivateFun(String s) { return "Derived"; }
+    private String invokeSpecialPrivateFun(String s) {
+        return "Derived";
+    }
 }

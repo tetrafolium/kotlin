@@ -88,7 +88,7 @@ public final class JsNameRef extends JsExpression implements HasName {
     @Override
     public void acceptChildren(JsVisitor visitor) {
         if (qualifier != null) {
-           visitor.accept(qualifier);
+            visitor.accept(qualifier);
         }
     }
 

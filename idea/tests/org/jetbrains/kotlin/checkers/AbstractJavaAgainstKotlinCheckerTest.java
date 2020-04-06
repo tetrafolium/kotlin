@@ -34,9 +34,9 @@ import java.util.List;
 public abstract class AbstractJavaAgainstKotlinCheckerTest extends KotlinDaemonAnalyzerTestCase {
 
     private static final LocalInspectionTool[] DEFAULT_TOOLS = new LocalInspectionTool[] {
-            new StaticCallOnSubclassInspection(),
-            new StaticFieldReferenceOnSubclassInspection(),
-            new NullableStuffInspection()
+        new StaticCallOnSubclassInspection(),
+        new StaticFieldReferenceOnSubclassInspection(),
+        new NullableStuffInspection()
     };
 
     private static LocalInspectionTool mapStringToTool(String toolString) {

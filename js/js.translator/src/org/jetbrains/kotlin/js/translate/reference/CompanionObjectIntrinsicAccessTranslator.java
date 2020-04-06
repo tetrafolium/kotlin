@@ -31,8 +31,8 @@ import static org.jetbrains.kotlin.js.translate.utils.BindingUtils.getDescriptor
 public class CompanionObjectIntrinsicAccessTranslator extends AbstractTranslator implements AccessTranslator {
     @NotNull
     /*package*/ static CompanionObjectIntrinsicAccessTranslator newInstance(
-            @NotNull KtSimpleNameExpression expression,
-            @NotNull TranslationContext context
+        @NotNull KtSimpleNameExpression expression,
+        @NotNull TranslationContext context
     ) {
         DeclarationDescriptor referenceDescriptor = getDescriptorForReferenceExpression(context.bindingContext(), expression);
         assert referenceDescriptor != null : "JetSimpleName expression must reference a descriptor " + expression.getText();
@@ -40,8 +40,8 @@ public class CompanionObjectIntrinsicAccessTranslator extends AbstractTranslator
     }
 
     /*package*/ static boolean isCompanionObjectReference(
-            @NotNull KtReferenceExpression expression,
-            @NotNull TranslationContext context
+        @NotNull KtReferenceExpression expression,
+        @NotNull TranslationContext context
     ) {
         DeclarationDescriptor descriptor = getDescriptorForReferenceExpression(context.bindingContext(), expression);
         return descriptor instanceof ClassDescriptor && context.intrinsics().getObjectIntrinsic((ClassDescriptor) descriptor) != null;
@@ -57,8 +57,8 @@ public class CompanionObjectIntrinsicAccessTranslator extends AbstractTranslator
 
     @NotNull
     private static JsExpression generateReferenceToCompanionObject(
-            @NotNull DeclarationDescriptor descriptor,
-            @NotNull TranslationContext context
+        @NotNull DeclarationDescriptor descriptor,
+        @NotNull TranslationContext context
     ) {
         ObjectIntrinsic objectIntrinsic = context.intrinsics().getObjectIntrinsic((ClassDescriptor) descriptor);
         return objectIntrinsic.apply(context);

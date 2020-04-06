@@ -38,17 +38,17 @@ public class JavaPropertyDescriptor extends PropertyDescriptorImpl implements Ja
     private final Pair<UserDataKey<?>, ?> singleUserData;
 
     private JavaPropertyDescriptor(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull Annotations annotations,
-            @NotNull Modality modality,
-            @NotNull Visibility visibility,
-            boolean isVar,
-            @NotNull Name name,
-            @NotNull SourceElement source,
-            @Nullable PropertyDescriptor original,
-            @NotNull Kind kind,
-            boolean isStaticFinal,
-            @Nullable Pair<UserDataKey<?>, ?> singleUserData
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull Annotations annotations,
+        @NotNull Modality modality,
+        @NotNull Visibility visibility,
+        boolean isVar,
+        @NotNull Name name,
+        @NotNull SourceElement source,
+        @Nullable PropertyDescriptor original,
+        @NotNull Kind kind,
+        boolean isStaticFinal,
+        @Nullable Pair<UserDataKey<?>, ?> singleUserData
     ) {
         super(containingDeclaration, original, annotations, modality, visibility, isVar, name, kind, source,
               false, false, false, false, false, false);
@@ -59,34 +59,34 @@ public class JavaPropertyDescriptor extends PropertyDescriptorImpl implements Ja
 
     @NotNull
     public static JavaPropertyDescriptor create(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull Annotations annotations,
-            @NotNull Modality modality,
-            @NotNull Visibility visibility,
-            boolean isVar,
-            @NotNull Name name,
-            @NotNull SourceElement source,
-            boolean isStaticFinal
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull Annotations annotations,
+        @NotNull Modality modality,
+        @NotNull Visibility visibility,
+        boolean isVar,
+        @NotNull Name name,
+        @NotNull SourceElement source,
+        boolean isStaticFinal
     ) {
         return new JavaPropertyDescriptor(
-                containingDeclaration, annotations, modality, visibility, isVar, name, source, null, Kind.DECLARATION, isStaticFinal,
-                null);
+                   containingDeclaration, annotations, modality, visibility, isVar, name, source, null, Kind.DECLARATION, isStaticFinal,
+                   null);
     }
 
     @NotNull
     @Override
     protected PropertyDescriptorImpl createSubstitutedCopy(
-            @NotNull DeclarationDescriptor newOwner,
-            @NotNull Modality newModality,
-            @NotNull Visibility newVisibility,
-            @Nullable PropertyDescriptor original,
-            @NotNull Kind kind,
-            @NotNull Name newName
+        @NotNull DeclarationDescriptor newOwner,
+        @NotNull Modality newModality,
+        @NotNull Visibility newVisibility,
+        @Nullable PropertyDescriptor original,
+        @NotNull Kind kind,
+        @NotNull Name newName
     ) {
         return new JavaPropertyDescriptor(
-                newOwner, getAnnotations(), newModality, newVisibility, isVar(), newName, SourceElement.NO_SOURCE, original,
-                kind, isStaticFinal,
-                singleUserData);
+                   newOwner, getAnnotations(), newModality, newVisibility, isVar(), newName, SourceElement.NO_SOURCE, original,
+                   kind, isStaticFinal,
+                   singleUserData);
     }
 
     @Override
@@ -97,30 +97,30 @@ public class JavaPropertyDescriptor extends PropertyDescriptorImpl implements Ja
     @NotNull
     @Override
     public JavaCallableMemberDescriptor enhance(
-            @Nullable KotlinType enhancedReceiverType,
-            @NotNull List<ValueParameterData> enhancedValueParametersData,
-            @NotNull KotlinType enhancedReturnType,
-            @Nullable Pair<UserDataKey<?>, ?> additionalUserData
+        @Nullable KotlinType enhancedReceiverType,
+        @NotNull List<ValueParameterData> enhancedValueParametersData,
+        @NotNull KotlinType enhancedReturnType,
+        @Nullable Pair<UserDataKey<?>, ?> additionalUserData
     ) {
         JavaPropertyDescriptor enhanced = new JavaPropertyDescriptor(
-                getContainingDeclaration(),
-                getAnnotations(),
-                getModality(),
-                getVisibility(),
-                isVar(),
-                getName(),
-                getSource(),
-                getOriginal() == this ? null : getOriginal(),
-                getKind(),
-                isStaticFinal,
-                additionalUserData);
+            getContainingDeclaration(),
+            getAnnotations(),
+            getModality(),
+            getVisibility(),
+            isVar(),
+            getName(),
+            getSource(),
+            getOriginal() == this ? null : getOriginal(),
+            getKind(),
+            isStaticFinal,
+            additionalUserData);
 
         PropertyGetterDescriptorImpl newGetter = null;
         PropertyGetterDescriptorImpl getter = getGetter();
         if (getter != null) {
             newGetter = new PropertyGetterDescriptorImpl(
-                    enhanced, getter.getAnnotations(), getter.getModality(), getter.getVisibility(),
-                    getter.isDefault(), getter.isExternal(), getter.isInline(), getKind(), getter, getter.getSource()
+                enhanced, getter.getAnnotations(), getter.getModality(), getter.getVisibility(),
+                getter.isDefault(), getter.isExternal(), getter.isInline(), getKind(), getter, getter.getSource()
             );
             newGetter.setInitialSignatureDescriptor(getter.getInitialSignatureDescriptor());
             newGetter.initialize(enhancedReturnType);
@@ -130,8 +130,8 @@ public class JavaPropertyDescriptor extends PropertyDescriptorImpl implements Ja
         PropertySetterDescriptor setter = getSetter();
         if (setter != null) {
             newSetter = new PropertySetterDescriptorImpl(
-                    enhanced, setter.getAnnotations(), setter.getModality(), setter.getVisibility(),
-                    setter.isDefault(), setter.isExternal(), setter.isInline(), getKind(), setter, setter.getSource()
+                enhanced, setter.getAnnotations(), setter.getModality(), setter.getVisibility(),
+                setter.isDefault(), setter.isExternal(), setter.isInline(), getKind(), setter, setter.getSource()
             );
             newSetter.setInitialSignatureDescriptor(newSetter.getInitialSignatureDescriptor());
             newSetter.initialize(setter.getValueParameters().get(0));
@@ -146,15 +146,15 @@ public class JavaPropertyDescriptor extends PropertyDescriptorImpl implements Ja
         enhanced.setOverriddenDescriptors(getOverriddenDescriptors());
 
         ReceiverParameterDescriptor enhancedReceiver =
-                enhancedReceiverType == null ? null : DescriptorFactory.createExtensionReceiverParameterForCallable(
-                        this, enhancedReceiverType, Annotations.Companion.getEMPTY()
-                );
+            enhancedReceiverType == null ? null : DescriptorFactory.createExtensionReceiverParameterForCallable(
+                this, enhancedReceiverType, Annotations.Companion.getEMPTY()
+            );
 
         enhanced.setType(
-                enhancedReturnType,
-                getTypeParameters(), // TODO
-                getDispatchReceiverParameter(),
-                enhancedReceiver
+            enhancedReturnType,
+            getTypeParameters(), // TODO
+            getDispatchReceiverParameter(),
+            enhancedReceiver
         );
         return enhanced;
     }

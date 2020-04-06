@@ -12,17 +12,17 @@ import com.intellij.extapi.psi.ASTWrapperPsiElement;
 
 public class NativeDefinitionsBoolKeyImpl extends ASTWrapperPsiElement implements NativeDefinitionsBoolKey {
 
-  public NativeDefinitionsBoolKeyImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public NativeDefinitionsBoolKeyImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull NativeDefinitionsVisitor visitor) {
-    visitor.visitBoolKey(this);
-  }
+    public void accept(@NotNull NativeDefinitionsVisitor visitor) {
+        visitor.visitBoolKey(this);
+    }
 
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof NativeDefinitionsVisitor) accept((NativeDefinitionsVisitor)visitor);
-    else super.accept(visitor);
-  }
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof NativeDefinitionsVisitor) accept((NativeDefinitionsVisitor)visitor);
+        else super.accept(visitor);
+    }
 
 }

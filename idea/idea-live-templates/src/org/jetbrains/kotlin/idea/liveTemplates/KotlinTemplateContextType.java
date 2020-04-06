@@ -37,9 +37,9 @@ import org.jetbrains.kotlin.psi.*;
 
 public abstract class KotlinTemplateContextType extends TemplateContextType {
     private KotlinTemplateContextType(
-            @NotNull @NonNls String id,
-            @NotNull String presentableName,
-            @Nullable java.lang.Class<? extends TemplateContextType> baseContextType
+        @NotNull @NonNls String id,
+        @NotNull String presentableName,
+        @Nullable java.lang.Class<? extends TemplateContextType> baseContextType
     ) {
         super(id, presentableName, baseContextType);
     }
@@ -62,7 +62,7 @@ public abstract class KotlinTemplateContextType extends TemplateContextType {
             return isCommentInContext();
         }
         else if (PsiTreeUtil.getParentOfType(element, KtPackageDirective.class) != null
-                || PsiTreeUtil.getParentOfType(element, KtImportDirective.class) != null) {
+                 || PsiTreeUtil.getParentOfType(element, KtImportDirective.class) != null) {
             return false;
         }
         else if (element instanceof LeafPsiElement) {
@@ -164,7 +164,7 @@ public abstract class KotlinTemplateContextType extends TemplateContextType {
         @Override
         protected boolean isInContext(@NotNull PsiElement element) {
             PsiElement parentStatement = PsiTreeUtil.findFirstParent(element, e ->
-                    e instanceof KtExpression && KtPsiUtil.isStatementContainer(e.getParent()));
+                                         e instanceof KtExpression && KtPsiUtil.isStatementContainer(e.getParent()));
 
             if (parentStatement == null) return false;
 

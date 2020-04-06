@@ -42,10 +42,10 @@ public class KotlinExpressionMover extends AbstractKotlinUpDownMover {
     }
 
     private final static Class[] MOVABLE_ELEMENT_CLASSES = {
-            KtExpression.class,
-            KtWhenEntry.class,
-            KtValueArgument.class,
-            PsiComment.class
+        KtExpression.class,
+        KtWhenEntry.class,
+        KtValueArgument.class,
+        PsiComment.class
     };
 
     private static final Function1<PsiElement, Boolean> MOVABLE_ELEMENT_CONSTRAINT = new Function1<PsiElement, Boolean>() {
@@ -60,17 +60,17 @@ public class KotlinExpressionMover extends AbstractKotlinUpDownMover {
     };
 
     private final static Class[] BLOCKLIKE_ELEMENT_CLASSES =
-            {KtBlockExpression.class, KtWhenExpression.class, KtClassBody.class, KtFile.class};
+    {KtBlockExpression.class, KtWhenExpression.class, KtClassBody.class, KtFile.class};
 
     private final static Class[] FUNCTIONLIKE_ELEMENT_CLASSES =
-            {KtFunction.class, KtPropertyAccessor.class, KtAnonymousInitializer.class};
+    {KtFunction.class, KtPropertyAccessor.class, KtAnonymousInitializer.class};
 
     private static final Predicate<KtElement> CHECK_BLOCK_LIKE_ELEMENT =
-            input -> (input instanceof KtBlockExpression || input instanceof KtClassBody)
-                     && !PsiTreeUtil.instanceOf(input.getParent(), FUNCTIONLIKE_ELEMENT_CLASSES);
+        input -> (input instanceof KtBlockExpression || input instanceof KtClassBody)
+        && !PsiTreeUtil.instanceOf(input.getParent(), FUNCTIONLIKE_ELEMENT_CLASSES);
 
     private static final Predicate<KtElement> CHECK_BLOCK =
-            input -> input instanceof KtBlockExpression && !PsiTreeUtil.instanceOf(input.getParent(), FUNCTIONLIKE_ELEMENT_CLASSES);
+        input -> input instanceof KtBlockExpression && !PsiTreeUtil.instanceOf(input.getParent(), FUNCTIONLIKE_ELEMENT_CLASSES);
 
     @Nullable
     private static PsiElement getStandaloneClosingBrace(@NotNull PsiFile file, @NotNull Editor editor) {
@@ -87,10 +87,10 @@ public class KotlinExpressionMover extends AbstractKotlinUpDownMover {
     }
 
     private static BraceStatus checkForMovableDownClosingBrace(
-            @NotNull PsiElement closingBrace,
-            @NotNull PsiElement block,
-            @NotNull Editor editor,
-            @NotNull MoveInfo info
+        @NotNull PsiElement closingBrace,
+        @NotNull PsiElement block,
+        @NotNull Editor editor,
+        @NotNull MoveInfo info
     ) {
         PsiElement current = block;
         PsiElement nextElement = null;
@@ -122,10 +122,10 @@ public class KotlinExpressionMover extends AbstractKotlinUpDownMover {
     }
 
     private static BraceStatus checkForMovableUpClosingBrace(
-            @NotNull PsiElement closingBrace,
-            PsiElement block,
-            @NotNull Editor editor,
-            @NotNull MoveInfo info
+        @NotNull PsiElement closingBrace,
+        PsiElement block,
+        @NotNull Editor editor,
+        @NotNull MoveInfo info
     ) {
         //noinspection unchecked
         PsiElement prev = KtPsiUtil.getLastChildByType(block, KtExpression.class);
@@ -148,10 +148,10 @@ public class KotlinExpressionMover extends AbstractKotlinUpDownMover {
 
     // Returns null if standalone closing brace is not found
     private static BraceStatus checkForMovableClosingBrace(
-            @NotNull Editor editor,
-            @NotNull PsiFile file,
-            @NotNull MoveInfo info,
-            boolean down
+        @NotNull Editor editor,
+        @NotNull PsiFile file,
+        @NotNull MoveInfo info,
+        boolean down
     ) {
         PsiElement closingBrace = getStandaloneClosingBrace(file, editor);
         if (closingBrace == null) return BraceStatus.NOT_FOUND;
@@ -184,9 +184,9 @@ public class KotlinExpressionMover extends AbstractKotlinUpDownMover {
         while (current != null) {
             PsiElement parent = current.getParent();
             if (parent instanceof KtClassBody ||
-                (parent instanceof KtAnonymousInitializer && !(parent instanceof KtScriptInitializer)) ||
-                parent instanceof KtNamedFunction ||
-                (parent instanceof KtProperty && !((KtProperty) parent).isLocal())) {
+                    (parent instanceof KtAnonymousInitializer && !(parent instanceof KtScriptInitializer)) ||
+                    parent instanceof KtNamedFunction ||
+                    (parent instanceof KtProperty && !((KtProperty) parent).isLocal())) {
                 return null;
             }
 
@@ -211,7 +211,7 @@ public class KotlinExpressionMover extends AbstractKotlinUpDownMover {
     @Nullable
     private static KtBlockExpression getDSLLambdaBlock(@NotNull Editor editor, @NotNull PsiElement element, boolean down) {
         KtCallExpression callExpression =
-                (KtCallExpression) KtPsiUtil.getOutermostDescendantElement(element, down, IS_CALL_EXPRESSION);
+            (KtCallExpression) KtPsiUtil.getOutermostDescendantElement(element, down, IS_CALL_EXPRESSION);
         if (callExpression == null) return null;
 
         List<KtLambdaArgument> functionLiterals = callExpression.getLambdaArguments();
@@ -356,7 +356,7 @@ public class KotlinExpressionMover extends AbstractKotlinUpDownMover {
     @Nullable
     private static LineRange getWhenEntryTargetRange(@NotNull Editor editor, @NotNull PsiElement sibling, boolean down) {
         if (sibling.getNode().getElementType() == (down ? KtTokens.RBRACE : KtTokens.LBRACE) &&
-            PsiTreeUtil.getParentOfType(sibling, KtWhenEntry.class) == null) {
+                PsiTreeUtil.getParentOfType(sibling, KtWhenEntry.class) == null) {
             return null;
         }
 
@@ -365,10 +365,10 @@ public class KotlinExpressionMover extends AbstractKotlinUpDownMover {
 
     @Nullable
     private LineRange getValueParamOrArgTargetRange(
-            @NotNull Editor editor,
-            @NotNull PsiElement elementToCheck,
-            @NotNull PsiElement sibling,
-            boolean down
+        @NotNull Editor editor,
+        @NotNull PsiElement elementToCheck,
+        @NotNull PsiElement sibling,
+        boolean down
     ) {
         PsiElement next = sibling;
 
@@ -389,10 +389,10 @@ public class KotlinExpressionMover extends AbstractKotlinUpDownMover {
 
     @Nullable
     private LineRange getTargetRange(
-            @NotNull Editor editor,
-            @Nullable PsiElement elementToCheck,
-            @NotNull PsiElement sibling,
-            boolean down
+        @NotNull Editor editor,
+        @Nullable PsiElement elementToCheck,
+        @NotNull PsiElement sibling,
+        boolean down
     ) {
         if (elementToCheck instanceof KtParameter || elementToCheck instanceof KtValueArgument) {
             return getValueParamOrArgTargetRange(editor, elementToCheck, sibling, down);
@@ -429,11 +429,11 @@ public class KotlinExpressionMover extends AbstractKotlinUpDownMover {
     private static PsiElement getMovableElement(@NotNull PsiElement element, boolean lookRight) {
         //noinspection unchecked
         PsiElement movableElement = PsiUtilsKt.getParentOfTypesAndPredicate(
-                element,
-                false,
-                MOVABLE_ELEMENT_CLASSES,
-                MOVABLE_ELEMENT_CONSTRAINT
-        );
+                                        element,
+                                        false,
+                                        MOVABLE_ELEMENT_CLASSES,
+                                        MOVABLE_ELEMENT_CONSTRAINT
+                                    );
         if (movableElement == null) return null;
 
         if (isBracelessBlock(movableElement)) {
@@ -464,10 +464,10 @@ public class KotlinExpressionMover extends AbstractKotlinUpDownMover {
     }
 
     private static PsiElement adjustSibling(
-            @NotNull Editor editor,
-            @NotNull LineRange sourceRange,
-            @NotNull MoveInfo info,
-            boolean down
+        @NotNull Editor editor,
+        @NotNull LineRange sourceRange,
+        @NotNull MoveInfo info,
+        boolean down
     ) {
         PsiElement element = down ? sourceRange.lastElement : sourceRange.firstElement;
         PsiElement sibling = down ? element.getNextSibling() : element.getPrevSibling();
@@ -523,14 +523,14 @@ public class KotlinExpressionMover extends AbstractKotlinUpDownMover {
         if (!super.checkAvailable(editor, file, info, down)) return false;
 
         switch (checkForMovableClosingBrace(editor, file, info, down)) {
-            case NOT_MOVABLE: {
-                info.toMove2 = null;
-                return true;
-            }
-            case MOVABLE:
-                return true;
-            default:
-                break;
+        case NOT_MOVABLE: {
+            info.toMove2 = null;
+            return true;
+        }
+        case MOVABLE:
+            return true;
+        default:
+            break;
         }
 
         LineRange oldRange = info.toMove;
@@ -550,7 +550,7 @@ public class KotlinExpressionMover extends AbstractKotlinUpDownMover {
         }
 
         if ((firstElement instanceof KtParameter || firstElement instanceof KtValueArgument) &&
-            PsiTreeUtil.isAncestor(lastElement, firstElement, false)) {
+                PsiTreeUtil.isAncestor(lastElement, firstElement, false)) {
             lastElement = firstElement;
         }
 

@@ -38,10 +38,10 @@ public abstract class CreateLibraryDialogBase extends DialogWrapper {
     protected final ChooseLibraryPathPanel pathPanel;
 
     public CreateLibraryDialogBase(
-            @Nullable Project project,
-            @NotNull String defaultPath,
-            @NotNull String title,
-            @NotNull String libraryCaption
+        @Nullable Project project,
+        @NotNull String defaultPath,
+        @NotNull String title,
+        @NotNull String libraryCaption
     ) {
         super(project);
 

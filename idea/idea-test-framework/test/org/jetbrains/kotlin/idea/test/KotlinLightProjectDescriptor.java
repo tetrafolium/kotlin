@@ -28,9 +28,9 @@ import org.jetbrains.annotations.NotNull;
 public class KotlinLightProjectDescriptor extends LightProjectDescriptor {
     protected KotlinLightProjectDescriptor() {
     }
-    
+
     public static final KotlinLightProjectDescriptor INSTANCE = new KotlinLightProjectDescriptor();
-    
+
     @Override
     public ModuleType getModuleType() {
         return StdModuleTypes.JAVA;

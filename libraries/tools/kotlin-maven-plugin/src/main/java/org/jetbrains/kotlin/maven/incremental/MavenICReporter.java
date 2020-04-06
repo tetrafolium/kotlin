@@ -53,7 +53,7 @@ public class MavenICReporter implements ICReporter {
         else {
             if (!logLevel.equalsIgnoreCase(IC_LOG_LEVEL_NONE)) {
                 log.warn("Unknown incremental compilation log level '" + logLevel + "'," +
-                        "possible values: " + IC_LOG_LEVEL_NONE + ", " + IC_LOG_LEVEL_INFO + ", " + IC_LOG_LEVEL_DEBUG);
+                         "possible values: " + IC_LOG_LEVEL_NONE + ", " + IC_LOG_LEVEL_INFO + ", " + IC_LOG_LEVEL_DEBUG);
             }
 
             return MavenICReporter.noLog();

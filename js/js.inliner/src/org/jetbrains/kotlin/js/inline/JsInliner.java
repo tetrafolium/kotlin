@@ -59,7 +59,7 @@ public class JsInliner extends JsVisitorWithContextImpl {
     private final Stack<JsFunction> namedFunctionsStack = new Stack<>();
     private final LinkedList<JsCallInfo> inlineCallInfos = new LinkedList<>();
     private final Function1<JsNode, Boolean> canBeExtractedByInliner =
-            node -> node instanceof JsInvocation && hasToBeInlined((JsInvocation) node);
+        node -> node instanceof JsInvocation && hasToBeInlined((JsInvocation) node);
     private int inlineFunctionDepth;
 
     private final Map<JsWrapperKey, Map<JsName, JsNameRef>> replacementsInducedByWrappers = new HashMap<>();
@@ -73,13 +73,13 @@ public class JsInliner extends JsVisitorWithContextImpl {
     private final Set<JsName> inlinedModuleAliases = new HashSet<>();
 
     public static void process(
-            @NotNull JsConfig.Reporter reporter,
-            @NotNull JsConfig config,
-            @NotNull DiagnosticSink trace,
-            @NotNull JsName currentModuleName,
-            @NotNull List<JsProgramFragment> fragments,
-            @NotNull List<JsProgramFragment> fragmentsToProcess,
-            @NotNull List<JsStatement> importStatements
+        @NotNull JsConfig.Reporter reporter,
+        @NotNull JsConfig config,
+        @NotNull DiagnosticSink trace,
+        @NotNull JsName currentModuleName,
+        @NotNull List<JsProgramFragment> fragments,
+        @NotNull List<JsProgramFragment> fragmentsToProcess,
+        @NotNull List<JsStatement> importStatements
     ) {
         Map<JsName, FunctionWithWrapper> functions = CollectUtilsKt.collectNamedFunctionsAndWrappers(fragments);
         Map<String, FunctionWithWrapper> accessors = CollectUtilsKt.collectAccessors(fragments);
@@ -151,12 +151,12 @@ public class JsInliner extends JsVisitorWithContextImpl {
 
 
     private JsInliner(
-            @NotNull JsConfig config,
-            @NotNull Map<JsName, FunctionWithWrapper> functions,
-            @NotNull Map<String, FunctionWithWrapper> accessors,
-            @NotNull Map<JsName, String> inverseNameBindings,
-            @NotNull FunctionReader functionReader,
-            @NotNull DiagnosticSink trace
+        @NotNull JsConfig config,
+        @NotNull Map<JsName, FunctionWithWrapper> functions,
+        @NotNull Map<String, FunctionWithWrapper> accessors,
+        @NotNull Map<JsName, String> inverseNameBindings,
+        @NotNull FunctionReader functionReader,
+        @NotNull DiagnosticSink trace
     ) {
         this.config = config;
         this.functions = functions;
@@ -170,12 +170,12 @@ public class JsInliner extends JsVisitorWithContextImpl {
         this.trace = trace;
 
         Stream.concat(functions.values().stream(), accessors.values().stream())
-                .forEach(f -> {
-                    functionsByFunctionNodes.put(f.getFunction(), f);
-                    if (f.getWrapperBody() != null) {
-                        functionsByWrapperNodes.put(f.getWrapperBody(), f);
-                    }
-                });
+        .forEach(f -> {
+            functionsByFunctionNodes.put(f.getFunction(), f);
+            if (f.getWrapperBody() != null) {
+                functionsByWrapperNodes.put(f.getWrapperBody(), f);
+            }
+        });
     }
 
     private void processImportStatement(JsStatement statement) {
@@ -419,7 +419,7 @@ public class JsInliner extends JsVisitorWithContextImpl {
 
             while (i < statements.size()) {
                 List<JsStatement> additionalStatements =
-                        ExpressionDecomposer.preserveEvaluationOrder(statements.get(i), canBeExtractedByInliner);
+                    ExpressionDecomposer.preserveEvaluationOrder(statements.get(i), canBeExtractedByInliner);
                 statements.addAll(i, additionalStatements);
                 i += additionalStatements.size() + 1;
             }
@@ -491,8 +491,8 @@ public class JsInliner extends JsVisitorWithContextImpl {
     }
 
     private void applyWrapper(
-            @NotNull JsBlock wrapper, @NotNull JsFunction function, @NotNull JsFunction originalFunction,
-            @NotNull InliningContext inliningContext
+        @NotNull JsBlock wrapper, @NotNull JsFunction function, @NotNull JsFunction originalFunction,
+        @NotNull InliningContext inliningContext
     ) {
         // Apparently we should avoid this trick when we implement fair support for crossinline
         Function<JsWrapperKey, Map<JsName, JsNameRef>> replacementGen = k -> {
@@ -538,9 +538,9 @@ public class JsInliner extends JsVisitorWithContextImpl {
             }
 
             Set<JsName> definedNames = copiedStatements.stream()
-                    .flatMap(node -> CollectUtilsKt.collectDefinedNamesInAllScopes(node).stream())
-                    .filter(name -> !newReplacements.containsKey(name))
-                    .collect(Collectors.toSet());
+                                       .flatMap(node -> CollectUtilsKt.collectDefinedNamesInAllScopes(node).stream())
+                                       .filter(name -> !newReplacements.containsKey(name))
+                                       .collect(Collectors.toSet());
             for (JsName name : definedNames) {
                 JsName alias = JsScope.declareTemporaryName(name.getIdent());
                 alias.copyMetadataFrom(name);
@@ -602,17 +602,17 @@ public class JsInliner extends JsVisitorWithContextImpl {
                 }
             }
 
-        }.accept(statement);
+        } .accept(statement);
     }
 
     private static boolean isSuspendWithCurrentContinuation(
-            @Nullable DeclarationDescriptor descriptor,
-            @NotNull LanguageVersionSettings languageVersionSettings
+        @Nullable DeclarationDescriptor descriptor,
+        @NotNull LanguageVersionSettings languageVersionSettings
     ) {
         if (!(descriptor instanceof FunctionDescriptor)) return false;
         return CommonCoroutineCodegenUtilKt.isBuiltInSuspendCoroutineUninterceptedOrReturn(
-                (FunctionDescriptor) descriptor.getOriginal(), languageVersionSettings
-        );
+                   (FunctionDescriptor) descriptor.getOriginal(), languageVersionSettings
+               );
     }
 
     private void inlineSuspendWithCurrentContinuation(@NotNull JsInvocation call, @NotNull JsContext<JsNode> context) {

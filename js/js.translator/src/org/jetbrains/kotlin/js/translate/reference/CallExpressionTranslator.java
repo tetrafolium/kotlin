@@ -52,12 +52,12 @@ public final class CallExpressionTranslator extends AbstractCallExpressionTransl
 
     @NotNull
     public static JsNode translate(
-            @NotNull KtCallExpression expression,
-            @Nullable JsExpression receiver,
-            @NotNull TranslationContext context
+        @NotNull KtCallExpression expression,
+        @Nullable JsExpression receiver,
+        @NotNull TranslationContext context
     ) {
         ResolvedCall<? extends FunctionDescriptor> resolvedCall =
-                CallUtilKt.getFunctionResolvedCallWithAssert(expression, context.bindingContext());
+            CallUtilKt.getFunctionResolvedCallWithAssert(expression, context.bindingContext());
 
         if (isJsCall(resolvedCall)) {
             return (new CallExpressionTranslator(expression, receiver, context)).translateJsCode();
@@ -74,9 +74,9 @@ public final class CallExpressionTranslator extends AbstractCallExpressionTransl
 
     public static boolean shouldBeInlined(@NotNull CallableDescriptor descriptor) {
         if (descriptor instanceof SimpleFunctionDescriptor ||
-            descriptor instanceof PropertyAccessorDescriptor ||
-            descriptor instanceof FunctionImportedFromObject
-        ) {
+                descriptor instanceof PropertyAccessorDescriptor ||
+                descriptor instanceof FunctionImportedFromObject
+           ) {
             return InlineUtil.isInline(descriptor);
         }
 
@@ -90,9 +90,9 @@ public final class CallExpressionTranslator extends AbstractCallExpressionTransl
     }
 
     private CallExpressionTranslator(
-            @NotNull KtCallExpression expression,
-            @Nullable JsExpression receiver,
-            @NotNull TranslationContext context
+        @NotNull KtCallExpression expression,
+        @Nullable JsExpression receiver,
+        @NotNull TranslationContext context
     ) {
         super(expression, receiver, context);
     }
@@ -188,8 +188,8 @@ public final class CallExpressionTranslator extends AbstractCallExpressionTransl
         }
 
         List<JsStatement> statements = ParserUtilsKt.parseExpressionOrStatement(
-                jsCode, ThrowExceptionOnErrorReporter.INSTANCE, scope,
-                new CodePosition(location.getStartLine(), location.getStartChar()), location.getFile());
+                                           jsCode, ThrowExceptionOnErrorReporter.INSTANCE, scope,
+                                           new CodePosition(location.getStartLine(), location.getStartChar()), location.getFile());
         return statements != null ? statements : Collections.emptyList();
     }
 }

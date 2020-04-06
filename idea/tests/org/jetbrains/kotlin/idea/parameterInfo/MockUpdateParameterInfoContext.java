@@ -24,7 +24,7 @@ public class MockUpdateParameterInfoContext implements UpdateParameterInfoContex
         myFile = file;
         myFixture = fixture;
     }
-    
+
 
     @Override
     public void removeHint() {
@@ -52,7 +52,7 @@ public class MockUpdateParameterInfoContext implements UpdateParameterInfoContex
     public void setCurrentParameter(int index) {
         myCurrentParameter = index;
     }
-    
+
     public int getCurrentParameter() {
         return myCurrentParameter;
     }

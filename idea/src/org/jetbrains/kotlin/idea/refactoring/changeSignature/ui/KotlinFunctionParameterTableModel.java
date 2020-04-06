@@ -38,7 +38,7 @@ public class KotlinFunctionParameterTableModel extends KotlinCallableParameterTa
               new NameColumn(typeContext.getProject()),
               new TypeColumn(typeContext.getProject(), KotlinFileType.INSTANCE),
               new DefaultValueColumn<KotlinParameterInfo, ParameterTableModelItemBase<KotlinParameterInfo>>(typeContext.getProject(),
-                                                                                                            KotlinFileType.INSTANCE),
+                      KotlinFileType.INSTANCE),
               new ReceiverColumn(typeContext.getProject(), methodDescriptor));
     }
 
@@ -65,7 +65,7 @@ public class KotlinFunctionParameterTableModel extends KotlinCallableParameterTa
     }
 
     protected static class ReceiverColumn<TableItem extends ParameterTableModelItemBase<KotlinParameterInfo>>
-            extends ColumnInfoBase<KotlinParameterInfo, TableItem, Boolean> {
+        extends ColumnInfoBase<KotlinParameterInfo, TableItem, Boolean> {
         private final Project project;
         @Nullable
         private KotlinParameterInfo receiver;

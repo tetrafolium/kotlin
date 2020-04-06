@@ -49,177 +49,177 @@ public class JsAstMapper {
 
     private JsNode mapWithoutLocation(Node node) throws JsParserException {
         switch (node.getType()) {
-            case TokenStream.SCRIPT: {
-                JsBlock block = new JsBlock();
-                mapStatements(block.getStatements(), node);
-                return block;
-            }
+        case TokenStream.SCRIPT: {
+            JsBlock block = new JsBlock();
+            mapStatements(block.getStatements(), node);
+            return block;
+        }
 
-            case TokenStream.DEBUGGER:
-                return mapDebuggerStatement(node);
+        case TokenStream.DEBUGGER:
+            return mapDebuggerStatement(node);
 
-            case TokenStream.VOID:
-                // VOID = nothing was parsed for this node
-                return null;
+        case TokenStream.VOID:
+            // VOID = nothing was parsed for this node
+            return null;
 
-            case TokenStream.EXPRSTMT:
-                return mapExpressionStatement(node);
+        case TokenStream.EXPRSTMT:
+            return mapExpressionStatement(node);
 
-            case TokenStream.REGEXP:
-                return mapRegExp(node);
+        case TokenStream.REGEXP:
+            return mapRegExp(node);
 
-            case TokenStream.ADD:
-                return mapBinaryOperation(JsBinaryOperator.ADD, node);
+        case TokenStream.ADD:
+            return mapBinaryOperation(JsBinaryOperator.ADD, node);
 
-            case TokenStream.SUB:
-                return mapBinaryOperation(JsBinaryOperator.SUB, node);
+        case TokenStream.SUB:
+            return mapBinaryOperation(JsBinaryOperator.SUB, node);
 
-            case TokenStream.MUL:
-                return mapBinaryOperation(JsBinaryOperator.MUL, node);
+        case TokenStream.MUL:
+            return mapBinaryOperation(JsBinaryOperator.MUL, node);
 
-            case TokenStream.DIV:
-                return mapBinaryOperation(JsBinaryOperator.DIV, node);
+        case TokenStream.DIV:
+            return mapBinaryOperation(JsBinaryOperator.DIV, node);
 
-            case TokenStream.MOD:
-                return mapBinaryOperation(JsBinaryOperator.MOD, node);
+        case TokenStream.MOD:
+            return mapBinaryOperation(JsBinaryOperator.MOD, node);
 
-            case TokenStream.AND:
-                return mapBinaryOperation(JsBinaryOperator.AND, node);
+        case TokenStream.AND:
+            return mapBinaryOperation(JsBinaryOperator.AND, node);
 
-            case TokenStream.OR:
-                return mapBinaryOperation(JsBinaryOperator.OR, node);
+        case TokenStream.OR:
+            return mapBinaryOperation(JsBinaryOperator.OR, node);
 
-            case TokenStream.BITAND:
-                return mapBinaryOperation(JsBinaryOperator.BIT_AND, node);
+        case TokenStream.BITAND:
+            return mapBinaryOperation(JsBinaryOperator.BIT_AND, node);
 
-            case TokenStream.BITOR:
-                return mapBinaryOperation(JsBinaryOperator.BIT_OR, node);
+        case TokenStream.BITOR:
+            return mapBinaryOperation(JsBinaryOperator.BIT_OR, node);
 
-            case TokenStream.BITXOR:
-                return mapBinaryOperation(JsBinaryOperator.BIT_XOR, node);
+        case TokenStream.BITXOR:
+            return mapBinaryOperation(JsBinaryOperator.BIT_XOR, node);
 
-            case TokenStream.ASSIGN:
-                return mapAssignmentVariant(node);
+        case TokenStream.ASSIGN:
+            return mapAssignmentVariant(node);
 
-            case TokenStream.RELOP:
-                return mapRelationalVariant(node);
+        case TokenStream.RELOP:
+            return mapRelationalVariant(node);
 
-            case TokenStream.EQOP:
-                return mapEqualityVariant(node);
+        case TokenStream.EQOP:
+            return mapEqualityVariant(node);
 
-            case TokenStream.SHOP:
-                return mapShiftVariant(node);
+        case TokenStream.SHOP:
+            return mapShiftVariant(node);
 
-            case TokenStream.UNARYOP:
-                return mapUnaryVariant(node);
+        case TokenStream.UNARYOP:
+            return mapUnaryVariant(node);
 
-            case TokenStream.INC:
-                return mapIncDecFixity(JsUnaryOperator.INC, node);
+        case TokenStream.INC:
+            return mapIncDecFixity(JsUnaryOperator.INC, node);
 
-            case TokenStream.DEC:
-                return mapIncDecFixity(JsUnaryOperator.DEC, node);
+        case TokenStream.DEC:
+            return mapIncDecFixity(JsUnaryOperator.DEC, node);
 
-            case TokenStream.HOOK:
-                return mapConditional(node);
+        case TokenStream.HOOK:
+            return mapConditional(node);
 
-            case TokenStream.STRING:
-                return new JsStringLiteral(node.getString());
+        case TokenStream.STRING:
+            return new JsStringLiteral(node.getString());
 
-            case TokenStream.NUMBER_INT:
-                return mapIntNumber(node);
+        case TokenStream.NUMBER_INT:
+            return mapIntNumber(node);
 
-            case TokenStream.NUMBER:
-                return mapDoubleNumber(node);
+        case TokenStream.NUMBER:
+            return mapDoubleNumber(node);
 
-            case TokenStream.CALL:
-                return mapCall(node);
+        case TokenStream.CALL:
+            return mapCall(node);
 
-            case TokenStream.GETPROP:
-                return mapGetProp(node);
+        case TokenStream.GETPROP:
+            return mapGetProp(node);
 
-            case TokenStream.SETPROP:
-                return mapSetProp(node);
+        case TokenStream.SETPROP:
+            return mapSetProp(node);
 
-            case TokenStream.DELPROP:
-                return mapDeleteProp(node);
+        case TokenStream.DELPROP:
+            return mapDeleteProp(node);
 
-            case TokenStream.IF:
-                return mapIfStatement(node);
+        case TokenStream.IF:
+            return mapIfStatement(node);
 
-            case TokenStream.WHILE:
-                return mapDoOrWhileStatement(true, node);
+        case TokenStream.WHILE:
+            return mapDoOrWhileStatement(true, node);
 
-            case TokenStream.DO:
-                return mapDoOrWhileStatement(false, node);
+        case TokenStream.DO:
+            return mapDoOrWhileStatement(false, node);
 
-            case TokenStream.FOR:
-                return mapForStatement(node);
+        case TokenStream.FOR:
+            return mapForStatement(node);
 
-            case TokenStream.WITH:
-                return mapWithStatement(node);
+        case TokenStream.WITH:
+            return mapWithStatement(node);
 
-            case TokenStream.GETELEM:
-                return mapGetElem(node);
+        case TokenStream.GETELEM:
+            return mapGetElem(node);
 
-            case TokenStream.SETELEM:
-                return mapSetElem(node);
+        case TokenStream.SETELEM:
+            return mapSetElem(node);
 
-            case TokenStream.FUNCTION:
-                return mapFunction(node);
+        case TokenStream.FUNCTION:
+            return mapFunction(node);
 
-            case TokenStream.BLOCK:
-                return mapBlock(node);
+        case TokenStream.BLOCK:
+            return mapBlock(node);
 
-            case TokenStream.SETNAME:
-                return mapBinaryOperation(JsBinaryOperator.ASG, node);
+        case TokenStream.SETNAME:
+            return mapBinaryOperation(JsBinaryOperator.ASG, node);
 
-            case TokenStream.NAME:
-            case TokenStream.BINDNAME:
-                return scopeContext.globalNameFor(node.getString()).makeRef();
+        case TokenStream.NAME:
+        case TokenStream.BINDNAME:
+            return scopeContext.globalNameFor(node.getString()).makeRef();
 
-            case TokenStream.RETURN:
-                return mapReturn(node);
+        case TokenStream.RETURN:
+            return mapReturn(node);
 
-            case TokenStream.BREAK:
-                return mapBreak(node);
+        case TokenStream.BREAK:
+            return mapBreak(node);
 
-            case TokenStream.CONTINUE:
-                return mapContinue(node);
+        case TokenStream.CONTINUE:
+            return mapContinue(node);
 
-            case TokenStream.OBJLIT:
-                return mapObjectLit(node);
+        case TokenStream.OBJLIT:
+            return mapObjectLit(node);
 
-            case TokenStream.ARRAYLIT:
-                return mapArrayLit(node);
+        case TokenStream.ARRAYLIT:
+            return mapArrayLit(node);
 
-            case TokenStream.VAR:
-                return mapVar(node);
+        case TokenStream.VAR:
+            return mapVar(node);
 
-            case TokenStream.PRIMARY:
-                return mapPrimary(node);
+        case TokenStream.PRIMARY:
+            return mapPrimary(node);
 
-            case TokenStream.COMMA:
-                return mapBinaryOperation(JsBinaryOperator.COMMA, node);
+        case TokenStream.COMMA:
+            return mapBinaryOperation(JsBinaryOperator.COMMA, node);
 
-            case TokenStream.NEW:
-                return mapNew(node);
+        case TokenStream.NEW:
+            return mapNew(node);
 
-            case TokenStream.THROW:
-                return mapThrowStatement(node);
+        case TokenStream.THROW:
+            return mapThrowStatement(node);
 
-            case TokenStream.TRY:
-                return mapTryStatement(node);
+        case TokenStream.TRY:
+            return mapTryStatement(node);
 
-            case TokenStream.SWITCH:
-                return mapSwitchStatement(node);
+        case TokenStream.SWITCH:
+            return mapSwitchStatement(node);
 
-            case TokenStream.LABEL:
-                return mapLabel(node);
+        case TokenStream.LABEL:
+            return mapLabel(node);
 
-            default:
-                int tokenType = node.getType();
-                throw createParserException("Unexpected top-level token type: "
-                                            + tokenType, node);
+        default:
+            int tokenType = node.getType();
+            throw createParserException("Unexpected top-level token type: "
+                                        + tokenType, node);
         }
     }
 
@@ -237,7 +237,7 @@ public class JsAstMapper {
      * Produces a {@link JsNameRef}.
      */
     private JsNameRef mapAsPropertyNameRef(Node nameRefNode)
-            throws JsParserException {
+    throws JsParserException {
         JsNode unknown = map(nameRefNode);
         // This is weird, but for "a.b", the rhino AST calls "b" a string literal.
         // However, since we know it's for a PROPGET, we can unstringliteralize it.
@@ -252,52 +252,52 @@ public class JsAstMapper {
     }
 
     private JsExpression mapAssignmentVariant(Node asgNode)
-            throws JsParserException {
+    throws JsParserException {
         switch (asgNode.getOperation()) {
-            case TokenStream.NOP:
-                return mapBinaryOperation(JsBinaryOperator.ASG, asgNode);
+        case TokenStream.NOP:
+            return mapBinaryOperation(JsBinaryOperator.ASG, asgNode);
 
-            case TokenStream.ADD:
-                return mapBinaryOperation(JsBinaryOperator.ASG_ADD, asgNode);
+        case TokenStream.ADD:
+            return mapBinaryOperation(JsBinaryOperator.ASG_ADD, asgNode);
 
-            case TokenStream.SUB:
-                return mapBinaryOperation(JsBinaryOperator.ASG_SUB, asgNode);
+        case TokenStream.SUB:
+            return mapBinaryOperation(JsBinaryOperator.ASG_SUB, asgNode);
 
-            case TokenStream.MUL:
-                return mapBinaryOperation(JsBinaryOperator.ASG_MUL, asgNode);
+        case TokenStream.MUL:
+            return mapBinaryOperation(JsBinaryOperator.ASG_MUL, asgNode);
 
-            case TokenStream.DIV:
-                return mapBinaryOperation(JsBinaryOperator.ASG_DIV, asgNode);
+        case TokenStream.DIV:
+            return mapBinaryOperation(JsBinaryOperator.ASG_DIV, asgNode);
 
-            case TokenStream.MOD:
-                return mapBinaryOperation(JsBinaryOperator.ASG_MOD, asgNode);
+        case TokenStream.MOD:
+            return mapBinaryOperation(JsBinaryOperator.ASG_MOD, asgNode);
 
-            case TokenStream.BITAND:
-                return mapBinaryOperation(JsBinaryOperator.ASG_BIT_AND, asgNode);
+        case TokenStream.BITAND:
+            return mapBinaryOperation(JsBinaryOperator.ASG_BIT_AND, asgNode);
 
-            case TokenStream.BITOR:
-                return mapBinaryOperation(JsBinaryOperator.ASG_BIT_OR, asgNode);
+        case TokenStream.BITOR:
+            return mapBinaryOperation(JsBinaryOperator.ASG_BIT_OR, asgNode);
 
-            case TokenStream.BITXOR:
-                return mapBinaryOperation(JsBinaryOperator.ASG_BIT_XOR, asgNode);
+        case TokenStream.BITXOR:
+            return mapBinaryOperation(JsBinaryOperator.ASG_BIT_XOR, asgNode);
 
-            case TokenStream.LSH:
-                return mapBinaryOperation(JsBinaryOperator.ASG_SHL, asgNode);
+        case TokenStream.LSH:
+            return mapBinaryOperation(JsBinaryOperator.ASG_SHL, asgNode);
 
-            case TokenStream.RSH:
-                return mapBinaryOperation(JsBinaryOperator.ASG_SHR, asgNode);
+        case TokenStream.RSH:
+            return mapBinaryOperation(JsBinaryOperator.ASG_SHR, asgNode);
 
-            case TokenStream.URSH:
-                return mapBinaryOperation(JsBinaryOperator.ASG_SHRU, asgNode);
+        case TokenStream.URSH:
+            return mapBinaryOperation(JsBinaryOperator.ASG_SHRU, asgNode);
 
-            default:
-                throw createParserException("Unknown assignment operator variant: "
-                                            + asgNode.getOperation(), asgNode);
+        default:
+            throw createParserException("Unknown assignment operator variant: "
+                                        + asgNode.getOperation(), asgNode);
         }
     }
 
     private JsExpression mapBinaryOperation(JsBinaryOperator op, Node node)
-            throws JsParserException {
+    throws JsParserException {
         Node from1 = node.getFirstChild();
         Node from2 = from1.getNext();
 
@@ -385,11 +385,11 @@ public class JsAstMapper {
         JsExpression to = mapExpression(from);
         if (to instanceof JsNameRef) {
             return new JsPrefixOperation(
-                    JsUnaryOperator.DELETE, to);
+                       JsUnaryOperator.DELETE, to);
         }
         else if (to instanceof JsArrayAccess) {
             return new JsPrefixOperation(
-                    JsUnaryOperator.DELETE, to);
+                       JsUnaryOperator.DELETE, to);
         }
         else {
             return new JsNullLiteral();
@@ -397,7 +397,7 @@ public class JsAstMapper {
     }
 
     private JsStatement mapDoOrWhileStatement(boolean isWhile, Node ifNode)
-            throws JsParserException {
+    throws JsParserException {
 
         // Pull out the pieces we want to map.
         //
@@ -432,33 +432,33 @@ public class JsAstMapper {
 
     private JsExpression mapEqualityVariant(Node eqNode) throws JsParserException {
         switch (eqNode.getOperation()) {
-            case TokenStream.EQ:
-                return mapBinaryOperation(JsBinaryOperator.EQ, eqNode);
+        case TokenStream.EQ:
+            return mapBinaryOperation(JsBinaryOperator.EQ, eqNode);
 
-            case TokenStream.NE:
-                return mapBinaryOperation(JsBinaryOperator.NEQ, eqNode);
+        case TokenStream.NE:
+            return mapBinaryOperation(JsBinaryOperator.NEQ, eqNode);
 
-            case TokenStream.SHEQ:
-                return mapBinaryOperation(JsBinaryOperator.REF_EQ, eqNode);
+        case TokenStream.SHEQ:
+            return mapBinaryOperation(JsBinaryOperator.REF_EQ, eqNode);
 
-            case TokenStream.SHNE:
-                return mapBinaryOperation(JsBinaryOperator.REF_NEQ, eqNode);
+        case TokenStream.SHNE:
+            return mapBinaryOperation(JsBinaryOperator.REF_NEQ, eqNode);
 
-            case TokenStream.LT:
-                return mapBinaryOperation(JsBinaryOperator.LT, eqNode);
+        case TokenStream.LT:
+            return mapBinaryOperation(JsBinaryOperator.LT, eqNode);
 
-            case TokenStream.LE:
-                return mapBinaryOperation(JsBinaryOperator.LTE, eqNode);
+        case TokenStream.LE:
+            return mapBinaryOperation(JsBinaryOperator.LTE, eqNode);
 
-            case TokenStream.GT:
-                return mapBinaryOperation(JsBinaryOperator.GT, eqNode);
+        case TokenStream.GT:
+            return mapBinaryOperation(JsBinaryOperator.GT, eqNode);
 
-            case TokenStream.GE:
-                return mapBinaryOperation(JsBinaryOperator.GTE, eqNode);
+        case TokenStream.GE:
+            return mapBinaryOperation(JsBinaryOperator.GTE, eqNode);
 
-            default:
-                throw createParserException("Unknown equality operator variant: "
-                                            + eqNode.getOperation(), eqNode);
+        default:
+            throw createParserException("Unknown equality operator variant: "
+                                        + eqNode.getOperation(), eqNode);
         }
     }
 
@@ -634,15 +634,15 @@ public class JsAstMapper {
     }
 
     private JsExpression mapIncDecFixity(JsUnaryOperator op, Node node)
-            throws JsParserException {
+    throws JsParserException {
         switch (node.getOperation()) {
-            case TokenStream.PRE:
-                return mapPrefixOperation(op, node);
-            case TokenStream.POST:
-                return mapPostfixOperation(op, node);
-            default:
-                throw createParserException(
-                        "Unknown prefix/postfix variant: " + node.getOperation(), node);
+        case TokenStream.PRE:
+            return mapPrefixOperation(op, node);
+        case TokenStream.POST:
+            return mapPostfixOperation(op, node);
+        default:
+            throw createParserException(
+                "Unknown prefix/postfix variant: " + node.getOperation(), node);
         }
     }
 
@@ -666,7 +666,7 @@ public class JsAstMapper {
         //
         Node fromCtorExpr = newNode.getFirstChild();
         JsNew newExpr = new JsNew(
-                mapExpression(fromCtorExpr));
+            mapExpression(fromCtorExpr));
 
         // Iterate over and map the arguments.
         //
@@ -713,7 +713,7 @@ public class JsAstMapper {
             JsExpression toValueExpr = mapExpression(fromValueExpr);
 
             JsPropertyInitializer toPropInit = new JsPropertyInitializer(
-                    toLabelExpr, toValueExpr);
+                toLabelExpr, toValueExpr);
             toLit.getPropertyInitializers().add(toPropInit);
 
             // Begin the next property initializer, if there is one.
@@ -725,7 +725,7 @@ public class JsAstMapper {
     }
 
     private JsExpression mapOptionalExpression(Node exprNode)
-            throws JsParserException {
+    throws JsParserException {
         JsNode unknown = map(exprNode);
         if (unknown != null) {
             if (unknown instanceof JsExpression) {
@@ -739,14 +739,14 @@ public class JsAstMapper {
     }
 
     private JsExpression mapPostfixOperation(JsUnaryOperator op, Node node)
-            throws JsParserException {
+    throws JsParserException {
         Node from = node.getFirstChild();
         JsExpression to = mapExpression(from);
         return new JsPostfixOperation(op, to);
     }
 
     private JsExpression mapPrefixOperation(JsUnaryOperator op, Node node)
-            throws JsParserException {
+    throws JsParserException {
         Node from = node.getFirstChild();
         JsExpression to = mapExpression(from);
         return new JsPrefixOperation(op, to);
@@ -754,24 +754,24 @@ public class JsAstMapper {
 
     private static JsExpression mapPrimary(Node node) throws JsParserException {
         switch (node.getOperation()) {
-            case TokenStream.THIS:
-                return new JsThisRef();
+        case TokenStream.THIS:
+            return new JsThisRef();
 
-            case TokenStream.TRUE:
-                return new JsBooleanLiteral(true);
+        case TokenStream.TRUE:
+            return new JsBooleanLiteral(true);
 
-            case TokenStream.FALSE:
-                return new JsBooleanLiteral(false);
+        case TokenStream.FALSE:
+            return new JsBooleanLiteral(false);
 
-            case TokenStream.NULL:
-                return new JsNullLiteral();
+        case TokenStream.NULL:
+            return new JsNullLiteral();
 
-            case TokenStream.UNDEFINED:
-                return new JsNameRef("undefined");
+        case TokenStream.UNDEFINED:
+            return new JsNameRef("undefined");
 
-            default:
-                throw createParserException("Unknown primary: " + node.getOperation(),
-                                            node);
+        default:
+            throw createParserException("Unknown primary: " + node.getOperation(),
+                                        node);
         }
     }
 
@@ -790,29 +790,29 @@ public class JsAstMapper {
     }
 
     private JsExpression mapRelationalVariant(Node relNode)
-            throws JsParserException {
+    throws JsParserException {
         switch (relNode.getOperation()) {
-            case TokenStream.LT:
-                return mapBinaryOperation(JsBinaryOperator.LT, relNode);
+        case TokenStream.LT:
+            return mapBinaryOperation(JsBinaryOperator.LT, relNode);
 
-            case TokenStream.LE:
-                return mapBinaryOperation(JsBinaryOperator.LTE, relNode);
+        case TokenStream.LE:
+            return mapBinaryOperation(JsBinaryOperator.LTE, relNode);
 
-            case TokenStream.GT:
-                return mapBinaryOperation(JsBinaryOperator.GT, relNode);
+        case TokenStream.GT:
+            return mapBinaryOperation(JsBinaryOperator.GT, relNode);
 
-            case TokenStream.GE:
-                return mapBinaryOperation(JsBinaryOperator.GTE, relNode);
+        case TokenStream.GE:
+            return mapBinaryOperation(JsBinaryOperator.GTE, relNode);
 
-            case TokenStream.INSTANCEOF:
-                return mapBinaryOperation(JsBinaryOperator.INSTANCEOF, relNode);
+        case TokenStream.INSTANCEOF:
+            return mapBinaryOperation(JsBinaryOperator.INSTANCEOF, relNode);
 
-            case TokenStream.IN:
-                return mapBinaryOperation(JsBinaryOperator.INOP, relNode);
+        case TokenStream.IN:
+            return mapBinaryOperation(JsBinaryOperator.INOP, relNode);
 
-            default:
-                throw createParserException("Unknown relational operator variant: "
-                                            + relNode.getOperation(), relNode);
+        default:
+            throw createParserException("Unknown relational operator variant: "
+                                        + relNode.getOperation(), relNode);
         }
     }
 
@@ -838,7 +838,7 @@ public class JsAstMapper {
         JsExpression toRhs = mapExpression(fromRhs);
 
         return new JsBinaryOperation(
-                JsBinaryOperator.ASG, lhs, toRhs);
+                   JsBinaryOperator.ASG, lhs, toRhs);
     }
 
     private JsExpression mapSetProp(Node getPropNode) throws JsParserException {
@@ -852,23 +852,23 @@ public class JsAstMapper {
         JsExpression toRhs = mapExpression(fromRhs);
 
         return new JsBinaryOperation(
-                JsBinaryOperator.ASG, lhs, toRhs);
+                   JsBinaryOperator.ASG, lhs, toRhs);
     }
 
     private JsExpression mapShiftVariant(Node shiftNode) throws JsParserException {
         switch (shiftNode.getOperation()) {
-            case TokenStream.LSH:
-                return mapBinaryOperation(JsBinaryOperator.SHL, shiftNode);
+        case TokenStream.LSH:
+            return mapBinaryOperation(JsBinaryOperator.SHL, shiftNode);
 
-            case TokenStream.RSH:
-                return mapBinaryOperation(JsBinaryOperator.SHR, shiftNode);
+        case TokenStream.RSH:
+            return mapBinaryOperation(JsBinaryOperator.SHR, shiftNode);
 
-            case TokenStream.URSH:
-                return mapBinaryOperation(JsBinaryOperator.SHRU, shiftNode);
+        case TokenStream.URSH:
+            return mapBinaryOperation(JsBinaryOperator.SHRU, shiftNode);
 
-            default:
-                throw createParserException("Unknown equality operator variant: "
-                                            + shiftNode.getOperation(), shiftNode);
+        default:
+            throw createParserException("Unknown equality operator variant: "
+                                        + shiftNode.getOperation(), shiftNode);
         }
     }
 
@@ -894,7 +894,7 @@ public class JsAstMapper {
     }
 
     private void mapStatements(List<JsStatement> stmts, Node nodeStmts)
-            throws JsParserException {
+    throws JsParserException {
         Node curr = nodeStmts.getFirstChild();
         while (curr != null) {
             JsStatement stmt = mapStatement(curr);
@@ -910,7 +910,7 @@ public class JsAstMapper {
     }
 
     public List<JsStatement> mapStatements(Node nodeStmts)
-            throws JsParserException {
+    throws JsParserException {
         List<JsStatement> stmts = new ArrayList<>();
         mapStatements(stmts, nodeStmts);
         return stmts;
@@ -1038,36 +1038,36 @@ public class JsAstMapper {
 
     private JsExpression mapUnaryVariant(Node unOp) throws JsParserException {
         switch (unOp.getOperation()) {
-            case TokenStream.SUB: {
-                Node operand = unOp.getFirstChild();
-                if (operand.getType() == TokenStream.NUMBER_INT) {
-                    double value = operand.getDouble();
-                    if (-value >= Integer.MIN_VALUE) {
-                        return new JsIntLiteral((int) -value);
-                    }
+        case TokenStream.SUB: {
+            Node operand = unOp.getFirstChild();
+            if (operand.getType() == TokenStream.NUMBER_INT) {
+                double value = operand.getDouble();
+                if (-value >= Integer.MIN_VALUE) {
+                    return new JsIntLiteral((int) -value);
                 }
-
-                return mapPrefixOperation(JsUnaryOperator.NEG, unOp);
             }
 
-            case TokenStream.NOT:
-                return mapPrefixOperation(JsUnaryOperator.NOT, unOp);
+            return mapPrefixOperation(JsUnaryOperator.NEG, unOp);
+        }
 
-            case TokenStream.BITNOT:
-                return mapPrefixOperation(JsUnaryOperator.BIT_NOT, unOp);
+        case TokenStream.NOT:
+            return mapPrefixOperation(JsUnaryOperator.NOT, unOp);
 
-            case TokenStream.TYPEOF:
-                return mapPrefixOperation(JsUnaryOperator.TYPEOF, unOp);
+        case TokenStream.BITNOT:
+            return mapPrefixOperation(JsUnaryOperator.BIT_NOT, unOp);
 
-            case TokenStream.ADD:
-                return mapPrefixOperation(JsUnaryOperator.POS, unOp);
+        case TokenStream.TYPEOF:
+            return mapPrefixOperation(JsUnaryOperator.TYPEOF, unOp);
 
-            case TokenStream.VOID:
-                return mapPrefixOperation(JsUnaryOperator.VOID, unOp);
+        case TokenStream.ADD:
+            return mapPrefixOperation(JsUnaryOperator.POS, unOp);
 
-            default:
-                throw createParserException(
-                        "Unknown unary operator variant: " + unOp.getOperation(), unOp);
+        case TokenStream.VOID:
+            return mapPrefixOperation(JsUnaryOperator.VOID, unOp);
+
+        default:
+            throw createParserException(
+                "Unknown unary operator variant: " + unOp.getOperation(), unOp);
         }
     }
 

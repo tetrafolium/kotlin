@@ -29,8 +29,8 @@ import java.io.File;
 import java.util.List;
 
 @Mojo(name = "test-metadata", defaultPhase = LifecyclePhase.PROCESS_TEST_SOURCES, requiresDependencyResolution = ResolutionScope.TEST,
-        threadSafe = true
-)
+      threadSafe = true
+     )
 public class TestMetadataMojo extends MetadataMojo {
     @Parameter(property = "maven.test.skip", defaultValue = "false")
     private boolean skip;

@@ -51,10 +51,10 @@ public class SourceMapBuilderConsumer implements SourceLocationConsumer {
     private final List<Object> sourceStack = new ArrayList<>();
 
     public SourceMapBuilderConsumer(
-            @NotNull File sourceBaseDir,
-            @NotNull SourceMapMappingConsumer mappingConsumer,
-            @NotNull SourceFilePathResolver pathResolver,
-            boolean provideCurrentModuleContent, boolean provideExternalModuleContent
+        @NotNull File sourceBaseDir,
+        @NotNull SourceMapMappingConsumer mappingConsumer,
+        @NotNull SourceFilePathResolver pathResolver,
+        boolean provideCurrentModuleContent, boolean provideExternalModuleContent
     ) {
         this.sourceBaseDir = sourceBaseDir;
         this.mappingConsumer = mappingConsumer;
@@ -117,8 +117,8 @@ public class SourceMapBuilderConsumer implements SourceLocationConsumer {
             String path;
 
             File absFile = new File(location.getFile()).isAbsolute() ?
-                           new File(location.getFile()) :
-                           new File(sourceBaseDir, location.getFile());
+            new File(location.getFile()) :
+            new File(sourceBaseDir, location.getFile());
             if (absFile.isAbsolute()) {
                 try {
                     path = pathResolver.getPathRelativeToSourceRoots(absFile);
@@ -131,7 +131,7 @@ public class SourceMapBuilderConsumer implements SourceLocationConsumer {
                 path = location.getFile();
             }
             mappingConsumer.addMapping(path, location.getIdentityObject(), contentSupplier,
-                               location.getStartLine(), location.getStartChar());
+                                       location.getStartLine(), location.getStartChar());
         }
     }
 }

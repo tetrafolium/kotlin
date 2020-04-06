@@ -8,14 +8,14 @@ import org.jetbrains.kotlin.js.util.AstUtil;
 import org.jetbrains.annotations.NotNull;
 
 public final class JsPostfixOperation extends JsUnaryOperation {
-  public JsPostfixOperation(JsUnaryOperator op, JsExpression arg) {
-    super(op, arg);
-  }
+    public JsPostfixOperation(JsUnaryOperator op, JsExpression arg) {
+        super(op, arg);
+    }
 
-  @Override
-  public void accept(JsVisitor v) {
-    v.visitPostfixOperation(this);
-  }
+    @Override
+    public void accept(JsVisitor v) {
+        v.visitPostfixOperation(this);
+    }
 
     @Override
     public void traverse(JsVisitorWithContext v, JsContext ctx) {

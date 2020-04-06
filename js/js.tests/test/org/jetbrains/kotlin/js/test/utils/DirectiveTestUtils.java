@@ -331,32 +331,32 @@ public class DirectiveTestUtils {
     };
 
     private static final List<DirectiveHandler> DIRECTIVE_HANDLERS = Arrays.asList(
-            FUNCTION_CONTAINS_NO_CALLS,
-            FUNCTION_NOT_CALLED,
-            FUNCTION_CALLED_TIMES,
-            PROPERTY_NOT_USED,
-            PROPERTY_NOT_READ_FROM,
-            PROPERTY_NOT_WRITTEN_TO,
-            PROPERTY_READ_COUNT,
-            PROPERTY_WRITE_COUNT,
-            FUNCTION_CALLED_IN_SCOPE,
-            FUNCTION_NOT_CALLED_IN_SCOPE,
-            FUNCTIONS_HAVE_SAME_LINES,
-            ONLY_THIS_QUALIFIED_REFERENCES,
-            COUNT_LABELS,
-            COUNT_VARS,
-            COUNT_BREAKS,
-            COUNT_NULLS,
-            COUNT_NEW,
-            COUNT_CASES,
-            COUNT_IF,
-            COUNT_DEBUGGER,
-            NOT_REFERENCED,
-            HAS_INLINE_METADATA,
-            HAS_NO_INLINE_METADATA,
-            HAS_NO_CAPTURED_VARS,
-            DECLARES_VARIABLE
-    );
+                FUNCTION_CONTAINS_NO_CALLS,
+                FUNCTION_NOT_CALLED,
+                FUNCTION_CALLED_TIMES,
+                PROPERTY_NOT_USED,
+                PROPERTY_NOT_READ_FROM,
+                PROPERTY_NOT_WRITTEN_TO,
+                PROPERTY_READ_COUNT,
+                PROPERTY_WRITE_COUNT,
+                FUNCTION_CALLED_IN_SCOPE,
+                FUNCTION_NOT_CALLED_IN_SCOPE,
+                FUNCTIONS_HAVE_SAME_LINES,
+                ONLY_THIS_QUALIFIED_REFERENCES,
+                COUNT_LABELS,
+                COUNT_VARS,
+                COUNT_BREAKS,
+                COUNT_NULLS,
+                COUNT_NEW,
+                COUNT_CASES,
+                COUNT_IF,
+                COUNT_DEBUGGER,
+                NOT_REFERENCED,
+                HAS_INLINE_METADATA,
+                HAS_NO_INLINE_METADATA,
+                HAS_NO_CAPTURED_VARS,
+                DECLARES_VARIABLE
+            );
 
     public static void processDirectives(@NotNull JsNode ast, @NotNull String sourceCode) throws Exception {
         for (DirectiveHandler handler : DIRECTIVE_HANDLERS) {
@@ -365,7 +365,7 @@ public class DirectiveTestUtils {
     }
 
     public static void checkFunctionContainsNoCalls(JsNode node, String functionName, @NotNull Set<String> exceptFunctionNames)
-            throws Exception {
+    throws Exception {
         JsFunction function = AstSearchUtil.getFunction(node, functionName);
         CallCounter counter = CallCounter.countCalls(function, exceptFunctionNames);
         int callsCount = counter.getTotalCallsCount();
@@ -383,7 +383,7 @@ public class DirectiveTestUtils {
     }
 
     public static void checkPropertyNotUsed(JsNode node, String propertyName, String scope, boolean isGetAllowed, boolean isSetAllowed)
-            throws Exception {
+    throws Exception {
         PropertyReferenceCollector counter = PropertyReferenceCollector.Companion.collect(findScope(node, scope));
         if (!isGetAllowed) {
             assertFalse("property getter for `" + propertyName + "`"  + " in scope: " + scope + " is called",
@@ -408,7 +408,7 @@ public class DirectiveTestUtils {
     }
 
     public static void checkFunctionNotCalled(@NotNull JsNode node, @NotNull String functionName, @Nullable String exceptFunction)
-            throws Exception {
+    throws Exception {
         Set<String> excludedScopes = exceptFunction != null ? Collections.singleton(exceptFunction) : Collections.emptySet();
 
         CallCounter counter = CallCounter.countCallsWithExcludedScopes(node, excludedScopes);
@@ -420,30 +420,30 @@ public class DirectiveTestUtils {
     }
 
     public static void checkCalledInScope(
-            @NotNull JsNode node,
-            @NotNull String functionName,
-            @NotNull String scopeFunctionName,
-            boolean checkQualifier
+        @NotNull JsNode node,
+        @NotNull String functionName,
+        @NotNull String scopeFunctionName,
+        boolean checkQualifier
     ) throws Exception {
         String errorMessage = functionName + " is not called inside " + scopeFunctionName;
         assertFalse(errorMessage, isCalledInScope(node, functionName, scopeFunctionName, checkQualifier));
     }
 
     public static void checkNotCalledInScope(
-            @NotNull JsNode node,
-            @NotNull String functionName,
-            @NotNull String scopeFunctionName,
-            boolean checkQualifier
+        @NotNull JsNode node,
+        @NotNull String functionName,
+        @NotNull String scopeFunctionName,
+        boolean checkQualifier
     ) throws Exception {
         String errorMessage = functionName + " is called inside " + scopeFunctionName;
         assertTrue(errorMessage, isCalledInScope(node, functionName, scopeFunctionName, checkQualifier));
     }
 
     private static boolean isCalledInScope(
-            @NotNull JsNode node,
-            @NotNull String functionName,
-            @NotNull String scopeFunctionName,
-            boolean checkQualifier
+        @NotNull JsNode node,
+        @NotNull String functionName,
+        @NotNull String scopeFunctionName,
+        boolean checkQualifier
     ) throws Exception {
         JsNode scope = AstSearchUtil.getFunction(node, scopeFunctionName);
 
@@ -506,9 +506,14 @@ public class DirectiveTestUtils {
                 String[] keyVal = argument.split("=");
 
                 switch (keyVal.length) {
-                    case 1: positionalArguments.add(keyVal[0]); break;
-                    case 2: namedArguments.put(keyVal[0], keyVal[1]); break;
-                    default: throw new AssertionError("Wrong argument format: " + argument);
+                case 1:
+                    positionalArguments.add(keyVal[0]);
+                    break;
+                case 2:
+                    namedArguments.put(keyVal[0], keyVal[1]);
+                    break;
+                default:
+                    throw new AssertionError("Wrong argument format: " + argument);
                 }
             }
         }

@@ -90,9 +90,9 @@ public abstract class AbstractHierarchyTest extends KotlinHierarchyViewTestBase 
             @Override
             public HierarchyTreeStructure compute() {
                 return new SupertypesHierarchyTreeStructure(
-                        getProject(),
-                        (PsiClass) getElementAtCaret(LanguageTypeHierarchy.INSTANCE)
-                );
+                           getProject(),
+                           (PsiClass) getElementAtCaret(LanguageTypeHierarchy.INSTANCE)
+                       );
             }
         };
     }
@@ -102,10 +102,10 @@ public abstract class AbstractHierarchyTest extends KotlinHierarchyViewTestBase 
             @Override
             public HierarchyTreeStructure compute() {
                 return new SubtypesHierarchyTreeStructure(
-                        getProject(),
-                        (PsiClass) getElementAtCaret(LanguageTypeHierarchy.INSTANCE),
-                        HierarchyBrowserBaseEx.SCOPE_PROJECT
-                );
+                           getProject(),
+                           (PsiClass) getElementAtCaret(LanguageTypeHierarchy.INSTANCE),
+                           HierarchyBrowserBaseEx.SCOPE_PROJECT
+                       );
             }
         };
     }
@@ -115,10 +115,10 @@ public abstract class AbstractHierarchyTest extends KotlinHierarchyViewTestBase 
             @Override
             public HierarchyTreeStructure compute() {
                 return new TypeHierarchyTreeStructure(
-                        getProject(),
-                        (PsiClass) getElementAtCaret(LanguageTypeHierarchy.INSTANCE),
-                        HierarchyBrowserBaseEx.SCOPE_PROJECT
-                );
+                           getProject(),
+                           (PsiClass) getElementAtCaret(LanguageTypeHierarchy.INSTANCE),
+                           HierarchyBrowserBaseEx.SCOPE_PROJECT
+                       );
             }
         };
     }
@@ -128,9 +128,9 @@ public abstract class AbstractHierarchyTest extends KotlinHierarchyViewTestBase 
             @Override
             public HierarchyTreeStructure compute() {
                 return new KotlinCallerTreeStructure(
-                        (KtElement) getElementAtCaret(LanguageCallHierarchy.INSTANCE),
-                        HierarchyBrowserBaseEx.SCOPE_PROJECT
-                );
+                           (KtElement) getElementAtCaret(LanguageCallHierarchy.INSTANCE),
+                           HierarchyBrowserBaseEx.SCOPE_PROJECT
+                       );
             }
         };
     }
@@ -140,10 +140,10 @@ public abstract class AbstractHierarchyTest extends KotlinHierarchyViewTestBase 
             @Override
             public HierarchyTreeStructure compute() {
                 return new CallerMethodsTreeStructure(
-                        getProject(),
-                        (PsiMethod) getElementAtCaret(LanguageCallHierarchy.INSTANCE),
-                        HierarchyBrowserBaseEx.SCOPE_PROJECT
-                );
+                           getProject(),
+                           (PsiMethod) getElementAtCaret(LanguageCallHierarchy.INSTANCE),
+                           HierarchyBrowserBaseEx.SCOPE_PROJECT
+                       );
             }
         };
     }
@@ -153,9 +153,9 @@ public abstract class AbstractHierarchyTest extends KotlinHierarchyViewTestBase 
             @Override
             public HierarchyTreeStructure compute() {
                 return new KotlinCalleeTreeStructure(
-                        (KtElement) getElementAtCaret(LanguageCallHierarchy.INSTANCE),
-                        HierarchyBrowserBaseEx.SCOPE_PROJECT
-                );
+                           (KtElement) getElementAtCaret(LanguageCallHierarchy.INSTANCE),
+                           HierarchyBrowserBaseEx.SCOPE_PROJECT
+                       );
             }
         };
     }
@@ -165,9 +165,9 @@ public abstract class AbstractHierarchyTest extends KotlinHierarchyViewTestBase 
             @Override
             public HierarchyTreeStructure compute() {
                 return new KotlinOverrideTreeStructure(
-                        getProject(),
-                        (KtCallableDeclaration) getElementAtCaret(LanguageMethodHierarchy.INSTANCE)
-                );
+                           getProject(),
+                           (KtCallableDeclaration) getElementAtCaret(LanguageMethodHierarchy.INSTANCE)
+                       );
             }
         };
     }
@@ -187,10 +187,10 @@ public abstract class AbstractHierarchyTest extends KotlinHierarchyViewTestBase 
         context.put(CommonDataKeys.PROJECT, getProject());
         context.put(CommonDataKeys.EDITOR, editor);
         PsiElement targetElement = (PsiElement) new TextEditorPsiDataProvider().getData(
-                CommonDataKeys.PSI_ELEMENT.getName(),
-                editor,
-                editor.getCaretModel().getCurrentCaret()
-        );
+                                       CommonDataKeys.PSI_ELEMENT.getName(),
+                                       editor,
+                                       editor.getCaretModel().getCurrentCaret()
+                                   );
         context.put(CommonDataKeys.PSI_ELEMENT, targetElement);
         return context;
     }
@@ -213,7 +213,7 @@ public abstract class AbstractHierarchyTest extends KotlinHierarchyViewTestBase 
 
     @Override
     protected void doHierarchyTest(
-            @NotNull Computable<? extends HierarchyTreeStructure> treeStructureComputable, @NotNull String... fileNames
+        @NotNull Computable<? extends HierarchyTreeStructure> treeStructureComputable, @NotNull String... fileNames
     ) throws Exception {
         try {
             super.doHierarchyTest(treeStructureComputable, fileNames);
@@ -231,7 +231,7 @@ public abstract class AbstractHierarchyTest extends KotlinHierarchyViewTestBase 
         catch (ComparisonFailure failure) {
             String actual = ComparisonDetailsExtractor.getActual(failure);
             String verificationFilePath =
-                    getTestDataPath() + "/" + getTestName(false) + "_verification.xml";
+                getTestDataPath() + "/" + getTestName(false) + "_verification.xml";
             KotlinTestUtils.assertEqualsToFile(new File(verificationFilePath), actual);
         }
     }

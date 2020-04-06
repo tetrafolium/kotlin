@@ -47,7 +47,7 @@ public class NavigateToLibraryRegressionTest extends LightCodeInsightFixtureTest
     public void testRefToClassesWithAltSignatureAnnotations() {
         PsiElement navigationElement = configureAndResolve("fun foo(e : java.util.Map.Entry<String, String>) { e.<caret>getKey(); }");
         PsiClass expectedClass =
-                JavaPsiFacade.getInstance(getProject()).findClass("java.util.Map.Entry", GlobalSearchScope.allScope(getProject()));
+            JavaPsiFacade.getInstance(getProject()).findClass("java.util.Map.Entry", GlobalSearchScope.allScope(getProject()));
         assertSame(expectedClass, navigationElement.getParent());
     }
 

@@ -101,13 +101,13 @@ public abstract class AbstractSafeDeleteTest extends KotlinLightCodeInsightFixtu
     }
 
     private <T extends PsiElement> void doTest(
-            @NotNull String path, @NotNull Class<T> elementClass, boolean withJava) throws Exception {
+        @NotNull String path, @NotNull Class<T> elementClass, boolean withJava) throws Exception {
         String[] filePaths;
         if (withJava) {
-            filePaths = new String[]{path, path.endsWith(".java") ? path.replace(".java", ".kt") : path.replace(".kt", ".java")};
+            filePaths = new String[] {path, path.endsWith(".java") ? path.replace(".java", ".kt") : path.replace(".kt", ".java")};
         }
         else {
-            filePaths = new String[]{path};
+            filePaths = new String[] {path};
         }
 
         Editor[] editors = new Editor[filePaths.length];
@@ -120,8 +120,8 @@ public abstract class AbstractSafeDeleteTest extends KotlinLightCodeInsightFixtu
         PsiElement elementAtCaret = null;
         for (Editor editor : editors) {
             elementAtCaret = TargetElementUtil.findTargetElement(
-                    editor, TargetElementUtil.REFERENCED_ELEMENT_ACCEPTED | TargetElementUtil.ELEMENT_NAME_ACCEPTED
-            );
+                                 editor, TargetElementUtil.REFERENCED_ELEMENT_ACCEPTED | TargetElementUtil.ELEMENT_NAME_ACCEPTED
+                             );
             if (elementAtCaret != null) break;
         }
 

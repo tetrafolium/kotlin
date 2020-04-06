@@ -123,7 +123,7 @@ public final class PsiUtils {
 
     @NotNull
     public static JsLocation extractLocationFromPsi(@NotNull PsiElement element, @NotNull SourceFilePathResolver pathResolver)
-            throws IOException {
+    throws IOException {
         PsiFile psiFile = element.getContainingFile();
         int offset = element.getNode().getStartOffset();
         Document document = psiFile.getViewProvider().getDocument();

@@ -98,8 +98,8 @@ public class QuickFixUtil {
 
     @Nullable
     public static KtParameter getParameterDeclarationForValueArgument(
-            @NotNull ResolvedCall<?> resolvedCall,
-            @Nullable ValueArgument valueArgument
+        @NotNull ResolvedCall<?> resolvedCall,
+        @Nullable ValueArgument valueArgument
     ) {
         PsiElement declaration = safeGetDeclaration(CallUtilKt.getParameterForArgument(resolvedCall, valueArgument));
         return declaration instanceof KtParameter ? (KtParameter) declaration : null;
@@ -116,7 +116,7 @@ public class QuickFixUtil {
         KtIfExpression ifExpression = PsiTreeUtil.getParentOfType(expression, KtIfExpression.class, true);
         if (ifExpression == null) return null;
         if (equalOrLastInBlock(ifExpression.getThen(), expression)
-            || equalOrLastInBlock(ifExpression.getElse(), expression)) {
+                || equalOrLastInBlock(ifExpression.getElse(), expression)) {
             return ifExpression;
         }
         return null;
@@ -154,7 +154,7 @@ public class QuickFixUtil {
                 continue;
             }
             if (childParent instanceof KtDotQualifiedExpression &&
-                (child instanceof KtCallExpression || child instanceof KtDotQualifiedExpression)) {
+                    (child instanceof KtCallExpression || child instanceof KtDotQualifiedExpression)) {
                 child = (KtExpression) childParent;
                 continue;
             }
@@ -184,8 +184,8 @@ public class QuickFixUtil {
         ClassifierDescriptor typeClassifierDescriptor = type.getConstructor().getDeclarationDescriptor();
         FqName typeFqName = typeClassifierDescriptor != null ? DescriptorUtils.getFqNameSafe(typeClassifierDescriptor) : fqNameToCheckAgainst;
         DescriptorRenderer renderer = typeFqName.shortName().equals(fqNameToCheckAgainst.shortName())
-               ? IdeDescriptorRenderers.SOURCE_CODE
-               : IdeDescriptorRenderers.SOURCE_CODE_SHORT_NAMES_NO_ANNOTATIONS;
+                                      ? IdeDescriptorRenderers.SOURCE_CODE
+                                      : IdeDescriptorRenderers.SOURCE_CODE_SHORT_NAMES_NO_ANNOTATIONS;
         return renderer.renderType(type);
     }
 }

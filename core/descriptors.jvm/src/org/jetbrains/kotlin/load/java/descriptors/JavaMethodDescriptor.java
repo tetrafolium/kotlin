@@ -35,7 +35,7 @@ public class JavaMethodDescriptor extends SimpleFunctionDescriptorImpl implement
     // org.jetbrains.kotlin.descriptors.impl.FunctionDescriptorImpl.initialize accepts extension parameter descriptor
     // instead of type
     public static final UserDataKey<ValueParameterDescriptor> ORIGINAL_VALUE_PARAMETER_FOR_EXTENSION_RECEIVER =
-            new UserDataKey<ValueParameterDescriptor>() {};
+    new UserDataKey<ValueParameterDescriptor>() {};
 
     private enum ParameterNamesStatus {
         NON_STABLE_DECLARED(false, false),
@@ -55,29 +55,29 @@ public class JavaMethodDescriptor extends SimpleFunctionDescriptorImpl implement
         @NotNull
         public static ParameterNamesStatus get(boolean stable, boolean synthesized) {
             return stable ? (synthesized ? STABLE_SYNTHESIZED : STABLE_DECLARED) :
-                   (synthesized ? NON_STABLE_SYNTHESIZED : NON_STABLE_DECLARED);
+            (synthesized ? NON_STABLE_SYNTHESIZED : NON_STABLE_DECLARED);
         }
     }
 
     private ParameterNamesStatus parameterNamesStatus = null;
 
     protected JavaMethodDescriptor(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @Nullable SimpleFunctionDescriptor original,
-            @NotNull Annotations annotations,
-            @NotNull Name name,
-            @NotNull Kind kind,
-            @NotNull SourceElement source
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @Nullable SimpleFunctionDescriptor original,
+        @NotNull Annotations annotations,
+        @NotNull Name name,
+        @NotNull Kind kind,
+        @NotNull SourceElement source
     ) {
         super(containingDeclaration, original, annotations, name, kind, source);
     }
 
     @NotNull
     public static JavaMethodDescriptor createJavaMethod(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull Annotations annotations,
-            @NotNull Name name,
-            @NotNull SourceElement source
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull Annotations annotations,
+        @NotNull Name name,
+        @NotNull SourceElement source
     ) {
         return new JavaMethodDescriptor(containingDeclaration, null, annotations, name, Kind.DECLARATION, source);
     }
@@ -85,19 +85,19 @@ public class JavaMethodDescriptor extends SimpleFunctionDescriptorImpl implement
     @NotNull
     @Override
     public SimpleFunctionDescriptorImpl initialize(
-            @Nullable ReceiverParameterDescriptor extensionReceiverParameter,
-            @Nullable ReceiverParameterDescriptor dispatchReceiverParameter,
-            @NotNull List<? extends TypeParameterDescriptor> typeParameters,
-            @NotNull List<ValueParameterDescriptor> unsubstitutedValueParameters,
-            @Nullable KotlinType unsubstitutedReturnType,
-            @Nullable Modality modality,
-            @NotNull Visibility visibility,
-            @Nullable Map<? extends UserDataKey<?>, ?> userData
+        @Nullable ReceiverParameterDescriptor extensionReceiverParameter,
+        @Nullable ReceiverParameterDescriptor dispatchReceiverParameter,
+        @NotNull List<? extends TypeParameterDescriptor> typeParameters,
+        @NotNull List<ValueParameterDescriptor> unsubstitutedValueParameters,
+        @Nullable KotlinType unsubstitutedReturnType,
+        @Nullable Modality modality,
+        @NotNull Visibility visibility,
+        @Nullable Map<? extends UserDataKey<?>, ?> userData
     ) {
         SimpleFunctionDescriptorImpl descriptor = super.initialize(
-                extensionReceiverParameter, dispatchReceiverParameter, typeParameters, unsubstitutedValueParameters,
-                unsubstitutedReturnType, modality, visibility, userData
-        );
+                    extensionReceiverParameter, dispatchReceiverParameter, typeParameters, unsubstitutedValueParameters,
+                    unsubstitutedReturnType, modality, visibility, userData
+                );
         setOperator(OperatorChecks.INSTANCE.check(descriptor).isSuccess());
         return descriptor;
     }
@@ -121,20 +121,20 @@ public class JavaMethodDescriptor extends SimpleFunctionDescriptorImpl implement
     @NotNull
     @Override
     protected JavaMethodDescriptor createSubstitutedCopy(
-            @NotNull DeclarationDescriptor newOwner,
-            @Nullable FunctionDescriptor original,
-            @NotNull Kind kind,
-            @Nullable Name newName,
-            @NotNull Annotations annotations,
-            @NotNull SourceElement source
+        @NotNull DeclarationDescriptor newOwner,
+        @Nullable FunctionDescriptor original,
+        @NotNull Kind kind,
+        @Nullable Name newName,
+        @NotNull Annotations annotations,
+        @NotNull SourceElement source
     ) {
         JavaMethodDescriptor result = new JavaMethodDescriptor(
-                newOwner,
-                (SimpleFunctionDescriptor) original,
-                annotations,
-                newName != null ? newName : getName(),
-                kind,
-                source
+            newOwner,
+            (SimpleFunctionDescriptor) original,
+            annotations,
+            newName != null ? newName : getName(),
+            kind,
+            source
         );
         result.setParameterNamesStatus(hasStableParameterNames(), hasSynthesizedParameterNames());
         return result;
@@ -143,27 +143,27 @@ public class JavaMethodDescriptor extends SimpleFunctionDescriptorImpl implement
     @Override
     @NotNull
     public JavaMethodDescriptor enhance(
-            @Nullable KotlinType enhancedReceiverType,
-            @NotNull List<ValueParameterData> enhancedValueParametersData,
-            @NotNull KotlinType enhancedReturnType,
-            @Nullable Pair<UserDataKey<?>, ?> additionalUserData
+        @Nullable KotlinType enhancedReceiverType,
+        @NotNull List<ValueParameterData> enhancedValueParametersData,
+        @NotNull KotlinType enhancedReturnType,
+        @Nullable Pair<UserDataKey<?>, ?> additionalUserData
     ) {
         List<ValueParameterDescriptor> enhancedValueParameters =
-                UtilKt.copyValueParameters(enhancedValueParametersData, getValueParameters(), this);
+            UtilKt.copyValueParameters(enhancedValueParametersData, getValueParameters(), this);
 
         ReceiverParameterDescriptor enhancedReceiver =
-                enhancedReceiverType == null ? null : DescriptorFactory.createExtensionReceiverParameterForCallable(
-                        this, enhancedReceiverType, Annotations.Companion.getEMPTY()
-                );
+            enhancedReceiverType == null ? null : DescriptorFactory.createExtensionReceiverParameterForCallable(
+                this, enhancedReceiverType, Annotations.Companion.getEMPTY()
+            );
 
         JavaMethodDescriptor enhancedMethod =
-                (JavaMethodDescriptor) newCopyBuilder()
-                        .setValueParameters(enhancedValueParameters)
-                        .setReturnType(enhancedReturnType)
-                        .setExtensionReceiverParameter(enhancedReceiver)
-                        .setDropOriginalInContainingParts()
-                        .setPreserveSourceElement()
-                        .build();
+            (JavaMethodDescriptor) newCopyBuilder()
+            .setValueParameters(enhancedValueParameters)
+            .setReturnType(enhancedReturnType)
+            .setExtensionReceiverParameter(enhancedReceiver)
+            .setDropOriginalInContainingParts()
+            .setPreserveSourceElement()
+            .build();
 
         assert enhancedMethod != null : "null after substitution while enhancing " + toString();
 

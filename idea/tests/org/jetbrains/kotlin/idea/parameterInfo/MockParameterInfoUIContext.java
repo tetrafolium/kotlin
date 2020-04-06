@@ -22,11 +22,11 @@ public class MockParameterInfoUIContext implements ParameterInfoUIContext {
         myParameterOwner = parameterOwner;
         myCurrentParameterIndex = currentParameterIndex;
     }
-    
+
     @Override
     public String setupUIComponentPresentation(String text, int highlightStartOffset, int highlightEndOffset,
-                                             boolean isDisabled, boolean strikeout,
-                                             boolean isDisabledBeforeHighlight, Color background) {
+            boolean isDisabled, boolean strikeout,
+            boolean isDisabledBeforeHighlight, Color background) {
         String highlightedText;
         if (highlightStartOffset != -1 && highlightEndOffset != -1) {
             highlightedText = text.substring(0, highlightStartOffset)
@@ -87,7 +87,7 @@ public class MockParameterInfoUIContext implements ParameterInfoUIContext {
     public Color getDefaultParameterColor() {
         return null;
     }
-    
+
     public String getResultText() {
         StringBuilder stringBuilder = new StringBuilder();
         Collections.sort(result);

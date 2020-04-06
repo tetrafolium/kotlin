@@ -26,9 +26,9 @@ public interface KotlinGradleModelFacade {
 
     @Nullable
     default String getResolvedVersionByModuleData(
-            @NotNull DataNode<?> moduleData,
-            @NotNull String groupId,
-            @NotNull List<String> libraryIds
+        @NotNull DataNode<?> moduleData,
+        @NotNull String groupId,
+        @NotNull List<String> libraryIds
     ) {
         //noinspection deprecation
         return getResolvedKotlinStdlibVersionByModuleData(moduleData, libraryIds);

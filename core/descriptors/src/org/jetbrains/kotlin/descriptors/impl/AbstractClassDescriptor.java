@@ -87,8 +87,8 @@ public abstract class AbstractClassDescriptor implements ClassDescriptor {
     @Override
     public MemberScope getMemberScope(@NotNull List<? extends TypeProjection> typeArguments) {
         assert typeArguments.size() == getTypeConstructor().getParameters().size() : "Illegal number of type arguments: expected "
-                                                                                     + getTypeConstructor().getParameters().size() + " but was " + typeArguments.size()
-                                                                                     + " for " + getTypeConstructor() + " " + getTypeConstructor().getParameters();
+        + getTypeConstructor().getParameters().size() + " but was " + typeArguments.size()
+            + " for " + getTypeConstructor() + " " + getTypeConstructor().getParameters();
         if (typeArguments.isEmpty()) return getUnsubstitutedMemberScope();
 
         TypeSubstitutor substitutor = TypeConstructorSubstitution.create(getTypeConstructor(), typeArguments).buildSubstitutor();

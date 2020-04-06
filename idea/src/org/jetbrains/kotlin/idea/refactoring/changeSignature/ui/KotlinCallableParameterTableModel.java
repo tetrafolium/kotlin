@@ -33,10 +33,10 @@ public abstract class KotlinCallableParameterTableModel extends ParameterTableMo
     private final KotlinMethodDescriptor methodDescriptor;
 
     protected KotlinCallableParameterTableModel(
-            KotlinMethodDescriptor methodDescriptor,
-            PsiElement typeContext,
-            PsiElement defaultValueContext,
-            ColumnInfo... columnInfos
+        KotlinMethodDescriptor methodDescriptor,
+        PsiElement typeContext,
+        PsiElement defaultValueContext,
+        ColumnInfo... columnInfos
     ) {
         super(typeContext, defaultValueContext, columnInfos);
         this.methodDescriptor = methodDescriptor;
@@ -64,9 +64,9 @@ public abstract class KotlinCallableParameterTableModel extends ParameterTableMo
         PsiCodeFragment paramTypeCodeFragment = psiFactory.createTypeCodeFragment(KotlinTypeInfoKt.render(parameterInfo.getCurrentTypeInfo()), myTypeContext);
         KtExpression defaultValueForCall = parameterInfo.getDefaultValueForCall();
         PsiCodeFragment defaultValueCodeFragment = psiFactory.createExpressionCodeFragment(
-                defaultValueForCall != null ? defaultValueForCall.getText() : "",
-                myDefaultValueContext
-        );
+                    defaultValueForCall != null ? defaultValueForCall.getText() : "",
+                    myDefaultValueContext
+                );
         return new ParameterTableModelItemBase<KotlinParameterInfo>(parameterInfo, paramTypeCodeFragment, defaultValueCodeFragment) {
             @Override
             public boolean isEllipsisType() {

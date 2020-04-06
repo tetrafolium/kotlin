@@ -30,13 +30,13 @@ public class CreateLibraryDialogWithModules extends CreateLibraryDialogBase {
     private final ChooseModulePanel chooseModulePanel;
 
     public CreateLibraryDialogWithModules(
-            @NotNull Project project,
-            @NotNull KotlinProjectConfigurator configurator,
-            @NotNull String defaultPath,
-            boolean showPathPanel,
-            @NotNull String title,
-            @NotNull String libraryCaption,
-            @NotNull Collection<Module> excludeModules
+        @NotNull Project project,
+        @NotNull KotlinProjectConfigurator configurator,
+        @NotNull String defaultPath,
+        boolean showPathPanel,
+        @NotNull String title,
+        @NotNull String libraryCaption,
+        @NotNull Collection<Module> excludeModules
     ) {
         super(project, defaultPath, title, libraryCaption);
 

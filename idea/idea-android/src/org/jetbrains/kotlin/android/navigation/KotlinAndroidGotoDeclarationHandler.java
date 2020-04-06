@@ -107,10 +107,10 @@ public class KotlinAndroidGotoDeclarationHandler implements GotoDeclarationHandl
     }
 
     private static void collectManifestElements(
-            @NotNull String nestedClassName,
-            @NotNull String fieldName,
-            @NotNull AndroidFacet facet,
-            @NotNull List<PsiElement> result
+        @NotNull String nestedClassName,
+        @NotNull String fieldName,
+        @NotNull AndroidFacet facet,
+        @NotNull List<PsiElement> result
     ) {
         Manifest manifest = facet.getManifest();
 

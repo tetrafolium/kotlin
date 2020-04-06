@@ -21,6 +21,6 @@ import org.jetbrains.kotlin.idea.configuration.AbstractGradleConfigureProjectByC
 
 public abstract class AbstractConfigureProjectTest extends AbstractGradleConfigureProjectByChangingFileTest {
     public void doTestAndroidGradle(@NotNull String path) throws Exception {
-         doTest(path, path.replace("before", "after"), new KotlinAndroidGradleModuleConfigurator());
+        doTest(path, path.replace("before", "after"), new KotlinAndroidGradleModuleConfigurator());
     }
 }

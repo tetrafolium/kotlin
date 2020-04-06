@@ -25,7 +25,7 @@ import java.util.Collection;
 import java.util.List;
 
 public interface CallableDescriptor extends DeclarationDescriptorWithVisibility, DeclarationDescriptorNonRoot,
-                                            Substitutable<CallableDescriptor> {
+    Substitutable<CallableDescriptor> {
     @Nullable
     ReceiverParameterDescriptor getExtensionReceiverParameter();
 

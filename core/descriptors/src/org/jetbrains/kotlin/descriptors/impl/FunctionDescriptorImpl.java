@@ -52,12 +52,12 @@ public abstract class FunctionDescriptorImpl extends DeclarationDescriptorNonRoo
     protected Map<UserDataKey<?>, Object> userDataMap = null;
 
     protected FunctionDescriptorImpl(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @Nullable FunctionDescriptor original,
-            @NotNull Annotations annotations,
-            @NotNull Name name,
-            @NotNull Kind kind,
-            @NotNull SourceElement source
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @Nullable FunctionDescriptor original,
+        @NotNull Annotations annotations,
+        @NotNull Name name,
+        @NotNull Kind kind,
+        @NotNull SourceElement source
     ) {
         super(containingDeclaration, annotations, name, source);
         this.original = original == null ? this : original;
@@ -66,13 +66,13 @@ public abstract class FunctionDescriptorImpl extends DeclarationDescriptorNonRoo
 
     @NotNull
     public FunctionDescriptorImpl initialize(
-            @Nullable ReceiverParameterDescriptor extensionReceiverParameter,
-            @Nullable ReceiverParameterDescriptor dispatchReceiverParameter,
-            @NotNull List<? extends TypeParameterDescriptor> typeParameters,
-            @NotNull List<ValueParameterDescriptor> unsubstitutedValueParameters,
-            @Nullable KotlinType unsubstitutedReturnType,
-            @Nullable Modality modality,
-            @NotNull Visibility visibility
+        @Nullable ReceiverParameterDescriptor extensionReceiverParameter,
+        @Nullable ReceiverParameterDescriptor dispatchReceiverParameter,
+        @NotNull List<? extends TypeParameterDescriptor> typeParameters,
+        @NotNull List<ValueParameterDescriptor> unsubstitutedValueParameters,
+        @Nullable KotlinType unsubstitutedReturnType,
+        @Nullable Modality modality,
+        @NotNull Visibility visibility
     ) {
         this.typeParameters = CollectionsKt.toList(typeParameters);
         this.unsubstitutedValueParameters = CollectionsKt.toList(unsubstitutedValueParameters);
@@ -367,15 +367,15 @@ public abstract class FunctionDescriptorImpl extends DeclarationDescriptorNonRoo
         protected boolean justForTypeSubstitution = false;
 
         public CopyConfiguration(
-                @NotNull TypeSubstitution substitution,
-                @NotNull DeclarationDescriptor newOwner,
-                @NotNull Modality newModality,
-                @NotNull Visibility newVisibility,
-                @NotNull Kind kind,
-                @NotNull List<ValueParameterDescriptor> newValueParameterDescriptors,
-                @Nullable ReceiverParameterDescriptor newExtensionReceiverParameter,
-                @NotNull KotlinType newReturnType,
-                @Nullable Name name
+            @NotNull TypeSubstitution substitution,
+            @NotNull DeclarationDescriptor newOwner,
+            @NotNull Modality newModality,
+            @NotNull Visibility newVisibility,
+            @NotNull Kind kind,
+            @NotNull List<ValueParameterDescriptor> newValueParameterDescriptors,
+            @Nullable ReceiverParameterDescriptor newExtensionReceiverParameter,
+            @NotNull KotlinType newReturnType,
+            @Nullable Name name
         ) {
             this.substitution = substitution;
             this.newOwner = newOwner;
@@ -565,49 +565,49 @@ public abstract class FunctionDescriptorImpl extends DeclarationDescriptorNonRoo
     @NotNull
     protected CopyConfiguration newCopyBuilder(@NotNull TypeSubstitutor substitutor) {
         return new CopyConfiguration(
-                substitutor.getSubstitution(),
-                getContainingDeclaration(), getModality(), getVisibility(), getKind(), getValueParameters(),
-                getExtensionReceiverParameter(), getReturnType(), null
-        );
+                   substitutor.getSubstitution(),
+                   getContainingDeclaration(), getModality(), getVisibility(), getKind(), getValueParameters(),
+                   getExtensionReceiverParameter(), getReturnType(), null
+               );
     }
 
     @Nullable
     protected FunctionDescriptor doSubstitute(@NotNull CopyConfiguration configuration) {
         boolean[] wereChanges = new boolean[1];
         Annotations resultAnnotations =
-                configuration.additionalAnnotations != null
-                ? AnnotationsKt.composeAnnotations(getAnnotations(), configuration.additionalAnnotations)
-                : getAnnotations();
+            configuration.additionalAnnotations != null
+            ? AnnotationsKt.composeAnnotations(getAnnotations(), configuration.additionalAnnotations)
+            : getAnnotations();
 
         FunctionDescriptorImpl substitutedDescriptor = createSubstitutedCopy(
-                configuration.newOwner, configuration.original, configuration.kind, configuration.name, resultAnnotations,
-                getSourceToUseForCopy(configuration.preserveSourceElement, configuration.original));
+                    configuration.newOwner, configuration.original, configuration.kind, configuration.name, resultAnnotations,
+                    getSourceToUseForCopy(configuration.preserveSourceElement, configuration.original));
 
         List<TypeParameterDescriptor> unsubstitutedTypeParameters =
-                configuration.newTypeParameters == null ? getTypeParameters() : configuration.newTypeParameters;
+            configuration.newTypeParameters == null ? getTypeParameters() : configuration.newTypeParameters;
 
         wereChanges[0] |= !unsubstitutedTypeParameters.isEmpty();
 
         List<TypeParameterDescriptor> substitutedTypeParameters =
-                new ArrayList<TypeParameterDescriptor>(unsubstitutedTypeParameters.size());
+            new ArrayList<TypeParameterDescriptor>(unsubstitutedTypeParameters.size());
         final TypeSubstitutor substitutor = DescriptorSubstitutor.substituteTypeParameters(
-                unsubstitutedTypeParameters, configuration.substitution, substitutedDescriptor, substitutedTypeParameters, wereChanges
-        );
+                                                unsubstitutedTypeParameters, configuration.substitution, substitutedDescriptor, substitutedTypeParameters, wereChanges
+                                            );
         if (substitutor == null) return null;
 
         ReceiverParameterDescriptor substitutedReceiverParameter = null;
         if (configuration.newExtensionReceiverParameter != null) {
             KotlinType substitutedExtensionReceiverType =
-                    substitutor.substitute(configuration.newExtensionReceiverParameter.getType(), Variance.IN_VARIANCE);
+                substitutor.substitute(configuration.newExtensionReceiverParameter.getType(), Variance.IN_VARIANCE);
             if (substitutedExtensionReceiverType == null) {
                 return null;
             }
             substitutedReceiverParameter = new ReceiverParameterDescriptorImpl(
-                    substitutedDescriptor,
-                    new ExtensionReceiver(
-                            substitutedDescriptor, substitutedExtensionReceiverType, configuration.newExtensionReceiverParameter.getValue()
-                    ),
-                    configuration.newExtensionReceiverParameter.getAnnotations()
+                substitutedDescriptor,
+                new ExtensionReceiver(
+                    substitutedDescriptor, substitutedExtensionReceiverType, configuration.newExtensionReceiverParameter.getValue()
+                ),
+                configuration.newExtensionReceiverParameter.getAnnotations()
             );
 
             wereChanges[0] |= substitutedExtensionReceiverType != configuration.newExtensionReceiverParameter.getType();
@@ -634,9 +634,9 @@ public abstract class FunctionDescriptorImpl extends DeclarationDescriptorNonRoo
         }
 
         List<ValueParameterDescriptor> substitutedValueParameters = getSubstitutedValueParameters(
-                substitutedDescriptor, configuration.newValueParameterDescriptors, substitutor, configuration.dropOriginalInContainingParts,
-                configuration.preserveSourceElement, wereChanges
-        );
+                    substitutedDescriptor, configuration.newValueParameterDescriptors, substitutor, configuration.dropOriginalInContainingParts,
+                    configuration.preserveSourceElement, wereChanges
+                );
         if (substitutedValueParameters == null) {
             return null;
         }
@@ -653,13 +653,13 @@ public abstract class FunctionDescriptorImpl extends DeclarationDescriptorNonRoo
         }
 
         substitutedDescriptor.initialize(
-                substitutedReceiverParameter,
-                substitutedExpectedThis,
-                substitutedTypeParameters,
-                substitutedValueParameters,
-                substitutedReturnType,
-                configuration.newModality,
-                configuration.newVisibility
+            substitutedReceiverParameter,
+            substitutedExpectedThis,
+            substitutedTypeParameters,
+            substitutedValueParameters,
+            substitutedReturnType,
+            configuration.newModality,
+            configuration.newVisibility
         );
         substitutedDescriptor.setOperator(isOperator);
         substitutedDescriptor.setInfix(isInfix);
@@ -674,7 +674,7 @@ public abstract class FunctionDescriptorImpl extends DeclarationDescriptorNonRoo
         substitutedDescriptor.setHiddenForResolutionEverywhereBesideSupercalls(configuration.isHiddenForResolutionEverywhereBesideSupercalls);
 
         substitutedDescriptor.setHasSynthesizedParameterNames(
-                configuration.newHasSynthesizedParameterNames != null ? configuration.newHasSynthesizedParameterNames : hasSynthesizedParameterNames
+            configuration.newHasSynthesizedParameterNames != null ? configuration.newHasSynthesizedParameterNames : hasSynthesizedParameterNames
         );
 
         if (!configuration.userDataMap.isEmpty() || userDataMap != null) {
@@ -690,8 +690,8 @@ public abstract class FunctionDescriptorImpl extends DeclarationDescriptorNonRoo
 
             if (newMap.size() == 1) {
                 substitutedDescriptor.userDataMap =
-                        Collections.<UserDataKey<?>, Object>singletonMap(
-                                newMap.keySet().iterator().next(), newMap.values().iterator().next());
+                    Collections.<UserDataKey<?>, Object>singletonMap(
+                        newMap.keySet().iterator().next(), newMap.values().iterator().next());
             }
             else {
                 substitutedDescriptor.userDataMap = newMap;
@@ -734,29 +734,29 @@ public abstract class FunctionDescriptorImpl extends DeclarationDescriptorNonRoo
     @NotNull
     @Override
     public FunctionDescriptor copy(
-            DeclarationDescriptor newOwner,
-            Modality modality,
-            Visibility visibility,
-            Kind kind,
-            boolean copyOverrides
+        DeclarationDescriptor newOwner,
+        Modality modality,
+        Visibility visibility,
+        Kind kind,
+        boolean copyOverrides
     ) {
         return newCopyBuilder()
-                .setOwner(newOwner)
-                .setModality(modality)
-                .setVisibility(visibility)
-                .setKind(kind)
-                .setCopyOverrides(copyOverrides)
-                .build();
+               .setOwner(newOwner)
+               .setModality(modality)
+               .setVisibility(visibility)
+               .setKind(kind)
+               .setCopyOverrides(copyOverrides)
+               .build();
     }
 
     @NotNull
     protected abstract FunctionDescriptorImpl createSubstitutedCopy(
-            @NotNull DeclarationDescriptor newOwner,
-            @Nullable FunctionDescriptor original,
-            @NotNull Kind kind,
-            @Nullable Name newName,
-            @NotNull Annotations annotations,
-            @NotNull SourceElement source
+        @NotNull DeclarationDescriptor newOwner,
+        @Nullable FunctionDescriptor original,
+        @NotNull Kind kind,
+        @Nullable Name newName,
+        @NotNull Annotations annotations,
+        @NotNull SourceElement source
     );
 
     @NotNull
@@ -773,21 +773,21 @@ public abstract class FunctionDescriptorImpl extends DeclarationDescriptorNonRoo
 
     @Nullable
     public static List<ValueParameterDescriptor> getSubstitutedValueParameters(
-            FunctionDescriptor substitutedDescriptor,
-            @NotNull List<ValueParameterDescriptor> unsubstitutedValueParameters,
-            @NotNull TypeSubstitutor substitutor
+        FunctionDescriptor substitutedDescriptor,
+        @NotNull List<ValueParameterDescriptor> unsubstitutedValueParameters,
+        @NotNull TypeSubstitutor substitutor
     ) {
         return getSubstitutedValueParameters(substitutedDescriptor, unsubstitutedValueParameters, substitutor, false, false, null);
     }
 
     @Nullable
     public static List<ValueParameterDescriptor> getSubstitutedValueParameters(
-            FunctionDescriptor substitutedDescriptor,
-            @NotNull List<ValueParameterDescriptor> unsubstitutedValueParameters,
-            @NotNull TypeSubstitutor substitutor,
-            boolean dropOriginal,
-            boolean preserveSourceElement,
-            @Nullable boolean[] wereChanges
+        FunctionDescriptor substitutedDescriptor,
+        @NotNull List<ValueParameterDescriptor> unsubstitutedValueParameters,
+        @NotNull TypeSubstitutor substitutor,
+        boolean dropOriginal,
+        boolean preserveSourceElement,
+        @Nullable boolean[] wereChanges
     ) {
         List<ValueParameterDescriptor> result = new ArrayList<ValueParameterDescriptor>(unsubstitutedValueParameters.size());
         for (ValueParameterDescriptor unsubstitutedValueParameter : unsubstitutedValueParameters) {
@@ -795,7 +795,7 @@ public abstract class FunctionDescriptorImpl extends DeclarationDescriptorNonRoo
             KotlinType substitutedType = substitutor.substitute(unsubstitutedValueParameter.getType(), Variance.IN_VARIANCE);
             KotlinType varargElementType = unsubstitutedValueParameter.getVarargElementType();
             KotlinType substituteVarargElementType =
-                    varargElementType == null ? null : substitutor.substitute(varargElementType, Variance.IN_VARIANCE);
+                varargElementType == null ? null : substitutor.substitute(varargElementType, Variance.IN_VARIANCE);
             if (substitutedType == null) return null;
             if (substitutedType != unsubstitutedValueParameter.getType() || varargElementType != substituteVarargElementType) {
                 if (wereChanges != null) {
@@ -803,19 +803,19 @@ public abstract class FunctionDescriptorImpl extends DeclarationDescriptorNonRoo
                 }
             }
             result.add(
-                    new ValueParameterDescriptorImpl(
-                            substitutedDescriptor,
-                            dropOriginal ? null : unsubstitutedValueParameter,
-                            unsubstitutedValueParameter.getIndex(),
-                            unsubstitutedValueParameter.getAnnotations(),
-                            unsubstitutedValueParameter.getName(),
-                            substitutedType,
-                            unsubstitutedValueParameter.declaresDefaultValue(),
-                            unsubstitutedValueParameter.isCrossinline(),
-                            unsubstitutedValueParameter.isNoinline(),
-                            substituteVarargElementType,
-                            preserveSourceElement ? unsubstitutedValueParameter.getSource() : SourceElement.NO_SOURCE
-                    )
+                new ValueParameterDescriptorImpl(
+                    substitutedDescriptor,
+                    dropOriginal ? null : unsubstitutedValueParameter,
+                    unsubstitutedValueParameter.getIndex(),
+                    unsubstitutedValueParameter.getAnnotations(),
+                    unsubstitutedValueParameter.getName(),
+                    substitutedType,
+                    unsubstitutedValueParameter.declaresDefaultValue(),
+                    unsubstitutedValueParameter.isCrossinline(),
+                    unsubstitutedValueParameter.isNoinline(),
+                    substituteVarargElementType,
+                    preserveSourceElement ? unsubstitutedValueParameter.getSource() : SourceElement.NO_SOURCE
+                )
             );
         }
         return result;

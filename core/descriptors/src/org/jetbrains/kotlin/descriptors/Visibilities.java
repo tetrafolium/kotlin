@@ -52,10 +52,10 @@ public class Visibilities {
             if (what instanceof ConstructorDescriptor) {
                 ClassifierDescriptorWithTypeParameters classDescriptor = ((ConstructorDescriptor) what).getContainingDeclaration();
                 if (DescriptorUtils.isSealedClass(classDescriptor)
-                    && DescriptorUtils.isTopLevelDeclaration(classDescriptor)
-                    && from instanceof ConstructorDescriptor
-                    && DescriptorUtils.isTopLevelDeclaration(from.getContainingDeclaration())
-                    && inSameFile(what, from)) {
+                        && DescriptorUtils.isTopLevelDeclaration(classDescriptor)
+                        && from instanceof ConstructorDescriptor
+                        && DescriptorUtils.isTopLevelDeclaration(from.getContainingDeclaration())
+                        && inSameFile(what, from)) {
                     return true;
                 }
             }
@@ -64,7 +64,7 @@ public class Visibilities {
             while (parent != null) {
                 parent = parent.getContainingDeclaration();
                 if ((parent instanceof ClassDescriptor && !DescriptorUtils.isCompanionObject(parent)) ||
-                    parent instanceof PackageFragmentDescriptor) {
+                        parent instanceof PackageFragmentDescriptor) {
                     break;
                 }
             }
@@ -140,9 +140,9 @@ public class Visibilities {
 
         @Override
         public boolean isVisible(
-                @Nullable ReceiverValue receiver,
-                @NotNull DeclarationDescriptorWithVisibility what,
-                @NotNull DeclarationDescriptor from
+            @Nullable ReceiverValue receiver,
+            @NotNull DeclarationDescriptorWithVisibility what,
+            @NotNull DeclarationDescriptor from
         ) {
             ClassDescriptor givenDescriptorContainingClass = DescriptorUtils.getParentOfType(what, ClassDescriptor.class);
             ClassDescriptor fromClass = DescriptorUtils.getParentOfType(from, ClassDescriptor.class, false);
@@ -173,9 +173,9 @@ public class Visibilities {
         }
 
         private boolean doesReceiverFitForProtectedVisibility(
-                @Nullable ReceiverValue receiver,
-                @NotNull DeclarationDescriptorWithVisibility whatDeclaration,
-                @NotNull ClassDescriptor fromClass
+            @Nullable ReceiverValue receiver,
+            @NotNull DeclarationDescriptorWithVisibility whatDeclaration,
+            @NotNull ClassDescriptor fromClass
         ) {
             //noinspection deprecation
             if (receiver == FALSE_IF_PROTECTED) return false;
@@ -283,14 +283,14 @@ public class Visibilities {
 
         @Override
         public boolean isVisible(
-                @Nullable ReceiverValue receiver, @NotNull DeclarationDescriptorWithVisibility what, @NotNull DeclarationDescriptor from
+            @Nullable ReceiverValue receiver, @NotNull DeclarationDescriptorWithVisibility what, @NotNull DeclarationDescriptor from
         ) {
             return false;
         }
     };
 
     public static final Set<Visibility> INVISIBLE_FROM_OTHER_MODULES =
-            Collections.unmodifiableSet(SetsKt.setOf(PRIVATE, PRIVATE_TO_THIS, INTERNAL, LOCAL));
+        Collections.unmodifiableSet(SetsKt.setOf(PRIVATE, PRIVATE_TO_THIS, INTERNAL, LOCAL));
 
     private Visibilities() {
     }
@@ -326,9 +326,9 @@ public class Visibilities {
 
     @Nullable
     public static DeclarationDescriptorWithVisibility findInvisibleMember(
-            @Nullable ReceiverValue receiver,
-            @NotNull DeclarationDescriptorWithVisibility what,
-            @NotNull DeclarationDescriptor from
+        @Nullable ReceiverValue receiver,
+        @NotNull DeclarationDescriptorWithVisibility what,
+        @NotNull DeclarationDescriptor from
     ) {
         DeclarationDescriptorWithVisibility parent = (DeclarationDescriptorWithVisibility) what.getOriginal();
         while (parent != null && parent.getVisibility() != LOCAL) {
@@ -340,7 +340,7 @@ public class Visibilities {
 
         if (what instanceof TypeAliasConstructorDescriptor) {
             DeclarationDescriptorWithVisibility invisibleUnderlying =
-                    findInvisibleMember(receiver, ((TypeAliasConstructorDescriptor) what).getUnderlyingConstructorDescriptor(), from);
+                findInvisibleMember(receiver, ((TypeAliasConstructorDescriptor) what).getUnderlyingConstructorDescriptor(), from);
             if (invisibleUnderlying != null) return invisibleUnderlying;
         }
 

@@ -30,8 +30,8 @@ class Utils {
     }
 
     public static void configureLabelComponent(
-            @NotNull SimpleColoredComponent coloredComponent,
-            @NotNull KtNamedDeclaration declaration) {
+        @NotNull SimpleColoredComponent coloredComponent,
+        @NotNull KtNamedDeclaration declaration) {
         coloredComponent.append(DescriptorRenderer.COMPACT.render(UtilsKt.getDescriptor(declaration)));
     }
 

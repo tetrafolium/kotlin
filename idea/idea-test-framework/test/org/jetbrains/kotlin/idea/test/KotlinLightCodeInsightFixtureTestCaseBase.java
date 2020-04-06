@@ -65,10 +65,10 @@ public abstract class KotlinLightCodeInsightFixtureTestCaseBase extends LightCod
 
     @NotNull
     public VirtualFile createTempFile(
-            @NonNls @NotNull String ext,
-            @Nullable byte[] bom,
-            @NonNls @NotNull String content,
-            @NotNull Charset charset
+        @NonNls @NotNull String ext,
+        @Nullable byte[] bom,
+        @NonNls @NotNull String content,
+        @NotNull Charset charset
     ) throws IOException {
         File temp = FileUtil.createTempFile("copy", "." + ext);
         setContentOnDisk(temp, bom, content, charset);
@@ -80,7 +80,7 @@ public abstract class KotlinLightCodeInsightFixtureTestCaseBase extends LightCod
     }
 
     public static void setContentOnDisk(@NotNull File file, @Nullable byte[] bom, @NotNull String content, @NotNull Charset charset)
-            throws IOException {
+    throws IOException {
         FileOutputStream stream = new FileOutputStream(file);
         if (bom != null) {
             stream.write(bom);

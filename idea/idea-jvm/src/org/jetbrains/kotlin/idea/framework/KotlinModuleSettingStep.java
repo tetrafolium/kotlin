@@ -76,10 +76,10 @@ public class KotlinModuleSettingStep extends ModuleWizardStep {
     private final String basePath;
 
     public KotlinModuleSettingStep(
-            TargetPlatform targetPlatform,
-            ModuleBuilder moduleBuilder,
-            @NotNull SettingsStep settingsStep,
-            @Nullable WizardContext wizardContext
+        TargetPlatform targetPlatform,
+        ModuleBuilder moduleBuilder,
+        @NotNull SettingsStep settingsStep,
+        @Nullable WizardContext wizardContext
     ) {
         isNewProject = wizardContext != null && wizardContext.isCreatingNewProject();
 
@@ -166,10 +166,10 @@ public class KotlinModuleSettingStep extends ModuleWizardStep {
         Boolean selected = isLibrarySelected();
         if (selected != null && !selected) {
             if (Messages.showDialog(
-                    "Do you want to continue with no Kotlin Runtime library?",
-                    "No Kotlin Runtime Specified",
-                    new String[] {CommonBundle.getYesButtonText(), CommonBundle.getNoButtonText()}, 1,
-                    Messages.getWarningIcon()) != Messages.YES) {
+                        "Do you want to continue with no Kotlin Runtime library?",
+                        "No Kotlin Runtime Specified",
+                        new String[] {CommonBundle.getYesButtonText(), CommonBundle.getNoButtonText()}, 1,
+                        Messages.getWarningIcon()) != Messages.YES) {
                 return false;
             }
         }
@@ -182,11 +182,11 @@ public class KotlinModuleSettingStep extends ModuleWizardStep {
             String baseDirPath = basePath != null ? FileUtil.toSystemIndependentName(basePath) : "";
 
             libraryOptionsPanel = new LibraryOptionsPanel(
-                    customLibraryDescription,
-                    baseDirPath,
-                    FrameworkLibraryVersionFilter.ALL,
-                    librariesContainer,
-                    false);
+                customLibraryDescription,
+                baseDirPath,
+                FrameworkLibraryVersionFilter.ALL,
+                librariesContainer,
+                false);
         }
 
         return libraryOptionsPanel;
@@ -200,14 +200,14 @@ public class KotlinModuleSettingStep extends ModuleWizardStep {
             Class<LibraryOptionsPanel> panelClass = LibraryOptionsPanel.class;
 
             Field modelField = ArraysKt.singleOrNull(
-                    panelClass.getDeclaredFields(),
-                    new Function1<Field, Boolean>() {
-                        @Override
-                        public Boolean invoke(Field field) {
-                            return RadioButtonEnumModel.class.isAssignableFrom(field.getType());
-                        }
-                    }
-            );
+                                   panelClass.getDeclaredFields(),
+            new Function1<Field, Boolean>() {
+                @Override
+                public Boolean invoke(Field field) {
+                    return RadioButtonEnumModel.class.isAssignableFrom(field.getType());
+                }
+            }
+                               );
             if (modelField == null) {
                 LOG.error("There must be exactly one field of type RadioButtonEnumModel: " + Arrays.toString(panelClass.getDeclaredFields()));
                 return false;
@@ -219,14 +219,14 @@ public class KotlinModuleSettingStep extends ModuleWizardStep {
             int ordinal = enumModel.getSelected().ordinal();
             if (ordinal == 0) {
                 Field libComboboxField = ArraysKt.singleOrNull(
-                        panelClass.getDeclaredFields(),
-                        new Function1<Field, Boolean>() {
-                            @Override
-                            public Boolean invoke(Field field) {
-                                return JComboBox.class.isAssignableFrom(field.getType());
-                            }
-                        }
-                );
+                                             panelClass.getDeclaredFields(),
+                new Function1<Field, Boolean>() {
+                    @Override
+                    public Boolean invoke(Field field) {
+                        return JComboBox.class.isAssignableFrom(field.getType());
+                    }
+                }
+                                         );
                 if (libComboboxField == null) {
                     LOG.error("There must be exactly one field of type JComboBox: " + Arrays.toString(panelClass.getDeclaredFields()));
                     return false;

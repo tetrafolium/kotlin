@@ -28,13 +28,13 @@ public class MutableClassDescriptor extends ClassDescriptorBase {
     private final StorageManager storageManager;
 
     public MutableClassDescriptor(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull ClassKind kind,
-            boolean isInner,
-            boolean isExternal,
-            @NotNull Name name,
-            @NotNull SourceElement source,
-            @NotNull StorageManager storageManager
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull ClassKind kind,
+        boolean isInner,
+        boolean isExternal,
+        @NotNull Name name,
+        @NotNull SourceElement source,
+        @NotNull StorageManager storageManager
     ) {
         super(storageManager, containingDeclaration, name, source, isExternal);
         this.storageManager = storageManager;

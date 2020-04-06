@@ -24,14 +24,14 @@ public abstract class AbstractMultiFileHighlightingTest extends AbstractMultiHig
         configureByFile(new File(filePath).getName(), "");
         boolean shouldFail = getName().contains("UnspecifiedType");
         AstAccessControl.INSTANCE.testWithControlledAccessToAst(
-                shouldFail, getFile().getVirtualFile(), getProject(), getTestRootDisposable(),
-                new Function0<Unit>() {
-                    @Override
-                    public Unit invoke() {
-                        checkHighlighting(myEditor, true, false);
-                        return Unit.INSTANCE;
-                    }
-                }
+            shouldFail, getFile().getVirtualFile(), getProject(), getTestRootDisposable(),
+        new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+                checkHighlighting(myEditor, true, false);
+                return Unit.INSTANCE;
+            }
+        }
         );
     }
 

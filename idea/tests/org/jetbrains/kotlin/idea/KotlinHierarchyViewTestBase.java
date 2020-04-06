@@ -19,8 +19,8 @@ public abstract class KotlinHierarchyViewTestBase extends KotlinLightCodeInsight
     private final HierarchyViewTestFixture hierarchyFixture = new HierarchyViewTestFixture();
 
     protected void doHierarchyTest(
-            @NotNull Computable<? extends HierarchyTreeStructure> treeStructureComputable,
-            @NotNull String... fileNames
+        @NotNull Computable<? extends HierarchyTreeStructure> treeStructureComputable,
+        @NotNull String... fileNames
     ) throws Exception {
         configure(fileNames);
         String expectedStructure = loadExpectedStructure();

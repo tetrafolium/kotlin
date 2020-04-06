@@ -11,8 +11,8 @@ public class KotlinPrePushHook {
     private static final String MESSAGE_PREFIX = "MESSAGE.";
 
     private static final List<String> KOTLIN_GIT_REPOS = Arrays.asList(
-            "git@github.com:JetBrains/kotlin.git",
-            "https://github.com/JetBrains/kotlin.git");
+                "git@github.com:JetBrains/kotlin.git",
+                "https://github.com/JetBrains/kotlin.git");
 
     private static final String REF_PREFIX = "refs/heads/";
 
@@ -22,9 +22,9 @@ public class KotlinPrePushHook {
         }
 
         List<String> remoteRefs = Arrays
-                .stream(args[0].split(","))
-                .filter(ref -> ref.startsWith(REF_PREFIX))
-                .map(ref -> ref.substring(REF_PREFIX.length())).collect(Collectors.toList());
+                                  .stream(args[0].split(","))
+                                  .filter(ref -> ref.startsWith(REF_PREFIX))
+                                  .map(ref -> ref.substring(REF_PREFIX.length())).collect(Collectors.toList());
 
         String targetRepo = args[1];
 
@@ -89,9 +89,9 @@ public class KotlinPrePushHook {
         String completeMessage = baseMessage + "\n\nReason: " + reason.replace("\\n", "\n") + "\n\n" + confirmationMessage;
 
         int result = JOptionPane.showOptionDialog(
-                null, completeMessage, "Friendly warning",
-                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null,
-                new String[] { "Yes", "No" }, "No");
+                         null, completeMessage, "Friendly warning",
+                         JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null,
+                         new String[] { "Yes", "No" }, "No");
 
         return result == JOptionPane.YES_OPTION;
     }

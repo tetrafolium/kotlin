@@ -56,8 +56,8 @@ public abstract class AbstractDiagnosticMessageJsTest extends AbstractDiagnostic
         configuration.put(CommonConfigurationKeys.DISABLE_INLINE, true);
         if (explicitLanguageVersion != null) {
             CommonConfigurationKeysKt.setLanguageVersionSettings(
-                    configuration,
-                    new LanguageVersionSettingsImpl(explicitLanguageVersion, LanguageVersionSettingsImpl.DEFAULT.getApiVersion())
+                configuration,
+                new LanguageVersionSettingsImpl(explicitLanguageVersion, LanguageVersionSettingsImpl.DEFAULT.getApiVersion())
             );
         }
         return new JsConfig(getProject(), configuration);

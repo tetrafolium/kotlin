@@ -67,9 +67,9 @@ public class KotlinExtractFunctionDialog extends DialogWrapper {
     private final Function1<KotlinExtractFunctionDialog, Unit> onAccept;
 
     public KotlinExtractFunctionDialog(
-            @NotNull Project project,
-            @NotNull ExtractableCodeDescriptorWithConflicts originalDescriptor,
-            @NotNull Function1<KotlinExtractFunctionDialog, Unit> onAccept) {
+        @NotNull Project project,
+        @NotNull ExtractableCodeDescriptorWithConflicts originalDescriptor,
+        @NotNull Function1<KotlinExtractFunctionDialog, Unit> onAccept) {
         super(project, true);
 
         this.project = project;
@@ -116,7 +116,7 @@ public class KotlinExtractFunctionDialog extends DialogWrapper {
 
         setOKActionEnabled(checkNames());
         signaturePreviewField.setText(
-                ExtractorUtilKt.getSignaturePreview(getCurrentConfiguration(), IdeDescriptorRenderers.SOURCE_CODE_SHORT_NAMES_NO_ANNOTATIONS)
+            ExtractorUtilKt.getSignaturePreview(getCurrentConfiguration(), IdeDescriptorRenderers.SOURCE_CODE_SHORT_NAMES_NO_ANNOTATIONS)
         );
     }
 
@@ -127,17 +127,17 @@ public class KotlinExtractFunctionDialog extends DialogWrapper {
         ExtractableCodeDescriptor extractableCodeDescriptor = originalDescriptor.getDescriptor();
 
         functionNameField = new NameSuggestionsField(
-                ArrayUtil.toStringArray(extractableCodeDescriptor.getSuggestedNames()),
-                project,
-                KotlinFileType.INSTANCE
+            ArrayUtil.toStringArray(extractableCodeDescriptor.getSuggestedNames()),
+            project,
+            KotlinFileType.INSTANCE
         );
         functionNameField.addDataChangedListener(
-                new NameSuggestionsField.DataChanged() {
-                    @Override
-                    public void dataChanged() {
-                        update();
-                    }
-                }
+        new NameSuggestionsField.DataChanged() {
+            @Override
+            public void dataChanged() {
+                update();
+            }
+        }
         );
         functionNamePanel.add(functionNameField, BorderLayout.CENTER);
         functionNameLabel.setLabelFor(functionNameField);
@@ -147,29 +147,29 @@ public class KotlinExtractFunctionDialog extends DialogWrapper {
             DefaultComboBoxModel returnTypeBoxModel = new DefaultComboBoxModel(possibleReturnTypes.toArray());
             returnTypeBox.setModel(returnTypeBoxModel);
             returnTypeBox.setRenderer(
-                    new DefaultListCellRenderer() {
-                        @NotNull
-                        @Override
-                        public Component getListCellRendererComponent(
-                                JList list,
-                                Object value,
-                                int index,
-                                boolean isSelected,
-                                boolean cellHasFocus
-                        ) {
-                            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                            setText(IdeDescriptorRenderers.SOURCE_CODE_SHORT_NAMES_NO_ANNOTATIONS.renderType((KotlinType) value));
-                            return this;
-                        }
-                    }
+            new DefaultListCellRenderer() {
+                @NotNull
+                @Override
+                public Component getListCellRendererComponent(
+                    JList list,
+                    Object value,
+                    int index,
+                    boolean isSelected,
+                    boolean cellHasFocus
+                ) {
+                    super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                    setText(IdeDescriptorRenderers.SOURCE_CODE_SHORT_NAMES_NO_ANNOTATIONS.renderType((KotlinType) value));
+                    return this;
+                }
+            }
             );
             returnTypeBox.addItemListener(
-                    new ItemListener() {
-                        @Override
-                        public void itemStateChanged(@NotNull ItemEvent e) {
-                            update();
-                        }
-                    }
+            new ItemListener() {
+                @Override
+                public void itemStateChanged(@NotNull ItemEvent e) {
+                    update();
+                }
+            }
             );
         }
         else {
@@ -185,12 +185,12 @@ public class KotlinExtractFunctionDialog extends DialogWrapper {
             visibilityBox.setSelectedItem(defaultVisibility);
         }
         visibilityBox.addItemListener(
-                new ItemListener() {
-                    @Override
-                    public void itemStateChanged(@NotNull ItemEvent e) {
-                        update();
-                    }
-                }
+        new ItemListener() {
+            @Override
+            public void itemStateChanged(@NotNull ItemEvent e) {
+                update();
+            }
+        }
         );
 
         parameterTablePanel = new ExtractFunctionParameterTablePanel() {
@@ -223,22 +223,22 @@ public class KotlinExtractFunctionDialog extends DialogWrapper {
         conflicts.values().removeAll(originalDescriptor.getConflicts().values());
 
         KotlinRefactoringUtilKt.checkConflictsInteractively(
-                project,
-                conflicts,
-                new Function0<Unit>() {
-                    @Override
-                    public Unit invoke() {
-                        close(OK_EXIT_CODE);
-                        return Unit.INSTANCE;
-                    }
-                },
-                new Function0<Unit>() {
-                    @Override
-                    public Unit invoke() {
-                        KotlinExtractFunctionDialog.super.doOKAction();
-                        return onAccept.invoke(KotlinExtractFunctionDialog.this);
-                    }
-                }
+            project,
+            conflicts,
+        new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+                close(OK_EXIT_CODE);
+                return Unit.INSTANCE;
+            }
+        },
+        new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+                KotlinExtractFunctionDialog.super.doOKAction();
+                return onAccept.invoke(KotlinExtractFunctionDialog.this);
+            }
+        }
         );
     }
 
@@ -274,12 +274,12 @@ public class KotlinExtractFunctionDialog extends DialogWrapper {
     }
 
     public static ExtractableCodeDescriptor createNewDescriptor(
-            @NotNull ExtractableCodeDescriptor originalDescriptor,
-            @NotNull String newName,
-            @Nullable KtModifierKeywordToken newVisibility,
-            @Nullable ExtractFunctionParameterTablePanel.ParameterInfo newReceiverInfo,
-            @NotNull List<ExtractFunctionParameterTablePanel.ParameterInfo> newParameterInfos,
-            @Nullable KotlinType returnType
+        @NotNull ExtractableCodeDescriptor originalDescriptor,
+        @NotNull String newName,
+        @Nullable KtModifierKeywordToken newVisibility,
+        @Nullable ExtractFunctionParameterTablePanel.ParameterInfo newReceiverInfo,
+        @NotNull List<ExtractFunctionParameterTablePanel.ParameterInfo> newParameterInfos,
+        @Nullable KotlinType returnType
     ) {
         Map<Parameter, Parameter> oldToNewParameters = ContainerUtil.newLinkedHashMap();
         for (ExtractFunctionParameterTablePanel.ParameterInfo parameterInfo : newParameterInfos) {

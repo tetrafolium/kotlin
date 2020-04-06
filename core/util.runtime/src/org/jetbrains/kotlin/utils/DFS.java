@@ -38,9 +38,9 @@ public class DFS {
     }
 
     public static <N> Boolean ifAny(
-            @NotNull Collection<N> nodes,
-            @NotNull Neighbors<N> neighbors,
-            @NotNull final Function1<N, Boolean> predicate
+        @NotNull Collection<N> nodes,
+        @NotNull Neighbors<N> neighbors,
+        @NotNull final Function1<N, Boolean> predicate
     ) {
         final boolean[] result = new boolean[1];
 
@@ -67,9 +67,9 @@ public class DFS {
     }
 
     public static <N> void dfsFromNode(
-            @NotNull N node,
-            @NotNull Neighbors<N> neighbors,
-            @NotNull Visited<N> visited
+        @NotNull N node,
+        @NotNull Neighbors<N> neighbors,
+        @NotNull Visited<N> visited
     ) {
         dfsFromNode(node, neighbors, visited, new AbstractNodeHandler<N, Void>() {
             @Override

@@ -100,16 +100,16 @@ public class PluginTestCaseBase {
     @NotNull
     public static Sdk jdk(@NotNull TestJdkKind kind) {
         switch (kind) {
-            case MOCK_JDK:
-                return mockJdk();
-            case FULL_JDK_9:
-                String jre9 = KotlinTestUtils.getJdk9Home().getPath();
-                VfsRootAccess.allowRootAccess(jre9);
-                return getSdk(jre9, "Full JDK 9");
-            case FULL_JDK:
-                return fullJdk();
-            default:
-                throw new UnsupportedOperationException(kind.toString());
+        case MOCK_JDK:
+            return mockJdk();
+        case FULL_JDK_9:
+            String jre9 = KotlinTestUtils.getJdk9Home().getPath();
+            VfsRootAccess.allowRootAccess(jre9);
+            return getSdk(jre9, "Full JDK 9");
+        case FULL_JDK:
+            return fullJdk();
+        default:
+            throw new UnsupportedOperationException(kind.toString());
         }
     }
 

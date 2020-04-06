@@ -27,7 +27,7 @@ public abstract class AbstractKotlinFoldingTest extends KotlinLightCodeInsightFi
         myFixture.testFolding(path);
     }
 
-    protected void doSettingsFoldingTest(@NotNull String path) throws IOException{
+    protected void doSettingsFoldingTest(@NotNull String path) throws IOException {
         String fileText = FileUtil.loadFile(new File(path), true);
 
         String directText = fileText.replaceAll("~true~", "true").replaceAll("~false~", "false");
@@ -38,10 +38,10 @@ public abstract class AbstractKotlinFoldingTest extends KotlinLightCodeInsightFi
         doTestWithSettings(directText, doExpandSettingsTestFunction);
 
         String invertedText = fileText
-                .replaceAll("~false~", "true").replaceAll("~true~", "false")
-                .replaceAll(SettingsConfigurator.SET_TRUE_DIRECTIVE, "~TEMP_TRUE_DIRECTIVE~")
-                .replaceAll(SettingsConfigurator.SET_FALSE_DIRECTIVE, SettingsConfigurator.SET_TRUE_DIRECTIVE)
-                .replaceAll("~TEMP_TRUE_DIRECTIVE~", SettingsConfigurator.SET_FALSE_DIRECTIVE);
+                              .replaceAll("~false~", "true").replaceAll("~true~", "false")
+                              .replaceAll(SettingsConfigurator.SET_TRUE_DIRECTIVE, "~TEMP_TRUE_DIRECTIVE~")
+                              .replaceAll(SettingsConfigurator.SET_FALSE_DIRECTIVE, SettingsConfigurator.SET_TRUE_DIRECTIVE)
+                              .replaceAll("~TEMP_TRUE_DIRECTIVE~", SettingsConfigurator.SET_FALSE_DIRECTIVE);
         invertedText += "\n\n// Generated from: " + path + " with !INVERTED! settings";
 
         doTestWithSettings(invertedText, doExpandSettingsTestFunction);

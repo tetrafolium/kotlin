@@ -43,7 +43,8 @@ public class JsToStringGenerationVisitor extends JsVisitor {
     private static final char[] CHARS_VAR = "var".toCharArray();
     private static final char[] CHARS_WHILE = "while".toCharArray();
     private static final char[] HEX_DIGITS = {
-            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
+    };
     @NotNull
     private final SourceLocationConsumer sourceLocationConsumer;
 
@@ -68,12 +69,12 @@ public class JsToStringGenerationVisitor extends JsVisitor {
 
         for (int i = 0; i < n; i++) {
             switch (chars.charAt(i)) {
-                case '"':
-                    ++quoteCount;
-                    break;
-                case '\'':
-                    ++aposCount;
-                    break;
+            case '"':
+                ++quoteCount;
+                break;
+            case '\'':
+                ++aposCount;
+                break;
             }
         }
 
@@ -93,30 +94,30 @@ public class JsToStringGenerationVisitor extends JsVisitor {
 
             int escape = -1;
             switch (c) {
-                case '\b':
-                    escape = 'b';
-                    break;
-                case '\f':
-                    escape = 'f';
-                    break;
-                case '\n':
-                    escape = 'n';
-                    break;
-                case '\r':
-                    escape = 'r';
-                    break;
-                case '\t':
-                    escape = 't';
-                    break;
-                case '"':
-                    escape = '"';
-                    break; // only reach here if == quoteChar
-                case '\'':
-                    escape = '\'';
-                    break; // only reach here if == quoteChar
-                case '\\':
-                    escape = '\\';
-                    break;
+            case '\b':
+                escape = 'b';
+                break;
+            case '\f':
+                escape = 'f';
+                break;
+            case '\n':
+                escape = 'n';
+                break;
+            case '\r':
+                escape = 'r';
+                break;
+            case '\t':
+                escape = 't';
+                break;
+            case '"':
+                escape = '"';
+                break; // only reach here if == quoteChar
+            case '\'':
+                escape = '\'';
+                break; // only reach here if == quoteChar
+            case '\\':
+                escape = '\\';
+                break;
             }
 
             if (escape >= 0) {
@@ -1163,7 +1164,7 @@ public class JsToStringGenerationVisitor extends JsVisitor {
                 * a newline instead of a semi.
                 */
                 boolean functionStmt =
-                        statement instanceof JsExpressionStatement && ((JsExpressionStatement) statement).getExpression() instanceof JsFunction;
+                    statement instanceof JsExpressionStatement && ((JsExpressionStatement) statement).getExpression() instanceof JsFunction;
                 /*
                 * Special treatment of the last statement in a block: only a few
                 * statements at the end of a block require semicolons.

@@ -82,7 +82,7 @@ public class TranslationContext {
     @NotNull
     public static TranslationContext rootContext(@NotNull StaticContext staticContext) {
         DynamicContext rootDynamicContext = DynamicContext.rootContext(
-                staticContext.getFragment().getScope(), staticContext.getFragment().getInitializerBlock());
+                                                staticContext.getFragment().getScope(), staticContext.getFragment().getInitializerBlock());
         AliasingContext rootAliasingContext = AliasingContext.getCleanContext();
         return new TranslationContext(null, staticContext, rootDynamicContext, rootAliasingContext, null, null);
     }
@@ -90,12 +90,12 @@ public class TranslationContext {
     private final Map<JsExpression, TemporaryConstVariable> expressionToTempConstVariableCache = new HashMap<>();
 
     private TranslationContext(
-            @Nullable TranslationContext parent,
-            @NotNull StaticContext staticContext,
-            @NotNull DynamicContext dynamicContext,
-            @NotNull AliasingContext aliasingContext,
-            @Nullable UsageTracker usageTracker,
-            @Nullable DeclarationDescriptor declarationDescriptor
+        @Nullable TranslationContext parent,
+        @NotNull StaticContext staticContext,
+        @NotNull DynamicContext dynamicContext,
+        @NotNull AliasingContext aliasingContext,
+        @Nullable UsageTracker usageTracker,
+        @Nullable DeclarationDescriptor declarationDescriptor
     ) {
         this.parent = parent;
         this.dynamicContext = dynamicContext;
@@ -115,8 +115,8 @@ public class TranslationContext {
 
         DeclarationDescriptor parentDescriptor = parent != null ? parent.declarationDescriptor : null;
         if (parentDescriptor != declarationDescriptor &&
-            declarationDescriptor instanceof CallableDescriptor &&
-            InlineUtil.isInline(declarationDescriptor)) {
+                declarationDescriptor instanceof CallableDescriptor &&
+                InlineUtil.isInline(declarationDescriptor)) {
             inlineFunctionContext = new InlineFunctionContext((CallableDescriptor) declarationDescriptor);
         }
     }
@@ -129,9 +129,9 @@ public class TranslationContext {
             FunctionDescriptor function = (FunctionDescriptor) declarationDescriptor;
             if (function.isSuspend()) {
                 ClassDescriptor continuationDescriptor =
-                        DescriptorUtilKt.findContinuationClassDescriptor(
-                                getCurrentModule(), NoLookupLocation.FROM_BACKEND,
-                                getLanguageVersionSettings().supportsFeature(LanguageFeature.ReleaseCoroutines));
+                    DescriptorUtilKt.findContinuationClassDescriptor(
+                        getCurrentModule(), NoLookupLocation.FROM_BACKEND,
+                        getLanguageVersionSettings().supportsFeature(LanguageFeature.ReleaseCoroutines));
 
                 return new ValueParameterDescriptorImpl(function, null, function.getValueParameters().size(),
                                                         Annotations.Companion.getEMPTY(), Name.identifier("continuation"),
@@ -164,8 +164,8 @@ public class TranslationContext {
 
     @NotNull
     private TranslationContext newFunctionBody(
-            @NotNull JsFunction fun, @Nullable AliasingContext aliasingContext,
-            DeclarationDescriptor descriptor
+        @NotNull JsFunction fun, @Nullable AliasingContext aliasingContext,
+        DeclarationDescriptor descriptor
     ) {
         DynamicContext dynamicContext = DynamicContext.newContext(fun.getScope(), fun.getBody());
         if (aliasingContext == null) {
@@ -286,7 +286,7 @@ public class TranslationContext {
     public JsName getInlineableInnerNameForDescriptor(@NotNull DeclarationDescriptor descriptor) {
         JsName name;
         if (inlineFunctionContext == null || !isPublicInlineFunction() || !shouldBeExported(descriptor, getConfig()) ||
-            DescriptorUtils.isAncestor(inlineFunctionContext.getDescriptor(), descriptor, false)) {
+                DescriptorUtils.isAncestor(inlineFunctionContext.getDescriptor(), descriptor, false)) {
             name = getInnerNameForDescriptor(descriptor);
         }
         else {
@@ -308,7 +308,7 @@ public class TranslationContext {
         if (imported instanceof JsNameRef) {
             JsNameRef importedNameRef = (JsNameRef) imported;
             if (importedNameRef.getQualifier() == null && importedNameRef.getIdent().equals(Namer.getRootPackageName()) &&
-                (descriptor instanceof PackageFragmentDescriptor || descriptor instanceof ModuleDescriptor)) {
+                    (descriptor instanceof PackageFragmentDescriptor || descriptor instanceof ModuleDescriptor)) {
                 return importedNameRef.getName();
             }
         }
@@ -379,9 +379,9 @@ public class TranslationContext {
     }
 
     private static JsExpression replaceModuleReference(
-            @NotNull JsExpression expression,
-            @NotNull JsName expectedModuleName,
-            @NotNull JsExpression reexportExpr
+        @NotNull JsExpression expression,
+        @NotNull JsName expectedModuleName,
+        @NotNull JsExpression reexportExpr
     ) {
         if (expression instanceof JsNameRef) {
             JsNameRef nameRef = (JsNameRef) expression;
@@ -588,8 +588,8 @@ public class TranslationContext {
 
     @NotNull
     private JsExpression getDispatchReceiverPath(
-            @NotNull ClassDescriptor from, @NotNull ClassDescriptor to,
-            @NotNull JsExpression qualifier
+        @NotNull ClassDescriptor from, @NotNull ClassDescriptor to,
+        @NotNull JsExpression qualifier
     ) {
         while (true) {
             JsExpression alias = getAliasForDescriptor(from.getThisAsReceiverParameter());
@@ -681,7 +681,7 @@ public class TranslationContext {
 
         if (DescriptorUtils.isDescriptorWithLocalVisibility(declarationDescriptor)) return false;
         if (declarationDescriptor instanceof ConstructorDescriptor &&
-            DescriptorUtils.isDescriptorWithLocalVisibility(declarationDescriptor.getContainingDeclaration())) return false;
+                DescriptorUtils.isDescriptorWithLocalVisibility(declarationDescriptor.getContainingDeclaration())) return false;
 
         return true;
     }
@@ -704,9 +704,9 @@ public class TranslationContext {
 
         List<DeclarationDescriptor> result = staticContext.getClassOrConstructorClosure(classOrConstructor);
         if (result == null &&
-            classOrConstructor instanceof ConstructorDescriptor &&
-            ((ConstructorDescriptor) classOrConstructor).isPrimary()
-        ) {
+                classOrConstructor instanceof ConstructorDescriptor &&
+                ((ConstructorDescriptor) classOrConstructor).isPrimary()
+           ) {
             result = staticContext.getClassOrConstructorClosure((ClassDescriptor) classOrConstructor.getContainingDeclaration());
         }
         return result;
@@ -803,7 +803,7 @@ public class TranslationContext {
             return false;
         }
         PreliminaryDeclarationVisitor preliminaryVisitor =
-                PreliminaryDeclarationVisitor.Companion.getVisitorByVariable(descriptor, bindingContext());
+            PreliminaryDeclarationVisitor.Companion.getVisitorByVariable(descriptor, bindingContext());
         return (preliminaryVisitor == null ||
                 !hasNoWritersInClosures(descriptor.getContainingDeclaration(), preliminaryVisitor.writers(descriptor), bindingContext()));
     }
@@ -820,7 +820,7 @@ public class TranslationContext {
         ClassDescriptor classDescriptor = constructor.getContainingDeclaration();
         List<DeferredCallSite> callSites = staticContext.getDeferredCallSites().get(classDescriptor);
         if (callSites == null) throw new IllegalStateException("This method should be call only when `shouldBeDeferred` method " +
-                                                               "reports true for given constructor: " + constructor);
+                    "reports true for given constructor: " + constructor);
         callSites.add(new DeferredCallSite(constructor, invocationArgs, this));
     }
 
@@ -897,9 +897,9 @@ public class TranslationContext {
 
     @NotNull
     public JsExpression declareConstantValue(
-            @NotNull DeclarationDescriptor descriptor,
-            @NotNull KtSimpleNameExpression expression,
-            @NotNull JsExpression value) {
+        @NotNull DeclarationDescriptor descriptor,
+        @NotNull KtSimpleNameExpression expression,
+        @NotNull JsExpression value) {
         if (!isPublicInlineFunction() && isFromCurrentModule(descriptor)) {
             return ReferenceTranslator.translateSimpleName(expression, this);
         }

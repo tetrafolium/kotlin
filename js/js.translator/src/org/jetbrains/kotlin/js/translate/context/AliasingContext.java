@@ -41,9 +41,9 @@ public class AliasingContext {
     private final AliasingContext parent;
 
     private AliasingContext(
-            @Nullable AliasingContext parent,
-            @Nullable Map<DeclarationDescriptor, JsExpression> aliasesForDescriptors,
-            @Nullable Map<KtExpression, JsExpression> aliasesForExpressions
+        @Nullable AliasingContext parent,
+        @Nullable Map<DeclarationDescriptor, JsExpression> aliasesForDescriptors,
+        @Nullable Map<KtExpression, JsExpression> aliasesForExpressions
     ) {
         this.parent = parent;
         this.aliasesForDescriptors = aliasesForDescriptors;

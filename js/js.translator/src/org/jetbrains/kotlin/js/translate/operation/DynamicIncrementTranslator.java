@@ -31,13 +31,13 @@ public class DynamicIncrementTranslator extends IncrementTranslator {
 
     @NotNull
     public static JsExpression doTranslate(@NotNull KtUnaryExpression expression,
-            @NotNull TranslationContext context) {
+                                           @NotNull TranslationContext context) {
         return (new DynamicIncrementTranslator(expression, context))
-                .translate();
+               .translate();
     }
 
     private DynamicIncrementTranslator(@NotNull KtUnaryExpression expression,
-            @NotNull TranslationContext context) {
+                                       @NotNull TranslationContext context) {
         super(expression, context);
     }
 

@@ -268,24 +268,24 @@ public abstract class AndroidTestCase extends AndroidTestBase {
     }
 
     protected void configureAdditionalModules(
-            @NotNull TestFixtureBuilder<IdeaProjectTestFixture> projectBuilder, @NotNull List<MyAdditionalModuleData> modules) {
+        @NotNull TestFixtureBuilder<IdeaProjectTestFixture> projectBuilder, @NotNull List<MyAdditionalModuleData> modules) {
     }
 
     protected final void addModuleWithAndroidFacet(
-            @NotNull TestFixtureBuilder<IdeaProjectTestFixture> projectBuilder,
-            @NotNull List<MyAdditionalModuleData> modules,
-            @NotNull String dirName,
-            int projectType) {
+        @NotNull TestFixtureBuilder<IdeaProjectTestFixture> projectBuilder,
+        @NotNull List<MyAdditionalModuleData> modules,
+        @NotNull String dirName,
+        int projectType) {
         // By default, created module is declared as a main module's dependency
         addModuleWithAndroidFacet(projectBuilder, modules, dirName, projectType, true);
     }
 
     protected final void addModuleWithAndroidFacet(
-            @NotNull TestFixtureBuilder<IdeaProjectTestFixture> projectBuilder,
-            @NotNull List<MyAdditionalModuleData> modules,
-            @NotNull String dirName,
-            int projectType,
-            boolean isMainModuleDependency) {
+        @NotNull TestFixtureBuilder<IdeaProjectTestFixture> projectBuilder,
+        @NotNull List<MyAdditionalModuleData> modules,
+        @NotNull String dirName,
+        int projectType,
+        boolean isMainModuleDependency) {
         JavaModuleFixtureBuilder moduleFixtureBuilder = projectBuilder.addModule(JavaModuleFixtureBuilder.class);
         String moduleDirPath = myFixture.getTempDirPath() + getAdditionalModulePath(dirName);
         //noinspection ResultOfMethodCallIgnored
@@ -327,7 +327,7 @@ public abstract class AndroidTestCase extends AndroidTestBase {
     }
 
     protected final void doGlobalInspectionTest(
-            @NotNull GlobalInspectionTool inspection, @NotNull String globalTestDir, @NotNull AnalysisScope scope) {
+        @NotNull GlobalInspectionTool inspection, @NotNull String globalTestDir, @NotNull AnalysisScope scope) {
         doGlobalInspectionTest(new GlobalInspectionToolWrapper(inspection), globalTestDir, scope);
     }
 
@@ -337,13 +337,13 @@ public abstract class AndroidTestCase extends AndroidTestBase {
      * expected file.
      */
     protected final void doGlobalInspectionTest(
-            @NotNull GlobalInspectionToolWrapper wrapper, @NotNull String globalTestDir, @NotNull AnalysisScope scope) {
+        @NotNull GlobalInspectionToolWrapper wrapper, @NotNull String globalTestDir, @NotNull AnalysisScope scope) {
         myFixture.enableInspections(wrapper.getTool());
 
         scope.invalidate();
 
         GlobalInspectionContextForTests globalContext =
-                InspectionsKt.createGlobalContextForTool(scope, getProject(), Collections.singletonList(wrapper));
+            InspectionsKt.createGlobalContextForTool(scope, getProject(), Collections.singletonList(wrapper));
 
         InspectionTestUtil.runTool(wrapper, scope, globalContext);
         InspectionTestUtil.compareToolResults(globalContext, wrapper, false, getTestDataPath() + globalTestDir);
@@ -356,7 +356,7 @@ public abstract class AndroidTestCase extends AndroidTestBase {
         final boolean myIsMainModuleDependency;
 
         private MyAdditionalModuleData(
-                @NotNull JavaModuleFixtureBuilder moduleFixtureBuilder, @NotNull String dirName, int projectType, boolean isMainModuleDependency) {
+            @NotNull JavaModuleFixtureBuilder moduleFixtureBuilder, @NotNull String dirName, int projectType, boolean isMainModuleDependency) {
             myModuleFixtureBuilder = moduleFixtureBuilder;
             myDirName = dirName;
             myProjectType = projectType;

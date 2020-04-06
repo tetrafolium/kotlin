@@ -101,7 +101,7 @@ public abstract class AbstractSurroundWithTest extends LightCodeInsightTestCase 
             PsiElement[] elementsToSurround = getElementsToSurround(surrounder);
             assert elementsToSurround != null : "Couldn't find elements to surround";
             assert isApplicableExpected == surrounder.isApplicable(elementsToSurround)
-                    : "isApplicable() for " + surrounder.getClass() + " should return " + isApplicableExpected;
+            : "isApplicable() for " + surrounder.getClass() + " should return " + isApplicableExpected;
             if (isApplicableExpected) {
                 invokeSurroundAndCheck(path, surrounder);
             }
@@ -126,7 +126,7 @@ public abstract class AbstractSurroundWithTest extends LightCodeInsightTestCase 
     @Nullable
     private PsiElement[] getElementsToSurround(@NotNull Surrounder surrounder) {
         List<SurroundDescriptor> surroundDescriptors =
-                LanguageSurrounders.INSTANCE.allForLanguage(getFile().getViewProvider().getBaseLanguage());
+            LanguageSurrounders.INSTANCE.allForLanguage(getFile().getViewProvider().getBaseLanguage());
 
         String surrounderDescription = surrounder.getTemplateDescription();
         for (SurroundDescriptor descriptor : surroundDescriptors) {
@@ -135,7 +135,7 @@ public abstract class AbstractSurroundWithTest extends LightCodeInsightTestCase 
                 if (surrounderInDescriptor.getTemplateDescription().equals(surrounderDescription)) {
                     SelectionModel selection = getEditor().getSelectionModel();
                     PsiElement[] elements = descriptor.getElementsToSurround(
-                            getFile(), selection.getSelectionStart(), selection.getSelectionEnd());
+                                                getFile(), selection.getSelectionStart(), selection.getSelectionEnd());
                     return elements;
                 }
             }

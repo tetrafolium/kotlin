@@ -9,7 +9,7 @@ package org.jetbrains.kotlin.js.backend.ast;
  */
 public interface HasCondition {
 
-  JsExpression getCondition();
+    JsExpression getCondition();
 
-  void setCondition(JsExpression condition);
+    void setCondition(JsExpression condition);
 }

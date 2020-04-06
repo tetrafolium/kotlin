@@ -51,9 +51,9 @@ public class StructureViewUtil {
 
     @NotNull
     public static String print(
-            JTree tree, boolean withSelection,
-            @Nullable Queryable.PrintInfo printInfo,
-            @Nullable Condition<String> nodePrintCondition) {
+        JTree tree, boolean withSelection,
+        @Nullable Queryable.PrintInfo printInfo,
+        @Nullable Condition<String> nodePrintCondition) {
         StringBuilder buffer = new StringBuilder();
         Collection<String> strings = printAsList(tree, withSelection, printInfo, nodePrintCondition);
         for (String string : strings) {
@@ -63,9 +63,9 @@ public class StructureViewUtil {
     }
 
     public static Collection<String> printAsList(
-            JTree tree, boolean withSelection,
-            @Nullable Queryable.PrintInfo printInfo,
-            @Nullable Condition<String> nodePrintCondition) {
+        JTree tree, boolean withSelection,
+        @Nullable Queryable.PrintInfo printInfo,
+        @Nullable Condition<String> nodePrintCondition) {
         Collection<String> strings = new ArrayList<String>();
         Object root = tree.getModel().getRoot();
         printImpl(tree, root, strings, 0, withSelection, printInfo, nodePrintCondition);
@@ -73,12 +73,12 @@ public class StructureViewUtil {
     }
 
     private static void printImpl(JTree tree,
-            Object root,
-            Collection<String> strings,
-            int level,
-            boolean withSelection,
-            @Nullable Queryable.PrintInfo printInfo,
-            @Nullable Condition<String> nodePrintCondition) {
+                                  Object root,
+                                  Collection<String> strings,
+                                  int level,
+                                  boolean withSelection,
+                                  @Nullable Queryable.PrintInfo printInfo,
+                                  @Nullable Condition<String> nodePrintCondition) {
         DefaultMutableTreeNode defaultMutableTreeNode = (DefaultMutableTreeNode)root;
 
         Object userObject = defaultMutableTreeNode.getUserObject();

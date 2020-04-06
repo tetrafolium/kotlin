@@ -36,9 +36,9 @@ public class DestructuringDeclarationTranslator extends AbstractTranslator {
     // if multiObjectName was init, initializer must be null
     @NotNull
     public static JsVars translate(
-            @NotNull KtDestructuringDeclaration multiDeclaration,
-            @NotNull JsExpression multiObjectExpr,
-            @NotNull TranslationContext context
+        @NotNull KtDestructuringDeclaration multiDeclaration,
+        @NotNull JsExpression multiObjectExpr,
+        @NotNull TranslationContext context
     ) {
         return new DestructuringDeclarationTranslator(multiDeclaration, multiObjectExpr, context).translate();
     }
@@ -49,9 +49,9 @@ public class DestructuringDeclarationTranslator extends AbstractTranslator {
     private final JsExpression multiObjectExpr;
 
     private DestructuringDeclarationTranslator(
-            @NotNull KtDestructuringDeclaration multiDeclaration,
-            @NotNull JsExpression multiObjectExpr,
-            @NotNull TranslationContext context
+        @NotNull KtDestructuringDeclaration multiDeclaration,
+        @NotNull JsExpression multiObjectExpr,
+        @NotNull TranslationContext context
     ) {
         super(context);
         this.multiDeclaration = multiDeclaration;

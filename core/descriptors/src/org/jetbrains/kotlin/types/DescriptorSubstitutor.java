@@ -35,10 +35,10 @@ public class DescriptorSubstitutor {
 
     @NotNull
     public static TypeSubstitutor substituteTypeParameters(
-            @ReadOnly @NotNull List<TypeParameterDescriptor> typeParameters,
-            @NotNull TypeSubstitution originalSubstitution,
-            @NotNull DeclarationDescriptor newContainingDeclaration,
-            @NotNull @Mutable List<TypeParameterDescriptor> result
+        @ReadOnly @NotNull List<TypeParameterDescriptor> typeParameters,
+        @NotNull TypeSubstitution originalSubstitution,
+        @NotNull DeclarationDescriptor newContainingDeclaration,
+        @NotNull @Mutable List<TypeParameterDescriptor> result
     ) {
         TypeSubstitutor substitutor = substituteTypeParameters(typeParameters, originalSubstitution, newContainingDeclaration, result, null);
         if (substitutor == null) throw new AssertionError("Substitution failed");
@@ -47,11 +47,11 @@ public class DescriptorSubstitutor {
 
     @Nullable
     public static TypeSubstitutor substituteTypeParameters(
-            @ReadOnly @NotNull List<TypeParameterDescriptor> typeParameters,
-            @NotNull TypeSubstitution originalSubstitution,
-            @NotNull DeclarationDescriptor newContainingDeclaration,
-            @NotNull @Mutable List<TypeParameterDescriptor> result,
-            @Nullable boolean[] wereChanges
+        @ReadOnly @NotNull List<TypeParameterDescriptor> typeParameters,
+        @NotNull TypeSubstitution originalSubstitution,
+        @NotNull DeclarationDescriptor newContainingDeclaration,
+        @NotNull @Mutable List<TypeParameterDescriptor> result,
+        @Nullable boolean[] wereChanges
     ) {
         Map<TypeConstructor, TypeProjection> mutableSubstitution = new HashMap<TypeConstructor, TypeProjection>();
 
@@ -59,14 +59,14 @@ public class DescriptorSubstitutor {
         int index = 0;
         for (TypeParameterDescriptor descriptor : typeParameters) {
             TypeParameterDescriptorImpl substituted = TypeParameterDescriptorImpl.createForFurtherModification(
-                    newContainingDeclaration,
-                    descriptor.getAnnotations(),
-                    descriptor.isReified(),
-                    descriptor.getVariance(),
-                    descriptor.getName(),
-                    index++,
-                    SourceElement.NO_SOURCE
-            );
+                        newContainingDeclaration,
+                        descriptor.getAnnotations(),
+                        descriptor.isReified(),
+                        descriptor.getVariance(),
+                        descriptor.getName(),
+                        index++,
+                        SourceElement.NO_SOURCE
+                    );
 
             mutableSubstitution.put(descriptor.getTypeConstructor(), new TypeProjectionImpl(substituted.getDefaultType()));
 
@@ -75,8 +75,8 @@ public class DescriptorSubstitutor {
         }
 
         TypeSubstitutor substitutor = TypeSubstitutor.createChainedSubstitutor(
-                originalSubstitution, TypeConstructorSubstitution.createByConstructorsMap(mutableSubstitution)
-        );
+                                          originalSubstitution, TypeConstructorSubstitution.createByConstructorsMap(mutableSubstitution)
+                                      );
 
         for (TypeParameterDescriptor descriptor : typeParameters) {
             TypeParameterDescriptorImpl substituted = substitutedMap.get(descriptor);

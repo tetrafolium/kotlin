@@ -21,9 +21,9 @@ class MavenExecutionResult {
     private int exitCode;
 
     MavenExecutionResult(
-            @NotNull String output,
-            @NotNull File workingDir,
-            int exitCode
+        @NotNull String output,
+        @NotNull File workingDir,
+        int exitCode
     ) {
         this.stdout = output;
         this.workingDir = workingDir;

@@ -29,14 +29,14 @@ public final class NamePredicate implements Predicate<Name> {
 
     @NotNull
     public static final NamePredicate PRIMITIVE_NUMBERS = new NamePredicate(
-            CollectionsKt.map(PrimitiveType.NUMBER_TYPES, (PrimitiveType type) -> type.getTypeName().asString())
+        CollectionsKt.map(PrimitiveType.NUMBER_TYPES, (PrimitiveType type) -> type.getTypeName().asString())
     );
 
     @NotNull
     public static final NamePredicate PRIMITIVE_NUMBERS_MAPPED_TO_PRIMITIVE_JS = new NamePredicate(
-            CollectionsKt.mapNotNull(PrimitiveType.NUMBER_TYPES, (PrimitiveType type) ->
-                    type != PrimitiveType.LONG ? type.getTypeName().asString() : null
-            )
+        CollectionsKt.mapNotNull(PrimitiveType.NUMBER_TYPES, (PrimitiveType type) ->
+                                 type != PrimitiveType.LONG ? type.getTypeName().asString() : null
+                                )
     );
 
     @NotNull

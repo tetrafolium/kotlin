@@ -200,7 +200,7 @@ public abstract class KotlinCompileMojoBase<A extends CommonCompilerArguments> e
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         getLog().debug("Kotlin version " + KotlinCompilerVersion.VERSION +
-                " (JRE " + System.getProperty("java.runtime.version") + ")");
+                       " (JRE " + System.getProperty("java.runtime.version") + ")");
 
         if (!hasKotlinFilesInSources()) {
             getLog().warn("No sources found skipping Kotlin compile");
@@ -226,10 +226,10 @@ public abstract class KotlinCompileMojoBase<A extends CommonCompilerArguments> e
 
     @NotNull
     protected ExitCode execCompiler(
-            CLICompiler<A> compiler,
-            MessageCollector messageCollector,
-            A arguments,
-            List<File> sourceRoots
+        CLICompiler<A> compiler,
+        MessageCollector messageCollector,
+        A arguments,
+        List<File> sourceRoots
     ) throws MojoExecutionException {
         for (File sourceRoot : sourceRoots) {
             arguments.getFreeArgs().add(sourceRoot.getPath());
@@ -395,8 +395,8 @@ public abstract class KotlinCompileMojoBase<A extends CommonCompilerArguments> e
 
     @NotNull
     private static List<PluginOption> parseUserProvidedPluginOptions(
-            @NotNull List<String> rawOptions,
-            @NotNull Map<String, KotlinMavenPluginExtension> plugins
+        @NotNull List<String> rawOptions,
+        @NotNull Map<String, KotlinMavenPluginExtension> plugins
     ) throws PluginOptionIllegalFormatException, PluginNotFoundException {
         List<PluginOption> pluginOptions = new ArrayList<>(rawOptions.size());
 
@@ -497,8 +497,8 @@ public abstract class KotlinCompileMojoBase<A extends CommonCompilerArguments> e
             }
 
             arguments.setPluginOptions(joinArrays(
-                    arguments.getPluginOptions(),
-                    pluginArguments.toArray(new String[pluginArguments.size()])));
+                                           arguments.getPluginOptions(),
+                                           pluginArguments.toArray(new String[pluginArguments.size()])));
         }
     }
 

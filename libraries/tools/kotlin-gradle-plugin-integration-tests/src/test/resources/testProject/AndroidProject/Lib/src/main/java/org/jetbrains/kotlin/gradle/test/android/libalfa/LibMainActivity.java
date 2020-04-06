@@ -19,5 +19,5 @@ public class LibMainActivity extends Activity {
         getMenuInflater().inflate(R.menu.lib_main, menu);
         return true;
     }
-    
+
 }

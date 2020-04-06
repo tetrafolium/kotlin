@@ -29,17 +29,17 @@ public class SettingsConfigurator {
         settingsToFalse = InTextDirectivesUtils.findArrayWithPrefixes(fileText, SET_FALSE_DIRECTIVE);
         //noinspection unchecked
         settingsToIntValue = ContainerUtil.map2Array(
-                InTextDirectivesUtils.findArrayWithPrefixes(fileText, SET_INT_DIRECTIVE),
-                Pair.class,
-                new Function<String, Pair>() {
-                    @SuppressWarnings("unchecked")
-                    @Override
-                    public Pair fun(String s) {
-                        String[] tokens = s.split("=");
-                        return new Pair(tokens[0].trim(), Integer.valueOf(tokens[1].trim()));
-                    }
-                }
-        );
+                                 InTextDirectivesUtils.findArrayWithPrefixes(fileText, SET_INT_DIRECTIVE),
+                                 Pair.class,
+        new Function<String, Pair>() {
+            @SuppressWarnings("unchecked")
+            @Override
+            public Pair fun(String s) {
+                String[] tokens = s.split("=");
+                return new Pair(tokens[0].trim(), Integer.valueOf(tokens[1].trim()));
+            }
+        }
+                             );
         this.objects = objects;
     }
 
@@ -51,7 +51,7 @@ public class SettingsConfigurator {
         }
 
         throw new IllegalArgumentException(String.format(
-                "There's no property or method with name '%s' in given objects: %s", settingName, Arrays.toString(objects)));
+                                               "There's no property or method with name '%s' in given objects: %s", settingName, Arrays.toString(objects)));
     }
 
     private static void setBooleanSetting(String setting, Boolean value, Object... objects) {

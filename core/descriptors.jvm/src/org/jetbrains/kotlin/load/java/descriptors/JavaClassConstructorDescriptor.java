@@ -33,22 +33,22 @@ public class JavaClassConstructorDescriptor extends ClassConstructorDescriptorIm
     private Boolean hasSynthesizedParameterNames = null;
 
     protected JavaClassConstructorDescriptor(
-            @NotNull ClassDescriptor containingDeclaration,
-            @Nullable JavaClassConstructorDescriptor original,
-            @NotNull Annotations annotations,
-            boolean isPrimary,
-            @NotNull Kind kind,
-            @NotNull SourceElement source
+        @NotNull ClassDescriptor containingDeclaration,
+        @Nullable JavaClassConstructorDescriptor original,
+        @NotNull Annotations annotations,
+        boolean isPrimary,
+        @NotNull Kind kind,
+        @NotNull SourceElement source
     ) {
         super(containingDeclaration, original, annotations, isPrimary, kind, source);
     }
 
     @NotNull
     public static JavaClassConstructorDescriptor createJavaConstructor(
-            @NotNull ClassDescriptor containingDeclaration,
-            @NotNull Annotations annotations,
-            boolean isPrimary,
-            @NotNull SourceElement source
+        @NotNull ClassDescriptor containingDeclaration,
+        @NotNull Annotations annotations,
+        boolean isPrimary,
+        @NotNull SourceElement source
     ) {
         return new JavaClassConstructorDescriptor(containingDeclaration, null, annotations, isPrimary, Kind.DECLARATION, source);
     }
@@ -76,26 +76,26 @@ public class JavaClassConstructorDescriptor extends ClassConstructorDescriptorIm
     @NotNull
     @Override
     protected JavaClassConstructorDescriptor createSubstitutedCopy(
-            @NotNull DeclarationDescriptor newOwner,
-            @Nullable FunctionDescriptor original,
-            @NotNull Kind kind,
-            @Nullable Name newName,
-            @NotNull Annotations annotations,
-            @NotNull SourceElement source
+        @NotNull DeclarationDescriptor newOwner,
+        @Nullable FunctionDescriptor original,
+        @NotNull Kind kind,
+        @Nullable Name newName,
+        @NotNull Annotations annotations,
+        @NotNull SourceElement source
     ) {
         if (kind != Kind.DECLARATION && kind != Kind.SYNTHESIZED) {
             throw new IllegalStateException(
-                    "Attempt at creating a constructor that is not a declaration: \n" +
-                    "copy from: " + this + "\n" +
-                    "newOwner: " + newOwner + "\n" +
-                    "kind: " + kind
+                "Attempt at creating a constructor that is not a declaration: \n" +
+                "copy from: " + this + "\n" +
+                "newOwner: " + newOwner + "\n" +
+                "kind: " + kind
             );
         }
 
         assert newName == null : "Attempt to rename constructor: " + this;
 
         JavaClassConstructorDescriptor result =
-                createDescriptor((ClassDescriptor) newOwner, (JavaClassConstructorDescriptor) original, kind, source, annotations);
+            createDescriptor((ClassDescriptor) newOwner, (JavaClassConstructorDescriptor) original, kind, source, annotations);
         result.setHasStableParameterNames(hasStableParameterNames());
         result.setHasSynthesizedParameterNames(hasSynthesizedParameterNames());
         return result;
@@ -103,42 +103,42 @@ public class JavaClassConstructorDescriptor extends ClassConstructorDescriptorIm
 
     @NotNull
     protected JavaClassConstructorDescriptor createDescriptor(
-            @NotNull ClassDescriptor newOwner,
-            @Nullable JavaClassConstructorDescriptor original,
-            @NotNull Kind kind,
-            @NotNull SourceElement sourceElement,
-            @NotNull Annotations annotations
+        @NotNull ClassDescriptor newOwner,
+        @Nullable JavaClassConstructorDescriptor original,
+        @NotNull Kind kind,
+        @NotNull SourceElement sourceElement,
+        @NotNull Annotations annotations
     ) {
         return new JavaClassConstructorDescriptor(
-                newOwner, original, annotations, isPrimary, kind,
-                sourceElement
-        );
+                   newOwner, original, annotations, isPrimary, kind,
+                   sourceElement
+               );
     }
 
     @Override
     @NotNull
     public JavaClassConstructorDescriptor enhance(
-            @Nullable KotlinType enhancedReceiverType,
-            @NotNull List<ValueParameterData> enhancedValueParametersData,
-            @NotNull KotlinType enhancedReturnType,
-            @Nullable Pair<UserDataKey<?>, ?> additionalUserData
+        @Nullable KotlinType enhancedReceiverType,
+        @NotNull List<ValueParameterData> enhancedValueParametersData,
+        @NotNull KotlinType enhancedReturnType,
+        @Nullable Pair<UserDataKey<?>, ?> additionalUserData
     ) {
 
         JavaClassConstructorDescriptor enhanced = createSubstitutedCopy(
-                getContainingDeclaration(), /* original = */ null, getKind(), null, getAnnotations(), getSource());
+                    getContainingDeclaration(), /* original = */ null, getKind(), null, getAnnotations(), getSource());
         ReceiverParameterDescriptor enhancedReceiver =
-                enhancedReceiverType == null ? null : DescriptorFactory.createExtensionReceiverParameterForCallable(
-                        enhanced, enhancedReceiverType, Annotations.Companion.getEMPTY()
-                );
+            enhancedReceiverType == null ? null : DescriptorFactory.createExtensionReceiverParameterForCallable(
+                enhanced, enhancedReceiverType, Annotations.Companion.getEMPTY()
+            );
         // We do not use doSubstitute here as in JavaMethodDescriptor.enhance because type parameters of constructor belongs to class
         enhanced.initialize(
-                enhancedReceiver,
-                getDispatchReceiverParameter(),
-                getTypeParameters(),
-                UtilKt.copyValueParameters(enhancedValueParametersData, getValueParameters(), enhanced),
-                enhancedReturnType,
-                getModality(),
-                getVisibility()
+            enhancedReceiver,
+            getDispatchReceiverParameter(),
+            getTypeParameters(),
+            UtilKt.copyValueParameters(enhancedValueParametersData, getValueParameters(), enhanced),
+            enhancedReturnType,
+            getModality(),
+            getVisibility()
         );
 
         if (additionalUserData != null) {

@@ -150,15 +150,15 @@ public final class StaticContext {
     private final boolean isStdlib;
 
     private static final Set<String> BUILTIN_JS_PROPERTIES = Sets.union(
-            JsBuiltinNameClashChecker.PROHIBITED_MEMBER_NAMES,
-            JsBuiltinNameClashChecker.PROHIBITED_STATIC_NAMES
-    );
+                JsBuiltinNameClashChecker.PROHIBITED_MEMBER_NAMES,
+                JsBuiltinNameClashChecker.PROHIBITED_STATIC_NAMES
+            );
 
     public StaticContext(
-            @NotNull BindingTrace bindingTrace,
-            @NotNull JsConfig config,
-            @NotNull ModuleDescriptor moduleDescriptor,
-            @NotNull SourceFilePathResolver sourceFilePathResolver
+        @NotNull BindingTrace bindingTrace,
+        @NotNull JsConfig config,
+        @NotNull ModuleDescriptor moduleDescriptor,
+        @NotNull SourceFilePathResolver sourceFilePathResolver
     ) {
         program = new JsProgram();
         JsFunction rootFunction = JsAstUtils.createFunctionWithEmptyBody(program.getScope());
@@ -178,7 +178,7 @@ public final class StaticContext {
         this.sourceFilePathResolver = sourceFilePathResolver;
 
         ClassDescriptor exceptionClass = findClassAcrossModuleDependencies(
-                moduleDescriptor, ClassId.topLevel(new FqName("kotlin.Exception")));
+                                             moduleDescriptor, ClassId.topLevel(new FqName("kotlin.Exception")));
         isStdlib = exceptionClass != null && DescriptorUtils.getContainingModule(exceptionClass) == moduleDescriptor;
     }
 
@@ -421,8 +421,8 @@ public final class StaticContext {
                 JsName name = scope.declareName(namePart);
                 MetadataProperties.setDescriptor(name, suggested.getDescriptor());
                 if (tag != null && !AnnotationsUtils.isNativeObject(suggested.getDescriptor()) &&
-                    !AnnotationsUtils.isLibraryObject(suggested.getDescriptor())
-                ) {
+                        !AnnotationsUtils.isLibraryObject(suggested.getDescriptor())
+                   ) {
                     fragment.getNameBindings().add(new JsNameBinding(index++ + ":" + tag, name));
                 }
                 names.add(name);
@@ -435,8 +435,8 @@ public final class StaticContext {
             if (name == null) {
                 String baseName = NameSuggestion.sanitizeName(suggested.getNames().get(0));
                 if (suggested.getDescriptor() instanceof LocalVariableDescriptor ||
-                    suggested.getDescriptor() instanceof ValueParameterDescriptor
-                ) {
+                        suggested.getDescriptor() instanceof ValueParameterDescriptor
+                   ) {
                     name = JsScope.declareTemporaryName(baseName);
                 }
                 else {
@@ -651,7 +651,7 @@ public final class StaticContext {
             Rule<JsScope> generateNewScopesForPackageDescriptors = descriptor -> fragment.getScope();
             //TODO: never get there
             Rule<JsScope> generateInnerScopesForMembers =
-                    descriptor -> fragment.getScope().innerObjectScope("Scope for member " + descriptor.getName());
+                descriptor -> fragment.getScope().innerObjectScope("Scope for member " + descriptor.getName());
             Rule<JsScope> createFunctionObjectsForCallableDescriptors = descriptor -> {
                 if (!(descriptor instanceof CallableDescriptor)) {
                     return null;
@@ -737,9 +737,9 @@ public final class StaticContext {
 
     private static void applySideEffects(JsExpression expression, DeclarationDescriptor descriptor) {
         if (descriptor instanceof FunctionDescriptor ||
-            descriptor instanceof PackageFragmentDescriptor ||
-            descriptor instanceof ClassDescriptor
-        ) {
+                descriptor instanceof PackageFragmentDescriptor ||
+                descriptor instanceof ClassDescriptor
+           ) {
             MetadataProperties.setSideEffects(expression, SideEffectKind.PURE);
         }
     }
@@ -886,7 +886,7 @@ public final class StaticContext {
         if (functionDescriptor != null) return functionDescriptor;
 
         ClassifierDescriptor cls = rootPackage.getMemberScope().getContributedClassifier(
-                Name.identifier(name), NoLookupLocation.FROM_BACKEND);
+                                       Name.identifier(name), NoLookupLocation.FROM_BACKEND);
         if (cls != null) return cls;
 
         return null;

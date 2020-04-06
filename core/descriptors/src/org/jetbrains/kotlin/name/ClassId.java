@@ -42,7 +42,7 @@ public final class ClassId {
     public ClassId(@NotNull FqName packageFqName, @NotNull FqName relativeClassName, boolean local) {
         this.packageFqName = packageFqName;
         assert !relativeClassName.isRoot() :
-                "Class name must not be root: " + packageFqName + (local ? " (local)" : "");
+        "Class name must not be root: " + packageFqName + (local ? " (local)" : "");
         this.relativeClassName = relativeClassName;
         this.local = local;
     }

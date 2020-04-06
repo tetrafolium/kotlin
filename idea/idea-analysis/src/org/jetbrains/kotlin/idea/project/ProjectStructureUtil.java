@@ -40,7 +40,7 @@ public class ProjectStructureUtil {
             result = CachedValuesManager.getManager(module.getProject()).createCachedValue(() -> {
                 IdePlatform<?, ?> platform = IdePlatformKindUtil.orDefault(PlatformKt.getPlatform(module));
                 return CachedValueProvider.Result.create(platform.getKind().getCompilerPlatform(),
-                                                         ProjectRootModificationTracker.getInstance(module.getProject()));
+                        ProjectRootModificationTracker.getInstance(module.getProject()));
             }, false);
 
             module.putUserData(PLATFORM_FOR_MODULE, result);

@@ -164,8 +164,8 @@ public class KotlinCommonCodeStyleSettings extends CommonCodeStyleSettings {
 
         try {
             Method setRootSettingsMethod = ArraysKt.singleOrNull(
-                    CommonCodeStyleSettings.class.getDeclaredMethods(),
-                    method -> "setSoftMargins".equals(method.getName()));
+                                               CommonCodeStyleSettings.class.getDeclaredMethods(),
+                                               method -> "setSoftMargins".equals(method.getName()));
 
             if (setRootSettingsMethod != null) {
                 // Method was introduced in 173
@@ -197,7 +197,7 @@ public class KotlinCommonCodeStyleSettings extends CommonCodeStyleSettings {
 
         IndentOptions options = getIndentOptions();
         if ((options == null && other.getIndentOptions() != null) ||
-            (options != null && !options.equals(other.getIndentOptions()))) {
+                (options != null && !options.equals(other.getIndentOptions()))) {
             return false;
         }
 
@@ -244,9 +244,9 @@ public class KotlinCommonCodeStyleSettings extends CommonCodeStyleSettings {
         private final Set<String> mySupportedFieldNames;
 
         public SupportedFieldsDiffFilter(
-                final CommonCodeStyleSettings object,
-                Set<String> supportedFiledNames,
-                final CommonCodeStyleSettings parentObject
+            final CommonCodeStyleSettings object,
+            Set<String> supportedFiledNames,
+            final CommonCodeStyleSettings parentObject
         ) {
             super(object, parentObject);
             mySupportedFieldNames = supportedFiledNames;
@@ -255,7 +255,7 @@ public class KotlinCommonCodeStyleSettings extends CommonCodeStyleSettings {
         @Override
         public boolean isAccept(@NotNull Field field) {
             if (mySupportedFieldNames == null ||
-                mySupportedFieldNames.contains(field.getName())) {
+                    mySupportedFieldNames.contains(field.getName())) {
                 return super.isAccept(field);
             }
             return false;

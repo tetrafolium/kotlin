@@ -53,11 +53,11 @@ public abstract class AddFieldBreakpointDialog extends DialogWrapper {
     @Override
     protected JComponent createCenterPanel() {
         UiUtilKt.onTextChange(
-                myClassChooser.getTextField(),
-                (DocumentEvent e) -> {
-                    updateUI();
-                    return Unit.INSTANCE;
-                }
+            myClassChooser.getTextField(),
+        (DocumentEvent e) -> {
+            updateUI();
+            return Unit.INSTANCE;
+        }
         );
 
         myClassChooser.addActionListener(new ActionListener() {
@@ -65,7 +65,7 @@ public abstract class AddFieldBreakpointDialog extends DialogWrapper {
             public void actionPerformed(ActionEvent e) {
                 PsiClass currentClass = getSelectedClass();
                 TreeClassChooser chooser = TreeClassChooserFactory.getInstance(myProject).createAllProjectScopeChooser(
-                        DebuggerBundle.message("add.field.breakpoint.dialog.classchooser.title"));
+                                               DebuggerBundle.message("add.field.breakpoint.dialog.classchooser.title"));
                 if (currentClass != null) {
                     PsiFile containingFile = currentClass.getContainingFile();
                     if (containingFile != null) {

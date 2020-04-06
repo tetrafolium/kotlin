@@ -45,14 +45,14 @@ public class CopyIntoPanel {
 
     public CopyIntoPanel(@Nullable Project project, @NotNull String defaultPath, @Nullable String labelText) {
         copyIntoField.addBrowseFolderListener(
-                "Copy Into...", "Choose folder where files will be copied", project,
-                FileChooserDescriptorFactory.createSingleFolderDescriptor());
+            "Copy Into...", "Choose folder where files will be copied", project,
+            FileChooserDescriptorFactory.createSingleFolderDescriptor());
         UiUtilKt.onTextChange(
-                copyIntoField.getTextField(),
-                (DocumentEvent e) -> {
-                    updateComponents();
-                    return Unit.INSTANCE;
-                }
+            copyIntoField.getTextField(),
+        (DocumentEvent e) -> {
+            updateComponents();
+            return Unit.INSTANCE;
+        }
         );
 
         if (labelText != null) {

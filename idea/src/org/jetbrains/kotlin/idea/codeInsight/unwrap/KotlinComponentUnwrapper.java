@@ -42,7 +42,7 @@ public abstract class KotlinComponentUnwrapper extends KotlinUnwrapRemoveBase {
 
         KtExpression expressionToUnwrap = getExpressionToUnwrap((KtElement) e);
         return expressionToUnwrap != null && canExtractExpression(expressionToUnwrap,
-                                                                  (KtElement) getEnclosingElement((KtElement) e).getParent());
+                (KtElement) getEnclosingElement((KtElement) e).getParent());
     }
 
     @Override

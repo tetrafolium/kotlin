@@ -56,7 +56,7 @@ public final class BinaryOperationTranslator extends AbstractTranslator {
 
     @NotNull
     public static JsExpression translate(@NotNull KtBinaryExpression expression,
-            @NotNull TranslationContext context) {
+                                         @NotNull TranslationContext context) {
         JsExpression jsExpression = new BinaryOperationTranslator(expression, context).translate();
         return jsExpression.source(expression);
     }
@@ -84,7 +84,7 @@ public final class BinaryOperationTranslator extends AbstractTranslator {
     private final CallableDescriptor operationDescriptor;
 
     private BinaryOperationTranslator(@NotNull KtBinaryExpression expression,
-            @NotNull TranslationContext context) {
+                                      @NotNull TranslationContext context) {
         super(context);
         this.expression = expression;
 
@@ -120,7 +120,7 @@ public final class BinaryOperationTranslator extends AbstractTranslator {
             return translateEquals();
         }
         assert operationDescriptor != null :
-                "Overloadable operations must have not null descriptor";
+        "Overloadable operations must have not null descriptor";
         return translateAsOverloadedBinaryOperation();
     }
 
@@ -130,11 +130,11 @@ public final class BinaryOperationTranslator extends AbstractTranslator {
         assert expressionType != null;
 
         JsExpression leftExpression = TranslationUtils.coerce(
-                context(), Translation.translateAsExpression(leftKtExpression, context()), TypeUtilsKt.makeNullable(expressionType));
+                                          context(), Translation.translateAsExpression(leftKtExpression, context()), TypeUtilsKt.makeNullable(expressionType));
 
         JsBlock rightBlock = new JsBlock();
         JsExpression rightExpression = TranslationUtils.coerce(
-                context(), Translation.translateAsExpression(rightKtExpression, context(), rightBlock), expressionType);
+                                           context(), Translation.translateAsExpression(rightKtExpression, context(), rightBlock), expressionType);
 
         if (rightBlock.isEmpty()) {
             return TranslationUtils.notNullConditional(leftExpression, rightExpression, context());
@@ -161,7 +161,7 @@ public final class BinaryOperationTranslator extends AbstractTranslator {
     @Nullable
     private JsExpression tryApplyIntrinsic() {
         BinaryOperationIntrinsic intrinsic =
-                context().intrinsics().getBinaryOperationIntrinsic(expression, context());
+            context().intrinsics().getBinaryOperationIntrinsic(expression, context());
 
         if (intrinsic == null) return null;
 
@@ -217,7 +217,7 @@ public final class BinaryOperationTranslator extends AbstractTranslator {
                 rightBlock.getStatements().add(JsAstUtils.asSyntheticStatement(rightAssignment));
             }
             JsStatement assignmentStatement = JsAstUtils.asSyntheticStatement(
-                    JsAstUtils.assignment(result.deepCopy(), literalResult).source(rightKtExpression));
+                                                  JsAstUtils.assignment(result.deepCopy(), literalResult).source(rightKtExpression));
             ifStatement = JsAstUtils.newJsIf(leftExpression, rightBlock, assignmentStatement);
             MetadataProperties.setSynthetic(ifStatement, true);
         }

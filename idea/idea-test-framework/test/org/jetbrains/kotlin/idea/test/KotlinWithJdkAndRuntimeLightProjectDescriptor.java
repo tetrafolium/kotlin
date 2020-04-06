@@ -39,20 +39,20 @@ public class KotlinWithJdkAndRuntimeLightProjectDescriptor extends KotlinJdkAndL
 
     @NotNull
     public static final KotlinWithJdkAndRuntimeLightProjectDescriptor INSTANCE_WITH_KOTLIN_TEST = new KotlinWithJdkAndRuntimeLightProjectDescriptor(
-            Arrays.asList(ForTestCompileRuntime.runtimeJarForTests(),
-                          PathUtil.getKotlinPathsForDistDirectory().getKotlinTestPath())
+        Arrays.asList(ForTestCompileRuntime.runtimeJarForTests(),
+                      PathUtil.getKotlinPathsForDistDirectory().getKotlinTestPath())
     );
 
     @NotNull
     public static final KotlinWithJdkAndRuntimeLightProjectDescriptor INSTANCE_WITH_SCRIPT_RUNTIME = new KotlinWithJdkAndRuntimeLightProjectDescriptor(
-            Arrays.asList(ForTestCompileRuntime.runtimeJarForTests(),
-                          PathUtil.getKotlinPathsForDistDirectory().getScriptRuntimePath())
+        Arrays.asList(ForTestCompileRuntime.runtimeJarForTests(),
+                      PathUtil.getKotlinPathsForDistDirectory().getScriptRuntimePath())
     );
 
     @NotNull
     public static final KotlinWithJdkAndRuntimeLightProjectDescriptor INSTANCE_WITH_REFLECT = new KotlinWithJdkAndRuntimeLightProjectDescriptor(
-            Arrays.asList(ForTestCompileRuntime.runtimeJarForTests(),
-                          ForTestCompileRuntime.reflectJarForTests())
+        Arrays.asList(ForTestCompileRuntime.runtimeJarForTests(),
+                      ForTestCompileRuntime.reflectJarForTests())
     );
 
     @NotNull

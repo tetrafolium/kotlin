@@ -224,7 +224,7 @@ public class KotlinRunConfiguration extends JetRunConfiguration {
 
     @Override
     public RunProfileState getState(@NotNull Executor executor, @NotNull ExecutionEnvironment executionEnvironment)
-        throws ExecutionException {
+    throws ExecutionException {
         return new MyJavaCommandLineState(this, executionEnvironment);
     }
 
@@ -243,7 +243,7 @@ public class KotlinRunConfiguration extends JetRunConfiguration {
         }
 
         if (fqNameBeingRenamed == null ||
-            !MAIN_CLASS_NAME.equals(fqNameBeingRenamed) && !MAIN_CLASS_NAME.startsWith(fqNameBeingRenamed + ".")) {
+                !MAIN_CLASS_NAME.equals(fqNameBeingRenamed) && !MAIN_CLASS_NAME.startsWith(fqNameBeingRenamed + ".")) {
             return null;
         }
 
@@ -300,20 +300,20 @@ public class KotlinRunConfiguration extends JetRunConfiguration {
     @NotNull
     private static Collection<KtNamedFunction> getMainFunCandidates(@NotNull PsiClass psiClass) {
         return CollectionsKt.filterNotNull(
-                ArraysKt.map(
-                        psiClass.getAllMethods(),
-                        new Function1<PsiMethod, KtNamedFunction>() {
-                            @Override
-                            public KtNamedFunction invoke(PsiMethod method) {
-                                if (!(method instanceof KtLightMethod)) return null;
-                                if (!method.getName().equals("main")) return null;
+                   ArraysKt.map(
+                       psiClass.getAllMethods(),
+        new Function1<PsiMethod, KtNamedFunction>() {
+            @Override
+            public KtNamedFunction invoke(PsiMethod method) {
+                if (!(method instanceof KtLightMethod)) return null;
+                if (!method.getName().equals("main")) return null;
 
-                                KtDeclaration declaration = ((KtLightMethod) method).getKotlinOrigin();
-                                return declaration instanceof KtNamedFunction ? (KtNamedFunction) declaration : null;
-                            }
-                        }
-                )
-        );
+                KtDeclaration declaration = ((KtLightMethod) method).getKotlinOrigin();
+                return declaration instanceof KtNamedFunction ? (KtNamedFunction) declaration : null;
+            }
+        }
+                   )
+               );
     }
 
     @Nullable
@@ -321,7 +321,7 @@ public class KotlinRunConfiguration extends JetRunConfiguration {
         for (KtNamedFunction function : getMainFunCandidates(psiClass)) {
             BindingContext bindingContext = ResolutionUtils.analyze(function, BodyResolveMode.FULL);
             MainFunctionDetector mainFunctionDetector =
-                    new MainFunctionDetector(bindingContext, PlatformKt.getLanguageVersionSettings(function));
+                new MainFunctionDetector(bindingContext, PlatformKt.getLanguageVersionSettings(function));
             if (mainFunctionDetector.isMain(function)) return function;
         }
         return null;
@@ -338,7 +338,7 @@ public class KotlinRunConfiguration extends JetRunConfiguration {
             JavaRunConfigurationModule module = myConfiguration.getConfigurationModule();
 
             int classPathType = DumbService.getInstance(module.getProject()).computeWithAlternativeResolveEnabled(
-                    () -> getClasspathType(module));
+                                    () -> getClasspathType(module));
 
             String jreHome = myConfiguration.ALTERNATIVE_JRE_PATH_ENABLED ? myConfiguration.ALTERNATIVE_JRE_PATH : null;
             JavaParametersUtil.configureModule(module, params, classPathType, jreHome);
@@ -400,7 +400,7 @@ public class KotlinRunConfiguration extends JetRunConfiguration {
         private static void setupModulePath(JavaParameters params, JavaRunConfigurationModule module) {
             if (JavaSdkUtil.isJdkAtLeast(params.getJdk(), JavaSdkVersion.JDK_1_9)) {
                 PsiJavaModule mainModule = DumbService.getInstance(module.getProject()).computeWithAlternativeResolveEnabled(
-                        () -> JavaModuleGraphUtil.findDescriptorByElement(module.findClass(params.getMainClass())));
+                                               () -> JavaModuleGraphUtil.findDescriptorByElement(module.findClass(params.getMainClass())));
                 if (mainModule != null) {
                     params.setModuleName(mainModule.getName());
                     PathsList classPath = params.getClassPath();

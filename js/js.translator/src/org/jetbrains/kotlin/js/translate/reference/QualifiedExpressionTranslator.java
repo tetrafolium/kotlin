@@ -39,7 +39,7 @@ public final class QualifiedExpressionTranslator {
 
     @NotNull
     public static AccessTranslator getAccessTranslator(@NotNull KtQualifiedExpression expression,
-                                                       @NotNull TranslationContext context, boolean forceOrderOfEvaluation) {
+            @NotNull TranslationContext context, boolean forceOrderOfEvaluation) {
         JsExpression receiver = translateReceiver(expression, context);
         if (forceOrderOfEvaluation && receiver != null) {
             receiver = context.defineTemporary(receiver);
@@ -58,8 +58,8 @@ public final class QualifiedExpressionTranslator {
 
     @NotNull
     public static JsNode translateQualifiedExpression(
-            @NotNull KtQualifiedExpression expression,
-            @NotNull TranslationContext context
+        @NotNull KtQualifiedExpression expression,
+        @NotNull TranslationContext context
     ) {
         ResolvedCall<?> call = CallUtilKt.getResolvedCall(expression, context.bindingContext());
         JsExpression receiver = null;
@@ -72,9 +72,9 @@ public final class QualifiedExpressionTranslator {
 
     @NotNull
     private static JsNode dispatchToCorrectTranslator(
-            @Nullable JsExpression receiver,
-            @NotNull KtExpression selector,
-            @NotNull TranslationContext context
+        @Nullable JsExpression receiver,
+        @NotNull KtExpression selector,
+        @NotNull TranslationContext context
     ) {
         if (ReferenceTranslator.canBePropertyAccess(selector, context)) {
             assert selector instanceof KtSimpleNameExpression : "Selectors for properties must be simple names.";
@@ -92,9 +92,9 @@ public final class QualifiedExpressionTranslator {
 
     @NotNull
     static JsNode invokeCallExpressionTranslator(
-            @Nullable JsExpression receiver,
-            @NotNull KtCallExpression selector,
-            @NotNull TranslationContext context
+        @Nullable JsExpression receiver,
+        @NotNull KtCallExpression selector,
+        @NotNull TranslationContext context
     ) {
         try {
             return CallExpressionTranslator.translate(selector, receiver, context);
@@ -105,7 +105,7 @@ public final class QualifiedExpressionTranslator {
 
     @Nullable
     private static JsExpression translateReceiver(@NotNull KtQualifiedExpression expression,
-                                                  @NotNull TranslationContext context) {
+            @NotNull TranslationContext context) {
         KtExpression receiverExpression = expression.getReceiverExpression();
         if (isFullQualifierForExpression(receiverExpression, context)) {
             return null;

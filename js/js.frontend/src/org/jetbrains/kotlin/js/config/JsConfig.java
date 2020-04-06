@@ -46,10 +46,10 @@ import static org.jetbrains.kotlin.utils.PathUtil.getKotlinPathsForDistDirectory
 
 public class JsConfig {
     public static final List<String> JS_STDLIB =
-            Collections.singletonList(getKotlinPathsForDistDirectory().getJsStdLibJarPath().getAbsolutePath());
+        Collections.singletonList(getKotlinPathsForDistDirectory().getJsStdLibJarPath().getAbsolutePath());
 
     public static final List<String> JS_KOTLIN_TEST =
-            Collections.singletonList(getKotlinPathsForDistDirectory().getJsKotlinTestJarPath().getAbsolutePath());
+        Collections.singletonList(getKotlinPathsForDistDirectory().getJsKotlinTestJarPath().getAbsolutePath());
 
     public static final String UNKNOWN_EXTERNAL_MODULE_NAME = "<unknown>";
 
@@ -76,8 +76,8 @@ public class JsConfig {
     }
 
     public JsConfig(@NotNull Project project, @NotNull CompilerConfiguration configuration,
-            @Nullable List<JsModuleDescriptor<KotlinJavaScriptLibraryParts>> metadataCache,
-            @Nullable Set<String> librariesToSkip) {
+                    @Nullable List<JsModuleDescriptor<KotlinJavaScriptLibraryParts>> metadataCache,
+                    @Nullable Set<String> librariesToSkip) {
         this.project = project;
         this.configuration = configuration.copy();
         this.metadataCache = metadataCache;
@@ -157,8 +157,8 @@ public class JsConfig {
     }
 
     private boolean checkLibFilesAndReportErrors(
-            @NotNull Collection<String> libraries,
-            @NotNull JsConfig.Reporter report
+        @NotNull Collection<String> libraries,
+        @NotNull JsConfig.Reporter report
     ) {
         if (libraries.isEmpty()) {
             return false;
@@ -225,7 +225,7 @@ public class JsConfig {
 
             Set<String> friendLibsSet = new HashSet<>(getFriends());
             metadata.addAll(metadataList);
-            if (friendLibsSet.contains(path)){
+            if (friendLibsSet.contains(path)) {
                 friends.addAll(metadataList);
             }
         }
@@ -251,15 +251,15 @@ public class JsConfig {
             LanguageVersionSettings languageVersionSettings = CommonConfigurationKeysKt.getLanguageVersionSettings(configuration);
             for (JsModuleDescriptor<KotlinJavaScriptLibraryParts> cached : metadataCache) {
                 ModuleDescriptorImpl moduleDescriptor = new ModuleDescriptorImpl(
-                        Name.special("<" + cached.getName() + ">"), storageManager, JsPlatform.INSTANCE.getBuiltIns()
+                    Name.special("<" + cached.getName() + ">"), storageManager, JsPlatform.INSTANCE.getBuiltIns()
                 );
 
                 KotlinJavaScriptLibraryParts parts = cached.getData();
                 PackageFragmentProvider provider = KotlinJavascriptPackageFragmentProviderKt.createKotlinJavascriptPackageFragmentProvider(
-                        storageManager, moduleDescriptor, parts.getHeader(), parts.getBody(), parts.getMetadataVersion(),
-                        new CompilerDeserializationConfiguration(languageVersionSettings),
-                        LookupTracker.DO_NOTHING.INSTANCE
-                );
+                                                       storageManager, moduleDescriptor, parts.getHeader(), parts.getBody(), parts.getMetadataVersion(),
+                                                       new CompilerDeserializationConfiguration(languageVersionSettings),
+                                                       LookupTracker.DO_NOTHING.INSTANCE
+                                                   );
 
                 moduleDescriptor.initialize(provider);
                 moduleDescriptors.add(moduleDescriptor);
@@ -306,19 +306,19 @@ public class JsConfig {
         return factoryMap.computeIfAbsent(metadata, m -> {
             LanguageVersionSettings languageVersionSettings = CommonConfigurationKeysKt.getLanguageVersionSettings(configuration);
             assert m.getVersion().isCompatible() ||
-                   languageVersionSettings.getFlag(AnalysisFlags.getSkipMetadataVersionCheck()) :
-                    "Expected JS metadata version " + JsMetadataVersion.INSTANCE + ", but actual metadata version is " + m.getVersion();
+            languageVersionSettings.getFlag(AnalysisFlags.getSkipMetadataVersionCheck()) :
+            "Expected JS metadata version " + JsMetadataVersion.INSTANCE + ", but actual metadata version is " + m.getVersion();
 
             ModuleDescriptorImpl moduleDescriptor = new ModuleDescriptorImpl(
-                    Name.special("<" + m.getModuleName() + ">"), storageManager, JsPlatform.INSTANCE.getBuiltIns()
+                Name.special("<" + m.getModuleName() + ">"), storageManager, JsPlatform.INSTANCE.getBuiltIns()
             );
 
             LookupTracker lookupTracker = configuration.get(CommonConfigurationKeys.LOOKUP_TRACKER, LookupTracker.DO_NOTHING.INSTANCE);
             KotlinJavaScriptLibraryParts parts = KotlinJavascriptSerializationUtil.readModuleAsProto(m.getBody(), m.getVersion());
             PackageFragmentProvider provider = KotlinJavascriptPackageFragmentProviderKt.createKotlinJavascriptPackageFragmentProvider(
-                    storageManager, moduleDescriptor, parts.getHeader(), parts.getBody(), m.getVersion(),
-                    new CompilerDeserializationConfiguration(languageVersionSettings),
-                    lookupTracker
+                storageManager, moduleDescriptor, parts.getHeader(), parts.getBody(), m.getVersion(),
+                new CompilerDeserializationConfiguration(languageVersionSettings),
+                lookupTracker
             );
 
             moduleDescriptor.initialize(provider);

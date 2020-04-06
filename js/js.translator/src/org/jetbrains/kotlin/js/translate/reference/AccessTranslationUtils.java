@@ -53,16 +53,16 @@ public final class AccessTranslationUtils {
 
     @NotNull
     private static AccessTranslator getArrayAccessTranslator(
-            @NotNull KtArrayAccessExpression expression,
-            @NotNull TranslationContext context,
-            boolean forceOrderOfEvaluation
+        @NotNull KtArrayAccessExpression expression,
+        @NotNull TranslationContext context,
+        boolean forceOrderOfEvaluation
     ) {
         TranslationContext accessArrayContext;
         if (forceOrderOfEvaluation) {
             Map<KtExpression, JsExpression> indexesMap = new LinkedHashMap<>();
             for(KtExpression indexExpression : expression.getIndexExpressions()) {
                 JsExpression jsIndexExpression = context.cacheExpressionIfNeeded(
-                        Translation.translateAsExpression(indexExpression, context));
+                                                     Translation.translateAsExpression(indexExpression, context));
                 indexesMap.put(indexExpression, jsIndexExpression);
             }
             accessArrayContext = context.innerContextWithAliasesForExpressions(indexesMap);

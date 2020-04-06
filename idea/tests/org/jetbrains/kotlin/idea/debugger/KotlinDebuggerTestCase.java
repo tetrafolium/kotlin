@@ -77,7 +77,7 @@ public abstract class KotlinDebuggerTestCase extends DescriptorTestCase {
 
     private static File CUSTOM_LIBRARY_JAR;
     private static final File CUSTOM_LIBRARY_SOURCES =
-            new File(PluginTestCaseBase.getTestDataPathBase() + "/debugger/customLibraryForTinyApp");
+        new File(PluginTestCaseBase.getTestDataPathBase() + "/debugger/customLibraryForTinyApp");
 
     protected static final String KOTLIN_LIBRARY_NAME = "KotlinLibrary";
     private static final String CUSTOM_LIBRARY_NAME = "CustomLibrary";
@@ -88,7 +88,7 @@ public abstract class KotlinDebuggerTestCase extends DescriptorTestCase {
     @Override
     protected OutputChecker initOutputChecker() {
         return new KotlinOutputChecker(
-                this.getClass().getAnnotation(TestMetadata.class).value(), getTestAppPath(), getAppOutputPath());
+                   this.getClass().getAnnotation(TestMetadata.class).value(), getTestAppPath(), getAppOutputPath());
     }
 
     @NotNull
@@ -142,12 +142,12 @@ public abstract class KotlinDebuggerTestCase extends DescriptorTestCase {
 
     private static long cachedDataTimeStamp() {
         File testDataLastModifiedFile = JetTestUtilsKt.findLastModifiedFile(
-                TINY_APP_SRC,
-                file -> FilesKt.getExtension(file).equals("out") || file.isDirectory()
-        );
+                                            TINY_APP_SRC,
+                                            file -> FilesKt.getExtension(file).equals("out") || file.isDirectory()
+                                        );
 
         File distLibLastModifiedFile = JetTestUtilsKt.findLastModifiedFile(
-                PathUtil.getKotlinPathsForDistDirectory().getLibPath(), file -> false);
+                                           PathUtil.getKotlinPathsForDistDirectory().getLibPath(), file -> false);
 
         return Math.max(testDataLastModifiedFile.lastModified(), distLibLastModifiedFile.lastModified());
     }
@@ -180,9 +180,9 @@ public abstract class KotlinDebuggerTestCase extends DescriptorTestCase {
                 LOCAL_CACHE_APP_DIR.mkdirs();
 
                 boolean result =
-                        LOCAL_CACHE_DIR.exists() &&
-                        LOCAL_CACHE_JAR_DIR.exists() &&
-                        LOCAL_CACHE_APP_DIR.exists();
+                    LOCAL_CACHE_DIR.exists() &&
+                    LOCAL_CACHE_JAR_DIR.exists() &&
+                    LOCAL_CACHE_APP_DIR.exists();
 
                 Assert.assertTrue("Failure on local cache directories creation", result);
 
@@ -201,10 +201,10 @@ public abstract class KotlinDebuggerTestCase extends DescriptorTestCase {
     }
 
     private static void configureLibrary(
-            @NotNull ModifiableRootModel model,
-            @NotNull String libraryName,
-            @NotNull File classes,
-            @NotNull File sources
+        @NotNull ModifiableRootModel model,
+        @NotNull String libraryName,
+        @NotNull File classes,
+        @NotNull File sources
     ) {
         NewLibraryEditor customLibEditor = new NewLibraryEditor();
         customLibEditor.setName(libraryName);
@@ -259,10 +259,10 @@ public abstract class KotlinDebuggerTestCase extends DescriptorTestCase {
                 MockLibraryUtil.compileKotlin(sourcesDir, outDir, CollectionsKt.listOf("-jvm-target", "1.8"), CUSTOM_LIBRARY_JAR.getPath());
 
                 List<String> options =
-                        Arrays.asList("-d", outputDirPath, "-classpath",
-                                      ForTestCompileRuntime.runtimeJarForTests().getPath() + File.pathSeparator +
-                                      ForTestCompileRuntime.jetbrainsAnnotationsForTests().getPath(),
-                                      "-g");
+                    Arrays.asList("-d", outputDirPath, "-classpath",
+                                  ForTestCompileRuntime.runtimeJarForTests().getPath() + File.pathSeparator +
+                                  ForTestCompileRuntime.jetbrainsAnnotationsForTests().getPath(),
+                                  "-g");
                 KotlinTestUtils.compileJavaFiles(findJavaFiles(new File(sourcesDir)), options);
 
                 DexLikeBytecodePatchKt.patchDexTests(outDir);
@@ -319,8 +319,8 @@ public abstract class KotlinDebuggerTestCase extends DescriptorTestCase {
     @Override
     protected void createBreakpoints(String className) {
         PsiClass[] psiClasses = ApplicationManager.getApplication().runReadAction(
-                (Computable<PsiClass[]>) () -> JavaPsiFacade.getInstance(myProject)
-                        .findClasses(className, GlobalSearchScope.allScope(myProject)));
+                                    (Computable<PsiClass[]>) () -> JavaPsiFacade.getInstance(myProject)
+                                    .findClasses(className, GlobalSearchScope.allScope(myProject)));
 
         for (PsiClass psiClass : psiClasses) {
             if (psiClass instanceof KtLightClassForFacade) {
@@ -365,8 +365,8 @@ public abstract class KotlinDebuggerTestCase extends DescriptorTestCase {
         }
         catch (ComparisonFailure e) {
             KotlinTestUtils.assertEqualsToFile(
-                    new File(this.getClass().getAnnotation(TestMetadata.class).value(), getTestName(true) + ".out"),
-                    e.getActual());
+                new File(this.getClass().getAnnotation(TestMetadata.class).value(), getTestName(true) + ".out"),
+                e.getActual());
         }
     }
 

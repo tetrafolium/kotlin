@@ -124,49 +124,49 @@ public class TypeUtils {
             KotlinType argument = typeProjection.getType();
 
             switch (parameterDescriptor.getVariance()) {
+            case INVARIANT:
+                switch (projectionKind) {
                 case INVARIANT:
-                    switch (projectionKind) {
-                        case INVARIANT:
-                            if (lowerThanBound(typeChecker, argument, parameterDescriptor) || canHaveSubtypes(typeChecker, argument)) {
-                                return true;
-                            }
-                            break;
-                        case IN_VARIANCE:
-                            if (lowerThanBound(typeChecker, argument, parameterDescriptor)) {
-                                return true;
-                            }
-                            break;
-                        case OUT_VARIANCE:
-                            if (canHaveSubtypes(typeChecker, argument)) {
-                                return true;
-                            }
-                            break;
+                    if (lowerThanBound(typeChecker, argument, parameterDescriptor) || canHaveSubtypes(typeChecker, argument)) {
+                        return true;
                     }
                     break;
                 case IN_VARIANCE:
-                    if (projectionKind != Variance.OUT_VARIANCE) {
-                        if (lowerThanBound(typeChecker, argument, parameterDescriptor)) {
-                            return true;
-                        }
-                    }
-                    else {
-                        if (canHaveSubtypes(typeChecker, argument)) {
-                            return true;
-                        }
+                    if (lowerThanBound(typeChecker, argument, parameterDescriptor)) {
+                        return true;
                     }
                     break;
                 case OUT_VARIANCE:
-                    if (projectionKind != Variance.IN_VARIANCE) {
-                        if (canHaveSubtypes(typeChecker, argument)) {
-                            return true;
-                        }
-                    }
-                    else {
-                        if (lowerThanBound(typeChecker, argument, parameterDescriptor)) {
-                            return true;
-                        }
+                    if (canHaveSubtypes(typeChecker, argument)) {
+                        return true;
                     }
                     break;
+                }
+                break;
+            case IN_VARIANCE:
+                if (projectionKind != Variance.OUT_VARIANCE) {
+                    if (lowerThanBound(typeChecker, argument, parameterDescriptor)) {
+                        return true;
+                    }
+                }
+                else {
+                    if (canHaveSubtypes(typeChecker, argument)) {
+                        return true;
+                    }
+                }
+                break;
+            case OUT_VARIANCE:
+                if (projectionKind != Variance.IN_VARIANCE) {
+                    if (canHaveSubtypes(typeChecker, argument)) {
+                        return true;
+                    }
+                }
+                else {
+                    if (lowerThanBound(typeChecker, argument, parameterDescriptor)) {
+                        return true;
+                    }
+                }
+                break;
             }
         }
         return false;
@@ -191,12 +191,12 @@ public class TypeUtils {
         TypeConstructor typeConstructor = classifierDescriptor.getTypeConstructor();
         List<TypeProjection> arguments = getDefaultTypeProjections(typeConstructor.getParameters());
         return KotlinTypeFactory.simpleTypeWithNonTrivialMemberScope(
-                Annotations.Companion.getEMPTY(),
-                typeConstructor,
-                arguments,
-                false,
-                unsubstitutedMemberScope
-        );
+                   Annotations.Companion.getEMPTY(),
+                   typeConstructor,
+                   arguments,
+                   false,
+                   unsubstitutedMemberScope
+               );
     }
 
     @NotNull
@@ -224,9 +224,9 @@ public class TypeUtils {
 
     @Nullable
     public static KotlinType createSubstitutedSupertype(
-            @NotNull KotlinType subType,
-            @NotNull KotlinType superType,
-            @NotNull TypeSubstitutor substitutor
+        @NotNull KotlinType subType,
+        @NotNull KotlinType superType,
+        @NotNull TypeSubstitutor substitutor
     ) {
         KotlinType substitutedType = substitutor.substitute(superType, Variance.INVARIANT);
         if (substitutedType != null) {
@@ -352,14 +352,14 @@ public class TypeUtils {
 
     public static boolean dependsOnTypeParameters(@NotNull KotlinType type, @NotNull Collection<TypeParameterDescriptor> typeParameters) {
         return dependsOnTypeConstructors(type, CollectionsKt.map(
-                typeParameters,
-                new Function1<TypeParameterDescriptor, TypeConstructor>() {
-                    @Override
-                    public TypeConstructor invoke(@NotNull TypeParameterDescriptor typeParameterDescriptor) {
-                        return typeParameterDescriptor.getTypeConstructor();
-                    }
-                }
-        ));
+                                             typeParameters,
+        new Function1<TypeParameterDescriptor, TypeConstructor>() {
+            @Override
+            public TypeConstructor invoke(@NotNull TypeParameterDescriptor typeParameterDescriptor) {
+                return typeParameterDescriptor.getTypeConstructor();
+            }
+        }
+                                         ));
     }
 
     public static boolean dependsOnTypeConstructors(@NotNull KotlinType type, @NotNull Collection<TypeConstructor> typeParameterConstructors) {
@@ -382,8 +382,8 @@ public class TypeUtils {
     }
 
     public static boolean contains(
-            @Nullable KotlinType type,
-            @NotNull Function1<UnwrappedType, Boolean> isSpecialType
+        @Nullable KotlinType type,
+        @NotNull Function1<UnwrappedType, Boolean> isSpecialType
     ) {
         if (type == null) return false;
 
@@ -392,12 +392,12 @@ public class TypeUtils {
 
         FlexibleType flexibleType = unwrappedType instanceof FlexibleType ? (FlexibleType) unwrappedType : null;
         if (flexibleType != null
-            && (contains(flexibleType.getLowerBound(), isSpecialType) || contains(flexibleType.getUpperBound(), isSpecialType))) {
+                && (contains(flexibleType.getLowerBound(), isSpecialType) || contains(flexibleType.getUpperBound(), isSpecialType))) {
             return true;
         }
 
         if (unwrappedType instanceof DefinitelyNotNullType &&
-            contains(((DefinitelyNotNullType) unwrappedType).getOriginal(), isSpecialType)) {
+                contains(((DefinitelyNotNullType) unwrappedType).getOriginal(), isSpecialType)) {
             return true;
         }
 
@@ -425,7 +425,7 @@ public class TypeUtils {
     public static KotlinType getDefaultPrimitiveNumberType(@NotNull IntegerValueTypeConstructor numberValueTypeConstructor) {
         KotlinType type = getDefaultPrimitiveNumberType(numberValueTypeConstructor.getSupertypes());
         assert type != null : "Strange number value type constructor: " + numberValueTypeConstructor + ". " +
-                              "Super types doesn't contain double, int or long: " + numberValueTypeConstructor.getSupertypes();
+        "Super types doesn't contain double, int or long: " + numberValueTypeConstructor.getSupertypes();
         return type;
     }
 
@@ -474,8 +474,8 @@ public class TypeUtils {
 
     @NotNull
     public static KotlinType getPrimitiveNumberType(
-            @NotNull IntegerValueTypeConstructor numberValueTypeConstructor,
-            @NotNull KotlinType expectedType
+        @NotNull IntegerValueTypeConstructor numberValueTypeConstructor,
+        @NotNull KotlinType expectedType
     ) {
         if (noExpectedType(expectedType) || KotlinTypeKt.isError(expectedType)) {
             return getDefaultPrimitiveNumberType(numberValueTypeConstructor);

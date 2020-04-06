@@ -51,8 +51,8 @@ public class SimpleNameReferenceRenameTest extends LightCodeInsightTestCase {
     private void doTest(String newName) throws Exception {
         configureByFile(getTestName(true) + ".kt");
         PsiElement element = TargetElementUtil
-                .findTargetElement(myEditor,
-                                   TargetElementUtil.ELEMENT_NAME_ACCEPTED | TargetElementUtil.REFERENCED_ELEMENT_ACCEPTED);
+                             .findTargetElement(myEditor,
+                                                TargetElementUtil.ELEMENT_NAME_ACCEPTED | TargetElementUtil.REFERENCED_ELEMENT_ACCEPTED);
         assertNotNull(element);
         new RenameProcessor(getProject(), element, newName, true, true).run();
         checkResultByFile(getTestName(true) + ".kt.after");

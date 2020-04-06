@@ -21,7 +21,7 @@ import java.util.List;
 
 public class JUnitMembersSearcherTest extends AbstractSearcherTest {
     private static final LightProjectDescriptor junitProjectDescriptor =
-            new KotlinJdkAndLibraryProjectDescriptor(new File(PathManager.getHomePath().replace(File.separatorChar, '/') + "/lib/junit-4.12.jar"));
+        new KotlinJdkAndLibraryProjectDescriptor(new File(PathManager.getHomePath().replace(File.separatorChar, '/') + "/lib/junit-4.12.jar"));
 
     public void testJunit3() throws IOException {
         doJUnit3test();
@@ -46,7 +46,7 @@ public class JUnitMembersSearcherTest extends AbstractSearcherTest {
     private void doJUnit4test() throws IOException {
         myFixture.configureByFile(getFileName());
         List<String> directives = InTextDirectivesUtils.findListWithPrefixes(FileUtil.loadFile(new File(getPathToFile()), true),
-                                                                             "// ANNOTATION: ");
+                                  "// ANNOTATION: ");
         assertFalse("Specify ANNOTATION directive in test file", directives.isEmpty());
         String annotationClassName = directives.get(0);
         PsiClass psiClass = getPsiClass(annotationClassName);

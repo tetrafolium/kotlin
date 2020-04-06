@@ -80,7 +80,7 @@ public final class StringTemplateTranslator extends AbstractTranslator {
         public void visitStringTemplateEntryWithExpression(@NotNull KtStringTemplateEntryWithExpression entry) {
             KtExpression entryExpression = entry.getExpression();
             assert entryExpression != null :
-                    "JetStringTemplateEntryWithExpression must have not null entry expression.";
+            "JetStringTemplateEntryWithExpression must have not null entry expression.";
             JsExpression translatedExpression = Translation.translateAsExpression(entryExpression, context());
 
             KotlinType type = context().bindingContext().getType(entryExpression);
@@ -116,10 +116,10 @@ public final class StringTemplateTranslator extends AbstractTranslator {
 
             // Long has valueOf method which will be called instead of toString and produce different result.
             if (KotlinBuiltIns.isAny(type) ||
-                KotlinBuiltIns.isComparable(type) ||
-                KotlinBuiltIns.isNumber(type) ||
-                KotlinBuiltIns.isLong(type)
-            ) {
+                    KotlinBuiltIns.isComparable(type) ||
+                    KotlinBuiltIns.isNumber(type) ||
+                    KotlinBuiltIns.isLong(type)
+               ) {
                 return true;
             }
 

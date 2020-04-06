@@ -112,7 +112,7 @@ public final class Translation {
                         KtSimpleNameExpression referenceExpression = PsiUtils.getSimpleName(expression);
                         if (referenceExpression != null) {
                             DeclarationDescriptor descriptor =
-                                    BindingUtils.getDescriptorForReferenceExpression(context.bindingContext(), referenceExpression);
+                                BindingUtils.getDescriptorForReferenceExpression(context.bindingContext(), referenceExpression);
                             if (descriptor != null) {
                                 return context.declareConstantValue(descriptor, referenceExpression, constantResult);
                             }
@@ -139,9 +139,9 @@ public final class Translation {
 
     @Nullable
     public static JsExpression translateConstant(
-            @NotNull CompileTimeConstant compileTimeValue,
-            @NotNull KtExpression expression,
-            @NotNull TranslationContext context
+        @NotNull CompileTimeConstant compileTimeValue,
+        @NotNull KtExpression expression,
+        @NotNull TranslationContext context
     ) {
         KotlinType expectedType = context.bindingContext().getType(expression);
         ConstantValue<?> constant = compileTimeValue.toConstantValue(expectedType != null ? expectedType : TypeUtils.NO_EXPECTED_TYPE);
@@ -199,8 +199,8 @@ public final class Translation {
 
     @Nullable
     private static JsExpression translateUnsignedConstant(
-            @NotNull UnsignedValueConstant<?> unsignedConstant,
-            @NotNull TranslationContext context
+        @NotNull UnsignedValueConstant<?> unsignedConstant,
+        @NotNull TranslationContext context
     ) {
         if (unsignedConstant instanceof UByteValue) {
             return JsAstUtils.byteToUByte(((UByteValue) unsignedConstant).getValue(), context);
@@ -240,9 +240,9 @@ public final class Translation {
 
     @NotNull
     public static JsExpression translateAsExpression(
-            @NotNull KtExpression expression,
-            @NotNull TranslationContext context,
-            @NotNull JsBlock block
+        @NotNull KtExpression expression,
+        @NotNull TranslationContext context,
+        @NotNull JsBlock block
     ) {
         JsNode jsNode = translateExpression(expression, context, block);
 
@@ -279,16 +279,16 @@ public final class Translation {
 
     @NotNull
     public static JsStatement translateAsStatement(
-            @NotNull KtExpression expression,
-            @NotNull TranslationContext context,
-            @NotNull JsBlock block) {
+        @NotNull KtExpression expression,
+        @NotNull TranslationContext context,
+        @NotNull JsBlock block) {
         return convertToStatement(translateExpression(expression, context, block));
     }
 
     @NotNull
     public static JsStatement translateAsStatementAndMergeInBlockIfNeeded(
-            @NotNull KtExpression expression,
-            @NotNull TranslationContext context
+        @NotNull KtExpression expression,
+        @NotNull TranslationContext context
     ) {
         JsBlock block = new JsBlock();
         JsNode node = translateExpression(expression, context, block);
@@ -297,12 +297,12 @@ public final class Translation {
 
     @NotNull
     public static AstGenerationResult generateAst(
-            @NotNull BindingTrace bindingTrace,
-            @NotNull Collection<TranslationUnit> units,
-            @NotNull MainCallParameters mainCallParameters,
-            @NotNull ModuleDescriptor moduleDescriptor,
-            @NotNull JsConfig config,
-            @NotNull SourceFilePathResolver sourceFilePathResolver
+        @NotNull BindingTrace bindingTrace,
+        @NotNull Collection<TranslationUnit> units,
+        @NotNull MainCallParameters mainCallParameters,
+        @NotNull ModuleDescriptor moduleDescriptor,
+        @NotNull JsConfig config,
+        @NotNull SourceFilePathResolver sourceFilePathResolver
     ) throws TranslationException {
         try {
             return doGenerateAst(bindingTrace, units, mainCallParameters, moduleDescriptor, config, sourceFilePathResolver);
@@ -317,12 +317,12 @@ public final class Translation {
 
     @NotNull
     private static AstGenerationResult doGenerateAst(
-            @NotNull BindingTrace bindingTrace,
-            @NotNull Collection<TranslationUnit> units,
-            @NotNull MainCallParameters mainCallParameters,
-            @NotNull ModuleDescriptor moduleDescriptor,
-            @NotNull JsConfig config,
-            @NotNull SourceFilePathResolver sourceFilePathResolver
+        @NotNull BindingTrace bindingTrace,
+        @NotNull Collection<TranslationUnit> units,
+        @NotNull MainCallParameters mainCallParameters,
+        @NotNull ModuleDescriptor moduleDescriptor,
+        @NotNull JsConfig config,
+        @NotNull SourceFilePathResolver sourceFilePathResolver
     ) {
         JsProgram program = new JsProgram();
         JsFunction rootFunction = new JsFunction(program.getRootScope(), new JsBlock(), "root function");
@@ -397,7 +397,7 @@ public final class Translation {
 
         JsBlock block = program.getGlobalBlock();
         block.getStatements().addAll(wrapIfNecessary(config.getModuleId(), rootFunction, importedModuleList, program,
-                                                     config.getModuleKind()));
+                                     config.getModuleKind()));
 
         return new AstGenerationResult(program, internalModuleName, fragments, fragmentMap, newFragments,
                                        merger.getImportBlock().getStatements(), fileMemberScopes, importedModuleList);
@@ -415,9 +415,9 @@ public final class Translation {
     }
 
     private static void translateFile(
-            @NotNull TranslationContext context,
-            @NotNull KtFile file,
-            @NotNull List<DeclarationDescriptor> fileMemberScope
+        @NotNull TranslationContext context,
+        @NotNull KtFile file,
+        @NotNull List<DeclarationDescriptor> fileMemberScope
     ) {
         FileDeclarationVisitor fileVisitor = new FileDeclarationVisitor(context);
 
@@ -449,8 +449,8 @@ public final class Translation {
 
     @NotNull
     private static JsProgramFragment mayBeGenerateTests(
-            @NotNull JsConfig config, @NotNull BindingTrace trace,
-            @NotNull ModuleDescriptor moduleDescriptor, @NotNull SourceFilePathResolver sourceFilePathResolver
+        @NotNull JsConfig config, @NotNull BindingTrace trace,
+        @NotNull ModuleDescriptor moduleDescriptor, @NotNull SourceFilePathResolver sourceFilePathResolver
     ) {
         StaticContext staticContext = new StaticContext(trace, config, moduleDescriptor, sourceFilePathResolver);
         TranslationContext context = TranslationContext.rootContext(staticContext);
@@ -463,9 +463,9 @@ public final class Translation {
     //TODO: determine whether should throw exception
     @Nullable
     private static JsProgramFragment generateCallToMain(
-            @NotNull BindingTrace trace, @NotNull JsConfig config, @NotNull ModuleDescriptor moduleDescriptor,
-            @NotNull SourceFilePathResolver sourceFilePathResolver,
-            @NotNull List<String> arguments
+        @NotNull BindingTrace trace, @NotNull JsConfig config, @NotNull ModuleDescriptor moduleDescriptor,
+        @NotNull SourceFilePathResolver sourceFilePathResolver,
+        @NotNull List<String> arguments
     ) {
         StaticContext staticContext = new StaticContext(trace, config, moduleDescriptor, sourceFilePathResolver);
         TranslationContext context = TranslationContext.rootContext(staticContext);

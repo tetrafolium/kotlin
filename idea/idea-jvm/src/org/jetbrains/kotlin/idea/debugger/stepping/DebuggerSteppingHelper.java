@@ -48,9 +48,9 @@ public class DebuggerSteppingHelper {
     private static Logger LOG = Logger.getInstance(DebuggerSteppingHelper.class);
 
     public static DebugProcessImpl.ResumeCommand createStepOverCommand(
-            final SuspendContextImpl suspendContext,
-            final boolean ignoreBreakpoints,
-            final KotlinSteppingCommandProvider.KotlinSourcePosition kotlinSourcePosition
+        final SuspendContextImpl suspendContext,
+        final boolean ignoreBreakpoints,
+        final KotlinSteppingCommandProvider.KotlinSourcePosition kotlinSourcePosition
     ) {
         final DebugProcessImpl debugProcess = suspendContext.getDebugProcess();
 
@@ -63,16 +63,16 @@ public class DebuggerSteppingHelper {
                     StackFrameProxyImpl frameProxy = suspendContext.getFrameProxy();
                     if (frameProxy != null) {
                         Action action = KotlinSteppingCommandProviderKt.getStepOverAction(
-                                frameProxy.location(),
-                                kotlinSourcePosition,
-                                frameProxy,
-                                isDexDebug
-                        );
+                                            frameProxy.location(),
+                                            kotlinSourcePosition,
+                                            frameProxy,
+                                            isDexDebug
+                                        );
 
                         createStepRequest(
-                                suspendContext, getContextThread(),
-                                debugProcess.getVirtualMachineProxy().eventRequestManager(),
-                                StepRequest.STEP_LINE, StepRequest.STEP_OUT);
+                            suspendContext, getContextThread(),
+                            debugProcess.getVirtualMachineProxy().eventRequestManager(),
+                            StepRequest.STEP_LINE, StepRequest.STEP_OUT);
 
                         action.apply(debugProcess, suspendContext, ignoreBreakpoints);
                         return;
@@ -88,10 +88,10 @@ public class DebuggerSteppingHelper {
     }
 
     public static DebugProcessImpl.ResumeCommand createStepOutCommand(
-            final SuspendContextImpl suspendContext,
-            final boolean ignoreBreakpoints,
-            final List<KtNamedFunction> inlineFunctions,
-            final KtFunctionLiteral inlineArgument
+        final SuspendContextImpl suspendContext,
+        final boolean ignoreBreakpoints,
+        final List<KtNamedFunction> inlineFunctions,
+        final KtFunctionLiteral inlineArgument
     ) {
         final DebugProcessImpl debugProcess = suspendContext.getDebugProcess();
         return debugProcess.new ResumeCommand(suspendContext) {
@@ -101,16 +101,16 @@ public class DebuggerSteppingHelper {
                     StackFrameProxyImpl frameProxy = suspendContext.getFrameProxy();
                     if (frameProxy != null) {
                         Action action = KotlinSteppingCommandProviderKt.getStepOutAction(
-                                frameProxy.location(),
-                                suspendContext,
-                                inlineFunctions,
-                                inlineArgument
-                        );
+                                            frameProxy.location(),
+                                            suspendContext,
+                                            inlineFunctions,
+                                            inlineArgument
+                                        );
 
                         createStepRequest(
-                                suspendContext, getContextThread(),
-                                debugProcess.getVirtualMachineProxy().eventRequestManager(),
-                                StepRequest.STEP_LINE, StepRequest.STEP_OUT);
+                            suspendContext, getContextThread(),
+                            debugProcess.getVirtualMachineProxy().eventRequestManager(),
+                            StepRequest.STEP_LINE, StepRequest.STEP_OUT);
 
                         action.apply(debugProcess, suspendContext, ignoreBreakpoints);
                         return;
@@ -126,10 +126,10 @@ public class DebuggerSteppingHelper {
 
     // copied from DebugProcessImpl.doStep
     private static void createStepRequest(
-            @NotNull SuspendContextImpl suspendContext,
-            @Nullable ThreadReferenceProxyImpl stepThread,
-            @NotNull EventRequestManager requestManager,
-            int size, int depth
+        @NotNull SuspendContextImpl suspendContext,
+        @Nullable ThreadReferenceProxyImpl stepThread,
+        @NotNull EventRequestManager requestManager,
+        int size, int depth
     ) {
         if (stepThread == null) {
             return;

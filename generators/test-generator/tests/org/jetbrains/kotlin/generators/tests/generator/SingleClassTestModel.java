@@ -52,14 +52,14 @@ public class SingleClassTestModel implements TestClassModel {
     private final String testRunnerMethodName;
 
     public SingleClassTestModel(
-            @NotNull File rootFile,
-            @NotNull Pattern filenamePattern,
-            @Nullable Boolean checkFilenameStartsLowerCase,
-            @NotNull String doTestMethodName,
-            @NotNull String testClassName,
-            @NotNull TargetBackend targetBackend,
-            boolean skipIgnored,
-            String testRunnerMethodName
+        @NotNull File rootFile,
+        @NotNull Pattern filenamePattern,
+        @Nullable Boolean checkFilenameStartsLowerCase,
+        @NotNull String doTestMethodName,
+        @NotNull String testClassName,
+        @NotNull TargetBackend targetBackend,
+        boolean skipIgnored,
+        String testRunnerMethodName
     ) {
         this.rootFile = rootFile;
         this.filenamePattern = filenamePattern;
@@ -104,8 +104,8 @@ public class SingleClassTestModel implements TestClassModel {
     @NotNull
     private Collection<TestMethodModel> getTestMethodsFromFile(File file) {
         return Collections.singletonList(new SimpleTestMethodModel(
-                rootFile, file, filenamePattern, checkFilenameStartsLowerCase, targetBackend, skipIgnored
-        ));
+                                             rootFile, file, filenamePattern, checkFilenameStartsLowerCase, targetBackend, skipIgnored
+                                         ));
     }
 
     @Override
@@ -141,10 +141,10 @@ public class SingleClassTestModel implements TestClassModel {
         @Override
         public void generateBody(@NotNull Printer p) {
             String assertTestsPresentStr = String.format(
-                    "KotlinTestUtils.assertAllTestsPresentInSingleGeneratedClass(this.getClass(), new File(\"%s\"), Pattern.compile(\"%s\"), %s.%s);",
-                    KotlinTestUtils.getFilePath(rootFile), StringUtil.escapeStringCharacters(filenamePattern.pattern()),
-                    TargetBackend.class.getSimpleName(), targetBackend.toString()
-            );
+                                               "KotlinTestUtils.assertAllTestsPresentInSingleGeneratedClass(this.getClass(), new File(\"%s\"), Pattern.compile(\"%s\"), %s.%s);",
+                                               KotlinTestUtils.getFilePath(rootFile), StringUtil.escapeStringCharacters(filenamePattern.pattern()),
+                                               TargetBackend.class.getSimpleName(), targetBackend.toString()
+                                           );
             p.println(assertTestsPresentStr);
         }
 

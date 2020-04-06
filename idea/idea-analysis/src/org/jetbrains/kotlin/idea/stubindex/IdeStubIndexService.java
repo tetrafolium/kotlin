@@ -95,10 +95,10 @@ public class IdeStubIndexService extends StubIndexService {
     }
 
     private static void processNames(
-            @NotNull IndexSink sink,
-            String shortName,
-            FqName fqName,
-            boolean level) {
+        @NotNull IndexSink sink,
+        String shortName,
+        FqName fqName,
+        boolean level) {
         if (shortName != null) {
             sink.occurrence(KotlinClassShortNameIndex.getInstance().getKey(), shortName);
         }
@@ -267,7 +267,7 @@ public class IdeStubIndexService extends StubIndexService {
 
     @Override
     public void serializeFileStub(
-            @NotNull KotlinFileStub stub, @NotNull StubOutputStream dataStream
+        @NotNull KotlinFileStub stub, @NotNull StubOutputStream dataStream
     ) throws IOException {
         KotlinFileStubForIde fileStub = (KotlinFileStubForIde) stub;
         dataStream.writeName(fileStub.getPackageFqName().asString());

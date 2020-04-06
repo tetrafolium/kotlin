@@ -82,7 +82,7 @@ public class ModuleHighlightUtil2 {
             if (module != null) {
                 boolean isTest = FileIndexUtilsKt.isInTestSourceContentKotlinAware(index, file);
                 VirtualFile modularRoot = ArraysKt.singleOrNull(ModuleRootManager.getInstance(module).getSourceRoots(isTest),
-                                                                root -> root.findChild(MODULE_INFO_FILE) != null);
+                                          root -> root.findChild(MODULE_INFO_FILE) != null);
                 if (modularRoot != null) {
                     VirtualFile moduleInfo = modularRoot.findChild(MODULE_INFO_FILE);
                     assert moduleInfo != null : modularRoot;

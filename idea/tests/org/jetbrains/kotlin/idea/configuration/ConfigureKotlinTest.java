@@ -55,12 +55,12 @@ public class ConfigureKotlinTest extends AbstractConfigureKotlinTest {
 
         ModuleRootManager.getInstance(getModule()).orderEntries().forEachLibrary(library -> {
             assertSameElements(
-                    Arrays.stream(library.getRootProvider().getFiles(OrderRootType.CLASSES)).map(VirtualFile::getName).toArray(),
-                    PathUtil.KOTLIN_JAVA_STDLIB_JAR, PathUtil.KOTLIN_JAVA_REFLECT_JAR, PathUtil.KOTLIN_TEST_JAR);
+                Arrays.stream(library.getRootProvider().getFiles(OrderRootType.CLASSES)).map(VirtualFile::getName).toArray(),
+                PathUtil.KOTLIN_JAVA_STDLIB_JAR, PathUtil.KOTLIN_JAVA_REFLECT_JAR, PathUtil.KOTLIN_TEST_JAR);
 
             assertSameElements(
-                    Arrays.stream(library.getRootProvider().getFiles(OrderRootType.SOURCES)).map(VirtualFile::getName).toArray(),
-                    PathUtil.KOTLIN_JAVA_STDLIB_SRC_JAR, PathUtil.KOTLIN_REFLECT_SRC_JAR, PathUtil.KOTLIN_TEST_SRC_JAR);
+                Arrays.stream(library.getRootProvider().getFiles(OrderRootType.SOURCES)).map(VirtualFile::getName).toArray(),
+                PathUtil.KOTLIN_JAVA_STDLIB_SRC_JAR, PathUtil.KOTLIN_REFLECT_SRC_JAR, PathUtil.KOTLIN_TEST_SRC_JAR);
 
             return true;
         });
@@ -107,8 +107,8 @@ public class ConfigureKotlinTest extends AbstractConfigureKotlinTest {
 
         // Move fake runtime jar to default library path to pretend library is already configured
         FileUtil.copy(
-                new File(getProject().getBasePath() + "/lib/" + PathUtil.KOTLIN_JAVA_STDLIB_JAR),
-                new File(Companion.getJAVA_CONFIGURATOR().getDefaultPathToJarFile(getProject()) + "/" + PathUtil.KOTLIN_JAVA_STDLIB_JAR));
+            new File(getProject().getBasePath() + "/lib/" + PathUtil.KOTLIN_JAVA_STDLIB_JAR),
+            new File(Companion.getJAVA_CONFIGURATOR().getDefaultPathToJarFile(getProject()) + "/" + PathUtil.KOTLIN_JAVA_STDLIB_JAR));
 
         Companion.assertNotConfigured(module, Companion.getJAVA_CONFIGURATOR());
         Companion.getJAVA_CONFIGURATOR().configure(myProject, Collections.<Module>emptyList());
@@ -189,9 +189,9 @@ public class ConfigureKotlinTest extends AbstractConfigureKotlinTest {
     @SuppressWarnings("ConstantConditions")
     public void testMavenProvidedTestJsKind() {
         LibraryEx jsTest = (LibraryEx) ContainerUtil.find(
-                KotlinRuntimeLibraryUtilKt.findAllUsedLibraries(myProject).keySet(),
-                (library) -> library.getName().contains("kotlin-test-js")
-        );
+                               KotlinRuntimeLibraryUtilKt.findAllUsedLibraries(myProject).keySet(),
+                               (library) -> library.getName().contains("kotlin-test-js")
+                           );
         assertEquals(RepositoryLibraryType.REPOSITORY_LIBRARY_KIND, jsTest.getKind());
         assertEquals(JSLibraryKind.INSTANCE, LibraryEffectiveKindProviderKt.effectiveKind(jsTest, myProject));
     }
@@ -294,17 +294,17 @@ public class ConfigureKotlinTest extends AbstractConfigureKotlinTest {
 
     public void testProjectWithFreeArgs() {
         assertEquals(
-                Collections.singletonList("true"),
-                KotlinCommonCompilerArgumentsHolder.Companion.getInstance(myProject).getSettings().getFreeArgs()
+            Collections.singletonList("true"),
+            KotlinCommonCompilerArgumentsHolder.Companion.getInstance(myProject).getSettings().getFreeArgs()
         );
     }
 
     public void testProjectWithInternalArgs() {
         List<InternalArgument> internalArguments =
-                KotlinCommonCompilerArgumentsHolder.Companion.getInstance(myProject).getSettings().getInternalArguments();
+            KotlinCommonCompilerArgumentsHolder.Companion.getInstance(myProject).getSettings().getInternalArguments();
         assertEquals(
-                0,
-                internalArguments.size()
+            0,
+            internalArguments.size()
         );
     }
 
@@ -319,13 +319,13 @@ public class ConfigureKotlinTest extends AbstractConfigureKotlinTest {
         assertNotNull(javaModule);
 
         PsiRequiresStatement stdlibDirective =
-                Java9StructureUtilKt.findRequireDirective(javaModule, JavaModuleKt.KOTLIN_STDLIB_MODULE_NAME);
+            Java9StructureUtilKt.findRequireDirective(javaModule, JavaModuleKt.KOTLIN_STDLIB_MODULE_NAME);
         assertNotNull("Require directive for " + JavaModuleKt.KOTLIN_STDLIB_MODULE_NAME + " is expected",
                       stdlibDirective);
 
         long numberOfStdlib = StreamSupport.stream(javaModule.getRequires().spliterator(), false)
-                .filter((statement) -> JavaModuleKt.KOTLIN_STDLIB_MODULE_NAME.equals(statement.getModuleName()))
-                .count();
+                              .filter((statement) -> JavaModuleKt.KOTLIN_STDLIB_MODULE_NAME.equals(statement.getModuleName()))
+                              .count();
 
         assertTrue("Only one standard library directive is expected", numberOfStdlib == 1);
     }
@@ -336,11 +336,11 @@ public class ConfigureKotlinTest extends AbstractConfigureKotlinTest {
             KotlinFacet facet = FacetUtilsKt.getOrCreateFacet(getModule(), modelsProvider, false, null, false);
             JvmIdePlatformKind.Platform platform = new JvmIdePlatformKind.Platform(jvmTarget);
             FacetUtilsKt.configureFacet(
-                    facet,
-                    "1.1",
-                    LanguageFeature.State.ENABLED,
-                    platform,
-                    modelsProvider
+                facet,
+                "1.1",
+                LanguageFeature.State.ENABLED,
+                platform,
+                modelsProvider
             );
             assertEquals(platform, facet.getConfiguration().getSettings().getPlatform());
             assertEquals(jvmTarget.getDescription(),

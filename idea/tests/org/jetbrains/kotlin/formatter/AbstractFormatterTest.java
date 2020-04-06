@@ -58,7 +58,7 @@ public abstract class AbstractFormatterTest extends LightIdeaTestCase {
     }
 
     private static final String BASE_PATH =
-            new File(PluginTestCaseBase.getTestDataPathBase(), "/formatter/").getAbsolutePath();
+        new File(PluginTestCaseBase.getTestDataPathBase(), "/formatter/").getAbsolutePath();
 
     public TextRange myTextRange;
     public TextRange myLineRange;
@@ -79,7 +79,7 @@ public abstract class AbstractFormatterTest extends LightIdeaTestCase {
         if (myLineRange != null) {
             DocumentImpl document = new DocumentImpl(text);
             myTextRange =
-                    new TextRange(document.getLineStartOffset(myLineRange.getStartOffset()), document.getLineEndOffset(myLineRange.getEndOffset()));
+                new TextRange(document.getLineStartOffset(myLineRange.getStartOffset()), document.getLineEndOffset(myLineRange.getEndOffset()));
         }
 
         final PsiDocumentManager manager = PsiDocumentManager.getInstance(getProject());

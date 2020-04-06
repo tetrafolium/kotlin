@@ -41,7 +41,7 @@ public class ArrayAccessTranslator extends AbstractTranslator implements AccessT
 
     /*package*/
     static ArrayAccessTranslator newInstance(@NotNull KtArrayAccessExpression expression,
-                                             @NotNull TranslationContext context) {
+            @NotNull TranslationContext context) {
         return new ArrayAccessTranslator(expression, context);
     }
 
@@ -92,7 +92,7 @@ public class ArrayAccessTranslator extends AbstractTranslator implements AccessT
     @NotNull
     private TranslationContext contextWithValueParameterAliasInArrayGetAccess(@NotNull JsExpression toSetTo) {
         ResolvedCall<FunctionDescriptor> resolvedCall =
-                BindingUtils.getResolvedCallForArrayAccess(bindingContext(), expression,  /*isGetter = */ false);
+            BindingUtils.getResolvedCallForArrayAccess(bindingContext(), expression,  /*isGetter = */ false);
 
         List<ResolvedValueArgument> arguments = resolvedCall.getValueArgumentsByIndex();
         if (arguments == null) {
@@ -100,7 +100,7 @@ public class ArrayAccessTranslator extends AbstractTranslator implements AccessT
         }
         ResolvedValueArgument lastArgument = arguments.get(arguments.size() - 1);
         assert lastArgument instanceof ExpressionValueArgument:
-                "Last argument of array-like setter must be ExpressionValueArgument: " + lastArgument;
+        "Last argument of array-like setter must be ExpressionValueArgument: " + lastArgument;
 
         ValueArgument valueArgument = ((ExpressionValueArgument) lastArgument).getValueArgument();
         assert valueArgument != null;
@@ -130,9 +130,9 @@ public class ArrayAccessTranslator extends AbstractTranslator implements AccessT
         private final JsExpression arrayExpression;
 
         protected CachedArrayAccessTranslator(
-                @NotNull KtArrayAccessExpression expression,
-                @NotNull TranslationContext context,
-                @NotNull JsExpression arrayExpression
+            @NotNull KtArrayAccessExpression expression,
+            @NotNull TranslationContext context,
+            @NotNull JsExpression arrayExpression
         ) {
             super(expression, context);
             this.arrayExpression = arrayExpression;

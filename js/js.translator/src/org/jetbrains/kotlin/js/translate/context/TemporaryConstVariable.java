@@ -20,7 +20,7 @@ import org.jetbrains.kotlin.js.backend.ast.JsExpression;
 import org.jetbrains.kotlin.js.backend.ast.JsName;
 import org.jetbrains.annotations.NotNull;
 
-public final class TemporaryConstVariable extends TemporaryVariable{
+public final class TemporaryConstVariable extends TemporaryVariable {
     private boolean initialized = false;
 
     public TemporaryConstVariable(@NotNull JsName variableName, @NotNull JsExpression assignmentExpression) {
