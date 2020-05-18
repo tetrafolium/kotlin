@@ -139,71 +139,71 @@ inspecode:
   - input:
     - "/j2k/[t-z]*/"
     auto-fix: false     # TODO: change to `true`
-    thresholds: { num-issues: 348 }
+    thresholds: { num-issues: 0 }   # excluded all analyzable files by input/ignore patterns
   - input:
     - "/js/"
     - "!js/js.translator/src/"
     auto-fix: false     # TODO: change to `true`
-    thresholds: { num-issues: 580 }
+    thresholds: { num-issues: 575 }
   - input:
     - "/js/js.translator/src/"
     auto-fix: false     # TODO: change to `true`
-    thresholds: { num-issues: 542 }
+    thresholds: { num-issues: 565 }
   - input:
     - "/l*/"
     - "!/libraries/stdlib/"
     - "!/libraries/tools/"
     auto-fix: false     # TODO: change to `true`
-    thresholds: { num-issues: 186 }
+    thresholds: { num-issues: 156 }
   - input:
     - "/libraries/stdlib/"
     - "!/libraries/stdlib/common/src/generated/"  # (1115 ... too many in single directory)
     - "!/libraries/stdlib/js/src/"
     - "!/libraries/stdlib/jvm/"
     auto-fix: false     # TODO: change to `true`
-    thresholds: { num-issues: 918 }
+    thresholds: { num-issues: 567 }
   - input:
     - "/libraries/stdlib/js/src/"
     auto-fix: false     # TODO: change to `true`
-    thresholds: { num-issues: 969 }
+    thresholds: { num-issues: 999 }   # too many issues detected: 1010 > 1000
   - input:
     - "/libraries/stdlib/jvm/"
     auto-fix: false     # TODO: change to `true`
-    thresholds: { num-issues: 452 }
+    thresholds: { num-issues: 348 }
   - input:
     - "/libraries/tools/"
     auto-fix: false     # TODO: change to `true`
-    thresholds: { num-issues: 709 }
+    thresholds: { num-issues: 785 }
   - input:
     - "/[m-z]*/"
     - "!/plugins/"
     auto-fix: false     # TODO: change to `true`
-    thresholds: { num-issues: 106 }
+    thresholds: { num-issues: 80 }
   - input:
     - "/plugins/"
     - "!/plugins/android-extensions/"
     auto-fix: false     # TODO: change to `true`
-    thresholds: { num-issues: 904 }
+    thresholds: { num-issues: 894 }
   - input:
     - "/plugins/android-extensions/"
     auto-fix: false     # TODO: change to `true`
-    thresholds: { num-issues: 880 }
+    thresholds: { num-issues: 498 }
 
   misspell:     # supports: All Languages
     auto-fix: true
-    thresholds: { num-issues: 47 }
+    thresholds: { num-issues: 33 }
 
   pmd:          # supports: Java JavaScript
   - ignore:
     - "/idea/"
     - "/js/js.translator/"
     auto-fix: false     # TODO: change to `true`
-    thresholds: { num-issues: 855 }
+    thresholds: { num-issues: 414 }
   - input:
     - "/idea/"
     - "/js/js.translator/"
     auto-fix: false     # TODO: change to `true`
-    thresholds: { num-issues: 582 }
+    thresholds: { num-issues: 41 }
 
   uncrustify:   # supports: C C++ C# Objective-C Java
   - input:
@@ -212,10 +212,10 @@ inspecode:
     thresholds: { num-issues: 0 }   # SKIPPED: excluded all analyzable files by input/ignore patterns
   - input:
     - "/compiler/"
-    thresholds: { num-issues: 736 }
+    thresholds: { num-issues: 538 }
   - input:
     - "/idea/"
-    thresholds: { num-issues: 496 }
+    thresholds: { num-issues: 177 }
 
   #### Unused finished with errors.
   ####    Unused: analyzing unused: <stdin>: hGetContents: invalid argument (invalid byte sequence)
