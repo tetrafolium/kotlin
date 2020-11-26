@@ -34,12 +34,12 @@ public abstract class DelegatingClassBuilder implements ClassBuilder {
     @NotNull
     @Override
     public FieldVisitor newField(
-            @NotNull JvmDeclarationOrigin origin,
-            int access,
-            @NotNull String name,
-            @NotNull String desc,
-            @Nullable String signature,
-            @Nullable Object value
+        @NotNull JvmDeclarationOrigin origin,
+        int access,
+        @NotNull String name,
+        @NotNull String desc,
+        @Nullable String signature,
+        @Nullable Object value
     ) {
         return getDelegate().newField(origin, access, name, desc, signature, value);
     }
@@ -47,12 +47,12 @@ public abstract class DelegatingClassBuilder implements ClassBuilder {
     @NotNull
     @Override
     public MethodVisitor newMethod(
-            @NotNull JvmDeclarationOrigin origin,
-            int access,
-            @NotNull String name,
-            @NotNull String desc,
-            @Nullable String signature,
-            @Nullable String[] exceptions
+        @NotNull JvmDeclarationOrigin origin,
+        int access,
+        @NotNull String name,
+        @NotNull String desc,
+        @Nullable String signature,
+        @Nullable String[] exceptions
     ) {
         return getDelegate().newMethod(origin, access, name, desc, signature, exceptions);
     }
@@ -82,13 +82,13 @@ public abstract class DelegatingClassBuilder implements ClassBuilder {
 
     @Override
     public void defineClass(
-            @Nullable PsiElement origin,
-            int version,
-            int access,
-            @NotNull String name,
-            @Nullable String signature,
-            @NotNull String superName,
-            @NotNull String[] interfaces
+        @Nullable PsiElement origin,
+        int version,
+        int access,
+        @NotNull String name,
+        @Nullable String signature,
+        @NotNull String superName,
+        @NotNull String[] interfaces
     ) {
         getDelegate().defineClass(origin, version, access, name, signature, superName, interfaces);
     }

@@ -27,7 +27,7 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class KtTypeParameterListOwnerStub<T extends KotlinStubWithFqName<?>>
-        extends KtNamedDeclarationStub<T> implements KtTypeParameterListOwner {
+    extends KtNamedDeclarationStub<T> implements KtTypeParameterListOwner {
     public KtTypeParameterListOwnerStub(@NotNull T stub, @NotNull IStubElementType nodeType) {
         super(stub, nodeType);
     }

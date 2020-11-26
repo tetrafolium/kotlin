@@ -49,7 +49,7 @@ public class AnalyzingUtils {
             }
         });
     }
-    
+
     public static List<PsiErrorElement> getSyntaxErrorRanges(@NotNull PsiElement root) {
         List<PsiErrorElement> r = new ArrayList<>();
         root.acceptChildren(new PsiErrorElementVisitor() {

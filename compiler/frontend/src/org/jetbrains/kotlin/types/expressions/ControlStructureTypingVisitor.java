@@ -68,7 +68,7 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
     private DataFlowInfo checkCondition(@Nullable KtExpression condition, @NotNull ExpressionTypingContext context) {
         if (condition != null) {
             ExpressionTypingContext conditionContext =
-                    context.replaceExpectedType(components.builtIns.getBooleanType()).replaceContextDependency(INDEPENDENT);
+                context.replaceExpectedType(components.builtIns.getBooleanType()).replaceContextDependency(INDEPENDENT);
             KotlinTypeInfo typeInfo = facade.getTypeInfo(condition, conditionContext);
 
             return components.dataFlowAnalyzer.checkType(typeInfo, condition, conditionContext).getDataFlowInfo();
@@ -103,7 +103,7 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
         if (elseBranch == null) {
             if (thenBranch != null) {
                 KotlinTypeInfo result = getTypeInfoWhenOnlyOneBranchIsPresent(
-                        thenBranch, thenScope, thenInfo, elseInfo, contextWithExpectedType, ifExpression);
+                                            thenBranch, thenScope, thenInfo, elseInfo, contextWithExpectedType, ifExpression);
                 // If jump was possible, take condition check info as the jump info
                 return result.getJumpOutPossible()
                        ? result.replaceJumpOutPossible(true).replaceJumpFlowInfo(conditionDataFlowInfo)
@@ -113,34 +113,34 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
         }
         if (thenBranch == null) {
             return getTypeInfoWhenOnlyOneBranchIsPresent(
-                    elseBranch, elseScope, elseInfo, thenInfo, contextWithExpectedType, ifExpression);
+                       elseBranch, elseScope, elseInfo, thenInfo, contextWithExpectedType, ifExpression);
         }
         KtPsiFactory psiFactory = KtPsiFactoryKt.KtPsiFactory(ifExpression, false);
         KtBlockExpression thenBlock = psiFactory.wrapInABlockWrapper(thenBranch);
         KtBlockExpression elseBlock = psiFactory.wrapInABlockWrapper(elseBranch);
         Call callForIf = createCallForSpecialConstruction(ifExpression, ifExpression, Lists.newArrayList(thenBlock, elseBlock));
         MutableDataFlowInfoForArguments dataFlowInfoForArguments =
-                    createDataFlowInfoForArgumentsForIfCall(callForIf, conditionDataFlowInfo, thenInfo, elseInfo);
+            createDataFlowInfoForArgumentsForIfCall(callForIf, conditionDataFlowInfo, thenInfo, elseInfo);
         ResolvedCall<FunctionDescriptor> resolvedCall = components.controlStructureTypingUtils.resolveSpecialConstructionAsCall(
-                callForIf, ResolveConstruct.IF, Lists.newArrayList("thenBranch", "elseBranch"),
-                Lists.newArrayList(false, false),
-                contextWithExpectedType, dataFlowInfoForArguments);
+                    callForIf, ResolveConstruct.IF, Lists.newArrayList("thenBranch", "elseBranch"),
+                    Lists.newArrayList(false, false),
+                    contextWithExpectedType, dataFlowInfoForArguments);
 
         return processBranches(
-                ifExpression, contextWithExpectedType, context, conditionDataFlowInfo,
-                loopBreakContinuePossibleInCondition, elseBranch, thenBranch, resolvedCall);
+                   ifExpression, contextWithExpectedType, context, conditionDataFlowInfo,
+                   loopBreakContinuePossibleInCondition, elseBranch, thenBranch, resolvedCall);
     }
 
     @NotNull
     private KotlinTypeInfo processBranches(
-            KtIfExpression ifExpression,
-            ExpressionTypingContext contextWithExpectedType,
-            ExpressionTypingContext context,
-            DataFlowInfo conditionDataFlowInfo,
-            boolean loopBreakContinuePossibleInCondition,
-            KtExpression elseBranch,
-            KtExpression thenBranch,
-            ResolvedCall<FunctionDescriptor> resolvedCall
+        KtIfExpression ifExpression,
+        ExpressionTypingContext contextWithExpectedType,
+        ExpressionTypingContext context,
+        DataFlowInfo conditionDataFlowInfo,
+        boolean loopBreakContinuePossibleInCondition,
+        KtExpression elseBranch,
+        KtExpression thenBranch,
+        ResolvedCall<FunctionDescriptor> resolvedCall
     ) {
         BindingContext bindingContext = context.trace.getBindingContext();
         KotlinTypeInfo thenTypeInfo = BindingContextUtils.getRecordedTypeInfo(thenBranch, bindingContext);
@@ -150,7 +150,7 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
         boolean isElsePostponed = ArgumentTypeResolver.isFunctionLiteralOrCallableReference(thenBranch, context);
 
         assert thenTypeInfo != null || elseTypeInfo != null ||
-               isThenPostponed || isElsePostponed : "Both branches of if expression were not processed: " + ifExpression.getText();
+        isThenPostponed || isElsePostponed : "Both branches of if expression were not processed: " + ifExpression.getText();
 
         if (thenTypeInfo == null && elseTypeInfo == null) {
             return TypeInfoFactoryKt.noTypeInfo(context);
@@ -199,31 +199,31 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
                 resultDataFlowInfo = thenDataFlowInfo.or(elseDataFlowInfo);
             }
             if (thenType == null && jumpInElse ||
-                elseType == null && jumpInThen) {
+                    elseType == null && jumpInThen) {
                 return TypeInfoFactoryKt.noTypeInfo(resultDataFlowInfo);
             }
         }
 
         // If break or continue was possible, take condition check info as the jump info
         return TypeInfoFactoryKt.createTypeInfo(
-                components.dataFlowAnalyzer.checkType(resultType, ifExpression, contextWithExpectedType),
-                resultDataFlowInfo, loopBreakContinuePossible,
-                loopBreakContinuePossibleInCondition ? context.dataFlowInfo : conditionDataFlowInfo);
+                   components.dataFlowAnalyzer.checkType(resultType, ifExpression, contextWithExpectedType),
+                   resultDataFlowInfo, loopBreakContinuePossible,
+                   loopBreakContinuePossibleInCondition ? context.dataFlowInfo : conditionDataFlowInfo);
     }
 
     @NotNull
     private KotlinTypeInfo getTypeInfoWhenOnlyOneBranchIsPresent(
-            @NotNull KtExpression presentBranch,
-            @NotNull LexicalWritableScope presentScope,
-            @NotNull DataFlowInfo presentInfo,
-            @NotNull DataFlowInfo otherInfo,
-            @NotNull ExpressionTypingContext context,
-            @NotNull KtIfExpression ifExpression
+        @NotNull KtExpression presentBranch,
+        @NotNull LexicalWritableScope presentScope,
+        @NotNull DataFlowInfo presentInfo,
+        @NotNull DataFlowInfo otherInfo,
+        @NotNull ExpressionTypingContext context,
+        @NotNull KtIfExpression ifExpression
     ) {
         ExpressionTypingContext newContext = context.replaceDataFlowInfo(presentInfo).replaceExpectedType(NO_EXPECTED_TYPE)
-                .replaceContextDependency(INDEPENDENT);
+                                             .replaceContextDependency(INDEPENDENT);
         KotlinTypeInfo typeInfo = components.expressionTypingServices.getBlockReturnedTypeWithWritableScope(
-                presentScope, Collections.singletonList(presentBranch), CoercionStrategy.NO_COERCION, newContext);
+                                      presentScope, Collections.singletonList(presentBranch), CoercionStrategy.NO_COERCION, newContext);
         KotlinType type = typeInfo.getType();
         DataFlowInfo dataFlowInfo;
         if (type != null && KotlinBuiltIns.isNothing(type)) {
@@ -232,10 +232,10 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
             dataFlowInfo = typeInfo.getDataFlowInfo().or(otherInfo);
         }
         return components.dataFlowAnalyzer.checkType(
-                typeInfo.replaceType(components.builtIns.getUnitType()),
-                ifExpression,
-                context
-        ).replaceDataFlowInfo(dataFlowInfo);
+                   typeInfo.replaceType(components.builtIns.getUnitType()),
+                   ifExpression,
+                   context
+               ).replaceDataFlowInfo(dataFlowInfo);
     }
 
     @Override
@@ -247,12 +247,12 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
         if (!isStatement) return components.dataFlowAnalyzer.illegalStatementType(expression, contextWithExpectedType, facade);
 
         ExpressionTypingContext context = contextWithExpectedType.replaceExpectedType(NO_EXPECTED_TYPE).replaceContextDependency(
-                INDEPENDENT);
+                                              INDEPENDENT);
         // Preliminary analysis
         PreliminaryLoopVisitor loopVisitor = PreliminaryLoopVisitor.visitLoop(expression);
         context = context.replaceDataFlowInfo(
-                loopVisitor.clearDataFlowInfoForAssignedLocalVariables(context.dataFlowInfo, components.languageVersionSettings)
-        );
+                      loopVisitor.clearDataFlowInfoForAssignedLocalVariables(context.dataFlowInfo, components.languageVersionSettings)
+                  );
 
         KtExpression condition = expression.getCondition();
         // Extract data flow info from condition itself without taking value into account
@@ -264,8 +264,8 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
         if (body != null) {
             LexicalWritableScope scopeToExtend = newWritableScopeImpl(context, LexicalScopeKind.WHILE_BODY, components.overloadChecker);
             bodyTypeInfo = components.expressionTypingServices.getBlockReturnedTypeWithWritableScope(
-                    scopeToExtend, Collections.singletonList(body),
-                    CoercionStrategy.NO_COERCION, context.replaceDataFlowInfo(conditionInfo));
+                               scopeToExtend, Collections.singletonList(body),
+                               CoercionStrategy.NO_COERCION, context.replaceDataFlowInfo(conditionInfo));
         }
         else {
             bodyTypeInfo = TypeInfoFactoryKt.noTypeInfo(conditionInfo);
@@ -284,11 +284,11 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
             // We should take data flow info from the first jump point,
             // but without affecting changing variables
             dataFlowInfo = dataFlowInfo.and(loopVisitor.clearDataFlowInfoForAssignedLocalVariables(bodyTypeInfo.getJumpFlowInfo(),
-                                                                                                   components.languageVersionSettings));
+                                            components.languageVersionSettings));
         }
         return components.dataFlowAnalyzer
-                .checkType(bodyTypeInfo.replaceType(components.builtIns.getUnitType()), expression, contextWithExpectedType)
-                .replaceDataFlowInfo(dataFlowInfo);
+               .checkType(bodyTypeInfo.replaceType(components.builtIns.getUnitType()), expression, contextWithExpectedType)
+               .replaceDataFlowInfo(dataFlowInfo);
     }
 
     private boolean containsJumpOutOfLoop(@NotNull KtExpression expression, ExpressionTypingContext context) {
@@ -301,7 +301,7 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
                 KtSimpleNameExpression targetLabel = breakExpression.getTargetLabel();
                 PsiElement element = targetLabel != null ? context.trace.get(LABEL_TARGET, targetLabel) : null;
                 if (outerLoops.isEmpty() || element == expression ||
-                    (targetLabel == null && outerLoops.get(outerLoops.size() - 1) == expression)) {
+                        (targetLabel == null && outerLoops.get(outerLoops.size() - 1) == expression)) {
                     result[0] = true;
                 }
                 return null;
@@ -340,14 +340,14 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
         if (!isStatement) return components.dataFlowAnalyzer.illegalStatementType(expression, contextWithExpectedType, facade);
 
         ExpressionTypingContext context =
-                contextWithExpectedType.replaceExpectedType(NO_EXPECTED_TYPE).replaceContextDependency(INDEPENDENT);
+            contextWithExpectedType.replaceExpectedType(NO_EXPECTED_TYPE).replaceContextDependency(INDEPENDENT);
         KtExpression body = expression.getBody();
         LexicalScope conditionScope = context.scope;
         // Preliminary analysis
         PreliminaryLoopVisitor loopVisitor = PreliminaryLoopVisitor.visitLoop(expression);
         context = context.replaceDataFlowInfo(
-                loopVisitor.clearDataFlowInfoForAssignedLocalVariables(context.dataFlowInfo, components.languageVersionSettings)
-        );
+                      loopVisitor.clearDataFlowInfoForAssignedLocalVariables(context.dataFlowInfo, components.languageVersionSettings)
+                  );
         // Here we must record data flow information at the end of the body (or at the first jump, to be precise) and
         // .and it with entrance data flow information, because do-while body is executed at least once
         // See KT-6283
@@ -367,7 +367,7 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
                 block = Collections.singletonList(body);
             }
             bodyTypeInfo = components.expressionTypingServices.getBlockReturnedTypeWithWritableScope(
-                    writableScope, block, CoercionStrategy.NO_COERCION, context);
+                               writableScope, block, CoercionStrategy.NO_COERCION, context);
         }
         else {
             bodyTypeInfo = TypeInfoFactoryKt.noTypeInfo(context);
@@ -391,11 +391,11 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
             // We should take data flow info from the first jump point,
             // but without affecting changing variables
             dataFlowInfo = dataFlowInfo.and(loopVisitor.clearDataFlowInfoForAssignedLocalVariables(bodyTypeInfo.getJumpFlowInfo(),
-                                                                                                   components.languageVersionSettings));
+                                            components.languageVersionSettings));
         }
         return components.dataFlowAnalyzer
-                .checkType(bodyTypeInfo.replaceType(components.builtIns.getUnitType()), expression, contextWithExpectedType)
-                .replaceDataFlowInfo(dataFlowInfo);
+               .checkType(bodyTypeInfo.replaceType(components.builtIns.getUnitType()), expression, contextWithExpectedType)
+               .replaceDataFlowInfo(dataFlowInfo);
     }
 
     @Override
@@ -407,11 +407,11 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
         if (!isStatement) return components.dataFlowAnalyzer.illegalStatementType(expression, contextWithExpectedType, facade);
 
         ExpressionTypingContext context =
-                contextWithExpectedType.replaceExpectedType(NO_EXPECTED_TYPE).replaceContextDependency(INDEPENDENT);
+            contextWithExpectedType.replaceExpectedType(NO_EXPECTED_TYPE).replaceContextDependency(INDEPENDENT);
         // Preliminary analysis
         PreliminaryLoopVisitor loopVisitor = PreliminaryLoopVisitor.visitLoop(expression);
         context = context.replaceDataFlowInfo(loopVisitor.clearDataFlowInfoForAssignedLocalVariables(context.dataFlowInfo,
-                                                                                                     components.languageVersionSettings));
+                                              components.languageVersionSettings));
 
         KtExpression loopRange = expression.getLoopRange();
         KotlinType expectedParameterType = null;
@@ -442,7 +442,7 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
                 TransientReceiver iteratorNextAsReceiver = new TransientReceiver(elementType);
                 components.annotationResolver.resolveAnnotationsWithArguments(loopScope, loopParameter.getModifierList(), context.trace);
                 components.destructuringDeclarationResolver.defineLocalVariablesFromDestructuringDeclaration(
-                        loopScope, multiParameter, iteratorNextAsReceiver, loopRange, context
+                    loopScope, multiParameter, iteratorNextAsReceiver, loopRange, context
                 );
                 modifiersCheckingProcedure.checkModifiersForDestructuringDeclaration(multiParameter);
                 components.identifierChecker.checkDeclaration(multiParameter, context.trace);
@@ -453,21 +453,21 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
         KotlinTypeInfo bodyTypeInfo;
         if (body != null) {
             bodyTypeInfo = components.expressionTypingServices.getBlockReturnedTypeWithWritableScope(loopScope, Collections.singletonList(body),
-                    CoercionStrategy.NO_COERCION, context.replaceDataFlowInfo(loopRangeInfo.getDataFlowInfo()));
+                           CoercionStrategy.NO_COERCION, context.replaceDataFlowInfo(loopRangeInfo.getDataFlowInfo()));
         }
         else {
             bodyTypeInfo = loopRangeInfo;
         }
 
         return components.dataFlowAnalyzer
-                .checkType(bodyTypeInfo.replaceType(components.builtIns.getUnitType()), expression, contextWithExpectedType)
-                .replaceDataFlowInfo(loopRangeInfo.getDataFlowInfo());
+               .checkType(bodyTypeInfo.replaceType(components.builtIns.getUnitType()), expression, contextWithExpectedType)
+               .replaceDataFlowInfo(loopRangeInfo.getDataFlowInfo());
     }
 
     private VariableDescriptor createLoopParameterDescriptor(
-            KtParameter loopParameter,
-            KotlinType expectedParameterType,
-            ExpressionTypingContext context
+        KtParameter loopParameter,
+        KotlinType expectedParameterType,
+        ExpressionTypingContext context
     ) {
         components.modifiersChecker.withTrace(context.trace).checkParameterHasNoValOrVar(loopParameter, VAL_OR_VAR_ON_LOOP_PARAMETER);
 
@@ -475,7 +475,7 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
         VariableDescriptor variableDescriptor;
         if (typeReference != null) {
             variableDescriptor = components.descriptorResolver.
-                    resolveLocalVariableDescriptor(context.scope, loopParameter, context.trace);
+                                 resolveLocalVariableDescriptor(context.scope, loopParameter, context.trace);
             KotlinType actualParameterType = variableDescriptor.getType();
             if (expectedParameterType != null &&
                     !KotlinTypeChecker.DEFAULT.isSubtypeOf(expectedParameterType, actualParameterType)) {
@@ -487,7 +487,7 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
                 expectedParameterType = ErrorUtils.createErrorType("Error");
             }
             variableDescriptor = components.descriptorResolver.
-                    resolveLocalVariableDescriptor(loopParameter, expectedParameterType, context.trace, context.scope);
+                                 resolveLocalVariableDescriptor(loopParameter, expectedParameterType, context.trace, context.scope);
         }
 
         checkVariableShadowing(context.scope, context.trace, variableDescriptor);
@@ -537,12 +537,12 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
         KotlinTypeInfo tryResult = facade.getTypeInfo(tryBlock, context);
         ExpressionTypingContext tryOutputContext = context.replaceExpectedType(NO_EXPECTED_TYPE);
         if (!nothingInAllCatchBranches &&
-            facade.getComponents().languageVersionSettings.supportsFeature(LanguageFeature.SoundSmartCastsAfterTry)) {
+                facade.getComponents().languageVersionSettings.supportsFeature(LanguageFeature.SoundSmartCastsAfterTry)) {
             PreliminaryLoopVisitor tryVisitor = PreliminaryLoopVisitor.visitTryBlock(expression);
             tryOutputContext = tryOutputContext.replaceDataFlowInfo(
-                    tryVisitor.clearDataFlowInfoForAssignedLocalVariables(tryOutputContext.dataFlowInfo,
-                                                                          components.languageVersionSettings)
-            );
+                                   tryVisitor.clearDataFlowInfoForAssignedLocalVariables(tryOutputContext.dataFlowInfo,
+                                           components.languageVersionSettings)
+                               );
         }
 
         KotlinTypeInfo result = TypeInfoFactoryKt.noTypeInfo(tryOutputContext);
@@ -625,12 +625,12 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
             DeclarationDescriptor declarationDescriptor = context.trace.get(DECLARATION_TO_DESCRIPTOR, parentDeclaration);
 
             Pair<FunctionDescriptor, PsiElement> containingFunInfo =
-                    BindingContextUtils.getContainingFunctionSkipFunctionLiterals(declarationDescriptor, false);
+                BindingContextUtils.getContainingFunctionSkipFunctionLiterals(declarationDescriptor, false);
             FunctionDescriptor containingFunctionDescriptor = containingFunInfo.getFirst();
 
             if (containingFunctionDescriptor != null) {
                 if (!InlineUtil.checkNonLocalReturnUsage(containingFunctionDescriptor, expression, context) ||
-                    isClassInitializer(containingFunInfo)) {
+                        isClassInitializer(containingFunInfo)) {
                     // Unqualified, in a function literal
                     context.trace.report(RETURN_NOT_ALLOWED.on(expression));
                     resultType = ErrorUtils.createErrorType(RETURN_NOT_ALLOWED_MESSAGE);
@@ -659,15 +659,15 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
                          && Objects.equals(expression.getLabelName(), "suspend")) {
                     KtExpression callExpression = KtPsiUtil.getParentCallIfPresent((KtFunction) labelTargetElement);
                     ResolvedCall<? extends CallableDescriptor> resolvedCall =
-                            CallUtilKt.getResolvedCall(callExpression, context.trace.getBindingContext());
+                        CallUtilKt.getResolvedCall(callExpression, context.trace.getBindingContext());
 
                     if (resolvedCall != null &&
-                        !KtPsiUtil.isLabeledFunctionLiteral((KtFunctionLiteral) labelTargetElement) &&
-                        Objects.equals(
+                            !KtPsiUtil.isLabeledFunctionLiteral((KtFunctionLiteral) labelTargetElement) &&
+                            Objects.equals(
                                 DescriptorUtilsKt.fqNameOrNull(resolvedCall.getResultingDescriptor()),
                                 SuspendFunctionTypeUtilKt.KOTLIN_SUSPEND_BUILT_IN_FUNCTION_FQ_NAME
-                        )
-                    ) {
+                            )
+                       ) {
                         context.trace.report(RETURN_FOR_BUILT_IN_SUSPEND.on(expression));
                     }
                 }
@@ -679,15 +679,15 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
                 LambdaContextInfo contextInfo;
                 if (returnedExpression instanceof KtLambdaExpression) {
                     contextInfo = new LambdaContextInfo(
-                            new KotlinTypeInfo(DONT_CARE, context.dataFlowInfo),
-                            null,
-                            context.scope,
-                            context.trace
+                        new KotlinTypeInfo(DONT_CARE, context.dataFlowInfo),
+                        null,
+                        context.scope,
+                        context.trace
                     );
                 } else {
                     KotlinTypeInfo result = facade
-                            .getTypeInfo(returnedExpression, context.replaceExpectedType(newInferenceLambdaInfo.getExpectedType())
-                            .replaceContextDependency(newInferenceLambdaInfo.getContextDependency()));
+                                            .getTypeInfo(returnedExpression, context.replaceExpectedType(newInferenceLambdaInfo.getExpectedType())
+                                                         .replaceContextDependency(newInferenceLambdaInfo.getContextDependency()));
                     contextInfo = new LambdaContextInfo(result, null, context.scope, context.trace);
                 }
                 newInferenceLambdaInfo.getReturnStatements().add(new kotlin.Pair<>(expression, contextInfo));
@@ -717,20 +717,20 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
     public KotlinTypeInfo visitBreakExpression(@NotNull KtBreakExpression expression, ExpressionTypingContext context) {
         LabelResolver.INSTANCE.resolveControlLabel(expression, context);
         return components.dataFlowAnalyzer.createCheckedTypeInfo(components.builtIns.getNothingType(), context, expression).
-                replaceJumpOutPossible(true);
+               replaceJumpOutPossible(true);
     }
 
     @Override
     public KotlinTypeInfo visitContinueExpression(@NotNull KtContinueExpression expression, ExpressionTypingContext context) {
         LabelResolver.INSTANCE.resolveControlLabel(expression, context);
         return components.dataFlowAnalyzer.createCheckedTypeInfo(components.builtIns.getNothingType(), context, expression).
-                replaceJumpOutPossible(true);
+               replaceJumpOutPossible(true);
     }
 
     @Nullable
     private static KotlinResolutionCallbacksImpl.LambdaInfo getNewInferenceLambdaInfo(
-            @NotNull ExpressionTypingContext context,
-            @NotNull KtElement function
+        @NotNull ExpressionTypingContext context,
+        @NotNull KtElement function
     ) {
         if (function instanceof KtFunction) {
             return context.trace.get(BindingContext.NEW_INFERENCE_LAMBDA_INFO, (KtFunction) function);
@@ -740,9 +740,9 @@ public class ControlStructureTypingVisitor extends ExpressionTypingVisitor {
 
     @NotNull
     private static KotlinType getFunctionExpectedReturnType(
-            @NotNull FunctionDescriptor descriptor,
-            @NotNull KtElement function,
-            @NotNull ExpressionTypingContext context
+        @NotNull FunctionDescriptor descriptor,
+        @NotNull KtElement function,
+        @NotNull ExpressionTypingContext context
     ) {
         KotlinType expectedType;
         if (function instanceof KtSecondaryConstructor) {

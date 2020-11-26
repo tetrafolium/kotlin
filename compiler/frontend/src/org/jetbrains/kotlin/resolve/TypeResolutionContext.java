@@ -32,12 +32,12 @@ public class TypeResolutionContext {
     }
 
     public TypeResolutionContext(
-            @NotNull LexicalScope scope,
-            @NotNull BindingTrace trace,
-            boolean checkBounds,
-            boolean allowBareTypes,
-            boolean isDebuggerContext,
-            boolean abbreviated
+        @NotNull LexicalScope scope,
+        @NotNull BindingTrace trace,
+        boolean checkBounds,
+        boolean allowBareTypes,
+        boolean isDebuggerContext,
+        boolean abbreviated
     ) {
         this.scope = scope;
         this.trace = trace;

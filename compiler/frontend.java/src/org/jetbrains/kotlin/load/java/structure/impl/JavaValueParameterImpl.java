@@ -32,7 +32,7 @@ import org.jetbrains.kotlin.name.Name;
 import java.util.Collection;
 
 public class JavaValueParameterImpl extends JavaElementImpl<PsiParameter>
-        implements JavaValueParameter, JavaAnnotationOwnerImpl, JavaModifierListOwnerImpl {
+    implements JavaValueParameter, JavaAnnotationOwnerImpl, JavaModifierListOwnerImpl {
     public JavaValueParameterImpl(@NotNull PsiParameter psiParameter) {
         super(psiParameter);
     }

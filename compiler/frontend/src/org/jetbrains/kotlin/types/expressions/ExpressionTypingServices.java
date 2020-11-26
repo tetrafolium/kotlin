@@ -48,10 +48,10 @@ public class ExpressionTypingServices {
     @NotNull private final StatementFilter statementFilter;
 
     public ExpressionTypingServices(
-            @NotNull ExpressionTypingComponents components,
-            @NotNull AnnotationChecker annotationChecker,
-            @NotNull StatementFilter statementFilter,
-            @NotNull ExpressionTypingVisitorDispatcher.ForDeclarations facade
+        @NotNull ExpressionTypingComponents components,
+        @NotNull AnnotationChecker annotationChecker,
+        @NotNull StatementFilter statementFilter,
+        @NotNull ExpressionTypingVisitorDispatcher.ForDeclarations facade
     ) {
         this.expressionTypingComponents = components;
         this.annotationChecker = annotationChecker;
@@ -70,11 +70,11 @@ public class ExpressionTypingServices {
 
     @NotNull
     public KotlinType safeGetType(
-            @NotNull LexicalScope scope,
-            @NotNull KtExpression expression,
-            @NotNull KotlinType expectedType,
-            @NotNull DataFlowInfo dataFlowInfo,
-            @NotNull BindingTrace trace
+        @NotNull LexicalScope scope,
+        @NotNull KtExpression expression,
+        @NotNull KotlinType expectedType,
+        @NotNull DataFlowInfo dataFlowInfo,
+        @NotNull BindingTrace trace
     ) {
         KotlinType type = getType(scope, expression, expectedType, dataFlowInfo, trace);
 
@@ -83,31 +83,31 @@ public class ExpressionTypingServices {
 
     @NotNull
     public KotlinTypeInfo getTypeInfo(
-            @NotNull LexicalScope scope,
-            @NotNull KtExpression expression,
-            @NotNull KotlinType expectedType,
-            @NotNull DataFlowInfo dataFlowInfo,
-            @NotNull BindingTrace trace,
-            boolean isStatement
+        @NotNull LexicalScope scope,
+        @NotNull KtExpression expression,
+        @NotNull KotlinType expectedType,
+        @NotNull DataFlowInfo dataFlowInfo,
+        @NotNull BindingTrace trace,
+        boolean isStatement
     ) {
         return getTypeInfo(scope, expression, expectedType, dataFlowInfo, trace, isStatement, expression, ContextDependency.INDEPENDENT);
     }
 
     @NotNull
     public KotlinTypeInfo getTypeInfo(
-            @NotNull LexicalScope scope,
-            @NotNull KtExpression expression,
-            @NotNull KotlinType expectedType,
-            @NotNull DataFlowInfo dataFlowInfo,
-            @NotNull BindingTrace trace,
-            boolean isStatement,
-            @NotNull KtExpression contextExpression,
-            @NotNull ContextDependency contextDependency
+        @NotNull LexicalScope scope,
+        @NotNull KtExpression expression,
+        @NotNull KotlinType expectedType,
+        @NotNull DataFlowInfo dataFlowInfo,
+        @NotNull BindingTrace trace,
+        boolean isStatement,
+        @NotNull KtExpression contextExpression,
+        @NotNull ContextDependency contextDependency
     ) {
         ExpressionTypingContext context = ExpressionTypingContext.newContext(
-                trace, scope, dataFlowInfo, expectedType, contextDependency, statementFilter, getLanguageVersionSettings(),
-                expressionTypingComponents.dataFlowValueFactory
-        );
+                                              trace, scope, dataFlowInfo, expectedType, contextDependency, statementFilter, getLanguageVersionSettings(),
+                                              expressionTypingComponents.dataFlowValueFactory
+                                          );
         if (contextExpression != expression) {
             context = context.replaceExpressionContextProvider(arg -> arg == expression ? contextExpression : null);
         }
@@ -121,11 +121,11 @@ public class ExpressionTypingServices {
 
     @Nullable
     public KotlinType getType(
-            @NotNull LexicalScope scope,
-            @NotNull KtExpression expression,
-            @NotNull KotlinType expectedType,
-            @NotNull DataFlowInfo dataFlowInfo,
-            @NotNull BindingTrace trace
+        @NotNull LexicalScope scope,
+        @NotNull KtExpression expression,
+        @NotNull KotlinType expectedType,
+        @NotNull DataFlowInfo dataFlowInfo,
+        @NotNull BindingTrace trace
     ) {
         return getTypeInfo(scope, expression, expectedType, dataFlowInfo, trace, false).getType();
     }
@@ -133,12 +133,12 @@ public class ExpressionTypingServices {
     /////////////////////////////////////////////////////////
 
     public void checkFunctionReturnType(
-            @NotNull LexicalScope functionInnerScope,
-            @NotNull KtDeclarationWithBody function,
-            @NotNull FunctionDescriptor functionDescriptor,
-            @NotNull DataFlowInfo dataFlowInfo,
-            @Nullable KotlinType expectedReturnType,
-            BindingTrace trace
+        @NotNull LexicalScope functionInnerScope,
+        @NotNull KtDeclarationWithBody function,
+        @NotNull FunctionDescriptor functionDescriptor,
+        @NotNull DataFlowInfo dataFlowInfo,
+        @Nullable KotlinType expectedReturnType,
+        BindingTrace trace
     ) {
         if (expectedReturnType == null) {
             expectedReturnType = functionDescriptor.getReturnType();
@@ -147,10 +147,10 @@ public class ExpressionTypingServices {
             }
         }
         checkFunctionReturnType(function, ExpressionTypingContext.newContext(
-                trace,
-                functionInnerScope, dataFlowInfo, expectedReturnType != null ? expectedReturnType : NO_EXPECTED_TYPE, getLanguageVersionSettings(),
-                expressionTypingComponents.dataFlowValueFactory
-        ));
+                                    trace,
+                                    functionInnerScope, dataFlowInfo, expectedReturnType != null ? expectedReturnType : NO_EXPECTED_TYPE, getLanguageVersionSettings(),
+                                    expressionTypingComponents.dataFlowValueFactory
+                                ));
     }
 
     /*package*/ void checkFunctionReturnType(KtDeclarationWithBody function, ExpressionTypingContext context) {
@@ -159,9 +159,9 @@ public class ExpressionTypingServices {
 
         boolean blockBody = function.hasBlockBody();
         ExpressionTypingContext newContext =
-                blockBody
-                ? context.replaceExpectedType(NO_EXPECTED_TYPE)
-                : context;
+            blockBody
+            ? context.replaceExpectedType(NO_EXPECTED_TYPE)
+            : context;
 
         expressionTypingFacade.getTypeInfo(bodyExpression, newContext, blockBody);
     }
@@ -173,26 +173,26 @@ public class ExpressionTypingServices {
 
     @NotNull
     public KotlinTypeInfo getBlockReturnedType(
-            @NotNull KtBlockExpression expression,
-            @NotNull CoercionStrategy coercionStrategyForLastExpression,
-            @NotNull ExpressionTypingContext context
+        @NotNull KtBlockExpression expression,
+        @NotNull CoercionStrategy coercionStrategyForLastExpression,
+        @NotNull ExpressionTypingContext context
     ) {
         List<KtExpression> block = StatementFilterKt.filterStatements(statementFilter, expression);
 
         DeclarationDescriptor containingDescriptor = context.scope.getOwnerDescriptor();
         TraceBasedLocalRedeclarationChecker redeclarationChecker
-                = new TraceBasedLocalRedeclarationChecker(context.trace, expressionTypingComponents.overloadChecker);
+            = new TraceBasedLocalRedeclarationChecker(context.trace, expressionTypingComponents.overloadChecker);
         LexicalWritableScope scope = new LexicalWritableScope(context.scope, containingDescriptor, false, redeclarationChecker,
-                                                              LexicalScopeKind.CODE_BLOCK);
+                LexicalScopeKind.CODE_BLOCK);
 
         KotlinTypeInfo r;
         if (block.isEmpty()) {
             r = expressionTypingComponents.dataFlowAnalyzer
-                    .createCheckedTypeInfo(expressionTypingComponents.builtIns.getUnitType(), context, expression);
+                .createCheckedTypeInfo(expressionTypingComponents.builtIns.getUnitType(), context, expression);
         }
         else {
             r = getBlockReturnedTypeWithWritableScope(scope, block, coercionStrategyForLastExpression,
-                                                      context.replaceStatementFilter(statementFilter));
+                    context.replaceStatementFilter(statementFilter));
         }
         scope.freeze();
 
@@ -205,21 +205,21 @@ public class ExpressionTypingServices {
 
     @NotNull
     public KotlinType getBodyExpressionType(
-            @NotNull BindingTrace trace,
-            @NotNull LexicalScope outerScope,
-            @NotNull DataFlowInfo dataFlowInfo,
-            @NotNull KtDeclarationWithBody function,
-            @NotNull FunctionDescriptor functionDescriptor
+        @NotNull BindingTrace trace,
+        @NotNull LexicalScope outerScope,
+        @NotNull DataFlowInfo dataFlowInfo,
+        @NotNull KtDeclarationWithBody function,
+        @NotNull FunctionDescriptor functionDescriptor
     ) {
         KtExpression bodyExpression = function.getBodyExpression();
         assert bodyExpression != null;
         LexicalScope functionInnerScope = FunctionDescriptorUtil.getFunctionInnerScope(outerScope, functionDescriptor, trace,
-                                                                                       expressionTypingComponents.overloadChecker);
+                                          expressionTypingComponents.overloadChecker);
 
         ExpressionTypingContext context = ExpressionTypingContext.newContext(
-                trace, functionInnerScope, dataFlowInfo, NO_EXPECTED_TYPE, getLanguageVersionSettings(),
-                expressionTypingComponents.dataFlowValueFactory
-        );
+                                              trace, functionInnerScope, dataFlowInfo, NO_EXPECTED_TYPE, getLanguageVersionSettings(),
+                                              expressionTypingComponents.dataFlowValueFactory
+                                          );
         KotlinTypeInfo typeInfo = expressionTypingFacade.getTypeInfo(bodyExpression, context, function.hasBlockBody());
 
         KotlinType type = typeInfo.getType();
@@ -237,17 +237,17 @@ public class ExpressionTypingServices {
      * at the nearest jump point from the block beginning.
      */
     /*package*/ KotlinTypeInfo getBlockReturnedTypeWithWritableScope(
-            @NotNull LexicalWritableScope scope,
-            @NotNull List<? extends KtElement> block,
-            @NotNull CoercionStrategy coercionStrategyForLastExpression,
-            @NotNull ExpressionTypingContext context
+        @NotNull LexicalWritableScope scope,
+        @NotNull List<? extends KtElement> block,
+        @NotNull CoercionStrategy coercionStrategyForLastExpression,
+        @NotNull ExpressionTypingContext context
     ) {
         if (block.isEmpty()) {
             return TypeInfoFactoryKt.createTypeInfo(expressionTypingComponents.builtIns.getUnitType(), context);
         }
 
         ExpressionTypingInternals blockLevelVisitor = new ExpressionTypingVisitorDispatcher.ForBlock(
-                expressionTypingComponents, annotationChecker, scope);
+            expressionTypingComponents, annotationChecker, scope);
         ExpressionTypingContext newContext = context.replaceScope(scope).replaceExpectedType(NO_EXPECTED_TYPE);
 
         KotlinTypeInfo result = TypeInfoFactoryKt.noTypeInfo(context);
@@ -270,20 +270,20 @@ public class ExpressionTypingServices {
             KtExpression statementExpression = (KtExpression) statement;
             if (!iterator.hasNext()) {
                 result = getTypeOfLastExpressionInBlock(
-                        statementExpression, newContext.replaceExpectedType(context.expectedType), coercionStrategyForLastExpression,
-                        blockLevelVisitor);
+                             statementExpression, newContext.replaceExpectedType(context.expectedType), coercionStrategyForLastExpression,
+                             blockLevelVisitor);
                 if (result.getType() != null && statementExpression.getParent() instanceof KtBlockExpression) {
                     DataFlowValue lastExpressionValue = expressionTypingComponents.dataFlowValueFactory.createDataFlowValue(
-                            statementExpression, result.getType(), context);
+                                                            statementExpression, result.getType(), context);
                     DataFlowValue blockExpressionValue = expressionTypingComponents.dataFlowValueFactory.createDataFlowValue(
                             (KtBlockExpression) statementExpression.getParent(), result.getType(), context);
                     result = result.replaceDataFlowInfo(result.getDataFlowInfo().assign(blockExpressionValue, lastExpressionValue,
-                                                                                        expressionTypingComponents.languageVersionSettings));
+                                                        expressionTypingComponents.languageVersionSettings));
                 }
             }
             else {
                 result = blockLevelVisitor
-                        .getTypeInfo(statementExpression, newContext.replaceContextDependency(ContextDependency.INDEPENDENT), true);
+                         .getTypeInfo(statementExpression, newContext.replaceContextDependency(ContextDependency.INDEPENDENT), true);
             }
 
             DataFlowInfo newDataFlowInfo = result.getDataFlowInfo();
@@ -308,15 +308,15 @@ public class ExpressionTypingServices {
     }
 
     private KotlinTypeInfo getTypeOfLastExpressionInBlock(
-            @NotNull KtExpression statementExpression,
-            @NotNull ExpressionTypingContext context,
-            @NotNull CoercionStrategy coercionStrategyForLastExpression,
-            @NotNull ExpressionTypingInternals blockLevelVisitor
+        @NotNull KtExpression statementExpression,
+        @NotNull ExpressionTypingContext context,
+        @NotNull CoercionStrategy coercionStrategyForLastExpression,
+        @NotNull ExpressionTypingInternals blockLevelVisitor
     ) {
         if (context.expectedType != NO_EXPECTED_TYPE) {
             KotlinType expectedType;
             if (context.expectedType == UNIT_EXPECTED_TYPE ||//the first check is necessary to avoid invocation 'isUnit(UNIT_EXPECTED_TYPE)'
-                (coercionStrategyForLastExpression == COERCION_TO_UNIT && KotlinBuiltIns.isUnit(context.expectedType))) {
+                    (coercionStrategyForLastExpression == COERCION_TO_UNIT && KotlinBuiltIns.isUnit(context.expectedType))) {
                 expectedType = UNIT_EXPECTED_TYPE;
             }
             else {
@@ -331,12 +331,12 @@ public class ExpressionTypingServices {
             return blockLevelVisitor.getTypeInfo(statementExpression, context.replaceExpectedType(expectedType).replaceContextDependency(dependency), true);
         }
         if (context.languageVersionSettings.supportsFeature(LanguageFeature.NewInference) &&
-            statementExpression instanceof KtLambdaExpression) {
+                statementExpression instanceof KtLambdaExpression) {
             PsiElement parent = PsiUtilsKt.getNonStrictParentOfType(statementExpression, KtFunctionLiteral.class);
             if (parent != null) {
                 KtFunctionLiteral functionLiteral = (KtFunctionLiteral) parent;
                 KotlinResolutionCallbacksImpl.LambdaInfo info =
-                        context.trace.getBindingContext().get(BindingContext.NEW_INFERENCE_LAMBDA_INFO, functionLiteral);
+                    context.trace.getBindingContext().get(BindingContext.NEW_INFERENCE_LAMBDA_INFO, functionLiteral);
                 if (info != null) {
                     info.getLastExpressionInfo().setLexicalScope(context.scope);
                     info.getLastExpressionInfo().setTrace(context.trace);

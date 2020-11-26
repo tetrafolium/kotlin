@@ -34,8 +34,8 @@ public class KtSuperTypeListEntry extends KtElementImplStub<KotlinPlaceHolderStu
     }
 
     public KtSuperTypeListEntry(
-            @NotNull KotlinPlaceHolderStub<? extends KtSuperTypeListEntry> stub,
-            @NotNull IStubElementType nodeType) {
+        @NotNull KotlinPlaceHolderStub<? extends KtSuperTypeListEntry> stub,
+        @NotNull IStubElementType nodeType) {
         super(stub, nodeType);
     }
 

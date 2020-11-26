@@ -95,8 +95,8 @@ public class JvmCodegenUtil {
     }
 
     private static boolean isCallInsideSameClassAsFieldRepresentingProperty(
-            @NotNull PropertyDescriptor descriptor,
-            @NotNull CodegenContext context
+        @NotNull PropertyDescriptor descriptor,
+        @NotNull CodegenContext context
     ) {
         boolean isFakeOverride = descriptor.getKind() == CallableMemberDescriptor.Kind.FAKE_OVERRIDE;
         boolean isDelegate = descriptor.getKind() == CallableMemberDescriptor.Kind.DELEGATION;
@@ -116,8 +116,8 @@ public class JvmCodegenUtil {
     }
 
     private static boolean isWithinSameFile(
-            @Nullable KtFile callerFile,
-            @NotNull CallableMemberDescriptor descriptor
+        @Nullable KtFile callerFile,
+        @NotNull CallableMemberDescriptor descriptor
     ) {
         DeclarationDescriptor containingDeclaration = descriptor.getContainingDeclaration().getOriginal();
         if (containingDeclaration instanceof PackageFragmentDescriptor) {
@@ -130,9 +130,9 @@ public class JvmCodegenUtil {
     }
 
     public static boolean isCallInsideSameModuleAsDeclared(
-            @NotNull CallableMemberDescriptor declarationDescriptor,
-            @NotNull CodegenContext context,
-            @Nullable File outDirectory
+        @NotNull CallableMemberDescriptor declarationDescriptor,
+        @NotNull CodegenContext context,
+        @Nullable File outDirectory
     ) {
         if (context instanceof RootContext) {
             return true;
@@ -153,8 +153,8 @@ public class JvmCodegenUtil {
     }
 
     public static boolean couldUseDirectAccessToCompanionObject(
-            @NotNull ClassDescriptor companionObjectDescriptor,
-            @NotNull MethodContext contextBeforeInline
+        @NotNull ClassDescriptor companionObjectDescriptor,
+        @NotNull MethodContext contextBeforeInline
     ) {
         if (!Visibilities.isPrivate(companionObjectDescriptor.getVisibility())) {
             // Non-private companion object can be directly accessed anywhere it's allowed by the front-end.
@@ -180,11 +180,11 @@ public class JvmCodegenUtil {
     }
 
     public static boolean couldUseDirectAccessToProperty(
-            @NotNull PropertyDescriptor property,
-            boolean forGetter,
-            boolean isDelegated,
-            @NotNull MethodContext contextBeforeInline,
-            boolean shouldInlineConstVals
+        @NotNull PropertyDescriptor property,
+        boolean forGetter,
+        boolean isDelegated,
+        @NotNull MethodContext contextBeforeInline,
+        boolean shouldInlineConstVals
     ) {
         if (shouldInlineConstVals && property.isConst()) return true;
 
@@ -248,8 +248,8 @@ public class JvmCodegenUtil {
 
     @Nullable
     public static ClassDescriptor getDispatchReceiverParameterForConstructorCall(
-            @NotNull ConstructorDescriptor descriptor,
-            @Nullable CalculatedClosure closure
+        @NotNull ConstructorDescriptor descriptor,
+        @Nullable CalculatedClosure closure
     ) {
         //for compilation against sources
         if (closure != null) {
@@ -303,8 +303,8 @@ public class JvmCodegenUtil {
 
     @Nullable
     public static KotlinType getPropertyDelegateType(
-            @NotNull VariableDescriptorWithAccessors descriptor,
-            @NotNull BindingContext bindingContext
+        @NotNull VariableDescriptorWithAccessors descriptor,
+        @NotNull BindingContext bindingContext
     ) {
         VariableAccessorDescriptor getter = descriptor.getGetter();
         if (getter != null) {
@@ -361,21 +361,21 @@ public class JvmCodegenUtil {
         return descriptor instanceof FunctionDescriptor &&
                descriptor.getName().equals(OperatorNameConventions.INVOKE) &&
                CollectionsKt.any(
-                       DescriptorUtils.getAllOverriddenDeclarations((FunctionDescriptor) descriptor),
-                       JvmCodegenUtil::isDeclarationOfBigArityFunctionInvoke
+                   DescriptorUtils.getAllOverriddenDeclarations((FunctionDescriptor) descriptor),
+                   JvmCodegenUtil::isDeclarationOfBigArityFunctionInvoke
                );
     }
 
     @Nullable
     public static ClassDescriptor getSuperClass(
-            @NotNull KtSuperTypeListEntry specifier,
-            @NotNull GenerationState state,
-            @NotNull BindingContext bindingContext
+        @NotNull KtSuperTypeListEntry specifier,
+        @NotNull GenerationState state,
+        @NotNull BindingContext bindingContext
     ) {
         ClassDescriptor superClass = CodegenUtil.getSuperClassBySuperTypeListEntry(specifier, bindingContext);
 
         assert superClass != null || state.getClassBuilderMode() == ClassBuilderMode.LIGHT_CLASSES
-                : "ClassDescriptor should not be null:" + specifier.getText();
+        : "ClassDescriptor should not be null:" + specifier.getText();
         return superClass;
     }
 

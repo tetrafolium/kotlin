@@ -83,8 +83,8 @@ public class CheckerTestUtil {
     private static final String DIAGNOSTIC_PARAMETER = "(?:(?:\\\\[" + SHOULD_BE_ESCAPED + "])|[^" + SHOULD_BE_ESCAPED + "])+";
     private static final String INDIVIDUAL_DIAGNOSTIC = "(\\w+;)?(\\w+:)?(\\w+)(\\(" + DIAGNOSTIC_PARAMETER + "(;\\s*" + DIAGNOSTIC_PARAMETER + ")*\\))?";
     private static final Pattern RANGE_START_OR_END_PATTERN = Pattern.compile("(<!" +
-                                                                              INDIVIDUAL_DIAGNOSTIC + "(,\\s*" +
-                                                                              INDIVIDUAL_DIAGNOSTIC + ")*!>)|(<!>)");
+            INDIVIDUAL_DIAGNOSTIC + "(,\\s*" +
+            INDIVIDUAL_DIAGNOSTIC + ")*!>)|(<!>)");
     private static final Pattern INDIVIDUAL_DIAGNOSTIC_PATTERN = Pattern.compile(INDIVIDUAL_DIAGNOSTIC);
     private static final Pattern INDIVIDUAL_PARAMETER_PATTERN = Pattern.compile(DIAGNOSTIC_PARAMETER);
 
@@ -93,29 +93,29 @@ public class CheckerTestUtil {
 
     @NotNull
     public static List<ActualDiagnostic> getDiagnosticsIncludingSyntaxErrors(
-            @NotNull BindingContext bindingContext,
-            @NotNull List<Pair<MultiTargetPlatform, BindingContext>> implementingModulesBindings,
-            @NotNull PsiElement root,
-            boolean markDynamicCalls,
-            @Nullable List<DeclarationDescriptor> dynamicCallDescriptors,
-            boolean withNewInference
+        @NotNull BindingContext bindingContext,
+        @NotNull List<Pair<MultiTargetPlatform, BindingContext>> implementingModulesBindings,
+        @NotNull PsiElement root,
+        boolean markDynamicCalls,
+        @Nullable List<DeclarationDescriptor> dynamicCallDescriptors,
+        boolean withNewInference
     ) {
         List<ActualDiagnostic> result =
-                getDiagnosticsIncludingSyntaxErrors(bindingContext, root, markDynamicCalls, dynamicCallDescriptors, null, withNewInference);
+            getDiagnosticsIncludingSyntaxErrors(bindingContext, root, markDynamicCalls, dynamicCallDescriptors, null, withNewInference);
 
         List<Pair<MultiTargetPlatform, BindingContext>> sortedBindings = CollectionsKt.sortedWith(
-                implementingModulesBindings,
-                (o1, o2) -> o1.getFirst().compareTo(o2.getFirst())
-        );
+                    implementingModulesBindings,
+                    (o1, o2) -> o1.getFirst().compareTo(o2.getFirst())
+                );
 
         for (Pair<MultiTargetPlatform, BindingContext> binding : sortedBindings) {
             MultiTargetPlatform platform = binding.getFirst();
             assert platform instanceof MultiTargetPlatform.Specific : "Implementing module must have a specific platform: " + platform;
 
             result.addAll(getDiagnosticsIncludingSyntaxErrors(
-                    binding.getSecond(), root, markDynamicCalls, dynamicCallDescriptors,
-                    ((MultiTargetPlatform.Specific) platform).getPlatform(), withNewInference
-            ));
+                              binding.getSecond(), root, markDynamicCalls, dynamicCallDescriptors,
+                              ((MultiTargetPlatform.Specific) platform).getPlatform(), withNewInference
+                          ));
         }
 
         return result;
@@ -123,12 +123,12 @@ public class CheckerTestUtil {
 
     @NotNull
     public static List<ActualDiagnostic> getDiagnosticsIncludingSyntaxErrors(
-            @NotNull BindingContext bindingContext,
-            @NotNull PsiElement root,
-            boolean markDynamicCalls,
-            @Nullable List<DeclarationDescriptor> dynamicCallDescriptors,
-            @Nullable String platform,
-            boolean withNewInference
+        @NotNull BindingContext bindingContext,
+        @NotNull PsiElement root,
+        boolean markDynamicCalls,
+        @Nullable List<DeclarationDescriptor> dynamicCallDescriptors,
+        @Nullable String platform,
+        boolean withNewInference
     ) {
         List<ActualDiagnostic> diagnostics = new ArrayList<>();
         for (Diagnostic diagnostic : bindingContext.getDiagnostics().all()) {
@@ -148,12 +148,12 @@ public class CheckerTestUtil {
     @SuppressWarnings("TestOnlyProblems")
     @NotNull
     private static List<ActualDiagnostic> getDebugInfoDiagnostics(
-            @NotNull PsiElement root,
-            @NotNull BindingContext bindingContext,
-            boolean markDynamicCalls,
-            @Nullable List<DeclarationDescriptor> dynamicCallDescriptors,
-            @Nullable String platform,
-            boolean withNewInference
+        @NotNull PsiElement root,
+        @NotNull BindingContext bindingContext,
+        boolean markDynamicCalls,
+        @Nullable List<DeclarationDescriptor> dynamicCallDescriptors,
+        @Nullable String platform,
+        boolean withNewInference
     ) {
         List<ActualDiagnostic> debugAnnotations = new ArrayList<>();
 
@@ -192,16 +192,16 @@ public class CheckerTestUtil {
         // this code is used in tests and in internal action 'copy current file as diagnostic test'
         //noinspection unchecked
         for (Pair<? extends WritableSlice<? extends KtExpression, ?>, DebugInfoDiagnosticFactory> factory : Arrays.asList(
-                TuplesKt.to(BindingContext.SMARTCAST, DebugInfoDiagnosticFactory.SMARTCAST),
-                TuplesKt.to(BindingContext.IMPLICIT_RECEIVER_SMARTCAST, DebugInfoDiagnosticFactory.IMPLICIT_RECEIVER_SMARTCAST),
-                TuplesKt.to(BindingContext.SMARTCAST_NULL, DebugInfoDiagnosticFactory.CONSTANT),
-                TuplesKt.to(BindingContext.LEAKING_THIS, DebugInfoDiagnosticFactory.LEAKING_THIS),
-                TuplesKt.to(BindingContext.IMPLICIT_EXHAUSTIVE_WHEN, DebugInfoDiagnosticFactory.IMPLICIT_EXHAUSTIVE)
-        )) {
+                    TuplesKt.to(BindingContext.SMARTCAST, DebugInfoDiagnosticFactory.SMARTCAST),
+                    TuplesKt.to(BindingContext.IMPLICIT_RECEIVER_SMARTCAST, DebugInfoDiagnosticFactory.IMPLICIT_RECEIVER_SMARTCAST),
+                    TuplesKt.to(BindingContext.SMARTCAST_NULL, DebugInfoDiagnosticFactory.CONSTANT),
+                    TuplesKt.to(BindingContext.LEAKING_THIS, DebugInfoDiagnosticFactory.LEAKING_THIS),
+                    TuplesKt.to(BindingContext.IMPLICIT_EXHAUSTIVE_WHEN, DebugInfoDiagnosticFactory.IMPLICIT_EXHAUSTIVE)
+                )) {
             for (KtExpression expression : bindingContext.getSliceContents(factory.getFirst()).keySet()) {
                 if (PsiTreeUtil.isAncestor(root, expression, false)) {
                     debugAnnotations.add(new ActualDiagnostic(new DebugInfoDiagnostic(expression, factory.getSecond()), platform,
-                                                              withNewInference));
+                                         withNewInference));
                 }
             }
         }
@@ -218,9 +218,9 @@ public class CheckerTestUtil {
     }
 
     public static Map<AbstractTestDiagnostic, TextDiagnostic> diagnosticsDiff(
-            List<DiagnosedRange> expected,
-            Collection<ActualDiagnostic> actual,
-            DiagnosticDiffCallbacks callbacks
+        List<DiagnosedRange> expected,
+        Collection<ActualDiagnostic> actual,
+        DiagnosticDiffCallbacks callbacks
     ) {
         Map<AbstractTestDiagnostic, TextDiagnostic> diagnosticToExpectedDiagnostic = new HashMap<>();
 
@@ -281,10 +281,10 @@ public class CheckerTestUtil {
     }
 
     private static void compareDiagnostics(
-            @NotNull DiagnosticDiffCallbacks callbacks,
-            @NotNull DiagnosedRange currentExpected,
-            @NotNull ActualDiagnosticDescriptor currentActual,
-            @NotNull Map<AbstractTestDiagnostic, TextDiagnostic> diagnosticToInput
+        @NotNull DiagnosticDiffCallbacks callbacks,
+        @NotNull DiagnosedRange currentExpected,
+        @NotNull ActualDiagnosticDescriptor currentActual,
+        @NotNull Map<AbstractTestDiagnostic, TextDiagnostic> diagnosticToInput
     ) {
         int expectedStart = currentExpected.getStart();
         int expectedEnd = currentExpected.getEnd();
@@ -298,12 +298,12 @@ public class CheckerTestUtil {
 
         for (TextDiagnostic expectedDiagnostic : expectedDiagnostics) {
             Map.Entry<AbstractTestDiagnostic, TextDiagnostic> actualDiagnosticEntry = CollectionsKt.firstOrNull(
-                    actualDiagnostics.entrySet(), entry -> {
-                        TextDiagnostic actualDiagnostic = entry.getValue();
-                        return expectedDiagnostic.getDescription().equals(actualDiagnostic.getDescription()) &&
-                               expectedDiagnostic.inferenceCompatibility.isCompatible(actualDiagnostic.inferenceCompatibility);
-                    }
-            );
+            actualDiagnostics.entrySet(), entry -> {
+                TextDiagnostic actualDiagnostic = entry.getValue();
+                return expectedDiagnostic.getDescription().equals(actualDiagnostic.getDescription()) &&
+                expectedDiagnostic.inferenceCompatibility.isCompatible(actualDiagnostic.inferenceCompatibility);
+            }
+                    );
 
             if (actualDiagnosticEntry != null) {
                 AbstractTestDiagnostic actualDiagnostic = actualDiagnosticEntry.getKey();
@@ -349,7 +349,7 @@ public class CheckerTestUtil {
         PsiFile file = CollectionsKt.first(actual).getFile();
         for (ActualDiagnostic actualDiagnostic : actual) {
             assert actualDiagnostic.getFile().equals(file)
-                    : "All diagnostics should come from the same file: " + actualDiagnostic.getFile() + ", " + file;
+            : "All diagnostics should come from the same file: " + actualDiagnostic.getFile() + ", " + file;
         }
     }
 
@@ -405,24 +405,24 @@ public class CheckerTestUtil {
     }
 
     public static StringBuffer addDiagnosticMarkersToText(
-            @NotNull PsiFile psiFile,
-            @NotNull Collection<ActualDiagnostic> diagnostics,
-            @NotNull Map<AbstractTestDiagnostic, TextDiagnostic> diagnosticToExpectedDiagnostic,
-            @NotNull Function<PsiFile, String> getFileText,
-            @NotNull Collection<PositionalTextDiagnostic> uncheckedDiagnostics,
-            boolean withNewInferenceDirective
+        @NotNull PsiFile psiFile,
+        @NotNull Collection<ActualDiagnostic> diagnostics,
+        @NotNull Map<AbstractTestDiagnostic, TextDiagnostic> diagnosticToExpectedDiagnostic,
+        @NotNull Function<PsiFile, String> getFileText,
+        @NotNull Collection<PositionalTextDiagnostic> uncheckedDiagnostics,
+        boolean withNewInferenceDirective
     ) {
         return addDiagnosticMarkersToText(psiFile, diagnostics, diagnosticToExpectedDiagnostic, getFileText, uncheckedDiagnostics, withNewInferenceDirective, false);
     }
 
     public static StringBuffer addDiagnosticMarkersToText(
-            @NotNull PsiFile psiFile,
-            @NotNull Collection<ActualDiagnostic> diagnostics,
-            @NotNull Map<AbstractTestDiagnostic, TextDiagnostic> diagnosticToExpectedDiagnostic,
-            @NotNull Function<PsiFile, String> getFileText,
-            @NotNull Collection<PositionalTextDiagnostic> uncheckedDiagnostics,
-            boolean withNewInferenceDirective,
-            boolean renderDiagnosticMessages
+        @NotNull PsiFile psiFile,
+        @NotNull Collection<ActualDiagnostic> diagnostics,
+        @NotNull Map<AbstractTestDiagnostic, TextDiagnostic> diagnosticToExpectedDiagnostic,
+        @NotNull Function<PsiFile, String> getFileText,
+        @NotNull Collection<PositionalTextDiagnostic> uncheckedDiagnostics,
+        boolean withNewInferenceDirective,
+        boolean renderDiagnosticMessages
     ) {
         String text = getFileText.fun(psiFile);
         StringBuffer result = new StringBuffer();
@@ -480,11 +480,11 @@ public class CheckerTestUtil {
     }
 
     private static void openDiagnosticsString(
-            StringBuffer result,
-            AbstractDiagnosticDescriptor currentDescriptor,
-            Map<AbstractTestDiagnostic, TextDiagnostic> diagnosticToExpectedDiagnostic,
-            boolean withNewInferenceDirective,
-            boolean renderDiagnosticMessages
+        StringBuffer result,
+        AbstractDiagnosticDescriptor currentDescriptor,
+        Map<AbstractTestDiagnostic, TextDiagnostic> diagnosticToExpectedDiagnostic,
+        boolean withNewInferenceDirective,
+        boolean renderDiagnosticMessages
     ) {
         result.append("<!");
         if (currentDescriptor instanceof TextDiagnosticDescriptor) {
@@ -519,8 +519,8 @@ public class CheckerTestUtil {
                         TextDiagnostic textDiagnostic = TextDiagnostic.asTextDiagnostic(diagnostic);
                         if (textDiagnostic.getParameters() != null) {
                             result.append("(")
-                                    .append(String.join(", ", textDiagnostic.getParameters()))
-                                    .append(")");
+                            .append(String.join(", ", textDiagnostic.getParameters()))
+                            .append(")");
                         }
                     }
                 }
@@ -640,18 +640,18 @@ public class CheckerTestUtil {
     }
 
     private static List<ActualDiagnosticDescriptor> getActualSortedDiagnosticDescriptors(
-            @NotNull Collection<ActualDiagnostic> diagnostics
+        @NotNull Collection<ActualDiagnostic> diagnostics
     ) {
         return CollectionsKt.filterIsInstance(
-                getSortedDiagnosticDescriptors(diagnostics, Collections.emptyList()),
-                ActualDiagnosticDescriptor.class
-        );
+                   getSortedDiagnosticDescriptors(diagnostics, Collections.emptyList()),
+                   ActualDiagnosticDescriptor.class
+               );
     }
 
     @NotNull
     private static List<AbstractDiagnosticDescriptor> getSortedDiagnosticDescriptors(
-            @NotNull Collection<ActualDiagnostic> diagnostics,
-            @NotNull Collection<PositionalTextDiagnostic> uncheckedDiagnostics
+        @NotNull Collection<ActualDiagnostic> diagnostics,
+        @NotNull Collection<PositionalTextDiagnostic> uncheckedDiagnostics
     ) {
         List<ActualDiagnostic> validDiagnostics = CollectionsKt.filter(diagnostics, actualDiagnostic -> actualDiagnostic.diagnostic.isValid());
         List<AbstractDiagnosticDescriptor> diagnosticDescriptors = groupDiagnosticsByTextRange(validDiagnostics, uncheckedDiagnostics);
@@ -661,8 +661,8 @@ public class CheckerTestUtil {
 
     @NotNull
     private static List<AbstractDiagnosticDescriptor> groupDiagnosticsByTextRange(
-            @NotNull Collection<ActualDiagnostic> diagnostics,
-            @NotNull Collection<PositionalTextDiagnostic> uncheckedDiagnostics
+        @NotNull Collection<ActualDiagnostic> diagnostics,
+        @NotNull Collection<PositionalTextDiagnostic> uncheckedDiagnostics
     ) {
         LinkedListMultimap<TextRange, AbstractTestDiagnostic> diagnosticsGroupedByRanges = LinkedListMultimap.create();
         for (ActualDiagnostic actualDiagnostic : diagnostics) {
@@ -682,8 +682,8 @@ public class CheckerTestUtil {
 
             Comparator<AbstractTestDiagnostic> comparator = Comparator.comparing(AbstractTestDiagnostic::getInferenceCompatibility);
             boolean needSortingByName = CollectionsKt.any(
-                    abstractDiagnostics,
-                    diagnostic -> diagnostic.getInferenceCompatibility() != TextDiagnostic.InferenceCompatibility.ALL
+                abstractDiagnostics,
+                diagnostic -> diagnostic.getInferenceCompatibility() != TextDiagnostic.InferenceCompatibility.ALL
             );
             if (needSortingByName) {
                 comparator = comparator.thenComparing(Comparator.comparing(AbstractTestDiagnostic::getName));
@@ -916,10 +916,10 @@ public class CheckerTestUtil {
         private InferenceCompatibility inferenceCompatibility;
 
         public TextDiagnostic(
-                @NotNull String name,
-                @Nullable String platform,
-                @Nullable List<String> parameters,
-                @Nullable InferenceCompatibility inference
+            @NotNull String name,
+            @Nullable String platform,
+            @Nullable List<String> parameters,
+            @Nullable InferenceCompatibility inference
         ) {
             this.name = name;
             this.platform = platform;

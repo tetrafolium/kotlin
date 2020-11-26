@@ -121,7 +121,7 @@ public class IntrinsicMethods {
             declareIntrinsicFunction(typeFqName, "toString", 0, TO_STRING);
 
             intrinsicsMap.registerIntrinsic(
-                    BUILT_INS_PACKAGE_FQ_NAME, null, StringsKt.decapitalize(type.getArrayTypeName().asString()) + "Of", 1, new ArrayOf()
+                BUILT_INS_PACKAGE_FQ_NAME, null, StringsKt.decapitalize(type.getArrayTypeName().asString()) + "Of", 1, new ArrayOf()
             );
         }
 
@@ -191,19 +191,19 @@ public class IntrinsicMethods {
     }
 
     private void declareIntrinsicFunction(
-            @NotNull FqName classFqName,
-            @NotNull String methodName,
-            int arity,
-            @NotNull IntrinsicMethod implementation
+        @NotNull FqName classFqName,
+        @NotNull String methodName,
+        int arity,
+        @NotNull IntrinsicMethod implementation
     ) {
         intrinsicsMap.registerIntrinsic(classFqName, null, methodName, arity, implementation);
     }
 
     private void declareIntrinsicFunction(
-            @NotNull FqNameUnsafe classFqName,
-            @NotNull String methodName,
-            int arity,
-            @NotNull IntrinsicMethod implementation
+        @NotNull FqNameUnsafe classFqName,
+        @NotNull String methodName,
+        int arity,
+        @NotNull IntrinsicMethod implementation
     ) {
         intrinsicsMap.registerIntrinsic(classFqName.toSafe(), null, methodName, arity, implementation);
     }

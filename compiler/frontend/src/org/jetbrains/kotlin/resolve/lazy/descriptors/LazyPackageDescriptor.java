@@ -31,10 +31,10 @@ public class LazyPackageDescriptor extends PackageFragmentDescriptorImpl impleme
     private final PackageMemberDeclarationProvider declarationProvider;
 
     public LazyPackageDescriptor(
-            @NotNull ModuleDescriptor module,
-            @NotNull FqName fqName,
-            @NotNull ResolveSession resolveSession,
-            @NotNull PackageMemberDeclarationProvider declarationProvider
+        @NotNull ModuleDescriptor module,
+        @NotNull FqName fqName,
+        @NotNull ResolveSession resolveSession,
+        @NotNull PackageMemberDeclarationProvider declarationProvider
     ) {
         super(module, fqName);
         this.declarationProvider = declarationProvider;

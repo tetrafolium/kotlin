@@ -61,7 +61,7 @@ public class DiagnosticUtils {
             return "unknown location";
         }
     }
-    
+
     @NotNull
     public static PsiFile getContainingFile(@NotNull ASTNode node) {
         PsiElement closestPsiElement = PsiUtilsKt.closestPsiElement(node);

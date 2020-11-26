@@ -50,11 +50,11 @@ public class PackagePartCodegen extends MemberCodegen<KtFile> {
     private final Type packagePartType;
 
     public PackagePartCodegen(
-            @NotNull ClassBuilder v,
-            @NotNull KtFile file,
-            @NotNull Type packagePartType,
-            @NotNull FieldOwnerContext context,
-            @NotNull GenerationState state
+        @NotNull ClassBuilder v,
+        @NotNull KtFile file,
+        @NotNull Type packagePartType,
+        @NotNull FieldOwnerContext context,
+        @NotNull GenerationState state
     ) {
         super(state, null, context, file, v);
         this.packagePartType = packagePartType;
@@ -68,7 +68,7 @@ public class PackagePartCodegen extends MemberCodegen<KtFile> {
                       null,
                       "java/lang/Object",
                       ArrayUtil.EMPTY_STRING_ARRAY
-        );
+                     );
         v.visitSource(element.getName(), null);
 
         generatePropertyMetadataArrayFieldIfNeeded(packagePartType);
@@ -119,8 +119,8 @@ public class PackagePartCodegen extends MemberCodegen<KtFile> {
 
     @NotNull
     protected static Pair<DescriptorSerializer, ProtoBuf.Package> serializePackagePartMembers(
-            @NotNull MemberCodegen<? extends KtFile> codegen,
-            @NotNull Type packagePartType
+        @NotNull MemberCodegen<? extends KtFile> codegen,
+        @NotNull Type packagePartType
     ) {
         BindingContext bindingContext = codegen.bindingContext;
         List<KtDeclaration> allDeclarations = CodegenUtil.getDeclarationsToGenerate(codegen.element, bindingContext);

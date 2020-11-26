@@ -28,8 +28,8 @@ public class JvmMethodSignature {
     private final List<JvmMethodParameterSignature> valueParameters;
 
     public JvmMethodSignature(
-            @NotNull Method asmMethod,
-            @NotNull List<JvmMethodParameterSignature> valueParameters
+        @NotNull Method asmMethod,
+        @NotNull List<JvmMethodParameterSignature> valueParameters
     ) {
         this.asmMethod = asmMethod;
         this.valueParameters = valueParameters;

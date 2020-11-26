@@ -37,30 +37,30 @@ public class JavaResolverUtils {
     }
 
     public static Map<TypeParameterDescriptor, TypeParameterDescriptorImpl> recreateTypeParametersAndReturnMapping(
-            @NotNull List<TypeParameterDescriptor> originalParameters,
-            @Nullable DeclarationDescriptor newOwner
+        @NotNull List<TypeParameterDescriptor> originalParameters,
+        @Nullable DeclarationDescriptor newOwner
     ) {
         // LinkedHashMap to save the order of type parameters
         Map<TypeParameterDescriptor, TypeParameterDescriptorImpl> result = new LinkedHashMap<>();
         for (TypeParameterDescriptor typeParameter : originalParameters) {
             result.put(typeParameter,
                        TypeParameterDescriptorImpl.createForFurtherModification(
-                               newOwner == null ? typeParameter.getContainingDeclaration() : newOwner,
-                               typeParameter.getAnnotations(),
-                               typeParameter.isReified(),
-                               typeParameter.getVariance(),
-                               typeParameter.getName(),
-                               typeParameter.getIndex(),
-                               SourceElement.NO_SOURCE
+                           newOwner == null ? typeParameter.getContainingDeclaration() : newOwner,
+                           typeParameter.getAnnotations(),
+                           typeParameter.isReified(),
+                           typeParameter.getVariance(),
+                           typeParameter.getName(),
+                           typeParameter.getIndex(),
+                           SourceElement.NO_SOURCE
                        )
-            );
+                      );
         }
         return result;
     }
 
     @NotNull
     public static TypeSubstitutor createSubstitutorForTypeParameters(
-            @NotNull Map<TypeParameterDescriptor, TypeParameterDescriptorImpl> originalToAltTypeParameters
+        @NotNull Map<TypeParameterDescriptor, TypeParameterDescriptorImpl> originalToAltTypeParameters
     ) {
         Map<TypeConstructor, TypeProjection> typeSubstitutionContext = new HashMap<>();
         for (Map.Entry<TypeParameterDescriptor, TypeParameterDescriptorImpl> originalToAltTypeParameter : originalToAltTypeParameters.entrySet()) {

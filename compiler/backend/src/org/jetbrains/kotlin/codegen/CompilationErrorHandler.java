@@ -21,8 +21,8 @@ import org.jetbrains.kotlin.util.ExceptionUtilKt;
 public interface CompilationErrorHandler {
     CompilationErrorHandler THROW_EXCEPTION = (exception, fileUrl) -> {
         throw new IllegalStateException(
-                ExceptionUtilKt.getExceptionMessage("Backend", "Exception during code generation", exception, fileUrl),
-                exception
+            ExceptionUtilKt.getExceptionMessage("Backend", "Exception during code generation", exception, fileUrl),
+            exception
         );
     };
 

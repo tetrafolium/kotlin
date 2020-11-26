@@ -91,9 +91,9 @@ public class CommonSupertypes {
 
         if (!hasFlexible) return commonSuperTypeForInflexible(upper, recursionDepth, maxDepth);
         return KotlinTypeFactory.flexibleType( // mixing different factories is not supported
-                commonSuperTypeForInflexible(lower, recursionDepth, maxDepth),
-                commonSuperTypeForInflexible(upper, recursionDepth, maxDepth)
-        );
+                   commonSuperTypeForInflexible(lower, recursionDepth, maxDepth),
+                   commonSuperTypeForInflexible(upper, recursionDepth, maxDepth)
+               );
     }
 
     @NotNull
@@ -142,15 +142,15 @@ public class CommonSupertypes {
             StringBuilder info = new StringBuilder();
             for (SimpleType type : types) {
                 String superTypes = TypeUtils.getAllSupertypes(type).stream()
-                        .map(t -> "-- " + renderTypeFully(t))
-                        .collect(Collectors.joining("\n"));
+                                    .map(t -> "-- " + renderTypeFully(t))
+                                    .collect(Collectors.joining("\n"));
 
                 info
-                        .append("Info about ").append(renderTypeFully(type)).append(": ").append('\n')
-                        .append("- Supertypes: ").append('\n')
-                        .append(superTypes).append('\n')
-                        .append("- DeclarationDescriptor class: ").append(classOfDeclarationDescriptor(type)).append('\n')
-                        .append('\n');
+                .append("Info about ").append(renderTypeFully(type)).append(": ").append('\n')
+                .append("- Supertypes: ").append('\n')
+                .append(superTypes).append('\n')
+                .append("- DeclarationDescriptor class: ").append(classOfDeclarationDescriptor(type)).append('\n')
+                .append('\n');
             }
             throw new IllegalStateException("[Report version 3] There is no common supertype for: " + types + " \n" + info.toString());
         }
@@ -277,9 +277,9 @@ public class CommonSupertypes {
 
     @NotNull
     private static TypeProjection computeSupertypeProjection(
-            @NotNull TypeParameterDescriptor parameterDescriptor,
-            @NotNull Set<TypeProjection> typeProjections,
-            int recursionDepth, int maxDepth
+        @NotNull TypeParameterDescriptor parameterDescriptor,
+        @NotNull Set<TypeProjection> typeProjections,
+        int recursionDepth, int maxDepth
     ) {
         TypeProjection singleBestProjection = FlexibleTypesKt.singleBestRepresentative(typeProjections);
         if (singleBestProjection != null) {
@@ -297,15 +297,15 @@ public class CommonSupertypes {
 
         Variance variance = parameterDescriptor.getVariance();
         switch (variance) {
-            case INVARIANT:
-                // Nothing
-                break;
-            case IN_VARIANCE:
-                outs = null;
-                break;
-            case OUT_VARIANCE:
-                ins = null;
-                break;
+        case INVARIANT:
+            // Nothing
+            break;
+        case IN_VARIANCE:
+            outs = null;
+            break;
+        case OUT_VARIANCE:
+            ins = null;
+            break;
         }
 
         for (TypeProjection projection : typeProjections) {
@@ -363,40 +363,40 @@ public class CommonSupertypes {
 
     @NotNull
     public static List<TypeConstructor> topologicallySortSuperclassesAndRecordAllInstances(
-            @NotNull SimpleType type,
-            @NotNull Map<TypeConstructor, Set<SimpleType>> constructorToAllInstances,
-            @NotNull Set<TypeConstructor> visited
+        @NotNull SimpleType type,
+        @NotNull Map<TypeConstructor, Set<SimpleType>> constructorToAllInstances,
+        @NotNull Set<TypeConstructor> visited
     ) {
         return DFS.dfs(
-                Collections.singletonList(type),
-                current -> {
-                    TypeSubstitutor substitutor = TypeSubstitutor.create(current);
-                    Collection<KotlinType> supertypes = current.getConstructor().getSupertypes();
-                    List<SimpleType> result = new ArrayList<>(supertypes.size());
-                    for (KotlinType supertype : supertypes) {
-                        if (visited.contains(supertype.getConstructor())) {
-                            continue;
-                        }
-                        result.add(FlexibleTypesKt.lowerIfFlexible(substitutor.safeSubstitute(supertype, Variance.INVARIANT)));
-                    }
-                    return result;
-                },
-                current -> visited.add(current.getConstructor()),
-                new DFS.NodeHandlerWithListResult<SimpleType, TypeConstructor>() {
-                    @Override
-                    public boolean beforeChildren(SimpleType current) {
-                        Set<SimpleType> instances =
-                                constructorToAllInstances.computeIfAbsent(current.getConstructor(), k -> new LinkedHashSet<>());
-                        instances.add(current);
-
-                        return true;
-                    }
-
-                    @Override
-                    public void afterChildren(SimpleType current) {
-                        result.addFirst(current.getConstructor());
-                    }
+                   Collections.singletonList(type),
+        current -> {
+            TypeSubstitutor substitutor = TypeSubstitutor.create(current);
+            Collection<KotlinType> supertypes = current.getConstructor().getSupertypes();
+            List<SimpleType> result = new ArrayList<>(supertypes.size());
+            for (KotlinType supertype : supertypes) {
+                if (visited.contains(supertype.getConstructor())) {
+                    continue;
                 }
-        );
+                result.add(FlexibleTypesKt.lowerIfFlexible(substitutor.safeSubstitute(supertype, Variance.INVARIANT)));
+            }
+            return result;
+        },
+        current -> visited.add(current.getConstructor()),
+        new DFS.NodeHandlerWithListResult<SimpleType, TypeConstructor>() {
+            @Override
+            public boolean beforeChildren(SimpleType current) {
+                Set<SimpleType> instances =
+                    constructorToAllInstances.computeIfAbsent(current.getConstructor(), k -> new LinkedHashSet<>());
+                instances.add(current);
+
+                return true;
+            }
+
+            @Override
+            public void afterChildren(SimpleType current) {
+                result.addFirst(current.getConstructor());
+            }
+        }
+               );
     }
 }

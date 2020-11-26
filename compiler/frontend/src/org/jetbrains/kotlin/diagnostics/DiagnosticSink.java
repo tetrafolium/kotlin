@@ -43,7 +43,7 @@ public interface DiagnosticSink {
                 List<TextRange> textRanges = diagnostic.getTextRanges();
                 String diagnosticText = DefaultErrorMessages.render(diagnostic);
                 throw new IllegalStateException(diagnostic.getFactory().getName() + ": " + diagnosticText + " " + PsiDiagnosticUtils
-                        .atLocation(psiFile, textRanges.get(0)));
+                                                .atLocation(psiFile, textRanges.get(0)));
             }
         }
 

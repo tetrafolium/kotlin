@@ -63,9 +63,9 @@ public class ValueArgumentsToParametersMapper {
         }
     }
     public static <D extends CallableDescriptor> Status mapValueArgumentsToParameters(
-            @NotNull Call call,
-            @NotNull TracingStrategy tracing,
-            @NotNull MutableResolvedCall<D> candidateCall
+        @NotNull Call call,
+        @NotNull TracingStrategy tracing,
+        @NotNull MutableResolvedCall<D> candidateCall
     ) {
         //return new ValueArgumentsToParametersMapper().process(call, tracing, candidateCall, unmappedArguments);
         Processor<D> processor = new Processor<>(call, candidateCall, tracing);
@@ -179,21 +179,21 @@ public class ValueArgumentsToParametersMapper {
                 ReservedCheckingKt.checkReservedYield(nameReference, candidateCall.getTrace());
                 if (nameReference != null) {
                     if (candidate instanceof MemberDescriptor && ((MemberDescriptor) candidate).isExpect() &&
-                        candidate.getContainingDeclaration() instanceof ClassDescriptor) {
+                            candidate.getContainingDeclaration() instanceof ClassDescriptor) {
                         // We do not allow named arguments for members of expected classes until we're able to use both
                         // expected and actual definitions when compiling platform code
                         report(NAMED_ARGUMENTS_NOT_ALLOWED.on(nameReference, EXPECTED_CLASS_MEMBER));
                     }
                     else if (!candidate.hasStableParameterNames()) {
                         report(NAMED_ARGUMENTS_NOT_ALLOWED.on(
-                                nameReference,
-                                candidate instanceof FunctionInvokeDescriptor ? INVOKE_ON_FUNCTION_TYPE : NON_KOTLIN_FUNCTION
-                        ));
+                                   nameReference,
+                                   candidate instanceof FunctionInvokeDescriptor ? INVOKE_ON_FUNCTION_TYPE : NON_KOTLIN_FUNCTION
+                               ));
                     }
                 }
 
                 if (candidate.hasStableParameterNames() && nameReference != null  &&
-                    candidate instanceof CallableMemberDescriptor && ((CallableMemberDescriptor)candidate).getKind() == CallableMemberDescriptor.Kind.FAKE_OVERRIDE) {
+                        candidate instanceof CallableMemberDescriptor && ((CallableMemberDescriptor)candidate).getKind() == CallableMemberDescriptor.Kind.FAKE_OVERRIDE) {
                     if (valueParameterDescriptor == null) {
                         valueParameterDescriptor = getParameterByNameInOverriddenMethods(argumentName.getAsName());
                     }

@@ -41,9 +41,9 @@ public class AnalyzerExtensions {
     private LanguageVersionSettings languageVersionSettings;
 
     public AnalyzerExtensions(
-            @NotNull BindingTrace trace,
-            @NotNull Iterable<ReasonableInlineRule> reasonableInlineRules,
-            @NotNull LanguageVersionSettings languageVersionSettings
+        @NotNull BindingTrace trace,
+        @NotNull Iterable<ReasonableInlineRule> reasonableInlineRules,
+        @NotNull LanguageVersionSettings languageVersionSettings
     ) {
         this.trace = trace;
         this.reasonableInlineRules = reasonableInlineRules;

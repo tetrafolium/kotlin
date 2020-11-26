@@ -40,19 +40,19 @@ public class SignaturePropagatorImpl implements SignaturePropagator {
     @Override
     @NotNull
     public PropagatedSignature resolvePropagatedSignature(
-            @NotNull JavaMethod method,
-            @NotNull ClassDescriptor owner,
-            @NotNull KotlinType returnType,
-            @Nullable KotlinType receiverType,
-            @NotNull List<ValueParameterDescriptor> valueParameters,
-            @NotNull List<TypeParameterDescriptor> typeParameters
+        @NotNull JavaMethod method,
+        @NotNull ClassDescriptor owner,
+        @NotNull KotlinType returnType,
+        @Nullable KotlinType receiverType,
+        @NotNull List<ValueParameterDescriptor> valueParameters,
+        @NotNull List<TypeParameterDescriptor> typeParameters
     ) {
         SignaturesPropagationData data =
-                new SignaturesPropagationData(owner, returnType, receiverType, valueParameters, typeParameters, method);
+            new SignaturesPropagationData(owner, returnType, receiverType, valueParameters, typeParameters, method);
         return new PropagatedSignature(
-                returnType, data.getModifiedReceiverType(), data.getModifiedValueParameters(),
-                typeParameters, data.getSignatureErrors(), data.getModifiedHasStableParameterNames()
-        );
+                   returnType, data.getModifiedReceiverType(), data.getModifiedValueParameters(),
+                   typeParameters, data.getSignatureErrors(), data.getModifiedHasStableParameterNames()
+               );
     }
 
     @Override

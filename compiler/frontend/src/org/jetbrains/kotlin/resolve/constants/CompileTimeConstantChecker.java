@@ -41,7 +41,7 @@ import static org.jetbrains.kotlin.diagnostics.Errors.*;
 
 public class CompileTimeConstantChecker {
     private static final Set<DiagnosticFactory<?>> errorsThatDependOnExpectedType =
-            Sets.newHashSet(CONSTANT_EXPECTED_TYPE_MISMATCH, NULL_FOR_NONNULL_TYPE);
+        Sets.newHashSet(CONSTANT_EXPECTED_TYPE_MISMATCH, NULL_FOR_NONNULL_TYPE);
 
     private final ResolutionContext<?> context;
     private final ModuleDescriptor module;
@@ -50,9 +50,9 @@ public class CompileTimeConstantChecker {
     private final BindingTrace trace;
 
     public CompileTimeConstantChecker(
-            @NotNull ResolutionContext<?> context,
-            @NotNull ModuleDescriptor module,
-            boolean checkOnlyErrorsThatDependOnExpectedType
+        @NotNull ResolutionContext<?> context,
+        @NotNull ModuleDescriptor module,
+        boolean checkOnlyErrorsThatDependOnExpectedType
     ) {
         this.context = context;
         this.module = module;
@@ -63,9 +63,9 @@ public class CompileTimeConstantChecker {
 
     // return true if there is an error
     public boolean checkConstantExpressionType(
-            @Nullable ConstantValue<?> compileTimeConstant,
-            @NotNull KtConstantExpression expression,
-            @NotNull KotlinType expectedType
+        @Nullable ConstantValue<?> compileTimeConstant,
+        @NotNull KtConstantExpression expression,
+        @NotNull KotlinType expectedType
     ) {
         IElementType elementType = expression.getNode().getElementType();
 
@@ -88,9 +88,9 @@ public class CompileTimeConstantChecker {
     }
 
     private boolean checkIntegerValue(
-            @Nullable ConstantValue<?> value,
-            @NotNull KotlinType expectedType,
-            @NotNull KtConstantExpression expression
+        @Nullable ConstantValue<?> value,
+        @NotNull KotlinType expectedType,
+        @NotNull KtConstantExpression expression
     ) {
         if (value == null) {
             return reportError(INT_LITERAL_OUT_OF_RANGE.on(expression));
@@ -110,9 +110,9 @@ public class CompileTimeConstantChecker {
     }
 
     private boolean checkFloatValue(
-            @Nullable ConstantValue<?> value,
-            @NotNull KotlinType expectedType,
-            @NotNull KtConstantExpression expression
+        @Nullable ConstantValue<?> value,
+        @NotNull KotlinType expectedType,
+        @NotNull KtConstantExpression expression
     ) {
         if (value == null) {
             return reportError(FLOAT_LITERAL_OUT_OF_RANGE.on(expression));
@@ -127,11 +127,11 @@ public class CompileTimeConstantChecker {
     }
 
     private boolean checkBooleanValue(
-            @NotNull KotlinType expectedType,
-            @NotNull KtConstantExpression expression
+        @NotNull KotlinType expectedType,
+        @NotNull KtConstantExpression expression
     ) {
         if (!noExpectedTypeOrError(expectedType)
-            && !KotlinTypeChecker.DEFAULT.isSubtypeOf(builtIns.getBooleanType(), expectedType)) {
+                && !KotlinTypeChecker.DEFAULT.isSubtypeOf(builtIns.getBooleanType(), expectedType)) {
             return reportConstantExpectedTypeMismatch(expression, "boolean", expectedType, builtIns.getBooleanType());
         }
         return false;
@@ -139,7 +139,7 @@ public class CompileTimeConstantChecker {
 
     private boolean checkCharValue(ConstantValue<?> constant, KotlinType expectedType, KtConstantExpression expression) {
         if (!noExpectedTypeOrError(expectedType)
-            && !KotlinTypeChecker.DEFAULT.isSubtypeOf(builtIns.getCharType(), expectedType)) {
+                && !KotlinTypeChecker.DEFAULT.isSubtypeOf(builtIns.getCharType(), expectedType)) {
             return reportConstantExpectedTypeMismatch(expression, "character", expectedType, builtIns.getCharType());
         }
 
@@ -194,27 +194,27 @@ public class CompileTimeConstantChecker {
         // Escape
         String escape = text.substring(1); // strip the slash
         switch (escape.length()) {
-            case 0:
-                // bare slash
+        case 0:
+            // bare slash
+            return illegalEscape(expression);
+        case 1:
+            // one-char escape
+            Character escaped = translateEscape(escape.charAt(0));
+            if (escaped == null) {
                 return illegalEscape(expression);
-            case 1:
-                // one-char escape
-                Character escaped = translateEscape(escape.charAt(0));
-                if (escaped == null) {
-                    return illegalEscape(expression);
+            }
+            return new CharacterWithDiagnostic(escaped);
+        case 5:
+            // unicode escape
+            if (escape.charAt(0) == 'u') {
+                try {
+                    Integer intValue = Integer.valueOf(escape.substring(1), 16);
+                    return new CharacterWithDiagnostic((char) intValue.intValue());
+                } catch (NumberFormatException e) {
+                    // Will be reported below
                 }
-                return new CharacterWithDiagnostic(escaped);
-            case 5:
-                // unicode escape
-                if (escape.charAt(0) == 'u') {
-                    try {
-                        Integer intValue = Integer.valueOf(escape.substring(1), 16);
-                        return new CharacterWithDiagnostic((char) intValue.intValue());
-                    } catch (NumberFormatException e) {
-                        // Will be reported below
-                    }
-                }
-                break;
+            }
+            break;
         }
         return illegalEscape(expression);
     }
@@ -260,22 +260,22 @@ public class CompileTimeConstantChecker {
     @Nullable
     private static Character translateEscape(char c) {
         switch (c) {
-            case 't':
-                return '\t';
-            case 'b':
-                return '\b';
-            case 'n':
-                return '\n';
-            case 'r':
-                return '\r';
-            case '\'':
-                return '\'';
-            case '\"':
-                return '\"';
-            case '\\':
-                return '\\';
-            case '$':
-                return '$';
+        case 't':
+            return '\t';
+        case 'b':
+            return '\b';
+        case 'n':
+            return '\n';
+        case 'r':
+            return '\r';
+        case '\'':
+            return '\'';
+        case '\"':
+            return '\"';
+        case '\\':
+            return '\\';
+        case '$':
+            return '$';
         }
         return null;
     }
@@ -285,10 +285,10 @@ public class CompileTimeConstantChecker {
     }
 
     private boolean reportConstantExpectedTypeMismatch(
-            @NotNull KtConstantExpression expression,
-            @NotNull String typeName,
-            @NotNull KotlinType expectedType,
-            @Nullable KotlinType expressionType
+        @NotNull KtConstantExpression expression,
+        @NotNull String typeName,
+        @NotNull KotlinType expectedType,
+        @Nullable KotlinType expressionType
     ) {
         if (DiagnosticUtilsKt.reportTypeMismatchDueToTypeProjection(context, expression, expectedType, expressionType)) return true;
 

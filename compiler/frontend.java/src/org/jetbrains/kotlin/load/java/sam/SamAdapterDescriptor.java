@@ -21,5 +21,5 @@ import org.jetbrains.kotlin.descriptors.synthetic.SyntheticMemberDescriptor;
 import org.jetbrains.kotlin.load.java.descriptors.JavaCallableMemberDescriptor;
 
 public interface SamAdapterDescriptor<D extends FunctionDescriptor> extends FunctionDescriptor, JavaCallableMemberDescriptor,
-                                                                            SyntheticMemberDescriptor<D> {
+    SyntheticMemberDescriptor<D> {
 }

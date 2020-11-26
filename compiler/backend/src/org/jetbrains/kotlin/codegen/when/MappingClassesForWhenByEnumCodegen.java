@@ -45,13 +45,13 @@ public class MappingClassesForWhenByEnumCodegen {
     public void generate(@NotNull List<WhenByEnumsMapping> mappings, @NotNull Type mappingsClass, @NotNull KtFile srcFile) {
         ClassBuilder cb = state.getFactory().newVisitor(JvmDeclarationOrigin.NO_ORIGIN, mappingsClass, srcFile);
         cb.defineClass(
-                srcFile,
-                state.getClassFileVersion(),
-                ACC_PUBLIC | ACC_FINAL | ACC_SUPER | ACC_SYNTHETIC,
-                mappingsClass.getInternalName(),
-                null,
-                OBJECT_TYPE.getInternalName(),
-                ArrayUtil.EMPTY_STRING_ARRAY
+            srcFile,
+            state.getClassFileVersion(),
+            ACC_PUBLIC | ACC_FINAL | ACC_SUPER | ACC_SYNTHETIC,
+            mappingsClass.getInternalName(),
+            null,
+            OBJECT_TYPE.getInternalName(),
+            ArrayUtil.EMPTY_STRING_ARRAY
         );
 
         generateFields(cb, mappings);
@@ -65,20 +65,20 @@ public class MappingClassesForWhenByEnumCodegen {
     private static void generateFields(@NotNull ClassBuilder cb, @NotNull List<WhenByEnumsMapping> mappings) {
         for (WhenByEnumsMapping mapping : mappings) {
             cb.newField(
-                    JvmDeclarationOrigin.NO_ORIGIN,
-                    ACC_STATIC | ACC_PUBLIC | ACC_FINAL | ACC_SYNTHETIC,
-                    mapping.getFieldName(),
-                    MAPPINGS_FIELD_DESCRIPTOR,
-                    null, null
+                JvmDeclarationOrigin.NO_ORIGIN,
+                ACC_STATIC | ACC_PUBLIC | ACC_FINAL | ACC_SYNTHETIC,
+                mapping.getFieldName(),
+                MAPPINGS_FIELD_DESCRIPTOR,
+                null, null
             );
         }
     }
 
     private void generateInitialization(@NotNull ClassBuilder cb, @NotNull List<WhenByEnumsMapping> mappings) {
         MethodVisitor mv = cb.newMethod(
-                JvmDeclarationOrigin.NO_ORIGIN,
-                ACC_STATIC | ACC_SYNTHETIC, "<clinit>", "()V", null, ArrayUtil.EMPTY_STRING_ARRAY
-        );
+                               JvmDeclarationOrigin.NO_ORIGIN,
+                               ACC_STATIC | ACC_SYNTHETIC, "<clinit>", "()V", null, ArrayUtil.EMPTY_STRING_ARRAY
+                           );
 
         mv.visitCode();
 
@@ -95,9 +95,9 @@ public class MappingClassesForWhenByEnumCodegen {
     }
 
     private void generateInitializationForMapping(
-            @NotNull ClassBuilder cb,
-            @NotNull InstructionAdapter v,
-            @NotNull WhenByEnumsMapping mapping
+        @NotNull ClassBuilder cb,
+        @NotNull InstructionAdapter v,
+        @NotNull WhenByEnumsMapping mapping
     ) {
         Type enumType = state.getTypeMapper().mapClass(mapping.getEnumClassDescriptor());
 

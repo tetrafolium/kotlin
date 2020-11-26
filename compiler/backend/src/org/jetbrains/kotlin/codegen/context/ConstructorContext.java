@@ -33,11 +33,11 @@ public class ConstructorContext extends MethodContext {
     private final KotlinTypeMapper kotlinTypeMapper;
 
     public ConstructorContext(
-            @NotNull ConstructorDescriptor contextDescriptor,
-            @NotNull OwnerKind kind,
-            @NotNull CodegenContext parent,
-            @Nullable MutableClosure closure,
-            @NotNull KotlinTypeMapper kotlinTypeMapper
+        @NotNull ConstructorDescriptor contextDescriptor,
+        @NotNull OwnerKind kind,
+        @NotNull CodegenContext parent,
+        @Nullable MutableClosure closure,
+        @NotNull KotlinTypeMapper kotlinTypeMapper
     ) {
         super(contextDescriptor, kind, parent, closure, false);
         this.kotlinTypeMapper = kotlinTypeMapper;

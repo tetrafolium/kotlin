@@ -149,14 +149,14 @@ public class ResolveSession implements KotlinCodeAnalyzer, LazyClassContext {
     // Only calls from injectors expected
     @Deprecated
     public ResolveSession(
-            @NotNull Project project,
-            @NotNull GlobalContext globalContext,
-            @NotNull ModuleDescriptor rootDescriptor,
-            @NotNull DeclarationProviderFactory declarationProviderFactory,
-            @NotNull BindingTrace delegationTrace
+        @NotNull Project project,
+        @NotNull GlobalContext globalContext,
+        @NotNull ModuleDescriptor rootDescriptor,
+        @NotNull DeclarationProviderFactory declarationProviderFactory,
+        @NotNull BindingTrace delegationTrace
     ) {
         LockBasedLazyResolveStorageManager lockBasedLazyResolveStorageManager =
-                new LockBasedLazyResolveStorageManager(globalContext.getStorageManager());
+            new LockBasedLazyResolveStorageManager(globalContext.getStorageManager());
 
         this.storageManager = lockBasedLazyResolveStorageManager;
         this.exceptionTracker = globalContext.getExceptionTracker();
@@ -177,7 +177,7 @@ public class ResolveSession implements KotlinCodeAnalyzer, LazyClassContext {
             @NotNull
             @Override
             public Collection<FqName> getSubPackagesOf(
-                    @NotNull FqName fqName, @NotNull Function1<? super Name, Boolean> nameFilter
+                @NotNull FqName fqName, @NotNull Function1<? super Name, Boolean> nameFilter
             ) {
                 LazyPackageDescriptor packageDescriptor = getPackageFragment(fqName);
                 if (packageDescriptor == null) {
@@ -197,7 +197,7 @@ public class ResolveSession implements KotlinCodeAnalyzer, LazyClassContext {
     private LazyAnnotations createAnnotations(KtFile file, List<KtAnnotationEntry> annotationEntries) {
         LexicalScope scope = fileScopeProvider.getFileResolutionScope(file);
         LazyAnnotationsContextImpl lazyAnnotationContext =
-                new LazyAnnotationsContextImpl(annotationResolver, storageManager, trace, scope);
+            new LazyAnnotationsContextImpl(annotationResolver, storageManager, trace, scope);
         return new LazyAnnotations(lazyAnnotationContext, annotationEntries);
     }
 
@@ -216,9 +216,9 @@ public class ResolveSession implements KotlinCodeAnalyzer, LazyClassContext {
         }
 
         return packages.computeIfAbsent(
-                fqName,
-                () -> new LazyPackageDescriptor(module, fqName, this, provider)
-        );
+                   fqName,
+                   () -> new LazyPackageDescriptor(module, fqName, this, provider)
+               );
     }
 
 
@@ -262,27 +262,27 @@ public class ResolveSession implements KotlinCodeAnalyzer, LazyClassContext {
         Collection<ClassifierDescriptor> result = new SmartList<>();
 
         result.addAll(ContainerUtil.mapNotNull(
-                provider.getClassOrObjectDeclarations(fqName.shortName()),
-                classLikeInfo -> {
-                    if (classLikeInfo instanceof KtClassOrObjectInfo) {
-                        //noinspection RedundantCast
-                        return getClassDescriptor(((KtClassOrObjectInfo) classLikeInfo).getCorrespondingClassOrObject(), location);
-                    }
-                    else if (classLikeInfo instanceof KtScriptInfo) {
-                        return getScriptDescriptor(((KtScriptInfo) classLikeInfo).getScript());
-                    }
-                    else {
-                        throw new IllegalStateException(
-                                "Unexpected " + classLikeInfo + " of type " + classLikeInfo.getClass().getName()
-                        );
-                    }
-                }
-        ));
+                          provider.getClassOrObjectDeclarations(fqName.shortName()),
+        classLikeInfo -> {
+            if (classLikeInfo instanceof KtClassOrObjectInfo) {
+                //noinspection RedundantCast
+                return getClassDescriptor(((KtClassOrObjectInfo) classLikeInfo).getCorrespondingClassOrObject(), location);
+            }
+            else if (classLikeInfo instanceof KtScriptInfo) {
+                return getScriptDescriptor(((KtScriptInfo) classLikeInfo).getScript());
+            }
+            else {
+                throw new IllegalStateException(
+                    "Unexpected " + classLikeInfo + " of type " + classLikeInfo.getClass().getName()
+                );
+            }
+        }
+                      ));
 
         result.addAll(ContainerUtil.map(
-                provider.getTypeAliasDeclarations(fqName.shortName()),
-                alias -> (ClassifierDescriptor) lazyDeclarationResolver.resolveToDescriptor(alias)
-        ));
+                          provider.getTypeAliasDeclarations(fqName.shortName()),
+                          alias -> (ClassifierDescriptor) lazyDeclarationResolver.resolveToDescriptor(alias)
+                      ));
 
         return result;
     }
@@ -322,8 +322,8 @@ public class ResolveSession implements KotlinCodeAnalyzer, LazyClassContext {
         assertValid();
         if (!areDescriptorsCreatedForDeclaration(declaration)) {
             throw new IllegalStateException(
-                    "No descriptors are created for declarations of type " + declaration.getClass().getSimpleName()
-                    + "\n. Change the caller accordingly"
+                "No descriptors are created for declarations of type " + declaration.getClass().getSimpleName()
+                + "\n. Change the caller accordingly"
             );
         }
         if (!KtPsiUtil.isLocal(declaration)) {
@@ -356,8 +356,8 @@ public class ResolveSession implements KotlinCodeAnalyzer, LazyClassContext {
 
     @NotNull
     private List<LazyPackageDescriptor> collectAllPackages(
-            @NotNull List<LazyPackageDescriptor> result,
-            @NotNull LazyPackageDescriptor current
+        @NotNull List<LazyPackageDescriptor> result,
+        @NotNull LazyPackageDescriptor current
     ) {
         result.add(current);
         for (FqName subPackage : packageFragmentProvider.getSubPackagesOf(current.getFqName(), MemberScope.Companion.getALL_NAME_FILTER())) {

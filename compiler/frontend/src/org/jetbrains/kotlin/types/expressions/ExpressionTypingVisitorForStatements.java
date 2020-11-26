@@ -68,12 +68,12 @@ public class ExpressionTypingVisitorForStatements extends ExpressionTypingVisito
     private final FunctionsTypingVisitor functions;
 
     public ExpressionTypingVisitorForStatements(
-            @NotNull ExpressionTypingInternals facade,
-            @NotNull LexicalWritableScope scope,
-            @NotNull BasicExpressionTypingVisitor basic,
-            @NotNull ControlStructureTypingVisitor controlStructures,
-            @NotNull PatternMatchingTypingVisitor patterns,
-            @NotNull FunctionsTypingVisitor functions
+        @NotNull ExpressionTypingInternals facade,
+        @NotNull LexicalWritableScope scope,
+        @NotNull BasicExpressionTypingVisitor basic,
+        @NotNull ControlStructureTypingVisitor controlStructures,
+        @NotNull PatternMatchingTypingVisitor patterns,
+        @NotNull FunctionsTypingVisitor functions
     ) {
         super(facade);
         this.scope = scope;
@@ -85,12 +85,12 @@ public class ExpressionTypingVisitorForStatements extends ExpressionTypingVisito
 
     @Nullable
     private KotlinType checkAssignmentType(
-            @Nullable KotlinType assignmentType,
-            @NotNull KtBinaryExpression expression,
-            @NotNull ExpressionTypingContext context
+        @Nullable KotlinType assignmentType,
+        @NotNull KtBinaryExpression expression,
+        @NotNull ExpressionTypingContext context
     ) {
         if (assignmentType != null && !KotlinBuiltIns.isUnit(assignmentType) && !noExpectedType(context.expectedType) &&
-            !KotlinTypeKt.isError(context.expectedType) && TypeUtils.equalTypes(context.expectedType, assignmentType)) {
+                !KotlinTypeKt.isError(context.expectedType) && TypeUtils.equalTypes(context.expectedType, assignmentType)) {
             context.trace.report(Errors.ASSIGNMENT_TYPE_MISMATCH.on(expression, context.expectedType));
             return null;
         }
@@ -100,9 +100,9 @@ public class ExpressionTypingVisitorForStatements extends ExpressionTypingVisito
     @Override
     public KotlinTypeInfo visitObjectDeclaration(@NotNull KtObjectDeclaration declaration, ExpressionTypingContext context) {
         components.localClassifierAnalyzer.processClassOrObject(
-                scope, context.replaceScope(scope).replaceContextDependency(INDEPENDENT),
-                scope.getOwnerDescriptor(),
-                declaration);
+            scope, context.replaceScope(scope).replaceContextDependency(INDEPENDENT),
+            scope.getOwnerDescriptor(),
+            declaration);
         return TypeInfoFactoryKt.createTypeInfo(components.dataFlowAnalyzer.checkStatementType(declaration, context), context);
     }
 
@@ -116,7 +116,7 @@ public class ExpressionTypingVisitorForStatements extends ExpressionTypingVisito
     @Override
     public KotlinTypeInfo visitTypeAlias(@NotNull KtTypeAlias typeAlias, ExpressionTypingContext context) {
         TypeAliasDescriptor typeAliasDescriptor = components.descriptorResolver.resolveTypeAliasDescriptor(
-                context.scope.getOwnerDescriptor(), context.scope, typeAlias, context.trace);
+                    context.scope.getOwnerDescriptor(), context.scope, typeAlias, context.trace);
         scope.addClassifierDescriptor(typeAliasDescriptor);
         ForceResolveUtil.forceResolveAllContents(typeAliasDescriptor);
 
@@ -138,7 +138,7 @@ public class ExpressionTypingVisitorForStatements extends ExpressionTypingVisito
                 facade, initializer, context.replaceExpectedType(NO_EXPECTED_TYPE).replaceContextDependency(INDEPENDENT)) : null;
 
         components.destructuringDeclarationResolver
-                .defineLocalVariablesFromDestructuringDeclaration(scope, multiDeclaration, expressionReceiver, initializer, context);
+        .defineLocalVariablesFromDestructuringDeclaration(scope, multiDeclaration, expressionReceiver, initializer, context);
         components.modifiersChecker.withTrace(context.trace).checkModifiersForDestructuringDeclaration(multiDeclaration);
         components.identifierChecker.checkDeclaration(multiDeclaration, context.trace);
 
@@ -147,7 +147,7 @@ public class ExpressionTypingVisitorForStatements extends ExpressionTypingVisito
         }
         else {
             return facade.getTypeInfo(initializer, context)
-                    .replaceType(components.dataFlowAnalyzer.checkStatementType(multiDeclaration, context));
+                   .replaceType(components.dataFlowAnalyzer.checkStatementType(multiDeclaration, context));
         }
     }
 
@@ -159,9 +159,9 @@ public class ExpressionTypingVisitorForStatements extends ExpressionTypingVisito
     @Override
     public KotlinTypeInfo visitClass(@NotNull KtClass klass, ExpressionTypingContext context) {
         components.localClassifierAnalyzer.processClassOrObject(
-                scope, context.replaceScope(scope).replaceContextDependency(INDEPENDENT),
-                scope.getOwnerDescriptor(),
-                klass);
+            scope, context.replaceScope(scope).replaceContextDependency(INDEPENDENT),
+            scope.getOwnerDescriptor(),
+            klass);
         return TypeInfoFactoryKt.createTypeInfo(components.dataFlowAnalyzer.checkStatementType(klass, context), context);
     }
 
@@ -191,9 +191,9 @@ public class ExpressionTypingVisitorForStatements extends ExpressionTypingVisito
     protected KotlinTypeInfo visitAssignmentOperation(KtBinaryExpression expression, ExpressionTypingContext contextWithExpectedType) {
         //There is a temporary binding trace for an opportunity to resolve set method for array if needed (the initial trace should be used there)
         TemporaryTraceAndCache temporary = TemporaryTraceAndCache.create(
-                contextWithExpectedType, "trace to resolve array set method for binary expression", expression);
+                                               contextWithExpectedType, "trace to resolve array set method for binary expression", expression);
         ExpressionTypingContext context = contextWithExpectedType.replaceExpectedType(NO_EXPECTED_TYPE)
-                .replaceTraceAndCache(temporary).replaceContextDependency(INDEPENDENT);
+                                          .replaceTraceAndCache(temporary).replaceContextDependency(INDEPENDENT);
 
         KtSimpleNameExpression operationSign = expression.getOperationReference();
         IElementType operationType = operationSign.getReferencedNameElementType();
@@ -220,27 +220,27 @@ public class ExpressionTypingVisitorForStatements extends ExpressionTypingVisito
         // Check for '+='
         Name name = OperatorConventions.ASSIGNMENT_OPERATIONS.get(operationType);
         TemporaryTraceAndCache temporaryForAssignmentOperation = TemporaryTraceAndCache.create(
-                context, "trace to check assignment operation like '+=' for", expression);
+                    context, "trace to check assignment operation like '+=' for", expression);
         OverloadResolutionResults<FunctionDescriptor> assignmentOperationDescriptors =
-                components.callResolver.resolveBinaryCall(
-                        context.replaceTraceAndCache(temporaryForAssignmentOperation).replaceScope(scope),
-                        receiver, expression, name
-                );
+            components.callResolver.resolveBinaryCall(
+                context.replaceTraceAndCache(temporaryForAssignmentOperation).replaceScope(scope),
+                receiver, expression, name
+            );
         KotlinType assignmentOperationType = OverloadResolutionResultsUtil.getResultingType(assignmentOperationDescriptors, context);
 
         OverloadResolutionResults<FunctionDescriptor> binaryOperationDescriptors;
         KotlinType binaryOperationType;
         TemporaryTraceAndCache temporaryForBinaryOperation = TemporaryTraceAndCache.create(
-                context, "trace to check binary operation like '+' for", expression);
+                    context, "trace to check binary operation like '+' for", expression);
         TemporaryBindingTrace ignoreReportsTrace = TemporaryBindingTrace.create(context.trace, "Trace for checking assignability");
         boolean lhsAssignable = basic.checkLValue(ignoreReportsTrace, context, left, right, expression);
         if (assignmentOperationType == null || lhsAssignable) {
             // Check for '+'
             Name counterpartName = OperatorConventions.BINARY_OPERATION_NAMES.get(OperatorConventions.ASSIGNMENT_OPERATION_COUNTERPARTS.get(operationType));
             binaryOperationDescriptors = components.callResolver.resolveBinaryCall(
-                    context.replaceTraceAndCache(temporaryForBinaryOperation).replaceScope(scope),
-                    receiver, expression, counterpartName
-            );
+                                             context.replaceTraceAndCache(temporaryForBinaryOperation).replaceScope(scope),
+                                             receiver, expression, counterpartName
+                                         );
 
             binaryOperationType = OverloadResolutionResultsUtil.getResultingType(binaryOperationDescriptors, context);
         }
@@ -282,7 +282,7 @@ public class ExpressionTypingVisitorForStatements extends ExpressionTypingVisito
             context.trace.record(VARIABLE_REASSIGNMENT, expression);
             if (left instanceof KtArrayAccessExpression) {
                 ExpressionTypingContext contextForResolve = context.replaceScope(scope).replaceBindingTrace(TemporaryBindingTrace.create(
-                        context.trace, "trace to resolve array set method for assignment", expression));
+                            context.trace, "trace to resolve array set method for assignment", expression));
                 basic.resolveImplicitArrayAccessSetMethod((KtArrayAccessExpression) left, right, contextForResolve, context.trace);
             }
             rightInfo = facade.getTypeInfo(right, context.replaceDataFlowInfo(leftInfo.getDataFlowInfo()));
@@ -290,7 +290,7 @@ public class ExpressionTypingVisitorForStatements extends ExpressionTypingVisito
             KotlinType expectedType = refineTypeFromPropertySetterIfPossible(context.trace.getBindingContext(), leftOperand, leftType);
 
             components.dataFlowAnalyzer.checkType(binaryOperationType, expression, context.replaceExpectedType(expectedType)
-                    .replaceDataFlowInfo(rightInfo.getDataFlowInfo()).replaceCallPosition(new CallPosition.PropertyAssignment(left)));
+                                                  .replaceDataFlowInfo(rightInfo.getDataFlowInfo()).replaceCallPosition(new CallPosition.PropertyAssignment(left)));
             basic.checkLValue(context.trace, context, leftOperand, right, expression);
         }
         temporary.commit();
@@ -309,9 +309,9 @@ public class ExpressionTypingVisitorForStatements extends ExpressionTypingVisito
 
     @Nullable
     private static KotlinType refineTypeFromPropertySetterIfPossible(
-            @NotNull BindingContext bindingContext,
-            @Nullable KtElement leftOperand,
-            @Nullable KotlinType leftOperandType
+        @NotNull BindingContext bindingContext,
+        @Nullable KtElement leftOperand,
+        @Nullable KotlinType leftOperandType
     ) {
         VariableDescriptor descriptor = BindingContextUtils.extractVariableFromResolvedCall(bindingContext, leftOperand);
 
@@ -326,7 +326,7 @@ public class ExpressionTypingVisitorForStatements extends ExpressionTypingVisito
     @NotNull
     protected KotlinTypeInfo visitAssignment(KtBinaryExpression expression, ExpressionTypingContext contextWithExpectedType) {
         ExpressionTypingContext context =
-                contextWithExpectedType.replaceExpectedType(NO_EXPECTED_TYPE).replaceScope(scope).replaceContextDependency(INDEPENDENT);
+            contextWithExpectedType.replaceExpectedType(NO_EXPECTED_TYPE).replaceScope(scope).replaceContextDependency(INDEPENDENT);
         KtExpression leftOperand = expression.getLeft();
         if (leftOperand instanceof KtAnnotatedExpression) {
             basic.resolveAnnotationsOnExpression((KtAnnotatedExpression) leftOperand, context);
@@ -346,8 +346,8 @@ public class ExpressionTypingVisitorForStatements extends ExpressionTypingVisito
         KotlinTypeInfo resultInfo;
         if (right != null) {
             resultInfo = facade.getTypeInfo(
-                            right, context.replaceDataFlowInfo(dataFlowInfo).replaceExpectedType(expectedType).replaceCallPosition(
-                                    new CallPosition.PropertyAssignment(leftOperand)));
+                             right, context.replaceDataFlowInfo(dataFlowInfo).replaceExpectedType(expectedType).replaceCallPosition(
+                                 new CallPosition.PropertyAssignment(leftOperand)));
 
             dataFlowInfo = resultInfo.getDataFlowInfo();
             KotlinType rightType = resultInfo.getType();
@@ -396,7 +396,7 @@ public class ExpressionTypingVisitorForStatements extends ExpressionTypingVisito
 
     @Override
     public KotlinTypeInfo visitAnnotatedExpression(
-            @NotNull KtAnnotatedExpression expression, ExpressionTypingContext data
+        @NotNull KtAnnotatedExpression expression, ExpressionTypingContext data
     ) {
         return basic.visitAnnotatedExpression(expression, data, true);
     }

@@ -29,8 +29,8 @@ public abstract class AbstractDiagnostic<E extends PsiElement> implements Parame
     private final Severity severity;
 
     public AbstractDiagnostic(@NotNull E psiElement,
-            @NotNull DiagnosticFactoryWithPsiElement<E, ?> factory,
-            @NotNull Severity severity) {
+                              @NotNull DiagnosticFactoryWithPsiElement<E, ?> factory,
+                              @NotNull Severity severity) {
         this.psiElement = psiElement;
         this.factory = factory;
         this.severity = severity;

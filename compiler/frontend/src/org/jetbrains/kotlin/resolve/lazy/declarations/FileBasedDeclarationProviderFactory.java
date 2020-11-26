@@ -79,7 +79,7 @@ public class FileBasedDeclarationProviderFactory extends AbstractDeclarationProv
     protected PackageMemberDeclarationProvider createPackageMemberDeclarationProvider(@NotNull FqName packageFqName) {
         if (packageExists(packageFqName)) {
             return new FileBasedPackageMemberDeclarationProvider(
-                    storageManager, packageFqName, this, index.invoke().filesByPackage.get(packageFqName));
+                       storageManager, packageFqName, this, index.invoke().filesByPackage.get(packageFqName));
         }
 
         return null;

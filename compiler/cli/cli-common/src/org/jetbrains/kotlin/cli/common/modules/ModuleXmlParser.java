@@ -56,8 +56,8 @@ public class ModuleXmlParser {
 
     @NotNull
     public static ModuleChunk parseModuleScript(
-            @NotNull String xmlFile,
-            @NotNull MessageCollector messageCollector
+        @NotNull String xmlFile,
+        @NotNull MessageCollector messageCollector
     ) {
         FileInputStream stream = null;
         try {
@@ -111,7 +111,7 @@ public class ModuleXmlParser {
     private final DefaultHandler initial = new DefaultHandler() {
         @Override
         public void startElement(@NotNull String uri, @NotNull String localName, @NotNull String qName, @NotNull Attributes attributes)
-                throws SAXException {
+        throws SAXException {
             if (!MODULES.equalsIgnoreCase(qName)) {
                 throw createError(qName);
             }
@@ -123,7 +123,7 @@ public class ModuleXmlParser {
     private final DefaultHandler insideModules = new DefaultHandler() {
         @Override
         public void startElement(@NotNull String uri, @NotNull String localName, @NotNull String qName, @NotNull Attributes attributes)
-                throws SAXException {
+        throws SAXException {
             if (!MODULE.equalsIgnoreCase(qName)) {
                 throw createError(qName);
             }
@@ -131,10 +131,10 @@ public class ModuleXmlParser {
             String moduleType = getAttribute(attributes, TYPE, qName);
             assert(TYPE_PRODUCTION.equals(moduleType) || TYPE_TEST.equals(moduleType)): "Unknown module type: " + moduleType;
             setCurrentState(new InsideModule(
-                    getAttribute(attributes, NAME, qName),
-                    getAttribute(attributes, OUTPUT_DIR, qName),
-                    moduleType
-            ));
+                                getAttribute(attributes, NAME, qName),
+                                getAttribute(attributes, OUTPUT_DIR, qName),
+                                moduleType
+                            ));
         }
 
         @Override
@@ -155,7 +155,7 @@ public class ModuleXmlParser {
 
         @Override
         public void startElement(@NotNull String uri, @NotNull String localName, @NotNull String qName, @NotNull Attributes attributes)
-                throws SAXException {
+        throws SAXException {
             if (SOURCES.equalsIgnoreCase(qName)) {
                 String path = getAttribute(attributes, PATH, qName);
                 moduleBuilder.addSourceFiles(path);

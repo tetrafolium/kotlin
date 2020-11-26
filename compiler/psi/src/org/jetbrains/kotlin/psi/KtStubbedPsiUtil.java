@@ -39,9 +39,9 @@ public final class KtStubbedPsiUtil {
     @Nullable
     @SuppressWarnings("unchecked")
     public static <T extends KtElement> T getPsiOrStubParent(
-            @NotNull PsiElement element,
-            @NotNull Class<T> declarationClass,
-            boolean strict
+        @NotNull PsiElement element,
+        @NotNull Class<T> declarationClass,
+        boolean strict
     ) {
         if (!strict && declarationClass.isInstance(element)) {
             return (T) element;
@@ -57,9 +57,9 @@ public final class KtStubbedPsiUtil {
 
     @Nullable
     public static <T extends KtElement> T getStubOrPsiChild(
-            @NotNull KtElementImplStub<?> element,
-            @NotNull TokenSet types,
-            @NotNull ArrayFactory<T> factory
+        @NotNull KtElementImplStub<?> element,
+        @NotNull TokenSet types,
+        @NotNull ArrayFactory<T> factory
     ) {
         T[] typeElements = element.getStubOrPsiChildren(types, factory);
         if (typeElements.length == 0) {

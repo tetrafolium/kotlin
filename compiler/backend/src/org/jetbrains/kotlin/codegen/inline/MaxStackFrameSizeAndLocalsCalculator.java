@@ -168,19 +168,19 @@ public class MaxStackFrameSizeAndLocalsCalculator extends MaxLocalsCalculator {
         // computes the stack size variation
         char c = desc.charAt(0);
         switch (opcode) {
-            case Opcodes.GETSTATIC:
-                stackSizeVariation = c == 'D' || c == 'J' ? 2 : 1;
-                break;
-            case Opcodes.PUTSTATIC:
-                stackSizeVariation = c == 'D' || c == 'J' ? -2 : -1;
-                break;
-            case Opcodes.GETFIELD:
-                stackSizeVariation = c == 'D' || c == 'J' ? 1 : 0;
-                break;
-            // case Constants.PUTFIELD:
-            default:
-                stackSizeVariation = c == 'D' || c == 'J' ? -3 : -2;
-                break;
+        case Opcodes.GETSTATIC:
+            stackSizeVariation = c == 'D' || c == 'J' ? 2 : 1;
+            break;
+        case Opcodes.PUTSTATIC:
+            stackSizeVariation = c == 'D' || c == 'J' ? -2 : -1;
+            break;
+        case Opcodes.GETFIELD:
+            stackSizeVariation = c == 'D' || c == 'J' ? 1 : 0;
+            break;
+        // case Constants.PUTFIELD:
+        default:
+            stackSizeVariation = c == 'D' || c == 'J' ? -3 : -2;
+            break;
         }
 
         increaseStackSize(stackSizeVariation);
@@ -372,11 +372,11 @@ public class MaxStackFrameSizeAndLocalsCalculator extends MaxLocalsCalculator {
 
     @Override
     public void visitTryCatchBlock(
-            @NotNull Label start, @NotNull Label end,
-            @NotNull Label handler, String type
+        @NotNull Label start, @NotNull Label end,
+        @NotNull Label handler, String type
     ) {
         ExceptionHandler exceptionHandler = new ExceptionHandler(
-                getLabelWrapper(start), getLabelWrapper(end), getLabelWrapper(handler)
+            getLabelWrapper(start), getLabelWrapper(end), getLabelWrapper(handler)
         );
 
         exceptionHandlers.add(exceptionHandler);
@@ -390,9 +390,9 @@ public class MaxStackFrameSizeAndLocalsCalculator extends MaxLocalsCalculator {
         private final LabelWrapper handlerLabel;
 
         public ExceptionHandler(
-                LabelWrapper start,
-                LabelWrapper end,
-                LabelWrapper handlerLabel
+            LabelWrapper start,
+            LabelWrapper end,
+            LabelWrapper handlerLabel
         ) {
             this.start = start;
             this.end = end;

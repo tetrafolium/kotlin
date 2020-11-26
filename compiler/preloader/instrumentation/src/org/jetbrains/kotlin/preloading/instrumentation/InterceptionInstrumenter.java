@@ -114,16 +114,16 @@ public class InterceptionInstrumenter {
                 String nameFromAnnotation = annotation.methodName();
                 String methodName = nameFromAnnotation.isEmpty() ? field.getName() : nameFromAnnotation;
                 MethodInstrumenter instrumenter = new MethodInstrumenter(
-                        field.getDeclaringClass().getSimpleName() + "." + field.getName(),
-                        classPattern,
-                        compilePattern(methodName),
-                        compilePattern(annotation.methodDesc()),
-                        annotation.allowMultipleMatches(),
-                        enterData,
-                        normalReturnData,
-                        exceptionData,
-                        annotation.logInterceptions(),
-                        annotation.dumpByteCode());
+                    field.getDeclaringClass().getSimpleName() + "." + field.getName(),
+                    classPattern,
+                    compilePattern(methodName),
+                    compilePattern(annotation.methodDesc()),
+                    annotation.allowMultipleMatches(),
+                    enterData,
+                    normalReturnData,
+                    exceptionData,
+                    annotation.logInterceptions(),
+                    annotation.dumpByteCode());
 
                 for (Method dumpMethod : dumpMethods) {
                     addDumpTask(interceptor, dumpMethod, instrumenter);
@@ -151,10 +151,10 @@ public class InterceptionInstrumenter {
 
     private static FieldData getFieldData(Field field, Class<?> runtimeType) {
         return new FieldData(
-                            Type.getInternalName(field.getDeclaringClass()),
-                            field.getName(),
-                            Type.getDescriptor(field.getType()),
-                            Type.getType(runtimeType));
+                   Type.getInternalName(field.getDeclaringClass()),
+                   field.getName(),
+                   Type.getDescriptor(field.getType()),
+                   Type.getType(runtimeType));
     }
 
     private static MethodData getMethodData(FieldData interceptorField, Method method) {
@@ -199,15 +199,15 @@ public class InterceptionInstrumenter {
             }
         }
         return new MethodData(
-            interceptorField,
-            Type.getInternalName(method.getDeclaringClass()),
-            method.getName(),
-            Type.getMethodDescriptor(method),
-            thisParameterIndex,
-            classNameParameterIndex,
-            methodNameParameterIndex,
-            methodDescParameterIndex,
-            allArgsParameterIndex);
+                   interceptorField,
+                   Type.getInternalName(method.getDeclaringClass()),
+                   method.getName(),
+                   Type.getMethodDescriptor(method),
+                   thisParameterIndex,
+                   classNameParameterIndex,
+                   methodNameParameterIndex,
+                   methodDescParameterIndex,
+                   allArgsParameterIndex);
     }
 
     private void addDumpTask(Object interceptor, Method method, MethodInstrumenter instrumenter) {
@@ -270,11 +270,11 @@ public class InterceptionInstrumenter {
 
             @Override
             public MethodVisitor visitMethod(
-                    int access,
-                    String name,
-                    String desc,
-                    String signature,
-                    String[] exceptions
+                int access,
+                String name,
+                String desc,
+                String signature,
+                String[] exceptions
             ) {
                 MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
                 // Do not instrument synthetic methods
@@ -345,22 +345,22 @@ public class InterceptionInstrumenter {
                     @Override
                     public void visitInsn(int opcode) {
                         switch (opcode) {
-                            case RETURN:
-                            case IRETURN:
-                            case LRETURN:
-                            case FRETURN:
-                            case DRETURN:
-                            case ARETURN:
-                                for (MethodData methodData : normalReturnData) {
-                                    invokeMethod(access, cr.getClassName(), name, desc, getInstructionAdapter(), methodData, false);
-                                }
-                                break;
-                            case ATHROW:
-                                for (MethodData methodData : exceptionData) {
-                                    // A constructor may throw before calling super(), 'this' is not available in this case
-                                    invokeMethod(access, cr.getClassName(), name, desc, getInstructionAdapter(), methodData, isConstructor);
-                                }
-                                break;
+                        case RETURN:
+                        case IRETURN:
+                        case LRETURN:
+                        case FRETURN:
+                        case DRETURN:
+                        case ARETURN:
+                            for (MethodData methodData : normalReturnData) {
+                                invokeMethod(access, cr.getClassName(), name, desc, getInstructionAdapter(), methodData, false);
+                            }
+                            break;
+                        case ATHROW:
+                            for (MethodData methodData : exceptionData) {
+                                // A constructor may throw before calling super(), 'this' is not available in this case
+                                invokeMethod(access, cr.getClassName(), name, desc, getInstructionAdapter(), methodData, isConstructor);
+                            }
+                            break;
                         }
                         super.visitInsn(opcode);
                     }
@@ -368,11 +368,11 @@ public class InterceptionInstrumenter {
             }
 
             private int getMaxStackDepth(
-                    String name,
-                    String desc,
-                    List<MethodData> normalReturnData,
-                    List<MethodData> enterData,
-                    List<MethodData> exceptionData
+                String name,
+                String desc,
+                List<MethodData> normalReturnData,
+                List<MethodData> enterData,
+                List<MethodData> exceptionData
             ) {
                 org.jetbrains.org.objectweb.asm.commons.Method methodBeingInstrumented = new org.jetbrains.org.objectweb.asm.commons.Method(name, desc);
 
@@ -443,13 +443,13 @@ public class InterceptionInstrumenter {
     }
 
     private static void invokeMethod(
-            int instrumentedMethodAccess,
-            String instrumentedClassName,
-            String instrumentedMethodName,
-            String instrumentedMethodDesc,
-            InstructionAdapter ia,
-            MethodData methodData,
-            boolean thisUnavailable
+        int instrumentedMethodAccess,
+        String instrumentedClassName,
+        String instrumentedMethodName,
+        String instrumentedMethodDesc,
+        InstructionAdapter ia,
+        MethodData methodData,
+        boolean thisUnavailable
     ) {
         FieldData field = methodData.getOwnerField();
         ia.getstatic(field.getDeclaringClass(), field.getName(), field.getDesc());
@@ -535,32 +535,32 @@ public class InterceptionInstrumenter {
             return;
         }
         switch (from.getSort()) {
-            case Type.BOOLEAN:
-                box(ia, from, Boolean.class);
-                break;
-            case Type.CHAR:
-                box(ia, from, Character.class);
-                break;
-            case Type.BYTE:
-                box(ia, from, Byte.class);
-                break;
-            case Type.SHORT:
-                box(ia, from, Short.class);
-                break;
-            case Type.INT:
-                box(ia, from, Integer.class);
-                break;
-            case Type.FLOAT:
-                box(ia, from, Float.class);
-                break;
-            case Type.LONG:
-                box(ia, from, Long.class);
-                break;
-            case Type.DOUBLE:
-                box(ia, from, Double.class);
-                break;
-            default:
-                // Nothing to do, it's an object already
+        case Type.BOOLEAN:
+            box(ia, from, Boolean.class);
+            break;
+        case Type.CHAR:
+            box(ia, from, Character.class);
+            break;
+        case Type.BYTE:
+            box(ia, from, Byte.class);
+            break;
+        case Type.SHORT:
+            box(ia, from, Short.class);
+            break;
+        case Type.INT:
+            box(ia, from, Integer.class);
+            break;
+        case Type.FLOAT:
+            box(ia, from, Float.class);
+            break;
+        case Type.LONG:
+            box(ia, from, Long.class);
+            break;
+        case Type.DOUBLE:
+            box(ia, from, Double.class);
+            break;
+        default:
+            // Nothing to do, it's an object already
         }
     }
 

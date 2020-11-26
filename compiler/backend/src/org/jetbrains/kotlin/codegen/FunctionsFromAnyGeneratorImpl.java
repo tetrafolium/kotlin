@@ -48,13 +48,13 @@ public class FunctionsFromAnyGeneratorImpl extends FunctionsFromAnyGenerator {
     private final JvmKotlinType underlyingType;
 
     public FunctionsFromAnyGeneratorImpl(
-            @NotNull KtClassOrObject declaration,
-            @NotNull BindingContext bindingContext,
-            @NotNull ClassDescriptor descriptor,
-            @NotNull Type type,
-            @NotNull FieldOwnerContext<?> fieldOwnerContext,
-            @NotNull ClassBuilder v,
-            @NotNull GenerationState state
+        @NotNull KtClassOrObject declaration,
+        @NotNull BindingContext bindingContext,
+        @NotNull ClassDescriptor descriptor,
+        @NotNull Type type,
+        @NotNull FieldOwnerContext<?> fieldOwnerContext,
+        @NotNull ClassBuilder v,
+        @NotNull GenerationState state
     ) {
         super(declaration, bindingContext);
         this.classDescriptor = descriptor;
@@ -64,14 +64,14 @@ public class FunctionsFromAnyGeneratorImpl extends FunctionsFromAnyGenerator {
         this.generationState = state;
         this.typeMapper = state.getTypeMapper();
         this.underlyingType = new JvmKotlinType(
-                typeMapper.mapType(descriptor),
-                InlineClassesUtilsKt.substitutedUnderlyingType(descriptor.getDefaultType())
+            typeMapper.mapType(descriptor),
+            InlineClassesUtilsKt.substitutedUnderlyingType(descriptor.getDefaultType())
         );
     }
 
     @Override
     protected void generateToStringMethod(
-            @NotNull FunctionDescriptor function, @NotNull List<? extends PropertyDescriptor> properties
+        @NotNull FunctionDescriptor function, @NotNull List<? extends PropertyDescriptor> properties
     ) {
         MethodContext context = fieldOwnerContext.intoFunction(function);
         JvmDeclarationOrigin methodOrigin = JvmDeclarationOriginKt.OtherOrigin(function);
@@ -137,7 +137,7 @@ public class FunctionsFromAnyGeneratorImpl extends FunctionsFromAnyGenerator {
 
     @Override
     protected void generateHashCodeMethod(
-            @NotNull FunctionDescriptor function, @NotNull List<? extends PropertyDescriptor> properties
+        @NotNull FunctionDescriptor function, @NotNull List<? extends PropertyDescriptor> properties
     ) {
         MethodContext context = fieldOwnerContext.intoFunction(function);
         JvmDeclarationOrigin methodOrigin = JvmDeclarationOriginKt.OtherOrigin(function);
@@ -206,7 +206,7 @@ public class FunctionsFromAnyGeneratorImpl extends FunctionsFromAnyGenerator {
 
     @Override
     protected void generateEqualsMethod(
-            @NotNull FunctionDescriptor function, @NotNull List<? extends PropertyDescriptor> properties
+        @NotNull FunctionDescriptor function, @NotNull List<? extends PropertyDescriptor> properties
     ) {
         MethodContext context = fieldOwnerContext.intoFunction(function);
         JvmDeclarationOrigin methodOrigin = JvmDeclarationOriginKt.OtherOrigin(function);
@@ -220,7 +220,7 @@ public class FunctionsFromAnyGeneratorImpl extends FunctionsFromAnyGenerator {
         }
 
         visitEndForAnnotationVisitor(
-                mv.visitParameterAnnotation(isErasedInlineClassKind ? 1 : 0, Type.getDescriptor(Nullable.class), false)
+            mv.visitParameterAnnotation(isErasedInlineClassKind ? 1 : 0, Type.getDescriptor(Nullable.class), false)
         );
 
         if (!generationState.getClassBuilderMode().generateBodies) {
@@ -265,8 +265,8 @@ public class FunctionsFromAnyGeneratorImpl extends FunctionsFromAnyGenerator {
             }
             else {
                 StackValue value = genEqualsForExpressionsOnStack(
-                        KtTokens.EQEQ, thisPropertyValue, otherPropertyValue
-                );
+                                       KtTokens.EQEQ, thisPropertyValue, otherPropertyValue
+                                   );
                 value.put(Type.BOOLEAN_TYPE, iv);
                 iv.ifeq(ne);
             }
@@ -332,8 +332,8 @@ public class FunctionsFromAnyGeneratorImpl extends FunctionsFromAnyGenerator {
         }
         else {
             return ImplementationBodyCodegen.genPropertyOnStack(
-                    iv, context, propertyDescriptor, classAsmType, index, generationState
-            );
+                       iv, context, propertyDescriptor, classAsmType, index, generationState
+                   );
         }
     }
 

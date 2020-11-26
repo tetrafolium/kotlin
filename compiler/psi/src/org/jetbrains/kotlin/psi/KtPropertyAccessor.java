@@ -30,7 +30,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class KtPropertyAccessor extends KtDeclarationStub<KotlinPropertyAccessorStub>
-        implements KtDeclarationWithBody, KtModifierListOwner, KtDeclarationWithInitializer {
+    implements KtDeclarationWithBody, KtModifierListOwner, KtDeclarationWithInitializer {
     public KtPropertyAccessor(@NotNull ASTNode node) {
         super(node);
     }
@@ -94,7 +94,7 @@ public class KtPropertyAccessor extends KtDeclarationStub<KotlinPropertyAccessor
 
         return AstLoadingFilter.forceAllowTreeLoading(this.getContainingFile(), () ->
                 findChildByClass(KtExpression.class)
-        );
+                                                     );
     }
 
     @Nullable

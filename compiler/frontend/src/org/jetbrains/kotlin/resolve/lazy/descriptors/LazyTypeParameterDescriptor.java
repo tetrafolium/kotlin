@@ -40,20 +40,20 @@ public class LazyTypeParameterDescriptor extends AbstractLazyTypeParameterDescri
     private final KtTypeParameter typeParameter;
 
     public LazyTypeParameterDescriptor(
-            @NotNull LazyClassContext c,
-            @NotNull LazyClassDescriptor containingDeclaration,
-            @NotNull KtTypeParameter typeParameter,
-            int index
+        @NotNull LazyClassContext c,
+        @NotNull LazyClassDescriptor containingDeclaration,
+        @NotNull KtTypeParameter typeParameter,
+        int index
     ) {
         super(
-                c.getStorageManager(),
-                containingDeclaration,
-                typeParameter.getNameAsSafeName(),
-                typeParameter.getVariance(),
-                typeParameter.hasModifier(KtTokens.REIFIED_KEYWORD),
-                index,
-                KotlinSourceElementKt.toSourceElement(typeParameter),
-                c.getSupertypeLoopChecker());
+            c.getStorageManager(),
+            containingDeclaration,
+            typeParameter.getNameAsSafeName(),
+            typeParameter.getVariance(),
+            typeParameter.hasModifier(KtTokens.REIFIED_KEYWORD),
+            index,
+            KotlinSourceElementKt.toSourceElement(typeParameter),
+            c.getSupertypeLoopChecker());
         this.c = c;
         this.typeParameter = typeParameter;
 
@@ -91,11 +91,11 @@ public class LazyTypeParameterDescriptor extends AbstractLazyTypeParameterDescri
 
     private Collection<KtTypeReference> getAllUpperBounds() {
         return CollectionsKt.plus(
-                typeParameter.getExtendsBound() != null
-                ? Collections.singletonList(typeParameter.getExtendsBound())
-                : Collections.emptyList(),
-                getUpperBoundsFromWhereClause()
-        );
+                   typeParameter.getExtendsBound() != null
+                   ? Collections.singletonList(typeParameter.getExtendsBound())
+                   : Collections.emptyList(),
+                   getUpperBoundsFromWhereClause()
+               );
     }
 
     private Collection<KtTypeReference> getUpperBoundsFromWhereClause() {
@@ -124,8 +124,8 @@ public class LazyTypeParameterDescriptor extends AbstractLazyTypeParameterDescri
     @NotNull
     private KotlinType resolveBoundType(@NotNull KtTypeReference boundTypeReference) {
         return c.getTypeResolver().resolveType(
-                getContainingDeclaration().getScopeForClassHeaderResolution(), boundTypeReference, c.getTrace(), false
-        );
+                   getContainingDeclaration().getScopeForClassHeaderResolution(), boundTypeReference, c.getTrace(), false
+               );
     }
 
     @NotNull

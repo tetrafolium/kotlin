@@ -19,11 +19,11 @@ import org.jetbrains.org.objectweb.asm.MethodVisitor;
 
 public abstract class FunctionGenerationStrategy {
     public abstract void generateBody(
-            @NotNull MethodVisitor mv,
-            @NotNull FrameMap frameMap,
-            @NotNull JvmMethodSignature signature,
-            @NotNull MethodContext context,
-            @NotNull MemberCodegen<?> parentCodegen
+        @NotNull MethodVisitor mv,
+        @NotNull FrameMap frameMap,
+        @NotNull JvmMethodSignature signature,
+        @NotNull MethodContext context,
+        @NotNull MemberCodegen<?> parentCodegen
     );
 
     public abstract boolean skipNotNullAssertionsForParameters();
@@ -38,10 +38,10 @@ public abstract class FunctionGenerationStrategy {
 
     @NotNull
     public JvmMethodGenericSignature mapMethodSignature(
-            @NotNull FunctionDescriptor functionDescriptor,
-            @NotNull KotlinTypeMapper typeMapper,
-            @NotNull OwnerKind contextKind,
-            boolean hasSpecialBridge
+        @NotNull FunctionDescriptor functionDescriptor,
+        @NotNull KotlinTypeMapper typeMapper,
+        @NotNull OwnerKind contextKind,
+        boolean hasSpecialBridge
     ) {
         return typeMapper.mapSignatureWithGeneric(functionDescriptor, contextKind, hasSpecialBridge);
     }
@@ -50,8 +50,8 @@ public abstract class FunctionGenerationStrategy {
         private final KtDeclarationWithBody declaration;
 
         public FunctionDefault(
-                @NotNull GenerationState state,
-                @NotNull KtDeclarationWithBody declaration
+            @NotNull GenerationState state,
+            @NotNull KtDeclarationWithBody declaration
         ) {
             super(state);
             this.declaration = declaration;
@@ -74,11 +74,11 @@ public abstract class FunctionGenerationStrategy {
 
         @Override
         public final void generateBody(
-                @NotNull MethodVisitor mv,
-                @NotNull FrameMap frameMap,
-                @NotNull JvmMethodSignature signature,
-                @NotNull MethodContext context,
-                @NotNull MemberCodegen<?> parentCodegen
+            @NotNull MethodVisitor mv,
+            @NotNull FrameMap frameMap,
+            @NotNull JvmMethodSignature signature,
+            @NotNull MethodContext context,
+            @NotNull MemberCodegen<?> parentCodegen
         ) {
             ExpressionCodegen codegen = new ExpressionCodegen(mv, frameMap, signature.getReturnType(), context, state, parentCodegen);
             doGenerateBody(codegen, signature);

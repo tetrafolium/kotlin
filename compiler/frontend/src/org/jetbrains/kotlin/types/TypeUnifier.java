@@ -49,9 +49,9 @@ public class TypeUnifier {
      */
     @NotNull
     public static UnificationResult unify(
-            @NotNull TypeProjection knownProjection,
-            @NotNull TypeProjection projectWithVariables,
-            @NotNull Predicate<TypeConstructor> isVariable
+        @NotNull TypeProjection knownProjection,
+        @NotNull TypeProjection projectWithVariables,
+        @NotNull Predicate<TypeConstructor> isVariable
     ) {
         UnificationResultImpl result = new UnificationResultImpl();
         doUnify(knownProjection, projectWithVariables, isVariable, result);
@@ -59,10 +59,10 @@ public class TypeUnifier {
     }
 
     private static void doUnify(
-            TypeProjection knownProjection,
-            TypeProjection projectWithVariables,
-            Predicate<TypeConstructor> isVariable,
-            UnificationResultImpl result
+        TypeProjection knownProjection,
+        TypeProjection projectWithVariables,
+        Predicate<TypeConstructor> isVariable,
+        UnificationResultImpl result
     ) {
         KotlinType known = knownProjection.getType();
         KotlinType withVariables = projectWithVariables.getType();
@@ -78,10 +78,10 @@ public class TypeUnifier {
         // Foo? ~ X?  =>  Foo ~ X
         if (known.isMarkedNullable() && withVariables.isMarkedNullable()) {
             doUnify(
-                    new TypeProjectionImpl(knownProjectionKind, TypeUtils.makeNotNullable(known)),
-                    new TypeProjectionImpl(withVariablesProjectionKind, TypeUtils.makeNotNullable(withVariables)),
-                    isVariable,
-                    result
+                new TypeProjectionImpl(knownProjectionKind, TypeUtils.makeNotNullable(known)),
+                new TypeProjectionImpl(withVariablesProjectionKind, TypeUtils.makeNotNullable(withVariables)),
+                isVariable,
+                result
             );
             return;
         }
@@ -108,8 +108,8 @@ public class TypeUnifier {
 
         // Foo? ~ Foo || in Foo ~ Foo || Foo ~ Bar
         boolean structuralMismatch = known.isMarkedNullable() != withVariables.isMarkedNullable()
-                || knownProjectionKind != withVariablesProjectionKind
-                || !known.getConstructor().equals(withVariables.getConstructor());
+                                     || knownProjectionKind != withVariablesProjectionKind
+                                     || !known.getConstructor().equals(withVariables.getConstructor());
         if (structuralMismatch) {
             result.fail();
             return;

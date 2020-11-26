@@ -51,9 +51,9 @@ public class ExpressionTypingUtils {
 
     @Nullable
     public static ExpressionReceiver getExpressionReceiver(
-            @NotNull ExpressionTypingFacade facade,
-            @NotNull KtExpression expression,
-            ExpressionTypingContext context
+        @NotNull ExpressionTypingFacade facade,
+        @NotNull KtExpression expression,
+        ExpressionTypingContext context
     ) {
         KotlinType type = facade.getTypeInfo(expression, context).getType();
         if (type == null) return null;
@@ -62,9 +62,9 @@ public class ExpressionTypingUtils {
 
     @NotNull
     public static ExpressionReceiver safeGetExpressionReceiver(
-            @NotNull ExpressionTypingFacade facade,
-            @NotNull KtExpression expression,
-            ExpressionTypingContext context
+        @NotNull ExpressionTypingFacade facade,
+        @NotNull KtExpression expression,
+        ExpressionTypingContext context
     ) {
         KotlinType type = safeGetType(facade.safeGetTypeInfo(expression, context));
         return ExpressionReceiver.Companion.create(expression, type, context.trace.getBindingContext());
@@ -79,19 +79,19 @@ public class ExpressionTypingUtils {
 
     @NotNull
     public static LexicalWritableScope newWritableScopeImpl(
-            @NotNull ExpressionTypingContext context,
-            @NotNull LexicalScopeKind scopeKind,
-            @NotNull OverloadChecker overloadChecker
+        @NotNull ExpressionTypingContext context,
+        @NotNull LexicalScopeKind scopeKind,
+        @NotNull OverloadChecker overloadChecker
     ) {
         return new LexicalWritableScope(context.scope, context.scope.getOwnerDescriptor(), false,
                                         new TraceBasedLocalRedeclarationChecker(context.trace, overloadChecker), scopeKind);
     }
 
     public static KtExpression createFakeExpressionOfType(
-            @NotNull Project project,
-            @NotNull BindingTrace trace,
-            @NotNull String argumentName,
-            @NotNull KotlinType argumentType
+        @NotNull Project project,
+        @NotNull BindingTrace trace,
+        @NotNull String argumentName,
+        @NotNull KotlinType argumentType
     ) {
         KtExpression fakeExpression = KtPsiFactoryKt.KtPsiFactory(project, false).createExpression(argumentName);
         trace.recordType(fakeExpression, argumentType);
@@ -100,9 +100,9 @@ public class ExpressionTypingUtils {
     }
 
     public static void checkVariableShadowing(
-            @NotNull LexicalScope scope,
-            @NotNull BindingTrace trace,
-            @NotNull VariableDescriptor variableDescriptor
+        @NotNull LexicalScope scope,
+        @NotNull BindingTrace trace,
+        @NotNull VariableDescriptor variableDescriptor
     ) {
         VariableDescriptor oldDescriptor = ScopeUtilsKt.findLocalVariable(scope, variableDescriptor.getName());
         if (oldDescriptor == null) return;
@@ -134,9 +134,9 @@ public class ExpressionTypingUtils {
     }
 
     public static ObservableBindingTrace makeTraceInterceptingTypeMismatch(
-            @NotNull BindingTrace trace,
-            @NotNull KtElement expressionToWatch,
-            @NotNull boolean[] mismatchFound
+        @NotNull BindingTrace trace,
+        @NotNull KtElement expressionToWatch,
+        @NotNull boolean[] mismatchFound
     ) {
         return new ObservableBindingTrace(trace) {
 
@@ -147,7 +147,7 @@ public class ExpressionTypingUtils {
                     mismatchFound[0] = true;
                 }
                 if (TYPE_INFERENCE_ERRORS.contains(factory) &&
-                    PsiTreeUtil.isAncestor(expressionToWatch, diagnostic.getPsiElement(), false)) {
+                        PsiTreeUtil.isAncestor(expressionToWatch, diagnostic.getPsiElement(), false)) {
                     mismatchFound[0] = true;
                 }
                 super.report(diagnostic);
@@ -157,9 +157,9 @@ public class ExpressionTypingUtils {
 
     @NotNull
     public static KotlinTypeInfo getTypeInfoOrNullType(
-            @Nullable KtExpression expression,
-            @NotNull ExpressionTypingContext context,
-            @NotNull ExpressionTypingInternals facade
+        @Nullable KtExpression expression,
+        @NotNull ExpressionTypingContext context,
+        @NotNull ExpressionTypingInternals facade
     ) {
         return expression != null
                ? facade.getTypeInfo(expression, context)

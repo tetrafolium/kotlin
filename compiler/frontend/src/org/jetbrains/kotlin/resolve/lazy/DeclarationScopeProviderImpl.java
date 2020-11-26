@@ -34,8 +34,8 @@ public class DeclarationScopeProviderImpl implements DeclarationScopeProvider {
     private final FileScopeProvider fileScopeProvider;
 
     public DeclarationScopeProviderImpl(
-            @NotNull LazyDeclarationResolver lazyDeclarationResolver,
-            @NotNull FileScopeProvider fileScopeProvider
+        @NotNull LazyDeclarationResolver lazyDeclarationResolver,
+        @NotNull FileScopeProvider fileScopeProvider
     ) {
         this.lazyDeclarationResolver = lazyDeclarationResolver;
         this.fileScopeProvider = fileScopeProvider;
@@ -47,7 +47,7 @@ public class DeclarationScopeProviderImpl implements DeclarationScopeProvider {
         KtDeclaration ktDeclaration = KtStubbedPsiUtil.getPsiOrStubParent(elementOfDeclaration, KtDeclaration.class, false);
 
         assert !(elementOfDeclaration instanceof KtDeclaration) || ktDeclaration == elementOfDeclaration :
-                "For JetDeclaration element getParentOfType() should return itself.";
+        "For JetDeclaration element getParentOfType() should return itself.";
         assert ktDeclaration != null : "Should be contained inside declaration.";
 
         KtDeclaration parentDeclaration = KtStubbedPsiUtil.getContainingDeclaration(ktDeclaration);
@@ -73,7 +73,7 @@ public class DeclarationScopeProviderImpl implements DeclarationScopeProvider {
             }
 
             if (ktDeclaration instanceof KtObjectDeclaration ||
-                ktDeclaration instanceof KtClass && !((KtClass) ktDeclaration).isInner()) {
+                    ktDeclaration instanceof KtClass && !((KtClass) ktDeclaration).isInner()) {
                 return parentClassDescriptor.getScopeForStaticMemberDeclarationResolution();
             }
 

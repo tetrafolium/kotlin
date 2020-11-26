@@ -181,9 +181,9 @@ public class SemanticWhitespaceAwarePsiBuilderImpl extends PsiBuilderAdapter imp
         if (!joinComplexTokens()) return super.getTokenText();
         IElementType tokenType = getTokenType();
         if (complexTokens.contains(tokenType)) {
-                if (tokenType == ELVIS) return "?:";
-                if (tokenType == SAFE_ACCESS) return "?.";
-            }
+            if (tokenType == ELVIS) return "?:";
+            if (tokenType == SAFE_ACCESS) return "?.";
+        }
         return super.getTokenText();
     }
 

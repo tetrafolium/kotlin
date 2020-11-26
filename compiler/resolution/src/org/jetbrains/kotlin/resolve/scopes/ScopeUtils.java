@@ -28,37 +28,37 @@ public final class ScopeUtils {
     private ScopeUtils() {}
 
     public static LexicalScope makeScopeForPropertyHeader(
-            @NotNull LexicalScope parent,
-            @NotNull PropertyDescriptor propertyDescriptor
+        @NotNull LexicalScope parent,
+        @NotNull PropertyDescriptor propertyDescriptor
     ) {
         return new LexicalScopeImpl(parent, propertyDescriptor, false, null, LexicalScopeKind.PROPERTY_HEADER,
                                     // redeclaration on type parameters should be reported early, see: DescriptorResolver.resolvePropertyDescriptor()
                                     LocalRedeclarationChecker.DO_NOTHING.INSTANCE,
-                                    handler -> {
-                                        for (TypeParameterDescriptor typeParameterDescriptor : propertyDescriptor.getTypeParameters()) {
-                                            handler.addClassifierDescriptor(typeParameterDescriptor);
-                                        }
-                                        return Unit.INSTANCE;
-                                    });
+        handler -> {
+            for (TypeParameterDescriptor typeParameterDescriptor : propertyDescriptor.getTypeParameters()) {
+                handler.addClassifierDescriptor(typeParameterDescriptor);
+            }
+            return Unit.INSTANCE;
+        });
     }
 
     @NotNull
     public static LexicalScope makeScopeForPropertyInitializer(
-            @NotNull LexicalScope propertyHeader,
-            @NotNull PropertyDescriptor propertyDescriptor
+        @NotNull LexicalScope propertyHeader,
+        @NotNull PropertyDescriptor propertyDescriptor
     ) {
         return new LexicalScopeImpl(propertyHeader, propertyDescriptor, false, null, LexicalScopeKind.PROPERTY_INITIALIZER_OR_DELEGATE);
     }
 
     @NotNull
     public static LexicalScope makeScopeForDelegateConventionFunctions(
-            @NotNull LexicalScope parent,
-            @NotNull VariableDescriptorWithAccessors variableDescriptor
+        @NotNull LexicalScope parent,
+        @NotNull VariableDescriptorWithAccessors variableDescriptor
     ) {
         // todo: very strange scope!
         return new LexicalScopeImpl(parent, variableDescriptor, true, variableDescriptor.getExtensionReceiverParameter(),
                                     LexicalScopeKind.PROPERTY_DELEGATE_METHOD
-        );
+                                   );
     }
 
     // TestOnly

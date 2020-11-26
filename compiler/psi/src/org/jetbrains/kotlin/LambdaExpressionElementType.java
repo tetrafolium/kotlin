@@ -44,7 +44,7 @@ class LambdaExpressionElementType extends IErrorCounterReparseableElementType {
     public ASTNode parseContents(ASTNode chameleon) {
         Project project = chameleon.getPsi().getProject();
         PsiBuilder builder = PsiBuilderFactory.getInstance().createBuilder(
-                project, chameleon, null, KotlinLanguage.INSTANCE, chameleon.getChars());
+                                 project, chameleon, null, KotlinLanguage.INSTANCE, chameleon.getChars());
         return KotlinParser.parseLambdaExpression(builder).getFirstChildNode();
     }
 

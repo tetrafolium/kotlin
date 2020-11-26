@@ -97,18 +97,18 @@ public class CallTransformer {
         public final boolean itIsVariableAsFunctionCall;
 
         public CallForImplicitInvoke(
-                @Nullable Receiver explicitExtensionReceiver,
-                @NotNull ExpressionReceiver calleeExpressionAsDispatchReceiver,
-                @NotNull Call call,
-                boolean functionCall
+            @Nullable Receiver explicitExtensionReceiver,
+            @NotNull ExpressionReceiver calleeExpressionAsDispatchReceiver,
+            @NotNull Call call,
+            boolean functionCall
         ) {
             super(call);
             this.outerCall = call;
             this.explicitExtensionReceiver = explicitExtensionReceiver;
             this.calleeExpressionAsDispatchReceiver = calleeExpressionAsDispatchReceiver;
             this.fakeInvokeExpression =
-                    (KtSimpleNameExpression) KtPsiFactoryKt.KtPsiFactory(call.getCallElement(), false)
-                            .createExpression(OperatorNameConventions.INVOKE.asString());
+                (KtSimpleNameExpression) KtPsiFactoryKt.KtPsiFactory(call.getCallElement(), false)
+                .createExpression(OperatorNameConventions.INVOKE.asString());
             itIsVariableAsFunctionCall = functionCall;
         }
 

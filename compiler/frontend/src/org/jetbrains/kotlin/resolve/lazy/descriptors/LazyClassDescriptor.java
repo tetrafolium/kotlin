@@ -103,16 +103,16 @@ public class LazyClassDescriptor extends ClassDescriptorBase implements ClassDes
     private final NotNullLazyValue<Collection<ClassDescriptor>> sealedSubclasses;
 
     public LazyClassDescriptor(
-            @NotNull LazyClassContext c,
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull Name name,
-            @NotNull KtClassLikeInfo classLikeInfo,
-            boolean isExternal
+        @NotNull LazyClassContext c,
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull Name name,
+        @NotNull KtClassLikeInfo classLikeInfo,
+        boolean isExternal
     ) {
         super(c.getStorageManager(), containingDeclaration, name,
               KotlinSourceElementKt.toSourceElement(classLikeInfo.getCorrespondingClassOrObject()),
               isExternal
-        );
+             );
         this.c = c;
 
         classOrObject = classLikeInfo.getCorrespondingClassOrObject();
@@ -140,8 +140,8 @@ public class LazyClassDescriptor extends ClassDescriptorBase implements ClassDes
         else {
             Modality defaultModality = kind == ClassKind.INTERFACE ? Modality.ABSTRACT : Modality.FINAL;
             this.modality = storageManager.createLazyValue(
-                    () -> resolveModalityFromModifiers(classOrObject, defaultModality, c.getTrace().getBindingContext(),
-                                                       null, /* allowSealed = */ true));
+                                () -> resolveModalityFromModifiers(classOrObject, defaultModality, c.getTrace().getBindingContext(),
+                                        null, /* allowSealed = */ true));
         }
 
         boolean isLocal = classOrObject != null && KtPsiUtil.isLocal(classOrObject);
@@ -166,18 +166,18 @@ public class LazyClassDescriptor extends ClassDescriptorBase implements ClassDes
         }
         if (!annotationEntries.isEmpty()) {
             this.annotations = new LazyAnnotations(
-                    new LazyAnnotationsContext(
-                            c.getAnnotationResolver(),
-                            storageManager,
-                            c.getTrace()
-                    ) {
-                        @NotNull
-                        @Override
-                        public LexicalScope getScope() {
-                            return getOuterScope();
-                        }
-                    },
-                    annotationEntries
+                new LazyAnnotationsContext(
+                    c.getAnnotationResolver(),
+                    storageManager,
+                    c.getTrace()
+            ) {
+                @NotNull
+                @Override
+                public LexicalScope getScope() {
+                    return getOuterScope();
+                }
+            },
+            annotationEntries
             );
         }
         else {
@@ -190,24 +190,24 @@ public class LazyClassDescriptor extends ClassDescriptorBase implements ClassDes
         }
         else {
             this.danglingAnnotations = new LazyAnnotations(
-                    new LazyAnnotationsContext(
-                            c.getAnnotationResolver(),
-                            storageManager,
-                            c.getTrace()
-                    ) {
-                        @NotNull
-                        @Override
-                        public LexicalScope getScope() {
-                            return getScopeForMemberDeclarationResolution();
-                        }
-                    },
-                    jetDanglingAnnotations
+                new LazyAnnotationsContext(
+                    c.getAnnotationResolver(),
+                    storageManager,
+                    c.getTrace()
+            ) {
+                @NotNull
+                @Override
+                public LexicalScope getScope() {
+                    return getScopeForMemberDeclarationResolution();
+                }
+            },
+            jetDanglingAnnotations
             );
         }
 
         this.companionObjectDescriptor = storageManager.createNullableLazyValue(
-                () -> computeCompanionObjectDescriptor(getCompanionObjectIfAllowed())
-        );
+                                             () -> computeCompanionObjectDescriptor(getCompanionObjectIfAllowed())
+                                         );
         this.extraCompanionObjectDescriptors = storageManager.createMemoizedFunction(this::computeCompanionObjectDescriptor);
         this.forceResolveAllContents = storageManager.createRecursionTolerantNullableLazyValue(() -> {
             doForceResolveAllContents();
@@ -215,10 +215,10 @@ public class LazyClassDescriptor extends ClassDescriptorBase implements ClassDes
         }, null);
 
         this.resolutionScopesSupport = new ClassResolutionScopesSupport(
-                this,
-                storageManager,
-                c.getLanguageVersionSettings(),
-                this::getOuterScope
+            this,
+            storageManager,
+            c.getLanguageVersionSettings(),
+            this::getOuterScope
         );
 
         this.parameters = c.getStorageManager().createLazyValue(() -> {
@@ -247,9 +247,9 @@ public class LazyClassDescriptor extends ClassDescriptorBase implements ClassDes
 
         this.scopeForInitializerResolution = storageManager.createLazyValue(
                 () -> ClassResolutionScopesSupportKt.scopeForInitializerResolution(
-                        this, createInitializerScopeParent(), classLikeInfo.getPrimaryConstructorParameters()
+                    this, createInitializerScopeParent(), classLikeInfo.getPrimaryConstructorParameters()
                 )
-        );
+                                             );
 
         // TODO: only consider classes from the same file, not the whole package fragment
         this.sealedSubclasses = storageManager.createLazyValue(() -> DescriptorUtilsKt.computeSealedSubclasses(this));
@@ -270,8 +270,8 @@ public class LazyClassDescriptor extends ClassDescriptorBase implements ClassDes
         if (primaryConstructor != null) return primaryConstructor;
 
         return new FunctionDescriptorImpl(
-                LazyClassDescriptor.this, null, Annotations.Companion.getEMPTY(), Name.special("<init-blocks>"),
-                CallableMemberDescriptor.Kind.SYNTHESIZED, SourceElement.NO_SOURCE
+                   LazyClassDescriptor.this, null, Annotations.Companion.getEMPTY(), Name.special("<init-blocks>"),
+                   CallableMemberDescriptor.Kind.SYNTHESIZED, SourceElement.NO_SOURCE
         ) {
             {
                 initialize(null, null, Collections.emptyList(), Collections.emptyList(),
@@ -281,12 +281,12 @@ public class LazyClassDescriptor extends ClassDescriptorBase implements ClassDes
             @NotNull
             @Override
             protected FunctionDescriptorImpl createSubstitutedCopy(
-                    @NotNull DeclarationDescriptor newOwner,
-                    @Nullable FunctionDescriptor original,
-                    @NotNull Kind kind,
-                    @Nullable Name newName,
-                    @NotNull Annotations annotations,
-                    @NotNull SourceElement source
+                @NotNull DeclarationDescriptor newOwner,
+                @Nullable FunctionDescriptor original,
+                @NotNull Kind kind,
+                @Nullable Name newName,
+                @NotNull Annotations annotations,
+                @NotNull SourceElement source
             ) {
                 throw new UnsupportedOperationException();
             }
@@ -296,8 +296,8 @@ public class LazyClassDescriptor extends ClassDescriptorBase implements ClassDes
     // NOTE: Called from constructor!
     @NotNull
     protected LazyClassMemberScope createMemberScope(
-            @NotNull LazyClassContext c,
-            @NotNull ClassMemberDeclarationProvider declarationProvider
+        @NotNull LazyClassContext c,
+        @NotNull ClassMemberDeclarationProvider declarationProvider
     ) {
         return new LazyClassMemberScope(c, declarationProvider, this, c.getTrace());
     }
@@ -354,10 +354,10 @@ public class LazyClassDescriptor extends ClassDescriptorBase implements ClassDes
     @SuppressWarnings("unchecked")
     public Collection<CallableMemberDescriptor> getDeclaredCallableMembers() {
         return (Collection) CollectionsKt.filter(
-                DescriptorUtils.getAllDescriptors(unsubstitutedMemberScope),
-                descriptor -> descriptor instanceof CallableMemberDescriptor
-                              && ((CallableMemberDescriptor) descriptor).getKind() != CallableMemberDescriptor.Kind.FAKE_OVERRIDE
-        );
+                   DescriptorUtils.getAllDescriptors(unsubstitutedMemberScope),
+                   descriptor -> descriptor instanceof CallableMemberDescriptor
+                   && ((CallableMemberDescriptor) descriptor).getKind() != CallableMemberDescriptor.Kind.FAKE_OVERRIDE
+               );
     }
 
     @NotNull
@@ -394,12 +394,12 @@ public class LazyClassDescriptor extends ClassDescriptorBase implements ClassDes
         KtObjectDeclaration allowedCompanionObject = getCompanionObjectIfAllowed();
 
         return CollectionsKt.map(
-                CollectionsKt.filter(
-                        declarationProvider.getOwnerInfo().getCompanionObjects(),
-                        companionObject -> companionObject != allowedCompanionObject
-                ),
-                extraCompanionObjectDescriptors
-        );
+                   CollectionsKt.filter(
+                       declarationProvider.getOwnerInfo().getCompanionObjects(),
+                       companionObject -> companionObject != allowedCompanionObject
+                   ),
+                   extraCompanionObjectDescriptors
+               );
     }
 
     @Nullable
@@ -581,8 +581,8 @@ public class LazyClassDescriptor extends ClassDescriptorBase implements ClassDes
 
     private class LazyClassTypeConstructor extends AbstractClassTypeConstructor {
         private final NotNullLazyValue<List<TypeParameterDescriptor>> parameters = c.getStorageManager().createLazyValue(
-                () -> TypeParameterUtilsKt.computeConstructorTypeParameters(LazyClassDescriptor.this)
-        );
+                    () -> TypeParameterUtilsKt.computeConstructorTypeParameters(LazyClassDescriptor.this)
+                );
 
         public LazyClassTypeConstructor() {
             super(LazyClassDescriptor.this.c.getStorageManager());
@@ -617,9 +617,9 @@ public class LazyClassDescriptor extends ClassDescriptorBase implements ClassDes
         }
 
         private void reportCyclicInheritanceHierarchyError(
-                @NotNull BindingTrace trace,
-                @NotNull ClassDescriptor classDescriptor,
-                @NotNull ClassDescriptor superclass
+            @NotNull BindingTrace trace,
+            @NotNull ClassDescriptor classDescriptor,
+            @NotNull ClassDescriptor superclass
         ) {
             PsiElement psiElement = DescriptorToSourceUtils.getSourceFromDescriptor(classDescriptor);
 
@@ -688,7 +688,7 @@ public class LazyClassDescriptor extends ClassDescriptorBase implements ClassDes
         }
 
         List<KotlinType> allSupertypes =
-                c.getDescriptorResolver().resolveSupertypes(getScopeForClassHeaderResolution(), this, classOrObject, c.getTrace());
+            c.getDescriptorResolver().resolveSupertypes(getScopeForClassHeaderResolution(), this, classOrObject, c.getTrace());
 
         return new ArrayList<>(CollectionsKt.filter(allSupertypes, VALID_SUPERTYPE));
     }

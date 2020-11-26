@@ -31,14 +31,14 @@ public class LocalVariableDescriptor extends VariableDescriptorWithInitializerIm
     private LocalVariableAccessorDescriptor.Setter setter;
 
     public LocalVariableDescriptor(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull Annotations annotations,
-            @NotNull Name name,
-            @Nullable KotlinType type,
-            boolean mutable,
-            boolean isDelegated,
-            boolean isLateInit,
-            @NotNull SourceElement source
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull Annotations annotations,
+        @NotNull Name name,
+        @Nullable KotlinType type,
+        boolean mutable,
+        boolean isDelegated,
+        boolean isLateInit,
+        @NotNull SourceElement source
     ) {
         super(containingDeclaration, annotations, name, type, mutable, source);
         this.isDelegated = isDelegated;
@@ -46,23 +46,23 @@ public class LocalVariableDescriptor extends VariableDescriptorWithInitializerIm
     }
 
     public LocalVariableDescriptor(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull Annotations annotations,
-            @NotNull Name name,
-            @Nullable KotlinType type,
-            boolean mutable,
-            boolean isDelegated,
-            @NotNull SourceElement source
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull Annotations annotations,
+        @NotNull Name name,
+        @Nullable KotlinType type,
+        boolean mutable,
+        boolean isDelegated,
+        @NotNull SourceElement source
     ) {
         this(containingDeclaration, annotations, name, type, mutable, isDelegated, false, source);
     }
 
     public LocalVariableDescriptor(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull Annotations annotations,
-            @NotNull Name name,
-            @Nullable KotlinType type,
-            @NotNull SourceElement source
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull Annotations annotations,
+        @NotNull Name name,
+        @Nullable KotlinType type,
+        @NotNull SourceElement source
     ) {
         this(containingDeclaration, annotations, name, type, false, false, false, source);
     }

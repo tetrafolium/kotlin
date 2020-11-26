@@ -68,10 +68,10 @@ public class SubstitutionUtils {
 
     // we use the mutability of the substitution map here
     private static void fillInDeepSubstitutor(
-            @NotNull KotlinType context,
-            @NotNull TypeSubstitutor substitutor,
-            @NotNull Map<TypeConstructor, TypeProjection> substitution,
-            @Nullable Multimap<TypeParameterDescriptor, TypeProjection> typeParameterMapping
+        @NotNull KotlinType context,
+        @NotNull TypeSubstitutor substitutor,
+        @NotNull Map<TypeConstructor, TypeProjection> substitution,
+        @Nullable Multimap<TypeParameterDescriptor, TypeProjection> typeParameterMapping
     ) {
         List<TypeParameterDescriptor> parameters = context.getConstructor().getParameters();
         List<TypeProjection> arguments = context.getArguments();

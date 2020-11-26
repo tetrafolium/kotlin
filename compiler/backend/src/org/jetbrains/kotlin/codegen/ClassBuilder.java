@@ -30,22 +30,22 @@ import org.jetbrains.org.objectweb.asm.MethodVisitor;
 public interface ClassBuilder {
     @NotNull
     FieldVisitor newField(
-            @NotNull JvmDeclarationOrigin origin,
-            int access,
-            @NotNull String name,
-            @NotNull String desc,
-            @Nullable String signature,
-            @Nullable Object value
+        @NotNull JvmDeclarationOrigin origin,
+        int access,
+        @NotNull String name,
+        @NotNull String desc,
+        @Nullable String signature,
+        @Nullable Object value
     );
 
     @NotNull
     MethodVisitor newMethod(
-            @NotNull JvmDeclarationOrigin origin,
-            int access,
-            @NotNull String name,
-            @NotNull String desc,
-            @Nullable String signature,
-            @Nullable String[] exceptions
+        @NotNull JvmDeclarationOrigin origin,
+        int access,
+        @NotNull String name,
+        @NotNull String desc,
+        @Nullable String signature,
+        @Nullable String[] exceptions
     );
 
     @NotNull
@@ -60,13 +60,13 @@ public interface ClassBuilder {
     ClassVisitor getVisitor();
 
     void defineClass(
-            @Nullable PsiElement origin,
-            int version,
-            int access,
-            @NotNull String name,
-            @Nullable String signature,
-            @NotNull String superName,
-            @NotNull String[] interfaces
+        @Nullable PsiElement origin,
+        int version,
+        int access,
+        @NotNull String name,
+        @Nullable String signature,
+        @NotNull String superName,
+        @NotNull String[] interfaces
     );
 
     void visitSource(@NotNull String name, @Nullable String debug);

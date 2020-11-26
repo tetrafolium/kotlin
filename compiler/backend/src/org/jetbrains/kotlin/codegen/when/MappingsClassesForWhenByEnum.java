@@ -43,9 +43,9 @@ public class MappingsClassesForWhenByEnum {
 
         if (!generatedMappingClasses.contains(mapping.getMappingsClassInternalName())) {
             List<WhenByEnumsMapping> mappings = state.getBindingContext().get(
-                    CodegenBinding.MAPPINGS_FOR_WHENS_BY_ENUM_IN_CLASS_FILE,
-                    mapping.getOuterClassInternalNameForExpression()
-            );
+                                                    CodegenBinding.MAPPINGS_FOR_WHENS_BY_ENUM_IN_CLASS_FILE,
+                                                    mapping.getOuterClassInternalNameForExpression()
+                                                );
 
             assert mappings != null : "guaranteed by usage contract of EnumSwitchCodegen";
 

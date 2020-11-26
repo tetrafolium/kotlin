@@ -24,12 +24,12 @@ public class CallReceiver extends StackValue {
     private final KotlinType secondReceiverKotlinType;
 
     private CallReceiver(
-            @NotNull StackValue dispatchReceiver,
-            @NotNull StackValue extensionReceiver,
-            @NotNull Type type,
-            @Nullable KotlinType kotlinType,
-            @Nullable Type secondReceiverType,
-            @Nullable KotlinType secondReceiverKotlinType
+        @NotNull StackValue dispatchReceiver,
+        @NotNull StackValue extensionReceiver,
+        @NotNull Type type,
+        @Nullable KotlinType kotlinType,
+        @Nullable Type secondReceiverType,
+        @Nullable KotlinType secondReceiverKotlinType
     ) {
         super(type, kotlinType, dispatchReceiver.canHaveSideEffects() || extensionReceiver.canHaveSideEffects());
         this.dispatchReceiver = dispatchReceiver;
@@ -43,13 +43,13 @@ public class CallReceiver extends StackValue {
     }
 
     public static StackValue generateCallReceiver(
-            @NotNull ResolvedCall<?> resolvedCall,
-            @NotNull ExpressionCodegen codegen,
-            @Nullable Callable callableMethod,
-            @Nullable ReceiverParameterDescriptor dispatchReceiverParameter,
-            @NotNull StackValue dispatchReceiver,
-            @Nullable ReceiverParameterDescriptor extensionReceiverParameter,
-            @NotNull StackValue extensionReceiver
+        @NotNull ResolvedCall<?> resolvedCall,
+        @NotNull ExpressionCodegen codegen,
+        @Nullable Callable callableMethod,
+        @Nullable ReceiverParameterDescriptor dispatchReceiverParameter,
+        @NotNull StackValue dispatchReceiver,
+        @Nullable ReceiverParameterDescriptor extensionReceiverParameter,
+        @NotNull StackValue extensionReceiver
     ) {
         KotlinTypeMapper typeMapper = codegen.typeMapper;
         GenerationState state = codegen.getState();
@@ -59,12 +59,12 @@ public class CallReceiver extends StackValue {
         KotlinType secondReceiverKotlinType = null;
         if (extensionReceiverParameter != null) {
             jvmKotlinType = calcExtensionReceiverType(
-                    resolvedCall, extensionReceiverParameter, typeMapper, callableMethod, state
-            );
+                                resolvedCall, extensionReceiverParameter, typeMapper, callableMethod, state
+                            );
             if (dispatchReceiverParameter != null) {
                 JvmKotlinType dispatchReceiverInfo = calcDispatchReceiverType(
                         resolvedCall, dispatchReceiverParameter, typeMapper, callableMethod
-                );
+                                                     );
                 secondReceiverType = dispatchReceiverInfo.getType();
                 secondReceiverKotlinType = dispatchReceiverInfo.getKotlinType();
             }
@@ -84,16 +84,16 @@ public class CallReceiver extends StackValue {
 
 
         return new CallReceiver(
-                dispatchReceiver, extensionReceiver, jvmKotlinType.getType(),
-                jvmKotlinType.getKotlinType(), secondReceiverType, secondReceiverKotlinType
-        );
+                   dispatchReceiver, extensionReceiver, jvmKotlinType.getType(),
+                   jvmKotlinType.getKotlinType(), secondReceiverType, secondReceiverKotlinType
+               );
     }
 
     private static JvmKotlinType calcDispatchReceiverType(
-            @NotNull ResolvedCall<?> resolvedCall,
-            @Nullable ReceiverParameterDescriptor dispatchReceiver,
-            @NotNull KotlinTypeMapper typeMapper,
-            @Nullable Callable callableMethod
+        @NotNull ResolvedCall<?> resolvedCall,
+        @Nullable ReceiverParameterDescriptor dispatchReceiver,
+        @NotNull KotlinTypeMapper typeMapper,
+        @Nullable Callable callableMethod
     ) {
         if (dispatchReceiver == null) return null;
 
@@ -127,20 +127,20 @@ public class CallReceiver extends StackValue {
     }
 
     private static JvmKotlinType calcExtensionReceiverType(
-            @NotNull ResolvedCall<?> resolvedCall,
-            @Nullable ReceiverParameterDescriptor extensionReceiver,
-            @NotNull KotlinTypeMapper typeMapper,
-            @Nullable Callable callableMethod,
-            @NotNull GenerationState state
+        @NotNull ResolvedCall<?> resolvedCall,
+        @Nullable ReceiverParameterDescriptor extensionReceiver,
+        @NotNull KotlinTypeMapper typeMapper,
+        @Nullable Callable callableMethod,
+        @NotNull GenerationState state
     ) {
         if (extensionReceiver == null) return null;
 
         CallableDescriptor descriptor = resolvedCall.getCandidateDescriptor();
 
         if (descriptor instanceof PropertyDescriptor &&
-            // hackaround: boxing changes behaviour of T.javaClass intrinsic
-            state.getIntrinsics().getIntrinsic((PropertyDescriptor) descriptor) != JavaClassProperty.INSTANCE
-        ) {
+                // hackaround: boxing changes behaviour of T.javaClass intrinsic
+                state.getIntrinsics().getIntrinsic((PropertyDescriptor) descriptor) != JavaClassProperty.INSTANCE
+           ) {
             ReceiverParameterDescriptor receiverCandidate = descriptor.getExtensionReceiverParameter();
             assert receiverCandidate != null;
             return new JvmKotlinType(typeMapper.mapType(receiverCandidate.getType()), receiverCandidate.getType());
@@ -163,17 +163,17 @@ public class CallReceiver extends StackValue {
         Type dispatchReceiverType = calcDispatchReceiver(secondReceiverType, hasExtensionReceiver, dispatchReceiver.type, type);
         KotlinType dispatchReceiverKotlinType = calcDispatchReceiver(
                 secondReceiverKotlinType, hasExtensionReceiver, dispatchReceiver.kotlinType, kotlinType
-        );
+                                                );
 
         dispatchReceiver.put(dispatchReceiverType, dispatchReceiverKotlinType, v);
 
         currentExtensionReceiver
-                .moveToTopOfStack(
-                        hasExtensionReceiver ? type : currentExtensionReceiver.type,
-                        hasExtensionReceiver ? kotlinType : currentExtensionReceiver.kotlinType,
-                        v,
-                        dispatchReceiverType.getSize()
-                );
+        .moveToTopOfStack(
+            hasExtensionReceiver ? type : currentExtensionReceiver.type,
+            hasExtensionReceiver ? kotlinType : currentExtensionReceiver.kotlinType,
+            v,
+            dispatchReceiverType.getSize()
+        );
     }
 
     private static <T> T calcDispatchReceiver(T secondType, boolean hasExtensionReceiver, T dispatchReceiverType, T defaultType) {

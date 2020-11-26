@@ -41,9 +41,9 @@ public class KtParameterElementType extends KtStubElementType<KotlinParameterStu
         FqName fqName = psi.getFqName();
         StringRef fqNameRef = StringRef.fromString(fqName != null ? fqName.asString() : null);
         return new KotlinParameterStubImpl(
-                (StubElement<?>) parentStub, fqNameRef, StringRef.fromString(psi.getName()),
-                psi.isMutable(), psi.hasValOrVar(), psi.hasDefaultValue()
-        );
+                   (StubElement<?>) parentStub, fqNameRef, StringRef.fromString(psi.getName()),
+                   psi.isMutable(), psi.hasValOrVar(), psi.hasDefaultValue()
+               );
     }
 
     @Override

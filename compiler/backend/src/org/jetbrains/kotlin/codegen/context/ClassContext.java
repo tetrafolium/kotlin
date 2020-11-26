@@ -21,11 +21,11 @@ public class ClassContext extends FieldOwnerContext<ClassDescriptor> {
     private final KotlinTypeMapper typeMapper;
 
     public ClassContext(
-            @NotNull KotlinTypeMapper typeMapper,
-            @NotNull ClassDescriptor contextDescriptor,
-            @NotNull OwnerKind contextKind,
-            @Nullable CodegenContext parentContext,
-            @Nullable LocalLookup localLookup
+        @NotNull KotlinTypeMapper typeMapper,
+        @NotNull ClassDescriptor contextDescriptor,
+        @NotNull OwnerKind contextKind,
+        @Nullable CodegenContext parentContext,
+        @Nullable LocalLookup localLookup
     ) {
         super(contextDescriptor, contextKind, parentContext, typeMapper.getBindingContext().get(CLOSURE, contextDescriptor),
               contextDescriptor, localLookup);
@@ -43,14 +43,14 @@ public class ClassContext extends FieldOwnerContext<ClassDescriptor> {
 
         SimpleType enclosingClassType = enclosingClass.getDefaultType();
         return StackValue.field(
-                typeMapper.mapType(enclosingClassType),
-                enclosingClassType,
-                typeMapper.mapType(getContextDescriptor()),
-                CAPTURED_THIS_FIELD,
-                /* isStatic = */ false,
-                StackValue.LOCAL_0,
-                enclosingClass
-        );
+                   typeMapper.mapType(enclosingClassType),
+                   enclosingClassType,
+                   typeMapper.mapType(getContextDescriptor()),
+                   CAPTURED_THIS_FIELD,
+                   /* isStatic = */ false,
+                   StackValue.LOCAL_0,
+                   enclosingClass
+               );
     }
 
     @Nullable

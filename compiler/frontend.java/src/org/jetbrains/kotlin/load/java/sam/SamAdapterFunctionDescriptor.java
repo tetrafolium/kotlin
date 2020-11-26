@@ -34,10 +34,10 @@ import org.jetbrains.kotlin.name.Name;
     }
 
     private SamAdapterFunctionDescriptor(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @Nullable SimpleFunctionDescriptor original,
-            @NotNull Kind kind,
-            @NotNull JavaMethodDescriptor declaration
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @Nullable SimpleFunctionDescriptor original,
+        @NotNull Kind kind,
+        @NotNull JavaMethodDescriptor declaration
     ) {
         super(containingDeclaration, original, declaration.getAnnotations(), declaration.getName(), kind, declaration.getSource());
         this.declaration = declaration;
@@ -47,12 +47,12 @@ import org.jetbrains.kotlin.name.Name;
     @NotNull
     @Override
     protected JavaMethodDescriptor createSubstitutedCopy(
-            @NotNull DeclarationDescriptor newOwner,
-            @Nullable FunctionDescriptor original,
-            @NotNull Kind kind,
-            @Nullable Name newName,
-            @NotNull Annotations annotations,
-            @NotNull SourceElement source
+        @NotNull DeclarationDescriptor newOwner,
+        @Nullable FunctionDescriptor original,
+        @NotNull Kind kind,
+        @Nullable Name newName,
+        @NotNull Annotations annotations,
+        @NotNull SourceElement source
     ) {
         return new SamAdapterFunctionDescriptor(newOwner, (SimpleFunctionDescriptor) original, kind, declaration);
     }

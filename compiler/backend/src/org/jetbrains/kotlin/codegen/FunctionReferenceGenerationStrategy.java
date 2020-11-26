@@ -57,12 +57,12 @@ public class FunctionReferenceGenerationStrategy extends FunctionGenerationStrat
     private final boolean isInliningStrategy;
 
     public FunctionReferenceGenerationStrategy(
-            @NotNull GenerationState state,
-            @NotNull FunctionDescriptor functionDescriptor,
-            @NotNull ResolvedCall<?> resolvedCall,
-            @Nullable JvmKotlinType receiverJvmKotlinType,
-            @Nullable StackValue receiverValue,
-            boolean isInliningStrategy
+        @NotNull GenerationState state,
+        @NotNull FunctionDescriptor functionDescriptor,
+        @NotNull ResolvedCall<?> resolvedCall,
+        @Nullable JvmKotlinType receiverJvmKotlinType,
+        @Nullable StackValue receiverValue,
+        boolean isInliningStrategy
     ) {
         super(state);
         this.resolvedCall = resolvedCall;
@@ -80,8 +80,8 @@ public class FunctionReferenceGenerationStrategy extends FunctionGenerationStrat
         this.receiverValue = receiverValue;
         this.isInliningStrategy = isInliningStrategy;
         assert receiverType != null || receiverValue == null
-                : "A receiver value is provided for unbound function reference. Either this is a bound reference and you forgot " +
-                  "to pass receiverType, or you accidentally passed some receiverValue for a reference without receiver";
+        : "A receiver value is provided for unbound function reference. Either this is a bound reference and you forgot " +
+        "to pass receiverType, or you accidentally passed some receiverValue for a reference without receiver";
     }
 
     @Override
@@ -119,8 +119,8 @@ public class FunctionReferenceGenerationStrategy extends FunctionGenerationStrat
                             // If we've exhausted the argument list of the reference and we still have one vararg parameter left,
                             // we should use its default value if present, or simply an empty vararg instead
                             argumentMap.put(
-                                    parameter,
-                                    ArgumentsUtilsKt.hasDefaultValue(parameter) ? DefaultValueArgument.DEFAULT : new VarargValueArgument()
+                                parameter,
+                                ArgumentsUtilsKt.hasDefaultValue(parameter) ? DefaultValueArgument.DEFAULT : new VarargValueArgument()
                             );
                             continue;
                         }
@@ -137,8 +137,8 @@ public class FunctionReferenceGenerationStrategy extends FunctionGenerationStrat
                     }
                     else {
                         assert ArgumentsUtilsKt.hasDefaultValue(parameter) :
-                                "Parameter should be either vararg or expression or default: " + parameter +
-                                " (reference in: " + functionDescriptor.getContainingDeclaration() + ")";
+                        "Parameter should be either vararg or expression or default: " + parameter +
+                        " (reference in: " + functionDescriptor.getContainingDeclaration() + ")";
                         argumentMap.put(parameter, DefaultValueArgument.DEFAULT);
                     }
                 }
@@ -203,11 +203,11 @@ public class FunctionReferenceGenerationStrategy extends FunctionGenerationStrat
     }
 
     private void computeAndSaveArguments(
-            @NotNull List<? extends ValueArgument> fakeArguments, @NotNull ExpressionCodegen codegen, int receivers
+        @NotNull List<? extends ValueArgument> fakeArguments, @NotNull ExpressionCodegen codegen, int receivers
     ) {
         List<ValueParameterDescriptor> valueParameters = CollectionsKt.drop(functionDescriptor.getValueParameters(), receivers);
         assert valueParameters.size() == fakeArguments.size()
-                : functionDescriptor + ": " + valueParameters.size() + " != " + fakeArguments.size();
+        : functionDescriptor + ": " + valueParameters.size() + " != " + fakeArguments.size();
         for (int i = 0; i < valueParameters.size(); i++) {
             ValueParameterDescriptor parameter = valueParameters.get(i);
             ValueArgument fakeArgument = fakeArguments.get(i);
@@ -225,9 +225,9 @@ public class FunctionReferenceGenerationStrategy extends FunctionGenerationStrat
 
     @Nullable
     private ReceiverValue computeAndSaveReceiver(
-            @NotNull JvmMethodSignature signature,
-            @NotNull ExpressionCodegen codegen,
-            @Nullable ReceiverParameterDescriptor receiver
+        @NotNull JvmMethodSignature signature,
+        @NotNull ExpressionCodegen codegen,
+        @Nullable ReceiverParameterDescriptor receiver
     ) {
         if (receiver == null) return null;
 

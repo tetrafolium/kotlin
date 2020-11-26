@@ -28,7 +28,7 @@ import org.jetbrains.kotlin.psi.stubs.impl.KotlinPlaceHolderStubImpl;
 import java.io.IOException;
 
 public class KtPlaceHolderStubElementType<T extends KtElementImplStub<? extends StubElement<?>>> extends
-                                                                                                 KtStubElementType<KotlinPlaceHolderStub<T>, T> {
+    KtStubElementType<KotlinPlaceHolderStub<T>, T> {
     public KtPlaceHolderStubElementType(@NotNull @NonNls String debugName, @NotNull Class<T> psiClass) {
         super(debugName, psiClass, KotlinPlaceHolderStub.class);
     }

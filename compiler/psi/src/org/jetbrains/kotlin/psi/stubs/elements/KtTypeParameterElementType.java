@@ -38,9 +38,9 @@ public class KtTypeParameterElementType extends KtStubElementType<KotlinTypePara
     @Override
     public KotlinTypeParameterStub createStub(@NotNull KtTypeParameter psi, StubElement parentStub) {
         return new KotlinTypeParameterStubImpl(
-                (StubElement<?>) parentStub, StringRef.fromString(psi.getName()),
-                psi.getVariance() == Variance.IN_VARIANCE, psi.getVariance() == Variance.OUT_VARIANCE
-        );
+                   (StubElement<?>) parentStub, StringRef.fromString(psi.getName()),
+                   psi.getVariance() == Variance.IN_VARIANCE, psi.getVariance() == Variance.OUT_VARIANCE
+               );
     }
 
     @Override

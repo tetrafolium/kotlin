@@ -43,11 +43,11 @@ public class MethodContext extends CodegenContext<CallableMemberDescriptor> {
     private final boolean isDefaultFunctionContext;
 
     protected MethodContext(
-            @NotNull FunctionDescriptor functionDescriptor,
-            @NotNull OwnerKind contextKind,
-            @NotNull CodegenContext parentContext,
-            @Nullable MutableClosure closure,
-            boolean isDefaultFunctionContext
+        @NotNull FunctionDescriptor functionDescriptor,
+        @NotNull OwnerKind contextKind,
+        @NotNull CodegenContext parentContext,
+        @Nullable MutableClosure closure,
+        boolean isDefaultFunctionContext
     ) {
         super(JvmCodegenUtil.getDirectMember(functionDescriptor), contextKind, parentContext, closure,
               parentContext.hasThisDescriptor() ? parentContext.getThisDescriptor() : null, null);

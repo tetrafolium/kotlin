@@ -63,7 +63,7 @@ public class KtFileElementType extends IStubFileElementType<KotlinFileStub> {
 
     @Override
     public void serialize(@NotNull KotlinFileStub stub, @NotNull StubOutputStream dataStream)
-            throws IOException {
+    throws IOException {
         StubIndexService.getInstance().serializeFileStub(stub, dataStream);
     }
 

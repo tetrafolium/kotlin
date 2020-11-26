@@ -35,24 +35,24 @@ public class DeferredType extends WrappedType {
 
     @NotNull
     /*package private*/ static DeferredType create(
-            @NotNull StorageManager storageManager,
-            @NotNull BindingTrace trace,
-            @NotNull Function0<KotlinType> compute
+        @NotNull StorageManager storageManager,
+        @NotNull BindingTrace trace,
+        @NotNull Function0<KotlinType> compute
     ) {
         DeferredType deferredType = new DeferredType(storageManager.createLazyValue(compute));
         trace.record(DEFERRED_TYPE, new Box<>(deferredType));
         return deferredType;
     }
-    
+
     @NotNull
     /*package private*/ static DeferredType createRecursionIntolerant(
-            @NotNull StorageManager storageManager,
-            @NotNull BindingTrace trace,
-            @NotNull Function0<KotlinType> compute
+        @NotNull StorageManager storageManager,
+        @NotNull BindingTrace trace,
+        @NotNull Function0<KotlinType> compute
     ) {
         //noinspection unchecked
         DeferredType deferredType =
-                new DeferredType(storageManager.createLazyValueWithPostCompute(compute, RECURSION_PREVENTER, t -> null));
+            new DeferredType(storageManager.createLazyValueWithPostCompute(compute, RECURSION_PREVENTER, t -> null));
         trace.record(DEFERRED_TYPE, new Box<>(deferredType));
         return deferredType;
     }

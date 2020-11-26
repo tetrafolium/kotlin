@@ -84,9 +84,9 @@ public class InlineUtil {
     }
 
     public static boolean checkNonLocalReturnUsage(
-            @NotNull DeclarationDescriptor fromFunction,
-            @NotNull KtExpression startExpression,
-            @NotNull ResolutionContext<?> context
+        @NotNull DeclarationDescriptor fromFunction,
+        @NotNull KtExpression startExpression,
+        @NotNull ResolutionContext<?> context
     ) {
         PsiElement containingFunction = context.getContextParentOfType(startExpression, KtClassOrObject.class, KtDeclarationWithBody.class);
         if (containingFunction == null) {
@@ -94,16 +94,16 @@ public class InlineUtil {
         }
 
         return checkNonLocalReturnUsage(
-                fromFunction, context.trace.get(BindingContext.DECLARATION_TO_DESCRIPTOR, containingFunction), containingFunction,
-                context.trace.getBindingContext()
-        );
+                   fromFunction, context.trace.get(BindingContext.DECLARATION_TO_DESCRIPTOR, containingFunction), containingFunction,
+                   context.trace.getBindingContext()
+               );
     }
 
     public static boolean checkNonLocalReturnUsage(
-            @NotNull DeclarationDescriptor fromFunction,
-            @Nullable DeclarationDescriptor containingFunctionDescriptor,
-            @Nullable PsiElement containingFunction,
-            @NotNull BindingContext bindingContext
+        @NotNull DeclarationDescriptor fromFunction,
+        @Nullable DeclarationDescriptor containingFunctionDescriptor,
+        @Nullable PsiElement containingFunction,
+        @NotNull BindingContext bindingContext
     ) {
         if (containingFunctionDescriptor == null) return false;
 
@@ -123,9 +123,9 @@ public class InlineUtil {
     }
 
     public static boolean isInlinedArgument(
-            @NotNull KtFunction argument,
-            @NotNull BindingContext bindingContext,
-            boolean checkNonLocalReturn
+        @NotNull KtFunction argument,
+        @NotNull BindingContext bindingContext,
+        boolean checkNonLocalReturn
     ) {
         ValueParameterDescriptor descriptor = getInlineArgumentDescriptor(argument, bindingContext);
         if (descriptor != null) {
@@ -137,8 +137,8 @@ public class InlineUtil {
 
     @Nullable
     public static ValueParameterDescriptor getInlineArgumentDescriptor(
-            @NotNull KtFunction argument,
-            @NotNull BindingContext bindingContext
+        @NotNull KtFunction argument,
+        @NotNull BindingContext bindingContext
     ) {
         if (!canBeInlineArgument(argument)) return null;
 

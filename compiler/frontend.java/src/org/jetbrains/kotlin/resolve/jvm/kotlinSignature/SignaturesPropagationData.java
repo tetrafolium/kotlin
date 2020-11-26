@@ -45,28 +45,28 @@ import static org.jetbrains.kotlin.resolve.DescriptorUtils.getFqName;
 public class SignaturesPropagationData {
 
     private static final KotlinToJvmSignatureMapper SIGNATURE_MAPPER = ServiceLoader.load(
-            KotlinToJvmSignatureMapper.class,
-            KotlinToJvmSignatureMapper.class.getClassLoader()
-    ).iterator().next();
+                KotlinToJvmSignatureMapper.class,
+                KotlinToJvmSignatureMapper.class.getClassLoader()
+            ).iterator().next();
 
     private final ValueParameters modifiedValueParameters;
     private final List<String> signatureErrors = new ArrayList<>(0);
     private final List<FunctionDescriptor> superFunctions;
 
     public SignaturesPropagationData(
-            @NotNull ClassDescriptor containingClass,
-            @NotNull KotlinType autoReturnType, // type built by JavaTypeTransformer from Java signature and @NotNull annotations
-            @Nullable KotlinType receiverType,
-            @NotNull List<ValueParameterDescriptor> autoValueParameters, // descriptors built by parameters resolver
-            @NotNull List<TypeParameterDescriptor> autoTypeParameters, // descriptors built by signature resolver
-            @NotNull JavaMethod method
+        @NotNull ClassDescriptor containingClass,
+        @NotNull KotlinType autoReturnType, // type built by JavaTypeTransformer from Java signature and @NotNull annotations
+        @Nullable KotlinType receiverType,
+        @NotNull List<ValueParameterDescriptor> autoValueParameters, // descriptors built by parameters resolver
+        @NotNull List<TypeParameterDescriptor> autoTypeParameters, // descriptors built by signature resolver
+        @NotNull JavaMethod method
     ) {
         assert receiverType == null : "Parameters before propagation have receiver type," +
-                                      " but propagation should be disabled for functions compiled from Kotlin in class: " +
-                                      DescriptorUtils.getFqName(containingClass);
+        " but propagation should be disabled for functions compiled from Kotlin in class: " +
+        DescriptorUtils.getFqName(containingClass);
 
         JavaMethodDescriptor autoMethodDescriptor =
-                createAutoMethodDescriptor(containingClass, method, autoReturnType, autoValueParameters, autoTypeParameters);
+            createAutoMethodDescriptor(containingClass, method, autoReturnType, autoValueParameters, autoTypeParameters);
 
         boolean hasStableParameterNames = autoValueParameters.stream().allMatch(it -> UtilKt.getParameterNameAnnotation(it) != null);
 
@@ -78,26 +78,26 @@ public class SignaturesPropagationData {
 
     @NotNull
     private static JavaMethodDescriptor createAutoMethodDescriptor(
-            @NotNull ClassDescriptor containingClass,
-            @NotNull JavaMethod method, KotlinType autoReturnType,
-            @NotNull List<ValueParameterDescriptor> autoValueParameters,
-            @NotNull List<TypeParameterDescriptor> autoTypeParameters
+        @NotNull ClassDescriptor containingClass,
+        @NotNull JavaMethod method, KotlinType autoReturnType,
+        @NotNull List<ValueParameterDescriptor> autoValueParameters,
+        @NotNull List<TypeParameterDescriptor> autoTypeParameters
     ) {
         JavaMethodDescriptor autoMethodDescriptor = JavaMethodDescriptor.createJavaMethod(
-                containingClass,
-                Annotations.Companion.getEMPTY(),
-                method.getName(),
-                //TODO: what to do?
-                SourceElement.NO_SOURCE
-        );
+                    containingClass,
+                    Annotations.Companion.getEMPTY(),
+                    method.getName(),
+                    //TODO: what to do?
+                    SourceElement.NO_SOURCE
+                );
         autoMethodDescriptor.initialize(
-                null,
-                containingClass.getThisAsReceiverParameter(),
-                autoTypeParameters,
-                autoValueParameters,
-                autoReturnType,
-                Modality.OPEN,
-                Visibilities.PUBLIC
+            null,
+            containingClass.getThisAsReceiverParameter(),
+            autoTypeParameters,
+            autoValueParameters,
+            autoReturnType,
+            Modality.OPEN,
+            Visibilities.PUBLIC
         );
         return autoMethodDescriptor;
     }
@@ -123,8 +123,8 @@ public class SignaturesPropagationData {
     }
 
     private ValueParameters modifyValueParametersAccordingToSuperMethods(
-            @NotNull List<ValueParameterDescriptor> parameters,
-            boolean annotatedWithParameterName
+        @NotNull List<ValueParameterDescriptor> parameters,
+        boolean annotatedWithParameterName
     ) {
         KotlinType resultReceiverType = null;
         List<ValueParameterDescriptor> resultParameters = new ArrayList<>(parameters.size());
@@ -134,18 +134,18 @@ public class SignaturesPropagationData {
         for (ValueParameterDescriptor originalParam : parameters) {
             int originalIndex = originalParam.getIndex();
             List<TypeAndName> typesFromSuperMethods = CollectionsKt.map(
-                    superFunctions,
-                    superFunction -> {
-                        ReceiverParameterDescriptor receiver = superFunction.getExtensionReceiverParameter();
-                        int index = receiver != null ? originalIndex - 1 : originalIndex;
-                        if (index == -1) {
-                            assert receiver != null : "can't happen: index is -1, while function is not extension";
-                            return new TypeAndName(receiver.getType(), originalParam.getName());
-                        }
-                        ValueParameterDescriptor parameter = superFunction.getValueParameters().get(index);
-                        return new TypeAndName(parameter.getType(), parameter.getName());
-                    }
-            );
+                        superFunctions,
+            superFunction -> {
+                ReceiverParameterDescriptor receiver = superFunction.getExtensionReceiverParameter();
+                int index = receiver != null ? originalIndex - 1 : originalIndex;
+                if (index == -1) {
+                    assert receiver != null : "can't happen: index is -1, while function is not extension";
+                    return new TypeAndName(receiver.getType(), originalParam.getName());
+                }
+                ValueParameterDescriptor parameter = superFunction.getValueParameters().get(index);
+                return new TypeAndName(parameter.getType(), parameter.getName());
+            }
+                    );
 
             VarargCheckResult varargCheckResult = checkVarargInSuperFunctions(originalParam);
 
@@ -170,31 +170,31 @@ public class SignaturesPropagationData {
                 boolean shouldTakeOldName = currentName == null && stableName != null;
 
                 resultParameters.add(new ValueParameterDescriptorImpl(
-                        originalParam.getContainingDeclaration(),
-                        null,
-                        shouldBeExtension ? originalIndex - 1 : originalIndex,
-                        originalParam.getAnnotations(),
-                        shouldTakeOldName ? stableName : originalParam.getName(),
-                        altType,
-                        originalParam.declaresDefaultValue(),
-                        originalParam.isCrossinline(),
-                        originalParam.isNoinline(),
-                        varargCheckResult.isVararg ? DescriptorUtilsKt.getBuiltIns(originalParam).getArrayElementType(altType) : null,
-                        SourceElement.NO_SOURCE
-                ));
+                                         originalParam.getContainingDeclaration(),
+                                         null,
+                                         shouldBeExtension ? originalIndex - 1 : originalIndex,
+                                         originalParam.getAnnotations(),
+                                         shouldTakeOldName ? stableName : originalParam.getName(),
+                                         altType,
+                                         originalParam.declaresDefaultValue(),
+                                         originalParam.isCrossinline(),
+                                         originalParam.isNoinline(),
+                                         varargCheckResult.isVararg ? DescriptorUtilsKt.getBuiltIns(originalParam).getArrayElementType(altType) : null,
+                                         SourceElement.NO_SOURCE
+                                     ));
             }
         }
 
         boolean hasStableParameterNames =
-                annotatedWithParameterName || CollectionsKt.any(superFunctions, CallableDescriptor::hasStableParameterNames);
+            annotatedWithParameterName || CollectionsKt.any(superFunctions, CallableDescriptor::hasStableParameterNames);
 
         return new ValueParameters(resultReceiverType, resultParameters, hasStableParameterNames);
     }
 
     private static List<FunctionDescriptor> getSuperFunctionsForMethod(
-            @NotNull JavaMethod method,
-            @NotNull JavaMethodDescriptor autoMethodDescriptor,
-            @NotNull ClassDescriptor containingClass
+        @NotNull JavaMethod method,
+        @NotNull JavaMethodDescriptor autoMethodDescriptor,
+        @NotNull ClassDescriptor containingClass
     ) {
         List<FunctionDescriptor> superFunctions = Lists.newArrayList();
 
@@ -204,7 +204,7 @@ public class SignaturesPropagationData {
         boolean autoMethodContainsVararg = SignaturePropagationUtilKt.containsVarargs(autoMethodDescriptor);
         for (KotlinType supertype : containingClass.getTypeConstructor().getSupertypes()) {
             Collection<? extends SimpleFunctionDescriptor> superFunctionCandidates =
-                    supertype.getMemberScope().getContributedFunctions(name, NoLookupLocation.WHEN_GET_SUPER_MEMBERS);
+                supertype.getMemberScope().getContributedFunctions(name, NoLookupLocation.WHEN_GET_SUPER_MEMBERS);
 
             if (!autoMethodContainsVararg && !SignaturePropagationUtilKt.containsAnyNotTrivialSignature(superFunctionCandidates)) continue;
 
@@ -322,9 +322,9 @@ public class SignaturesPropagationData {
         private final boolean hasStableParameterNames;
 
         public ValueParameters(
-                @Nullable KotlinType receiverType,
-                @NotNull List<ValueParameterDescriptor> descriptors,
-                boolean hasStableParameterNames
+            @Nullable KotlinType receiverType,
+            @NotNull List<ValueParameterDescriptor> descriptors,
+            boolean hasStableParameterNames
         ) {
             this.receiverType = receiverType;
             this.descriptors = descriptors;

@@ -30,10 +30,10 @@ import static org.jetbrains.kotlin.diagnostics.Errors.PLATFORM_CLASS_MAPPED_TO_K
 
 public class PlatformClassesMappedToKotlinChecker {
     public static void checkPlatformClassesMappedToKotlin(
-            @NotNull PlatformToKotlinClassMap platformToKotlinMap,
-            @NotNull BindingTrace trace,
-            @NotNull KtImportDirective importDirective,
-            @NotNull Collection<? extends DeclarationDescriptor> descriptors
+        @NotNull PlatformToKotlinClassMap platformToKotlinMap,
+        @NotNull BindingTrace trace,
+        @NotNull KtImportDirective importDirective,
+        @NotNull Collection<? extends DeclarationDescriptor> descriptors
     ) {
         KtExpression importedReference = importDirective.getImportedReference();
         if (importedReference != null) {
@@ -44,10 +44,10 @@ public class PlatformClassesMappedToKotlinChecker {
     }
 
     public static void reportPlatformClassMappedToKotlin(
-            @NotNull PlatformToKotlinClassMap platformToKotlinMap,
-            @NotNull BindingTrace trace,
-            @NotNull KtElement element,
-            @NotNull DeclarationDescriptor descriptor
+        @NotNull PlatformToKotlinClassMap platformToKotlinMap,
+        @NotNull BindingTrace trace,
+        @NotNull KtElement element,
+        @NotNull DeclarationDescriptor descriptor
     ) {
         if (!(descriptor instanceof ClassDescriptor)) return;
 

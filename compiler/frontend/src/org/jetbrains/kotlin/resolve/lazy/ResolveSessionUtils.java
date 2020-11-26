@@ -49,9 +49,9 @@ public class ResolveSessionUtils {
 
     @NotNull
     private static Collection<ClassDescriptor> getClassOrObjectDescriptorsByFqName(
-            @NotNull ModuleDescriptor module,
-            @NotNull FqName fqName,
-            @NotNull Predicate<ClassDescriptor> filter
+        @NotNull ModuleDescriptor module,
+        @NotNull FqName fqName,
+        @NotNull Predicate<ClassDescriptor> filter
     ) {
         if (fqName.isRoot()) return Collections.emptyList();
 

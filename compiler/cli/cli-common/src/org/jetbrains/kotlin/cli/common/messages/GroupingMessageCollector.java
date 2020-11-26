@@ -46,9 +46,9 @@ public class GroupingMessageCollector implements MessageCollector {
 
     @Override
     public void report(
-            @NotNull CompilerMessageSeverity severity,
-            @NotNull String message,
-            @Nullable CompilerMessageLocation location
+        @NotNull CompilerMessageSeverity severity,
+        @NotNull String message,
+        @Nullable CompilerMessageLocation location
     ) {
         if (CompilerMessageSeverity.VERBOSE.contains(severity)) {
             delegate.report(severity, message, location);
@@ -79,7 +79,7 @@ public class GroupingMessageCollector implements MessageCollector {
         }
 
         List<CompilerMessageLocation> sortedKeys =
-                CollectionsKt.sortedWith(groupedMessages.keySet(), Comparator.nullsFirst(CompilerMessageLocationComparator.INSTANCE));
+            CollectionsKt.sortedWith(groupedMessages.keySet(), Comparator.nullsFirst(CompilerMessageLocationComparator.INSTANCE));
         for (CompilerMessageLocation location : sortedKeys) {
             for (Message message : groupedMessages.get(location)) {
                 if (!hasExplicitErrors || message.severity.isError() || message.severity == CompilerMessageSeverity.STRONG_WARNING) {

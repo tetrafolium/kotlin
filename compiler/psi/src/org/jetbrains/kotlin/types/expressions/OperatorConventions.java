@@ -42,8 +42,8 @@ public class OperatorConventions {
 
 
     public static final ImmutableSet<Name> NUMBER_CONVERSIONS = ImmutableSet.of(
-            DOUBLE, FLOAT, LONG, INT, SHORT, BYTE, CHAR
-    );
+                DOUBLE, FLOAT, LONG, INT, SHORT, BYTE, CHAR
+            );
 
     // If you add new unary, binary or assignment operators, add it to OperatorConventionNames as well
 
@@ -70,22 +70,22 @@ public class OperatorConventions {
             .build();
 
     public static final ImmutableSet<KtSingleValueToken> NOT_OVERLOADABLE =
-            ImmutableSet.of(KtTokens.ANDAND, KtTokens.OROR, KtTokens.ELVIS, KtTokens.EQEQEQ, KtTokens.EXCLEQEQEQ);
-    
+        ImmutableSet.of(KtTokens.ANDAND, KtTokens.OROR, KtTokens.ELVIS, KtTokens.EQEQEQ, KtTokens.EXCLEQEQEQ);
+
     public static final ImmutableSet<KtSingleValueToken> INCREMENT_OPERATIONS =
-            ImmutableSet.of(KtTokens.PLUSPLUS, KtTokens.MINUSMINUS);
+        ImmutableSet.of(KtTokens.PLUSPLUS, KtTokens.MINUSMINUS);
 
     public static final ImmutableSet<KtSingleValueToken> COMPARISON_OPERATIONS =
-            ImmutableSet.of(KtTokens.LT, KtTokens.GT, KtTokens.LTEQ, KtTokens.GTEQ);
+        ImmutableSet.of(KtTokens.LT, KtTokens.GT, KtTokens.LTEQ, KtTokens.GTEQ);
 
     public static final ImmutableSet<KtSingleValueToken> EQUALS_OPERATIONS =
-            ImmutableSet.of(KtTokens.EQEQ, KtTokens.EXCLEQ);
+        ImmutableSet.of(KtTokens.EQEQ, KtTokens.EXCLEQ);
 
     public static final ImmutableSet<KtSingleValueToken> IDENTITY_EQUALS_OPERATIONS =
-            ImmutableSet.of(KtTokens.EQEQEQ, KtTokens.EXCLEQEQEQ);
+        ImmutableSet.of(KtTokens.EQEQEQ, KtTokens.EXCLEQEQEQ);
 
     public static final ImmutableSet<KtSingleValueToken> IN_OPERATIONS =
-            ImmutableSet.of(KtTokens.IN_KEYWORD, KtTokens.NOT_IN);
+        ImmutableSet.of(KtTokens.IN_KEYWORD, KtTokens.NOT_IN);
 
     public static final ImmutableBiMap<KtSingleValueToken, Name> ASSIGNMENT_OPERATIONS = ImmutableBiMap.<KtSingleValueToken, Name>builder()
             .put(KtTokens.MULTEQ, TIMES_ASSIGN)
@@ -104,9 +104,9 @@ public class OperatorConventions {
             .build();
 
     public static final ImmutableBiMap<KtSingleValueToken, Name> BOOLEAN_OPERATIONS = ImmutableBiMap.<KtSingleValueToken, Name>builder()
-             .put(KtTokens.ANDAND, AND)
-             .put(KtTokens.OROR, OR)
-             .build();
+            .put(KtTokens.ANDAND, AND)
+            .put(KtTokens.OROR, OR)
+            .build();
 
     public static final ImmutableSet<Name> CONVENTION_NAMES = ImmutableSet.<Name>builder()
             .add(GET, SET, INVOKE, CONTAINS, ITERATOR, NEXT, HAS_NEXT, EQUALS, COMPARE_TO, GET_VALUE, SET_VALUE)

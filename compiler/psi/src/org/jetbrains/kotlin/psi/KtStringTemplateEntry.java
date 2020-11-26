@@ -30,8 +30,8 @@ public abstract class KtStringTemplateEntry extends KtElementImplStub<KotlinPlac
     }
 
     public KtStringTemplateEntry(
-            @NotNull KotlinPlaceHolderWithTextStub<? extends KtStringTemplateEntry> stub,
-            @NotNull IStubElementType elementType
+        @NotNull KotlinPlaceHolderWithTextStub<? extends KtStringTemplateEntry> stub,
+        @NotNull IStubElementType elementType
     ) {
         super(stub, elementType);
     }

@@ -59,12 +59,12 @@ public class KtClassElementType extends KtStubElementType<KotlinClassStub, KtCla
         boolean isEnumEntry = psi instanceof KtEnumEntry;
         List<String> superNames = KtPsiUtilKt.getSuperNames(psi);
         return new KotlinClassStubImpl(
-                getStubType(isEnumEntry), (StubElement<?>) parentStub,
-                StringRef.fromString(fqName != null ? fqName.asString() : null),
-                StringRef.fromString(psi.getName()),
-                Utils.INSTANCE.wrapStrings(superNames),
-                psi.isInterface(), isEnumEntry, psi.isLocal(), psi.isTopLevel()
-        );
+                   getStubType(isEnumEntry), (StubElement<?>) parentStub,
+                   StringRef.fromString(fqName != null ? fqName.asString() : null),
+                   StringRef.fromString(psi.getName()),
+                   Utils.INSTANCE.wrapStrings(superNames),
+                   psi.isInterface(), isEnumEntry, psi.isLocal(), psi.isTopLevel()
+               );
     }
 
     @Override
@@ -101,9 +101,9 @@ public class KtClassElementType extends KtStubElementType<KotlinClassStub, KtCla
         }
 
         return new KotlinClassStubImpl(
-                getStubType(isEnumEntry), (StubElement<?>) parentStub, qualifiedName, name, superNames,
-                isTrait, isEnumEntry, isLocal, isTopLevel
-        );
+                   getStubType(isEnumEntry), (StubElement<?>) parentStub, qualifiedName, name, superNames,
+                   isTrait, isEnumEntry, isLocal, isTopLevel
+               );
     }
 
     @Override

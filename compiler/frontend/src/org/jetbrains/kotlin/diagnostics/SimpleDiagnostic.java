@@ -21,9 +21,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class SimpleDiagnostic<E extends PsiElement> extends AbstractDiagnostic<E> {
     public SimpleDiagnostic(
-            @NotNull E psiElement,
-            @NotNull DiagnosticFactory0<E> factory,
-            @NotNull Severity severity
+        @NotNull E psiElement,
+        @NotNull DiagnosticFactory0<E> factory,
+        @NotNull Severity severity
     ) {
         super(psiElement, factory, severity);
     }

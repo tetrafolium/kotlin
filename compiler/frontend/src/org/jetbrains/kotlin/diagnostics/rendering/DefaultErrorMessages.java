@@ -39,10 +39,10 @@ public class DefaultErrorMessages {
 
     private static final DiagnosticFactoryToRendererMap MAP = new DiagnosticFactoryToRendererMap("Default");
     private static final List<DiagnosticFactoryToRendererMap> RENDERER_MAPS =
-            CollectionsKt.plus(
-                    Collections.singletonList(MAP),
-                    CollectionsKt.map(ServiceLoader.load(Extension.class, DefaultErrorMessages.class.getClassLoader()), Extension::getMap)
-            );
+        CollectionsKt.plus(
+            Collections.singletonList(MAP),
+            CollectionsKt.map(ServiceLoader.load(Extension.class, DefaultErrorMessages.class.getClassLoader()), Extension::getMap)
+        );
 
     @NotNull
     @SuppressWarnings("unchecked")
@@ -99,16 +99,16 @@ public class DefaultErrorMessages {
                 RENDER_TYPE);
         MAP.put(TYPE_MISMATCH_DUE_TO_TYPE_PROJECTIONS,
                 "Type mismatch: inferred type is {1} but {0} was expected. Projected type {2} restricts use of {3}",
-                object -> {
-                    RenderingContext context =
-                            of(object.getExpectedType(), object.getExpressionType(), object.getReceiverType(), object.getCallableDescriptor());
-                    return new String[] {
-                            RENDER_TYPE.render(object.getExpectedType(), context),
-                            RENDER_TYPE.render(object.getExpressionType(), context),
-                            RENDER_TYPE.render(object.getReceiverType(), context),
-                            FQ_NAMES_IN_TYPES.render(object.getCallableDescriptor(), context)
-                    };
-                });
+        object -> {
+            RenderingContext context =
+            of(object.getExpectedType(), object.getExpressionType(), object.getReceiverType(), object.getCallableDescriptor());
+            return new String[] {
+                RENDER_TYPE.render(object.getExpectedType(), context),
+                RENDER_TYPE.render(object.getExpressionType(), context),
+                RENDER_TYPE.render(object.getReceiverType(), context),
+                FQ_NAMES_IN_TYPES.render(object.getCallableDescriptor(), context)
+            };
+        });
 
         MAP.put(MEMBER_PROJECTED_OUT, "Out-projected type ''{1}'' prohibits the use of ''{0}''", FQ_NAMES_IN_TYPES, RENDER_TYPE);
         MAP.put(INCOMPATIBLE_MODIFIERS, "Modifier ''{0}'' is incompatible with ''{1}''", TO_STRING, TO_STRING);
@@ -183,14 +183,14 @@ public class DefaultErrorMessages {
         MAP.put(NAMED_PARAMETER_NOT_FOUND, "Cannot find a parameter with this name: {0}", ELEMENT_TEXT);
         MAP.put(NAMED_ARGUMENTS_NOT_ALLOWED, "Named arguments are not allowed for {0}", (target, context) -> {
             switch (target) {
-                case NON_KOTLIN_FUNCTION:
-                    return "non-Kotlin functions";
-                case INVOKE_ON_FUNCTION_TYPE:
-                    return "function types";
-                case EXPECTED_CLASS_MEMBER:
-                    return "members of expected classes";
-                default:
-                    throw new AssertionError(target);
+            case NON_KOTLIN_FUNCTION:
+                return "non-Kotlin functions";
+            case INVOKE_ON_FUNCTION_TYPE:
+                return "function types";
+            case EXPECTED_CLASS_MEMBER:
+                return "members of expected classes";
+            default:
+                throw new AssertionError(target);
             }
         });
 
@@ -208,7 +208,7 @@ public class DefaultErrorMessages {
         MAP.put(COMPONENT_FUNCTION_ON_NULLABLE, "Not nullable value required to call ''{0}()'' function of destructuring declaration initializer", TO_STRING);
         MAP.put(COMPONENT_FUNCTION_AMBIGUITY, "Function ''{0}()'' is ambiguous for this expression: {1}", TO_STRING, AMBIGUOUS_CALLS);
         MAP.put(COMPONENT_FUNCTION_RETURN_TYPE_MISMATCH, "''{0}()'' function returns ''{1}'', but ''{2}'' is expected",
-                                                                                    TO_STRING, RENDER_TYPE, RENDER_TYPE);
+                TO_STRING, RENDER_TYPE, RENDER_TYPE);
 
         MAP.put(ABSTRACT_PROPERTY_IN_PRIMARY_CONSTRUCTOR_PARAMETERS, "This property cannot be declared abstract");
         MAP.put(ABSTRACT_PROPERTY_WITH_INITIALIZER, "Property with initializer cannot be abstract");
@@ -373,10 +373,10 @@ public class DefaultErrorMessages {
                 "{0} was compiled with an incompatible version of Kotlin. {1}",
                 TO_STRING,
                 (incompatibility, renderingContext) ->
-                        "The binary version of its metadata is " + incompatibility.getActualVersion() +
-                        ", expected version is " + incompatibility.getExpectedVersion() + ".\n" +
-                        "The class is loaded from " + FileUtil.toSystemIndependentName(incompatibility.getFilePath())
-        );
+                "The binary version of its metadata is " + incompatibility.getActualVersion() +
+                ", expected version is " + incompatibility.getExpectedVersion() + ".\n" +
+                "The class is loaded from " + FileUtil.toSystemIndependentName(incompatibility.getFilePath())
+               );
 
         MAP.put(LOCAL_OBJECT_NOT_ALLOWED, "Named object ''{0}'' is a singleton and cannot be local. Try to use anonymous object instead", NAME);
         MAP.put(LOCAL_INTERFACE_NOT_ALLOWED, "''{0}'' is an interface so it cannot be local. Try to use anonymous object or abstract class instead", NAME);
@@ -491,17 +491,17 @@ public class DefaultErrorMessages {
         MAP.put(INAPPLICABLE_MODIFIER, "''{0}'' modifier is inapplicable. The reason is that {1}", TO_STRING, STRING);
 
         MAP.put(DSL_SCOPE_VIOLATION, "''{0}'' can''t be called in this context by implicit receiver. " +
-                                     "Use the explicit one if necessary", COMPACT);
+                "Use the explicit one if necessary", COMPACT);
 
         MAP.put(DSL_SCOPE_VIOLATION_WARNING, "''{0}'' shouldn't be called in this context by implicit receiver, it will become an error soon. " +
-                                     "Use the explicit one if necessary", COMPACT);
+                "Use the explicit one if necessary", COMPACT);
 
         MAP.put(RETURN_IN_FUNCTION_WITH_EXPRESSION_BODY,
                 "Returns are not allowed for functions with expression body. Use block body in '{...}'");
         MAP.put(NO_RETURN_IN_FUNCTION_WITH_BLOCK_BODY, "A 'return' expression required in a function with a block body ('{...}')");
         MAP.put(NO_RETURN_IN_FUNCTION_WITH_BLOCK_BODY_MIGRATION, "A 'return' expression required in a function with a block body ('{...}'). " +
-                                                                 "If you got this error after the compiler update, then it's most likely due to a fix of a bug " +
-                                                                 "introduced in 1.3.0 (see KT-28061 for details)");
+                "If you got this error after the compiler update, then it's most likely due to a fix of a bug " +
+                "introduced in 1.3.0 (see KT-28061 for details)");
         MAP.put(RETURN_TYPE_MISMATCH, "This function must return a value of type {0}", RENDER_TYPE);
         MAP.put(EXPECTED_TYPE_MISMATCH, "Expected a value of type {0}", RENDER_TYPE);
         MAP.put(ASSIGNMENT_TYPE_MISMATCH,
@@ -515,7 +515,7 @@ public class DefaultErrorMessages {
         MAP.put(EXPRESSION_EXPECTED, "{0} is not an expression, and only expressions are allowed here", (expression, context) -> {
             String expressionType = expression.toString();
             return expressionType.substring(0, 1) +
-                   expressionType.substring(1).toLowerCase();
+            expressionType.substring(1).toLowerCase();
         });
 
         MAP.put(UPPER_BOUND_VIOLATED, "Type argument is not within its bounds: should be subtype of ''{0}''", RENDER_TYPE, RENDER_TYPE);
@@ -575,7 +575,7 @@ public class DefaultErrorMessages {
         MAP.put(CYCLIC_INHERITANCE_HIERARCHY, "There's a cycle in the inheritance hierarchy for this type");
         MAP.put(CYCLIC_GENERIC_UPPER_BOUND, "Type parameter has cyclic upper bounds");
         MAP.put(CYCLIC_SCOPES_WITH_COMPANION, "There's a cycle in scopes for that type. Most probably, there's a companion object that inherits some nested class (see KT-21515).\n" +
-                                              "Such code is currently unstable, and its behavior may change in future releases");
+                "Such code is currently unstable, and its behavior may change in future releases");
 
         MAP.put(MANY_CLASSES_IN_SUPERTYPE_LIST, "Only one class may appear in a supertype list");
         MAP.put(SUPERTYPE_NOT_A_CLASS_OR_INTERFACE, "Only classes and interfaces may serve as supertypes");
@@ -686,13 +686,13 @@ public class DefaultErrorMessages {
 
         MultiRenderer<VarianceConflictDiagnosticData> varianceConflictDataRenderer = data -> {
             RenderingContext context =
-                    of(data.getTypeParameter(), data.getTypeParameter().getVariance(), data.getOccurrencePosition(),
-                       data.getContainingType());
+            of(data.getTypeParameter(), data.getTypeParameter().getVariance(), data.getOccurrencePosition(),
+               data.getContainingType());
             return new String[] {
-                    NAME.render(data.getTypeParameter(), context),
-                    RENDER_POSITION_VARIANCE.render(data.getTypeParameter().getVariance(), context),
-                    RENDER_POSITION_VARIANCE.render(data.getOccurrencePosition(), context),
-                    RENDER_TYPE.render(data.getContainingType(), context)
+                NAME.render(data.getTypeParameter(), context),
+                RENDER_POSITION_VARIANCE.render(data.getTypeParameter().getVariance(), context),
+                RENDER_POSITION_VARIANCE.render(data.getOccurrencePosition(), context),
+                RENDER_TYPE.render(data.getContainingType(), context)
             };
         };
         MAP.put(TYPE_VARIANCE_CONFLICT, "Type parameter {0} is declared as ''{1}'' but occurs in ''{2}'' position in type {3}",
@@ -788,11 +788,11 @@ public class DefaultErrorMessages {
         MAP.put(CONFLICTING_OVERLOADS, "Conflicting overloads: {0}", commaSeparated(FQ_NAMES_IN_TYPES));
 
         MAP.put(FUNCTION_EXPECTED, "Expression ''{0}''{1} cannot be invoked as a function. " +
-                                   "The function ''" + OperatorNameConventions.INVOKE.asString() + "()'' is not found",
-                ELEMENT_TEXT, (type, context) -> {
-                    if (KotlinTypeKt.isError(type)) return "";
-                    return " of type '" + RENDER_TYPE.render(type, context) + "'";
-                });
+                "The function ''" + OperatorNameConventions.INVOKE.asString() + "()'' is not found",
+        ELEMENT_TEXT, (type, context) -> {
+            if (KotlinTypeKt.isError(type)) return "";
+            return " of type '" + RENDER_TYPE.render(type, context) + "'";
+        });
         MAP.put(FUNCTION_CALL_EXPECTED, "Function invocation ''{0}({1})'' expected", ELEMENT_TEXT,
                 (hasValueParameters, context) -> hasValueParameters ? "..." : "");
         MAP.put(NON_TAIL_RECURSIVE_CALL, "Recursive call is not a tail call");
@@ -829,7 +829,7 @@ public class DefaultErrorMessages {
         MAP.put(TYPE_INFERENCE_PARAMETER_CONSTRAINT_ERROR, "Type inference failed: {0}", TYPE_INFERENCE_PARAMETER_CONSTRAINT_ERROR_RENDERER);
         MAP.put(TYPE_INFERENCE_INCORPORATION_ERROR, "Type inference failed. Please try to specify type arguments explicitly.");
         MAP.put(TYPE_INFERENCE_ONLY_INPUT_TYPES, "Type inference failed. The value of the type parameter {0} should be mentioned in input types " +
-                                                 "(argument types, receiver type or expected type). Try to specify it explicitly.", NAME);
+                "(argument types, receiver type or expected type). Try to specify it explicitly.", NAME);
         MAP.put(TYPE_INFERENCE_UPPER_BOUND_VIOLATED, "{0}", TYPE_INFERENCE_UPPER_BOUND_VIOLATED_RENDERER);
         MAP.put(TYPE_INFERENCE_EXPECTED_TYPE_MISMATCH, "Type inference failed. Expected type mismatch: inferred type is {1} but {0} was expected", RENDER_TYPE, RENDER_TYPE);
 
@@ -839,9 +839,9 @@ public class DefaultErrorMessages {
         MAP.put(WRONG_NUMBER_OF_TYPE_ARGUMENTS, wrongNumberOfTypeArguments + " for {1}", null, COMPACT_WITHOUT_SUPERTYPES);
 
         MAP.put(
-                OUTER_CLASS_ARGUMENTS_REQUIRED,
-                "Type arguments should be specified for an outer {0}. Use full class name to specify them",
-                RENDER_CLASS_OR_OBJECT_NAME);
+            OUTER_CLASS_ARGUMENTS_REQUIRED,
+            "Type arguments should be specified for an outer {0}. Use full class name to specify them",
+            RENDER_CLASS_OR_OBJECT_NAME);
         MAP.put(NO_TYPE_ARGUMENTS_ON_RHS, wrongNumberOfTypeArguments + ". Use ''{1}'' if you don''t want to pass type arguments", null, STRING);
         MAP.put(TYPE_ARGUMENTS_NOT_ALLOWED, "Type arguments are not allowed {0}", STRING);
 
@@ -898,11 +898,11 @@ public class DefaultErrorMessages {
         MAP.put(MULTIPLE_DEFAULTS_INHERITED_FROM_SUPERTYPES_WHEN_NO_EXPLICIT_OVERRIDE, multipleDefaultsMessage, FQ_NAMES_IN_TYPES);
 
         MAP.put(PARAMETER_NAME_CHANGED_ON_OVERRIDE, "The corresponding parameter in the supertype ''{0}'' is named ''{1}''. " +
-                                                    "This may cause problems when calling this function with named arguments.", NAME, NAME);
+                "This may cause problems when calling this function with named arguments.", NAME, NAME);
 
         MAP.put(DIFFERENT_NAMES_FOR_THE_SAME_PARAMETER_IN_SUPERTYPES,
-                    "Names of the parameter #{1} conflict in the following members of supertypes: ''{0}''. " +
-                    "This may cause problems when calling this function with named arguments.", commaSeparated(FQ_NAMES_IN_TYPES), TO_STRING);
+                "Names of the parameter #{1} conflict in the following members of supertypes: ''{0}''. " +
+                "This may cause problems when calling this function with named arguments.", commaSeparated(FQ_NAMES_IN_TYPES), TO_STRING);
 
         MAP.put(NAME_FOR_AMBIGUOUS_PARAMETER, "Named argument is not allowed for a parameter with an ambiguous name");
 

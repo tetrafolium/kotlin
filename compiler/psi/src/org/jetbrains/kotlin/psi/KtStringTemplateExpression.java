@@ -50,11 +50,11 @@ public class KtStringTemplateExpression extends KtElementImplStub<KotlinPlaceHol
     }
 
     private static final TokenSet STRING_ENTRIES_TYPES = TokenSet.create(
-            KtStubElementTypes.LONG_STRING_TEMPLATE_ENTRY,
-            KtStubElementTypes.SHORT_STRING_TEMPLATE_ENTRY,
-            KtStubElementTypes.LITERAL_STRING_TEMPLATE_ENTRY,
-            KtStubElementTypes.ESCAPE_STRING_TEMPLATE_ENTRY
-    );
+                KtStubElementTypes.LONG_STRING_TEMPLATE_ENTRY,
+                KtStubElementTypes.SHORT_STRING_TEMPLATE_ENTRY,
+                KtStubElementTypes.LITERAL_STRING_TEMPLATE_ENTRY,
+                KtStubElementTypes.ESCAPE_STRING_TEMPLATE_ENTRY
+            );
 
     @NotNull
     public KtStringTemplateEntry[] getEntries() {

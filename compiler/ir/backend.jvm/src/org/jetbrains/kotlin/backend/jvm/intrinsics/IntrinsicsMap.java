@@ -81,11 +81,11 @@ class IntrinsicsMap {
      * @param valueParameterCount -1 for property
      */
     public void registerIntrinsic(
-            @NotNull FqName owner,
-            @Nullable FqNameUnsafe receiverParameter,
-            @NotNull String name,
-            int valueParameterCount,
-            @NotNull IntrinsicMethod impl
+        @NotNull FqName owner,
+        @Nullable FqNameUnsafe receiverParameter,
+        @NotNull String name,
+        int valueParameterCount,
+        @NotNull IntrinsicMethod impl
     ) {
         intrinsicsMap.put(new Key(owner.toUnsafe(), receiverParameter, name, valueParameterCount), impl);
     }
@@ -93,10 +93,10 @@ class IntrinsicsMap {
     @Nullable
     public IntrinsicMethod getIntrinsic(@NotNull CallableMemberDescriptor descriptor) {
         Key key = new Key(
-                DescriptorUtils.getFqName(descriptor.getContainingDeclaration()),
-                getReceiverParameterFqName(descriptor),
-                descriptor.getName().asString(),
-                valueParameterCountForKey(descriptor)
+            DescriptorUtils.getFqName(descriptor.getContainingDeclaration()),
+            getReceiverParameterFqName(descriptor),
+            descriptor.getName().asString(),
+            valueParameterCountForKey(descriptor)
         );
         return intrinsicsMap.get(key);
     }

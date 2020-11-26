@@ -52,10 +52,10 @@ public class ResolvedCallImpl<D extends CallableDescriptor> implements MutableRe
 
     @NotNull
     public static <D extends CallableDescriptor> ResolvedCallImpl<D> create(
-            @NotNull ResolutionCandidate<D> candidate,
-            @NotNull DelegatingBindingTrace trace,
-            @NotNull TracingStrategy tracing,
-            @NotNull MutableDataFlowInfoForArguments dataFlowInfoForArguments
+        @NotNull ResolutionCandidate<D> candidate,
+        @NotNull DelegatingBindingTrace trace,
+        @NotNull TracingStrategy tracing,
+        @NotNull MutableDataFlowInfoForArguments dataFlowInfoForArguments
     ) {
         return new ResolvedCallImpl<>(candidate, trace, tracing, dataFlowInfoForArguments);
     }
@@ -86,10 +86,10 @@ public class ResolvedCallImpl<D extends CallableDescriptor> implements MutableRe
     private Queue<Function0<Unit>> remainingTasks = null;
 
     private ResolvedCallImpl(
-            @NotNull ResolutionCandidate<D> candidate,
-            @NotNull DelegatingBindingTrace trace,
-            @NotNull TracingStrategy tracing,
-            @NotNull MutableDataFlowInfoForArguments dataFlowInfoForArguments
+        @NotNull ResolutionCandidate<D> candidate,
+        @NotNull DelegatingBindingTrace trace,
+        @NotNull TracingStrategy tracing,
+        @NotNull MutableDataFlowInfoForArguments dataFlowInfoForArguments
     ) {
         this.call = candidate.getCall();
         this.candidateDescriptor = candidate.getDescriptor();
@@ -106,15 +106,15 @@ public class ResolvedCallImpl<D extends CallableDescriptor> implements MutableRe
     }
 
     public ResolvedCallImpl(
-            @NotNull Call call,
-            @NotNull D candidateDescriptor,
-            @Nullable ReceiverValue dispatchReceiver,
-            @Nullable ReceiverValue extensionReceiver,
-            @NotNull ExplicitReceiverKind explicitReceiverKind,
-            @Nullable TypeSubstitutor knownTypeParametersSubstitutor,
-            @NotNull DelegatingBindingTrace trace,
-            @NotNull TracingStrategy tracing,
-            @NotNull MutableDataFlowInfoForArguments dataFlowInfoForArguments
+        @NotNull Call call,
+        @NotNull D candidateDescriptor,
+        @Nullable ReceiverValue dispatchReceiver,
+        @Nullable ReceiverValue extensionReceiver,
+        @NotNull ExplicitReceiverKind explicitReceiverKind,
+        @Nullable TypeSubstitutor knownTypeParametersSubstitutor,
+        @NotNull DelegatingBindingTrace trace,
+        @NotNull TracingStrategy tracing,
+        @NotNull MutableDataFlowInfoForArguments dataFlowInfoForArguments
     ) {
         this.call = call;
         this.candidateDescriptor = candidateDescriptor;
@@ -201,9 +201,9 @@ public class ResolvedCallImpl<D extends CallableDescriptor> implements MutableRe
         //noinspection ConstantConditions
         if (resultingDescriptor == null) {
             throw new AssertionError(
-                    "resultingDescriptor shouldn't be null:\n" +
-                    "candidateDescriptor: " + DescriptorRenderer.COMPACT_WITH_SHORT_TYPES.render(candidateDescriptor) + "\n" +
-                    "substitution: " + substitutor.getSubstitution()
+                "resultingDescriptor shouldn't be null:\n" +
+                "candidateDescriptor: " + DescriptorRenderer.COMPACT_WITH_SHORT_TYPES.render(candidateDescriptor) + "\n" +
+                "substitution: " + substitutor.getSubstitution()
             );
         }
 
@@ -219,7 +219,7 @@ public class ResolvedCallImpl<D extends CallableDescriptor> implements MutableRe
         List<ValueParameterDescriptor> substitutedParameters = resultingDescriptor.getValueParameters();
 
         Collection<Map.Entry<ValueParameterDescriptor, ResolvedValueArgument>> valueArgumentsBeforeSubstitution =
-                new SmartList<>(valueArguments.entrySet());
+            new SmartList<>(valueArguments.entrySet());
 
         valueArguments.clear();
 
@@ -230,7 +230,7 @@ public class ResolvedCallImpl<D extends CallableDescriptor> implements MutableRe
         }
 
         Collection<Map.Entry<ValueArgument, ArgumentMatchImpl>> unsubstitutedArgumentMappings =
-                new SmartList<>(argumentToParameterMap.entrySet());
+            new SmartList<>(argumentToParameterMap.entrySet());
 
         argumentToParameterMap.clear();
         for (Map.Entry<ValueArgument, ArgumentMatchImpl> entry : unsubstitutedArgumentMappings) {
@@ -413,8 +413,8 @@ public class ResolvedCallImpl<D extends CallableDescriptor> implements MutableRe
     public void updateExtensionReceiverWithSmartCastIfNeeded(@NotNull KotlinType smartCastExtensionReceiverType) {
         if (extensionReceiver instanceof ImplicitClassReceiver) {
             extensionReceiver = new CastImplicitClassReceiver(
-                    ((ImplicitClassReceiver) extensionReceiver).getClassDescriptor(),
-                    smartCastExtensionReceiverType
+                ((ImplicitClassReceiver) extensionReceiver).getClassDescriptor(),
+                smartCastExtensionReceiverType
             );
         }
     }

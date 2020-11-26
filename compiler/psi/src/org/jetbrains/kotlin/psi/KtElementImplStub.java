@@ -33,7 +33,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class KtElementImplStub<T extends StubElement<?>> extends StubBasedPsiElementBase<T>
-        implements KtElement, StubBasedPsiElement<T> {
+    implements KtElement, StubBasedPsiElement<T> {
     public KtElementImplStub(@NotNull T stub, @NotNull IStubElementType nodeType) {
         super(stub, nodeType);
     }
@@ -114,7 +114,7 @@ public class KtElementImplStub<T extends StubElement<?>> extends StubBasedPsiEle
 
     @NotNull
     protected <PsiT extends KtElementImplStub<?>, StubT extends StubElement> List<PsiT> getStubOrPsiChildrenAsList(
-            @NotNull KtStubElementType<StubT, PsiT> elementType
+        @NotNull KtStubElementType<StubT, PsiT> elementType
     ) {
         return Arrays.asList(getStubOrPsiChildren(elementType, elementType.getArrayFactory()));
     }

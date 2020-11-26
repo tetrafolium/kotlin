@@ -49,7 +49,7 @@ public class ReifiedTypeParameterSubstitutionChecker implements CallChecker {
             PsiElement reportErrorOn = typeProjection != null ? typeProjection : reportOn;
 
             if (argumentDeclarationDescriptor instanceof TypeParameterDescriptor &&
-                !((TypeParameterDescriptor) argumentDeclarationDescriptor).isReified()) {
+                    !((TypeParameterDescriptor) argumentDeclarationDescriptor).isReified()) {
                 context.getTrace().report(Errors.TYPE_PARAMETER_AS_REIFIED.on(reportErrorOn, (TypeParameterDescriptor) argumentDeclarationDescriptor));
             }
             else if (TypeUtilsKt.cannotBeReified(argument)) {

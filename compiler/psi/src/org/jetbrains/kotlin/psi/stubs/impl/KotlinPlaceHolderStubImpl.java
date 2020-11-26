@@ -22,7 +22,7 @@ import org.jetbrains.kotlin.psi.KtElementImplStub;
 import org.jetbrains.kotlin.psi.stubs.KotlinPlaceHolderStub;
 
 public class KotlinPlaceHolderStubImpl<T extends KtElementImplStub<? extends StubElement<?>>> extends KotlinStubBaseImpl<T>
-        implements KotlinPlaceHolderStub<T> {
+    implements KotlinPlaceHolderStub<T> {
     public KotlinPlaceHolderStubImpl(StubElement parent, IStubElementType elementType) {
         //noinspection unchecked
         super(parent, elementType);

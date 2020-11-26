@@ -426,19 +426,19 @@ public class KtVisitorVoidWithParameter<P> extends KtVisitor<Void, P> {
     @Override
     public final Void visitKtElement(@NotNull KtElement element, P data) {
         visitJetElementVoid(element, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitDeclaration(@NotNull KtDeclaration dcl, P data) {
         visitDeclarationVoid(dcl, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitClass(@NotNull KtClass klass, P data) {
         visitClassVoid(klass, data);
-    	return null;
+        return null;
     }
 
     @Override
@@ -450,25 +450,25 @@ public class KtVisitorVoidWithParameter<P> extends KtVisitor<Void, P> {
     @Override
     public final Void visitNamedFunction(@NotNull KtNamedFunction function, P data) {
         visitNamedFunctionVoid(function, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitProperty(@NotNull KtProperty property, P data) {
         visitPropertyVoid(property, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitDestructuringDeclaration(@NotNull KtDestructuringDeclaration multiDeclaration, P data) {
         visitDestructuringDeclarationVoid(multiDeclaration, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitDestructuringDeclarationEntry(@NotNull KtDestructuringDeclarationEntry multiDeclarationEntry, P data) {
         visitDestructuringDeclarationEntryVoid(multiDeclarationEntry, data);
-    	return null;
+        return null;
     }
 
     @Override
@@ -486,99 +486,99 @@ public class KtVisitorVoidWithParameter<P> extends KtVisitor<Void, P> {
     @Override
     public final Void visitImportDirective(@NotNull KtImportDirective importDirective, P data) {
         visitImportDirectiveVoid(importDirective, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitImportList(@NotNull KtImportList importList, P data) {
         visitImportListVoid(importList, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitClassBody(@NotNull KtClassBody classBody, P data) {
         visitClassBodyVoid(classBody, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitModifierList(@NotNull KtModifierList list, P data) {
         visitModifierListVoid(list, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitAnnotation(@NotNull KtAnnotation annotation, P data) {
         visitAnnotationVoid(annotation, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitAnnotationEntry(@NotNull KtAnnotationEntry annotationEntry, P data) {
         visitAnnotationEntryVoid(annotationEntry, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitTypeParameterList(@NotNull KtTypeParameterList list, P data) {
         visitTypeParameterListVoid(list, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitTypeParameter(@NotNull KtTypeParameter parameter, P data) {
         visitTypeParameterVoid(parameter, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitEnumEntry(@NotNull KtEnumEntry enumEntry, P data) {
         visitEnumEntryVoid(enumEntry, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitParameterList(@NotNull KtParameterList list, P data) {
         visitParameterListVoid(list, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitParameter(@NotNull KtParameter parameter, P data) {
         visitParameterVoid(parameter, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitSuperTypeList(@NotNull KtSuperTypeList list, P data) {
         visitSuperTypeListVoid(list, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitSuperTypeListEntry(@NotNull KtSuperTypeListEntry specifier, P data) {
         visitSuperTypeListEntryVoid(specifier, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitDelegatedSuperTypeEntry(
-            @NotNull KtDelegatedSuperTypeEntry specifier, P data
+        @NotNull KtDelegatedSuperTypeEntry specifier, P data
     ) {
         visitDelegatedSuperTypeEntryVoid(specifier, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitSuperTypeCallEntry(@NotNull KtSuperTypeCallEntry call, P data) {
         visitSuperTypeCallEntryVoid(call, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitSuperTypeEntry(@NotNull KtSuperTypeEntry specifier, P data) {
         visitSuperTypeEntryVoid(specifier, data);
-    	return null;
+        return null;
     }
 
     @Override
@@ -590,55 +590,55 @@ public class KtVisitorVoidWithParameter<P> extends KtVisitor<Void, P> {
     @Override
     public final Void visitPropertyDelegate(@NotNull KtPropertyDelegate delegate, P data) {
         visitPropertyDelegateVoid(delegate, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitTypeReference(@NotNull KtTypeReference typeReference, P data) {
         visitTypeReferenceVoid(typeReference, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitValueArgumentList(@NotNull KtValueArgumentList list, P data) {
         visitValueArgumentListVoid(list, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitArgument(@NotNull KtValueArgument argument, P data) {
         visitArgumentVoid(argument, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitExpression(@NotNull KtExpression expression, P data) {
         visitExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitLoopExpression(@NotNull KtLoopExpression loopExpression, P data) {
         visitLoopExpressionVoid(loopExpression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitConstantExpression(@NotNull KtConstantExpression expression, P data) {
         visitConstantExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitSimpleNameExpression(@NotNull KtSimpleNameExpression expression, P data) {
         visitSimpleNameExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitReferenceExpression(@NotNull KtReferenceExpression expression, P data) {
         visitReferenceExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
@@ -650,67 +650,67 @@ public class KtVisitorVoidWithParameter<P> extends KtVisitor<Void, P> {
     @Override
     public final Void visitPrefixExpression(@NotNull KtPrefixExpression expression, P data) {
         visitPrefixExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitPostfixExpression(@NotNull KtPostfixExpression expression, P data) {
         visitPostfixExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitUnaryExpression(@NotNull KtUnaryExpression expression, P data) {
         visitUnaryExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitBinaryExpression(@NotNull KtBinaryExpression expression, P data) {
         visitBinaryExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitReturnExpression(@NotNull KtReturnExpression expression, P data) {
         visitReturnExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitExpressionWithLabel(@NotNull KtExpressionWithLabel expression, P data) {
         visitExpressionWithLabelVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitThrowExpression(@NotNull KtThrowExpression expression, P data) {
         visitThrowExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitBreakExpression(@NotNull KtBreakExpression expression, P data) {
         visitBreakExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitContinueExpression(@NotNull KtContinueExpression expression, P data) {
         visitContinueExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitIfExpression(@NotNull KtIfExpression expression, P data) {
         visitIfExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitWhenExpression(@NotNull KtWhenExpression expression, P data) {
         visitWhenExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
@@ -722,169 +722,169 @@ public class KtVisitorVoidWithParameter<P> extends KtVisitor<Void, P> {
     @Override
     public final Void visitTryExpression(@NotNull KtTryExpression expression, P data) {
         visitTryExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitForExpression(@NotNull KtForExpression expression, P data) {
         visitForExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitWhileExpression(@NotNull KtWhileExpression expression, P data) {
         visitWhileExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitDoWhileExpression(@NotNull KtDoWhileExpression expression, P data) {
         visitDoWhileExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitLambdaExpression(@NotNull KtLambdaExpression expression, P data) {
         visitLambdaExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitAnnotatedExpression(@NotNull KtAnnotatedExpression expression, P data) {
         visitAnnotatedExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitCallExpression(@NotNull KtCallExpression expression, P data) {
         visitCallExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitArrayAccessExpression(@NotNull KtArrayAccessExpression expression, P data) {
         visitArrayAccessExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitQualifiedExpression(@NotNull KtQualifiedExpression expression, P data) {
         visitQualifiedExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitDoubleColonExpression(@NotNull KtDoubleColonExpression expression, P data) {
         visitDoubleColonExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitCallableReferenceExpression(@NotNull KtCallableReferenceExpression expression, P data) {
         visitCallableReferenceExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitClassLiteralExpression(@NotNull KtClassLiteralExpression expression, P data) {
         visitClassLiteralExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitDotQualifiedExpression(@NotNull KtDotQualifiedExpression expression, P data) {
         visitDotQualifiedExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitSafeQualifiedExpression(@NotNull KtSafeQualifiedExpression expression, P data) {
         visitSafeQualifiedExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitObjectLiteralExpression(@NotNull KtObjectLiteralExpression expression, P data) {
         visitObjectLiteralExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitBlockExpression(@NotNull KtBlockExpression expression, P data) {
         visitBlockExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitCatchSection(@NotNull KtCatchClause catchClause, P data) {
         visitCatchSectionVoid(catchClause, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitFinallySection(@NotNull KtFinallySection finallySection, P data) {
         visitFinallySectionVoid(finallySection, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitTypeArgumentList(@NotNull KtTypeArgumentList typeArgumentList, P data) {
         visitTypeArgumentListVoid(typeArgumentList, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitThisExpression(@NotNull KtThisExpression expression, P data) {
         visitThisExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitSuperExpression(@NotNull KtSuperExpression expression, P data) {
         visitSuperExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitParenthesizedExpression(@NotNull KtParenthesizedExpression expression, P data) {
         visitParenthesizedExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitInitializerList(@NotNull KtInitializerList list, P data) {
         visitInitializerListVoid(list, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitAnonymousInitializer(@NotNull KtAnonymousInitializer initializer, P data) {
         visitAnonymousInitializerVoid(initializer, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitPropertyAccessor(@NotNull KtPropertyAccessor accessor, P data) {
         visitPropertyAccessorVoid(accessor, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitTypeConstraintList(@NotNull KtTypeConstraintList list, P data) {
         visitTypeConstraintListVoid(list, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitTypeConstraint(@NotNull KtTypeConstraint constraint, P data) {
         visitTypeConstraintVoid(constraint, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitUserType(@NotNull KtUserType type, P data) {
         visitUserTypeVoid(type, data);
-    	return null;
+        return null;
     }
 
     @Override
@@ -896,109 +896,109 @@ public class KtVisitorVoidWithParameter<P> extends KtVisitor<Void, P> {
     @Override
     public final Void visitFunctionType(@NotNull KtFunctionType type, P data) {
         visitFunctionTypeVoid(type, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitSelfType(@NotNull KtSelfType type, P data) {
         visitSelfTypeVoid(type, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitBinaryWithTypeRHSExpression(@NotNull KtBinaryExpressionWithTypeRHS expression, P data) {
         visitBinaryWithTypeRHSExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitStringTemplateExpression(@NotNull KtStringTemplateExpression expression, P data) {
         visitStringTemplateExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitNamedDeclaration(@NotNull KtNamedDeclaration declaration, P data) {
         visitNamedDeclarationVoid(declaration, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitNullableType(@NotNull KtNullableType nullableType, P data) {
         visitNullableTypeVoid(nullableType, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitTypeProjection(@NotNull KtTypeProjection typeProjection, P data) {
         visitTypeProjectionVoid(typeProjection, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitWhenEntry(@NotNull KtWhenEntry jetWhenEntry, P data) {
         visitWhenEntryVoid(jetWhenEntry, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitIsExpression(@NotNull KtIsExpression expression, P data) {
         visitIsExpressionVoid(expression, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitWhenConditionIsPattern(@NotNull KtWhenConditionIsPattern condition, P data) {
         visitWhenConditionIsPatternVoid(condition, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitWhenConditionInRange(@NotNull KtWhenConditionInRange condition, P data) {
         visitWhenConditionInRangeVoid(condition, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitWhenConditionWithExpression(@NotNull KtWhenConditionWithExpression condition, P data) {
         visitWhenConditionWithExpressionVoid(condition, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitObjectDeclaration(@NotNull KtObjectDeclaration declaration, P data) {
         visitObjectDeclarationVoid(declaration, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitStringTemplateEntry(@NotNull KtStringTemplateEntry entry, P data) {
         visitStringTemplateEntryVoid(entry, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitStringTemplateEntryWithExpression(@NotNull KtStringTemplateEntryWithExpression entry, P data) {
         visitStringTemplateEntryWithExpressionVoid(entry, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitBlockStringTemplateEntry(@NotNull KtBlockStringTemplateEntry entry, P data) {
         visitBlockStringTemplateEntryVoid(entry, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitSimpleNameStringTemplateEntry(@NotNull KtSimpleNameStringTemplateEntry entry, P data) {
         visitSimpleNameStringTemplateEntryVoid(entry, data);
-    	return null;
+        return null;
     }
 
     @Override
     public final Void visitLiteralStringTemplateEntry(@NotNull KtLiteralStringTemplateEntry entry, P data) {
         visitLiteralStringTemplateEntryVoid(entry, data);
-    	return null;
+        return null;
     }
 
     @Override

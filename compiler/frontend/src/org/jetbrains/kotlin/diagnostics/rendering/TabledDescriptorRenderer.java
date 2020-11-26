@@ -35,7 +35,7 @@ import java.util.function.Predicate;
 public class TabledDescriptorRenderer {
     public interface TableOrTextRenderer {}
 
-    public static class TableRenderer implements TableOrTextRenderer{
+    public static class TableRenderer implements TableOrTextRenderer {
         public interface TableRow {
         }
 
@@ -183,10 +183,10 @@ public class TabledDescriptorRenderer {
     }
 
     private void renderFunctionArguments(
-            @Nullable KotlinType receiverType,
-            @NotNull List<KotlinType> argumentTypes,
-            StringBuilder result,
-            @NotNull RenderingContext context
+        @Nullable KotlinType receiverType,
+        @NotNull List<KotlinType> argumentTypes,
+        StringBuilder result,
+        @NotNull RenderingContext context
     ) {
         boolean hasReceiver = receiverType != null;
         if (hasReceiver) {

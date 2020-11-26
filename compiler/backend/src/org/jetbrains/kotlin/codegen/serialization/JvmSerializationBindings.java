@@ -30,11 +30,11 @@ import org.jetbrains.org.objectweb.asm.commons.Method;
 
 public final class JvmSerializationBindings {
     public static final SerializationMappingSlice<FunctionDescriptor, Method> METHOD_FOR_FUNCTION =
-            SerializationMappingSlice.create();
+        SerializationMappingSlice.create();
     public static final SerializationMappingSlice<PropertyDescriptor, Pair<Type, String>> FIELD_FOR_PROPERTY =
-            SerializationMappingSlice.create();
+        SerializationMappingSlice.create();
     public static final SerializationMappingSlice<PropertyDescriptor, Method> SYNTHETIC_METHOD_FOR_PROPERTY =
-            SerializationMappingSlice.create();
+        SerializationMappingSlice.create();
 
     static final class SerializationMappingSlice<K, V> extends BasicWritableSlice<K, V> {
         public SerializationMappingSlice() {

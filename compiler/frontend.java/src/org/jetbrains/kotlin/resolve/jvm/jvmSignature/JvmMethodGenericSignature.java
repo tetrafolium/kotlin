@@ -27,9 +27,9 @@ public class JvmMethodGenericSignature extends JvmMethodSignature {
     private final String genericsSignature;
 
     public JvmMethodGenericSignature(
-            @NotNull Method asmMethod,
-            @NotNull List<JvmMethodParameterSignature> valueParameters,
-            @Nullable String genericsSignature
+        @NotNull Method asmMethod,
+        @NotNull List<JvmMethodParameterSignature> valueParameters,
+        @Nullable String genericsSignature
     ) {
         super(asmMethod, valueParameters);
         this.genericsSignature = genericsSignature;

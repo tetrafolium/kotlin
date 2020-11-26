@@ -24,10 +24,10 @@ import org.jetbrains.org.objectweb.asm.Label;
 
 public class IntegralConstantsSwitchCodegen extends SwitchCodegen {
     public IntegralConstantsSwitchCodegen(
-            @NotNull KtWhenExpression expression,
-            boolean isStatement,
-            boolean isExhaustive,
-            @NotNull ExpressionCodegen codegen
+        @NotNull KtWhenExpression expression,
+        boolean isStatement,
+        boolean isExhaustive,
+        @NotNull ExpressionCodegen codegen
     ) {
         super(expression, isStatement, isExhaustive, codegen, null);
     }

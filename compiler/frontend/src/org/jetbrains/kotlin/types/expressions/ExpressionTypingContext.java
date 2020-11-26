@@ -22,12 +22,12 @@ public class ExpressionTypingContext extends ResolutionContext<ExpressionTypingC
 
     @NotNull
     public static ExpressionTypingContext newContext(
-            @NotNull BindingTrace trace,
-            @NotNull LexicalScope scope,
-            @NotNull DataFlowInfo dataFlowInfo,
-            @NotNull KotlinType expectedType,
-            @NotNull LanguageVersionSettings languageVersionSettings,
-            @NotNull DataFlowValueFactory dataFlowValueFactory
+        @NotNull BindingTrace trace,
+        @NotNull LexicalScope scope,
+        @NotNull DataFlowInfo dataFlowInfo,
+        @NotNull KotlinType expectedType,
+        @NotNull LanguageVersionSettings languageVersionSettings,
+        @NotNull DataFlowValueFactory dataFlowValueFactory
     ) {
         return newContext(trace, scope, dataFlowInfo, expectedType, ContextDependency.INDEPENDENT, StatementFilter.NONE,
                           languageVersionSettings, dataFlowValueFactory, InferenceSession.Companion.getDefault());
@@ -35,13 +35,13 @@ public class ExpressionTypingContext extends ResolutionContext<ExpressionTypingC
 
     @NotNull
     public static ExpressionTypingContext newContext(
-            @NotNull BindingTrace trace,
-            @NotNull LexicalScope scope,
-            @NotNull DataFlowInfo dataFlowInfo,
-            @NotNull KotlinType expectedType,
-            @NotNull LanguageVersionSettings languageVersionSettings,
-            @NotNull DataFlowValueFactory dataFlowValueFactory,
-            @NotNull InferenceSession inferenceSession
+        @NotNull BindingTrace trace,
+        @NotNull LexicalScope scope,
+        @NotNull DataFlowInfo dataFlowInfo,
+        @NotNull KotlinType expectedType,
+        @NotNull LanguageVersionSettings languageVersionSettings,
+        @NotNull DataFlowValueFactory dataFlowValueFactory,
+        @NotNull InferenceSession inferenceSession
     ) {
         return newContext(trace, scope, dataFlowInfo, expectedType, ContextDependency.INDEPENDENT, StatementFilter.NONE,
                           languageVersionSettings, dataFlowValueFactory, inferenceSession);
@@ -49,14 +49,14 @@ public class ExpressionTypingContext extends ResolutionContext<ExpressionTypingC
 
     @NotNull
     public static ExpressionTypingContext newContext(
-            @NotNull BindingTrace trace,
-            @NotNull LexicalScope scope,
-            @NotNull DataFlowInfo dataFlowInfo,
-            @NotNull KotlinType expectedType,
-            @NotNull ContextDependency contextDependency,
-            @NotNull StatementFilter statementFilter,
-            @NotNull LanguageVersionSettings languageVersionSettings,
-            @NotNull DataFlowValueFactory dataFlowValueFactory) {
+        @NotNull BindingTrace trace,
+        @NotNull LexicalScope scope,
+        @NotNull DataFlowInfo dataFlowInfo,
+        @NotNull KotlinType expectedType,
+        @NotNull ContextDependency contextDependency,
+        @NotNull StatementFilter statementFilter,
+        @NotNull LanguageVersionSettings languageVersionSettings,
+        @NotNull DataFlowValueFactory dataFlowValueFactory) {
         return newContext(trace, scope, dataFlowInfo, expectedType, contextDependency,
                           new ResolutionResultsCacheImpl(), statementFilter, false, languageVersionSettings, dataFlowValueFactory,
                           InferenceSession.Companion.getDefault());
@@ -64,15 +64,15 @@ public class ExpressionTypingContext extends ResolutionContext<ExpressionTypingC
 
     @NotNull
     public static ExpressionTypingContext newContext(
-            @NotNull BindingTrace trace,
-            @NotNull LexicalScope scope,
-            @NotNull DataFlowInfo dataFlowInfo,
-            @NotNull KotlinType expectedType,
-            @NotNull ContextDependency contextDependency,
-            @NotNull StatementFilter statementFilter,
-            @NotNull LanguageVersionSettings languageVersionSettings,
-            @NotNull DataFlowValueFactory dataFlowValueFactory,
-            @NotNull InferenceSession inferenceSession
+        @NotNull BindingTrace trace,
+        @NotNull LexicalScope scope,
+        @NotNull DataFlowInfo dataFlowInfo,
+        @NotNull KotlinType expectedType,
+        @NotNull ContextDependency contextDependency,
+        @NotNull StatementFilter statementFilter,
+        @NotNull LanguageVersionSettings languageVersionSettings,
+        @NotNull DataFlowValueFactory dataFlowValueFactory,
+        @NotNull InferenceSession inferenceSession
     ) {
         return newContext(trace, scope, dataFlowInfo, expectedType, contextDependency,
                           new ResolutionResultsCacheImpl(), statementFilter, false, languageVersionSettings, dataFlowValueFactory,
@@ -82,63 +82,63 @@ public class ExpressionTypingContext extends ResolutionContext<ExpressionTypingC
     @NotNull
     public static ExpressionTypingContext newContext(@NotNull ResolutionContext<?> context) {
         return new ExpressionTypingContext(
-                context.trace, context.scope, context.dataFlowInfo, context.expectedType,
-                context.contextDependency, context.resolutionResultsCache,
-                context.statementFilter,
-                context.isAnnotationContext, context.isDebuggerContext, context.collectAllCandidates,
-                context.callPosition, context.expressionContextProvider, context.languageVersionSettings,
-                context.dataFlowValueFactory, context.inferenceSession);
+                   context.trace, context.scope, context.dataFlowInfo, context.expectedType,
+                   context.contextDependency, context.resolutionResultsCache,
+                   context.statementFilter,
+                   context.isAnnotationContext, context.isDebuggerContext, context.collectAllCandidates,
+                   context.callPosition, context.expressionContextProvider, context.languageVersionSettings,
+                   context.dataFlowValueFactory, context.inferenceSession);
     }
 
     @NotNull
     public static ExpressionTypingContext newContext(@NotNull ResolutionContext<?> context, boolean isDebuggerContext) {
         return new ExpressionTypingContext(
-                context.trace, context.scope, context.dataFlowInfo, context.expectedType,
-                context.contextDependency, context.resolutionResultsCache,
-                context.statementFilter,
-                context.isAnnotationContext, isDebuggerContext, context.collectAllCandidates,
-                context.callPosition, context.expressionContextProvider,
-                context.languageVersionSettings,
-                context.dataFlowValueFactory, context.inferenceSession);
+                   context.trace, context.scope, context.dataFlowInfo, context.expectedType,
+                   context.contextDependency, context.resolutionResultsCache,
+                   context.statementFilter,
+                   context.isAnnotationContext, isDebuggerContext, context.collectAllCandidates,
+                   context.callPosition, context.expressionContextProvider,
+                   context.languageVersionSettings,
+                   context.dataFlowValueFactory, context.inferenceSession);
     }
 
     @NotNull
     public static ExpressionTypingContext newContext(
-            @NotNull BindingTrace trace,
-            @NotNull LexicalScope scope,
-            @NotNull DataFlowInfo dataFlowInfo,
-            @NotNull KotlinType expectedType,
-            @NotNull ContextDependency contextDependency,
-            @NotNull ResolutionResultsCache resolutionResultsCache,
-            @NotNull StatementFilter statementFilter,
-            boolean isAnnotationContext,
-            @NotNull LanguageVersionSettings languageVersionSettings,
-            @NotNull DataFlowValueFactory dataFlowValueFactory,
-            @NotNull InferenceSession inferenceSession
+        @NotNull BindingTrace trace,
+        @NotNull LexicalScope scope,
+        @NotNull DataFlowInfo dataFlowInfo,
+        @NotNull KotlinType expectedType,
+        @NotNull ContextDependency contextDependency,
+        @NotNull ResolutionResultsCache resolutionResultsCache,
+        @NotNull StatementFilter statementFilter,
+        boolean isAnnotationContext,
+        @NotNull LanguageVersionSettings languageVersionSettings,
+        @NotNull DataFlowValueFactory dataFlowValueFactory,
+        @NotNull InferenceSession inferenceSession
     ) {
         return new ExpressionTypingContext(
-                trace, scope, dataFlowInfo, expectedType, contextDependency, resolutionResultsCache,
-                statementFilter, isAnnotationContext, false, false,
-                CallPosition.Unknown.INSTANCE, DEFAULT_EXPRESSION_CONTEXT_PROVIDER, languageVersionSettings, dataFlowValueFactory,
-                inferenceSession);
+                   trace, scope, dataFlowInfo, expectedType, contextDependency, resolutionResultsCache,
+                   statementFilter, isAnnotationContext, false, false,
+                   CallPosition.Unknown.INSTANCE, DEFAULT_EXPRESSION_CONTEXT_PROVIDER, languageVersionSettings, dataFlowValueFactory,
+                   inferenceSession);
     }
 
     private ExpressionTypingContext(
-            @NotNull BindingTrace trace,
-            @NotNull LexicalScope scope,
-            @NotNull DataFlowInfo dataFlowInfo,
-            @NotNull KotlinType expectedType,
-            @NotNull ContextDependency contextDependency,
-            @NotNull ResolutionResultsCache resolutionResultsCache,
-            @NotNull StatementFilter statementFilter,
-            boolean isAnnotationContext,
-            boolean isDebuggerContext,
-            boolean collectAllCandidates,
-            @NotNull CallPosition callPosition,
-            @NotNull Function1<KtExpression, KtExpression> expressionContextProvider,
-            @NotNull LanguageVersionSettings languageVersionSettings,
-            @NotNull DataFlowValueFactory dataFlowValueFactory,
-            @NotNull InferenceSession inferenceSession
+        @NotNull BindingTrace trace,
+        @NotNull LexicalScope scope,
+        @NotNull DataFlowInfo dataFlowInfo,
+        @NotNull KotlinType expectedType,
+        @NotNull ContextDependency contextDependency,
+        @NotNull ResolutionResultsCache resolutionResultsCache,
+        @NotNull StatementFilter statementFilter,
+        boolean isAnnotationContext,
+        boolean isDebuggerContext,
+        boolean collectAllCandidates,
+        @NotNull CallPosition callPosition,
+        @NotNull Function1<KtExpression, KtExpression> expressionContextProvider,
+        @NotNull LanguageVersionSettings languageVersionSettings,
+        @NotNull DataFlowValueFactory dataFlowValueFactory,
+        @NotNull InferenceSession inferenceSession
     ) {
         super(trace, scope, expectedType, dataFlowInfo, contextDependency, resolutionResultsCache,
               statementFilter, isAnnotationContext, isDebuggerContext, collectAllCandidates, callPosition, expressionContextProvider,
@@ -147,19 +147,19 @@ public class ExpressionTypingContext extends ResolutionContext<ExpressionTypingC
 
     @Override
     protected ExpressionTypingContext create(
-            @NotNull BindingTrace trace,
-            @NotNull LexicalScope scope,
-            @NotNull DataFlowInfo dataFlowInfo,
-            @NotNull KotlinType expectedType,
-            @NotNull ContextDependency contextDependency,
-            @NotNull ResolutionResultsCache resolutionResultsCache,
-            @NotNull StatementFilter statementFilter,
-            boolean collectAllCandidates,
-            @NotNull CallPosition callPosition,
-            @NotNull Function1<KtExpression, KtExpression> expressionContextProvider,
-            @NotNull LanguageVersionSettings languageVersionSettings,
-            @NotNull DataFlowValueFactory dataFlowValueFactory,
-            @NotNull InferenceSession inferenceSession
+        @NotNull BindingTrace trace,
+        @NotNull LexicalScope scope,
+        @NotNull DataFlowInfo dataFlowInfo,
+        @NotNull KotlinType expectedType,
+        @NotNull ContextDependency contextDependency,
+        @NotNull ResolutionResultsCache resolutionResultsCache,
+        @NotNull StatementFilter statementFilter,
+        boolean collectAllCandidates,
+        @NotNull CallPosition callPosition,
+        @NotNull Function1<KtExpression, KtExpression> expressionContextProvider,
+        @NotNull LanguageVersionSettings languageVersionSettings,
+        @NotNull DataFlowValueFactory dataFlowValueFactory,
+        @NotNull InferenceSession inferenceSession
     ) {
         return new ExpressionTypingContext(trace, scope, dataFlowInfo,
                                            expectedType, contextDependency, resolutionResultsCache,

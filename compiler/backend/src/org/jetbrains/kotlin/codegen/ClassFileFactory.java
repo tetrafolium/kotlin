@@ -75,22 +75,22 @@ public class ClassFileFactory implements OutputFileCollection {
 
     @NotNull
     public ClassBuilder newVisitor(
-            @NotNull JvmDeclarationOrigin origin,
-            @NotNull Type asmType,
-            @NotNull PsiFile sourceFile) {
+        @NotNull JvmDeclarationOrigin origin,
+        @NotNull Type asmType,
+        @NotNull PsiFile sourceFile) {
         return newVisitor(origin, asmType, Collections.singletonList(sourceFile));
     }
 
     @NotNull
     public ClassBuilder newVisitor(
-            @NotNull JvmDeclarationOrigin origin,
-            @NotNull Type asmType,
-            @NotNull Collection<? extends PsiFile> sourceFiles
+        @NotNull JvmDeclarationOrigin origin,
+        @NotNull Type asmType,
+        @NotNull Collection<? extends PsiFile> sourceFiles
     ) {
         ClassBuilder answer = builderFactory.newClassBuilder(origin);
         generators.put(
-                asmType.getInternalName() + ".class",
-                new ClassBuilderAndSourceFileList(answer, toIoFilesIgnoringNonPhysical(sourceFiles))
+            asmType.getInternalName() + ".class",
+            new ClassBuilderAndSourceFileList(answer, toIoFilesIgnoringNonPhysical(sourceFiles))
         );
         return answer;
     }
@@ -144,14 +144,14 @@ public class ClassFileFactory implements OutputFileCollection {
     }
 
     private static void writeExperimentalMarkers(
-            @NotNull ModuleDescriptor module,
-            @NotNull JvmModuleProtoBuf.Module.Builder builder,
-            @NotNull List<String> experimental
+        @NotNull ModuleDescriptor module,
+        @NotNull JvmModuleProtoBuf.Module.Builder builder,
+        @NotNull List<String> experimental
     ) {
         StringTableImpl stringTable = new StringTableImpl();
         for (String fqName : experimental) {
             ClassDescriptor descriptor =
-                    DescriptorUtilKt.resolveClassByFqName(module, new FqName(fqName), NoLookupLocation.FOR_ALREADY_TRACKED);
+                DescriptorUtilKt.resolveClassByFqName(module, new FqName(fqName), NoLookupLocation.FOR_ALREADY_TRACKED);
             if (descriptor != null) {
                 ProtoBuf.Annotation.Builder annotation = ProtoBuf.Annotation.newBuilder();
                 ClassId classId = DescriptorUtilsKt.getClassId(descriptor);
@@ -200,25 +200,25 @@ public class ClassFileFactory implements OutputFileCollection {
             File relativePath = new File(file.getRelativePath());
             answer.append("@").append(relativePath).append('\n');
             switch (FilesKt.getExtension(relativePath)) {
-                case "class":
-                    answer.append(file.asText());
-                    break;
-                case "kotlin_module": {
-                    ModuleMapping mapping = ModuleMappingUtilKt.loadModuleMapping(
-                            ModuleMapping.Companion, file.asByteArray(), relativePath.getPath(),
-                            CompilerDeserializationConfiguration.Default.INSTANCE, version -> {
-                                throw new IllegalStateException("Version of the generated module cannot be incompatible: " + version);
-                            }
-                    );
-                    for (Map.Entry<String, PackageParts> entry : mapping.getPackageFqName2Parts().entrySet()) {
-                        FqName packageFqName = new FqName(entry.getKey());
-                        PackageParts packageParts = entry.getValue();
-                        answer.append("<package ").append(packageFqName).append(": ").append(packageParts.getParts()).append(">\n");
-                    }
-                    break;
+            case "class":
+                answer.append(file.asText());
+                break;
+            case "kotlin_module": {
+                ModuleMapping mapping = ModuleMappingUtilKt.loadModuleMapping(
+                                            ModuleMapping.Companion, file.asByteArray(), relativePath.getPath(),
+                CompilerDeserializationConfiguration.Default.INSTANCE, version -> {
+                    throw new IllegalStateException("Version of the generated module cannot be incompatible: " + version);
                 }
-                default:
-                    throw new UnsupportedOperationException("Unknown OutputFile: " + file);
+                                        );
+                for (Map.Entry<String, PackageParts> entry : mapping.getPackageFqName2Parts().entrySet()) {
+                    FqName packageFqName = new FqName(entry.getKey());
+                    PackageParts packageParts = entry.getValue();
+                    answer.append("<package ").append(packageFqName).append(": ").append(packageParts.getParts()).append(">\n");
+                }
+                break;
+            }
+            default:
+                throw new UnsupportedOperationException("Unknown OutputFile: " + file);
             }
         }
 

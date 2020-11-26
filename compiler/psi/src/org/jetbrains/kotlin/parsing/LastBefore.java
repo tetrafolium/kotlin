@@ -41,8 +41,8 @@ public class LastBefore extends AbstractTokenStreamPattern {
         }
         if (stopAt.matching(topLevel)) {
             if (topLevel
-                && (!dontStopRightAfterOccurrence
-                    || !previousLookForResult)) return true;
+                    && (!dontStopRightAfterOccurrence
+                        || !previousLookForResult)) return true;
         }
         previousLookForResult = lookForResult;
         return false;

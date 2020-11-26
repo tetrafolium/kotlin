@@ -37,13 +37,13 @@ public class KotlinParsing extends AbstractKotlinParsing {
     private static final Logger LOG = Logger.getInstance(KotlinParsing.class);
 
     private static final TokenSet TOP_LEVEL_DECLARATION_FIRST = TokenSet.create(
-            TYPE_ALIAS_KEYWORD, INTERFACE_KEYWORD, CLASS_KEYWORD, OBJECT_KEYWORD,
-            FUN_KEYWORD, VAL_KEYWORD, PACKAGE_KEYWORD);
+                TYPE_ALIAS_KEYWORD, INTERFACE_KEYWORD, CLASS_KEYWORD, OBJECT_KEYWORD,
+                FUN_KEYWORD, VAL_KEYWORD, PACKAGE_KEYWORD);
     private static final TokenSet DECLARATION_FIRST = TokenSet.orSet(TOP_LEVEL_DECLARATION_FIRST,
-                                                                     TokenSet.create(INIT_KEYWORD, GET_KEYWORD, SET_KEYWORD, CONSTRUCTOR_KEYWORD));
+            TokenSet.create(INIT_KEYWORD, GET_KEYWORD, SET_KEYWORD, CONSTRUCTOR_KEYWORD));
 
     private static final TokenSet CLASS_NAME_RECOVERY_SET = TokenSet.orSet(TokenSet.create(LT, LPAR, COLON, LBRACE),
-                                                                           TOP_LEVEL_DECLARATION_FIRST);
+            TOP_LEVEL_DECLARATION_FIRST);
     private static final TokenSet TYPE_PARAMETER_GT_RECOVERY_SET = TokenSet.create(WHERE_KEYWORD, LPAR, COLON, LBRACE, GT);
     private static final TokenSet PARAMETER_NAME_RECOVERY_SET = TokenSet.create(COLON, EQ, COMMA, RPAR, VAL_KEYWORD, VAR_KEYWORD);
     private static final TokenSet PACKAGE_NAME_RECOVERY_SET = TokenSet.create(DOT, EOL_OR_SEMICOLON);
@@ -51,13 +51,13 @@ public class KotlinParsing extends AbstractKotlinParsing {
     private static final TokenSet TYPE_REF_FIRST = TokenSet.create(LBRACKET, IDENTIFIER, LPAR, HASH, DYNAMIC_KEYWORD);
     private static final TokenSet RECEIVER_TYPE_TERMINATORS = TokenSet.create(DOT, SAFE_ACCESS);
     private static final TokenSet VALUE_PARAMETER_FIRST =
-            TokenSet.orSet(TokenSet.create(IDENTIFIER, LBRACKET, VAL_KEYWORD, VAR_KEYWORD), MODIFIER_KEYWORDS);
+        TokenSet.orSet(TokenSet.create(IDENTIFIER, LBRACKET, VAL_KEYWORD, VAR_KEYWORD), MODIFIER_KEYWORDS);
     private static final TokenSet LAMBDA_VALUE_PARAMETER_FIRST =
-            TokenSet.orSet(TokenSet.create(IDENTIFIER, LBRACKET), MODIFIER_KEYWORDS);
+        TokenSet.orSet(TokenSet.create(IDENTIFIER, LBRACKET), MODIFIER_KEYWORDS);
     private static final TokenSet SOFT_KEYWORDS_AT_MEMBER_START = TokenSet.create(CONSTRUCTOR_KEYWORD, INIT_KEYWORD);
     private static final TokenSet ANNOTATION_TARGETS = TokenSet.create(
-            FILE_KEYWORD, FIELD_KEYWORD, GET_KEYWORD, SET_KEYWORD, PROPERTY_KEYWORD,
-            RECEIVER_KEYWORD, PARAM_KEYWORD, SETPARAM_KEYWORD, DELEGATE_KEYWORD);
+                FILE_KEYWORD, FIELD_KEYWORD, GET_KEYWORD, SET_KEYWORD, PROPERTY_KEYWORD,
+                RECEIVER_KEYWORD, PARAM_KEYWORD, SETPARAM_KEYWORD, DELEGATE_KEYWORD);
 
     static KotlinParsing createForTopLevel(SemanticWhitespaceAwarePsiBuilder builder) {
         KotlinParsing kotlinParsing = new KotlinParsing(builder);
@@ -369,9 +369,9 @@ public class KotlinParsing extends AbstractKotlinParsing {
     }
 
     private boolean closeImportWithErrorIfNewline(
-            PsiBuilder.Marker importDirective,
-            @Nullable PsiBuilder.Marker importAlias,
-            String errorMessage) {
+        PsiBuilder.Marker importDirective,
+        @Nullable PsiBuilder.Marker importAlias,
+        String errorMessage) {
         if (myBuilder.newlineBeforeCurrentToken()) {
             if (importAlias != null) {
                 importAlias.done(IMPORT_ALIAS);
@@ -439,9 +439,9 @@ public class KotlinParsing extends AbstractKotlinParsing {
     }
 
     public IElementType parseCommonDeclaration(
-            @NotNull ModifierDetector detector,
-            @NotNull NameParsingMode nameParsingModeForObject,
-            @NotNull DeclarationParsingMode declarationParsingMode
+        @NotNull ModifierDetector detector,
+        @NotNull NameParsingMode nameParsingModeForObject,
+        @NotNull DeclarationParsingMode declarationParsingMode
     ) {
         IElementType keywordToken = tt();
 
@@ -471,15 +471,15 @@ public class KotlinParsing extends AbstractKotlinParsing {
      * (modifier | annotation)*
      */
     boolean parseModifierList(
-            @NotNull AnnotationParsingMode annotationParsingMode,
-            @NotNull TokenSet noModifiersBefore
+        @NotNull AnnotationParsingMode annotationParsingMode,
+        @NotNull TokenSet noModifiersBefore
     ) {
         return parseModifierList(null, annotationParsingMode, noModifiersBefore);
     }
 
     boolean parseAnnotationsList(
-            @NotNull AnnotationParsingMode annotationParsingMode,
-            @NotNull TokenSet noModifiersBefore
+        @NotNull AnnotationParsingMode annotationParsingMode,
+        @NotNull TokenSet noModifiersBefore
     ) {
         return doParseModifierList(null, TokenSet.EMPTY, annotationParsingMode, noModifiersBefore);
     }
@@ -493,9 +493,9 @@ public class KotlinParsing extends AbstractKotlinParsing {
      *                          that previous token must be parsed as an identifier rather than modifier
      */
     boolean parseModifierList(
-            @Nullable Consumer<IElementType> tokenConsumer,
-            @NotNull AnnotationParsingMode annotationParsingMode,
-            @NotNull TokenSet noModifiersBefore
+        @Nullable Consumer<IElementType> tokenConsumer,
+        @NotNull AnnotationParsingMode annotationParsingMode,
+        @NotNull TokenSet noModifiersBefore
     ) {
         return doParseModifierList(tokenConsumer, MODIFIER_KEYWORDS, annotationParsingMode, noModifiersBefore);
     }
@@ -513,10 +513,10 @@ public class KotlinParsing extends AbstractKotlinParsing {
     }
 
     private boolean doParseModifierList(
-            @Nullable Consumer<IElementType> tokenConsumer,
-            @NotNull TokenSet modifierKeywords,
-            @NotNull AnnotationParsingMode annotationParsingMode,
-            @NotNull TokenSet noModifiersBefore
+        @Nullable Consumer<IElementType> tokenConsumer,
+        @NotNull TokenSet modifierKeywords,
+        @NotNull AnnotationParsingMode annotationParsingMode,
+        @NotNull TokenSet noModifiersBefore
     ) {
         PsiBuilder.Marker list = mark();
         boolean empty = true;
@@ -542,9 +542,9 @@ public class KotlinParsing extends AbstractKotlinParsing {
     }
 
     private boolean tryParseModifier(
-            @Nullable Consumer<IElementType> tokenConsumer,
-            @NotNull TokenSet noModifiersBefore,
-            @NotNull TokenSet modifierKeywords
+        @Nullable Consumer<IElementType> tokenConsumer,
+        @NotNull TokenSet noModifiersBefore,
+        @NotNull TokenSet modifierKeywords
     ) {
         PsiBuilder.Marker marker = mark();
 
@@ -767,10 +767,10 @@ public class KotlinParsing extends AbstractKotlinParsing {
      */
     private boolean parseAnnotation(AnnotationParsingMode mode) {
         assert _at(IDENTIFIER) ||
-               // We have "@ann" or "@:ann" or "@ :ann", but not "@ ann"
-               // (it's guaranteed that call sites do not allow the latter case)
-               (_at(AT) && (!isNextRawTokenCommentOrWhitespace() || lookahead(1) == COLON))
-                : "Invalid annotation prefix";
+        // We have "@ann" or "@:ann" or "@ :ann", but not "@ ann"
+        // (it's guaranteed that call sites do not allow the latter case)
+        (_at(AT) && (!isNextRawTokenCommentOrWhitespace() || lookahead(1) == COLON))
+        : "Invalid annotation prefix";
 
         PsiBuilder.Marker annotation = mark();
 
@@ -829,11 +829,11 @@ public class KotlinParsing extends AbstractKotlinParsing {
      *   ;
      */
     private IElementType parseClassOrObject(
-            boolean object,
-            NameParsingMode nameParsingMode,
-            boolean optionalBody,
-            boolean enumClass,
-            boolean expectKindKeyword
+        boolean object,
+        NameParsingMode nameParsingMode,
+        boolean optionalBody,
+        boolean enumClass,
+        boolean expectKindKeyword
     ) {
         if (expectKindKeyword) {
             if (object) {
@@ -973,21 +973,21 @@ public class KotlinParsing extends AbstractKotlinParsing {
     private boolean parseEnumEntries() {
         while (!eof() && !at(RBRACE)) {
             switch (parseEnumEntry()) {
-                case FAILED:
-                    // Special case without any enum entries but with possible members after semicolon
-                    if (at(SEMICOLON)) {
-                        advance();
-                        return true;
-                    }
-                    else {
-                        return false;
-                    }
-                case NO_DELIMITER:
-                    return false;
-                case COMMA_DELIMITER:
-                    break;
-                case SEMICOLON_DELIMITER:
+            case FAILED:
+                // Special case without any enum entries but with possible members after semicolon
+                if (at(SEMICOLON)) {
+                    advance();
                     return true;
+                }
+                else {
+                    return false;
+                }
+            case NO_DELIMITER:
+                return false;
+            case COMMA_DELIMITER:
+                break;
+            case SEMICOLON_DELIMITER:
+                return true;
             }
         }
         return false;
@@ -1128,10 +1128,10 @@ public class KotlinParsing extends AbstractKotlinParsing {
 
     private IElementType parseMemberDeclarationRest(@NotNull ModifierDetector modifierDetector) {
         IElementType declType = parseCommonDeclaration(
-                modifierDetector,
-                modifierDetector.isCompanionDetected() ? NameParsingMode.ALLOWED : NameParsingMode.REQUIRED,
-                DeclarationParsingMode.MEMBER_OR_TOPLEVEL
-        );
+                                    modifierDetector,
+                                    modifierDetector.isCompanionDetected() ? NameParsingMode.ALLOWED : NameParsingMode.REQUIRED,
+                                    DeclarationParsingMode.MEMBER_OR_TOPLEVEL
+                                );
 
         if (declType != null) return declType;
 
@@ -1357,8 +1357,8 @@ public class KotlinParsing extends AbstractKotlinParsing {
                 if (!atSet(EOL_OR_SEMICOLON, RBRACE)) {
                     if (getLastToken() != SEMICOLON) {
                         errorUntil(
-                                "Property getter or setter expected",
-                                TokenSet.orSet(DECLARATION_FIRST, TokenSet.create(EOL_OR_SEMICOLON, LBRACE, RBRACE)));
+                            "Property getter or setter expected",
+                            TokenSet.orSet(DECLARATION_FIRST, TokenSet.create(EOL_OR_SEMICOLON, LBRACE, RBRACE)));
                     }
                 }
                 else {
@@ -1649,34 +1649,34 @@ public class KotlinParsing extends AbstractKotlinParsing {
     private int lastDotAfterReceiver() {
         if (at(LPAR)) {
             return matchTokenStreamPredicate(
-                    new FirstBefore(
-                            new AtSet(RECEIVER_TYPE_TERMINATORS),
-                            new AbstractTokenStreamPredicate() {
-                                @Override
-                                public boolean matching(boolean topLevel) {
-                                    if (topLevel && definitelyOutOfReceiver()) {
-                                        return true;
-                                    }
-                                    return topLevel && !at(QUEST) && !at(LPAR) && !at(RPAR);
-                                }
-                            }
-                    ));
+                       new FirstBefore(
+                           new AtSet(RECEIVER_TYPE_TERMINATORS),
+            new AbstractTokenStreamPredicate() {
+                @Override
+                public boolean matching(boolean topLevel) {
+                    if (topLevel && definitelyOutOfReceiver()) {
+                        return true;
+                    }
+                    return topLevel && !at(QUEST) && !at(LPAR) && !at(RPAR);
+                }
+            }
+                       ));
         }
         else {
             return matchTokenStreamPredicate(
-                    new LastBefore(
-                            new AtSet(RECEIVER_TYPE_TERMINATORS),
-                            new AbstractTokenStreamPredicate() {
-                                @Override
-                                public boolean matching(boolean topLevel) {
-                                    if (topLevel && (definitelyOutOfReceiver() || at(LPAR))) return true;
-                                    if (topLevel && at(IDENTIFIER)) {
-                                        IElementType lookahead = lookahead(1);
-                                        return lookahead != LT && lookahead != DOT && lookahead != SAFE_ACCESS && lookahead != QUEST;
-                                    }
-                                    return false;
-                                }
-                            }));
+                       new LastBefore(
+                           new AtSet(RECEIVER_TYPE_TERMINATORS),
+            new AbstractTokenStreamPredicate() {
+                @Override
+                public boolean matching(boolean topLevel) {
+                    if (topLevel && (definitelyOutOfReceiver() || at(LPAR))) return true;
+                    if (topLevel && at(IDENTIFIER)) {
+                        IElementType lookahead = lookahead(1);
+                        return lookahead != LT && lookahead != DOT && lookahead != SAFE_ACCESS && lookahead != QUEST;
+                    }
+                    return false;
+                }
+            }));
         }
     }
 
@@ -1988,9 +1988,9 @@ public class KotlinParsing extends AbstractKotlinParsing {
         }
         else {
             errorWithRecovery("Type expected",
-                    TokenSet.orSet(TOP_LEVEL_DECLARATION_FIRST,
-                                   TokenSet.create(EQ, COMMA, GT, RBRACKET, DOT, RPAR, RBRACE, LBRACE, SEMICOLON),
-                                   extraRecoverySet));
+                              TokenSet.orSet(TOP_LEVEL_DECLARATION_FIRST,
+                                             TokenSet.create(EQ, COMMA, GT, RBRACKET, DOT, RPAR, RBRACE, LBRACE, SEMICOLON),
+                                             extraRecoverySet));
             typeBeforeDot = false;
         }
 
@@ -2395,8 +2395,8 @@ public class KotlinParsing extends AbstractKotlinParsing {
         boolean allowAnnotations;
 
         AnnotationParsingMode(
-                boolean isFileAnnotationParsingMode,
-                boolean allowAnnotations
+            boolean isFileAnnotationParsingMode,
+            boolean allowAnnotations
         ) {
             this.isFileAnnotationParsingMode = isFileAnnotationParsingMode;
             this.allowAnnotations = allowAnnotations;
