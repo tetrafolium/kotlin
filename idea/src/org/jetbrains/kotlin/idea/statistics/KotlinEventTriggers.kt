@@ -5,7 +5,7 @@
 
 package org.jetbrains.kotlin.idea.statistics
 
-// Note: along with adding a trigger to this enum you sould also add its GROUP_ID to plugin.xml and get it whitelisted
+// Note: along with adding a trigger to this enum you could also add its GROUP_ID to plugin.xml and get it whitelisted
 // (see https://confluence.jetbrains.com/display/FUS/IntelliJ+Reporting+API).
 enum class KotlinEventTrigger(groupIdSufix: String) {
     KotlinGradleTargetTrigger("gradle.target"),
