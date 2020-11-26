@@ -35,12 +35,12 @@ import static org.jetbrains.kotlin.js.translate.utils.InlineUtils.setInlineCallM
 
 public class VariableAccessTranslator extends AbstractTranslator implements AccessTranslator {
     public static VariableAccessTranslator newInstance(
-            @NotNull TranslationContext context,
-            @NotNull KtReferenceExpression referenceExpression,
-            @Nullable JsExpression receiver
+        @NotNull TranslationContext context,
+        @NotNull KtReferenceExpression referenceExpression,
+        @Nullable JsExpression receiver
     ) {
         ResolvedCall<? extends VariableDescriptor> resolvedCall =
-                CallUtilKt.getVariableResolvedCallWithAssert(referenceExpression, context.bindingContext());
+            CallUtilKt.getVariableResolvedCallWithAssert(referenceExpression, context.bindingContext());
         if (resolvedCall instanceof VariableAsFunctionResolvedCall) {
             resolvedCall = ((VariableAsFunctionResolvedCall) resolvedCall).getVariableCall();
         }
@@ -53,10 +53,10 @@ public class VariableAccessTranslator extends AbstractTranslator implements Acce
     private final JsExpression receiver;
 
     private VariableAccessTranslator(
-            @NotNull TranslationContext context,
-            @NotNull KtReferenceExpression referenceExpression,
-            @NotNull ResolvedCall<? extends VariableDescriptor> resolvedCall,
-            @Nullable JsExpression receiver
+        @NotNull TranslationContext context,
+        @NotNull KtReferenceExpression referenceExpression,
+        @NotNull ResolvedCall<? extends VariableDescriptor> resolvedCall,
+        @Nullable JsExpression receiver
     ) {
         super(context);
         this.referenceExpression = referenceExpression;
@@ -119,10 +119,10 @@ public class VariableAccessTranslator extends AbstractTranslator implements Acce
 
     private static class CachedVariableAccessTranslator extends VariableAccessTranslator implements AccessTranslator {
         public CachedVariableAccessTranslator(
-                @NotNull TranslationContext context,
-                @NotNull KtReferenceExpression referenceExpression,
-                @NotNull  ResolvedCall<? extends VariableDescriptor> resolvedCall,
-                @Nullable JsExpression cachedReceiver
+            @NotNull TranslationContext context,
+            @NotNull KtReferenceExpression referenceExpression,
+            @NotNull  ResolvedCall<? extends VariableDescriptor> resolvedCall,
+            @Nullable JsExpression cachedReceiver
         ) {
             super(context, referenceExpression, resolvedCall, cachedReceiver);
         }

@@ -36,10 +36,10 @@ import java.util.List;
  * Converts Kotlin to JavaScript code
  */
 @Mojo(name = "test-js",
-        defaultPhase = LifecyclePhase.TEST_COMPILE,
-        requiresDependencyResolution = ResolutionScope.TEST,
-        threadSafe = true
-)
+      defaultPhase = LifecyclePhase.TEST_COMPILE,
+      requiresDependencyResolution = ResolutionScope.TEST,
+      threadSafe = true
+     )
 public class KotlinTestJSCompilerMojo extends K2JSCompilerMojo {
 
     /**

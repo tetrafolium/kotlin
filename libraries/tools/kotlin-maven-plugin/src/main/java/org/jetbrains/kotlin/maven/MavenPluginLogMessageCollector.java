@@ -62,29 +62,29 @@ public class MavenPluginLogMessageCollector implements MessageCollector {
         String text = position + message;
 
         switch (severity) {
-            case EXCEPTION:
-            case ERROR: {
-                collectedErrors.add(new Pair<>(location, message));
-                log.error(text);
-                break;
-            }
-            case STRONG_WARNING:
-            case WARNING: {
-                log.warn(text);
-                break;
-            }
-            case INFO: {
-                log.info(text);
-                break;
-            }
-            case LOGGING:
-            case OUTPUT: {
-                log.debug(text);
-                break;
-            }
-            default: {
-                log.warn("[Unknown severity " + severity + "] " + text);
-            }
+        case EXCEPTION:
+        case ERROR: {
+            collectedErrors.add(new Pair<>(location, message));
+            log.error(text);
+            break;
+        }
+        case STRONG_WARNING:
+        case WARNING: {
+            log.warn(text);
+            break;
+        }
+        case INFO: {
+            log.info(text);
+            break;
+        }
+        case LOGGING:
+        case OUTPUT: {
+            log.debug(text);
+            break;
+        }
+        default: {
+            log.warn("[Unknown severity " + severity + "] " + text);
+        }
         }
     }
 
@@ -100,13 +100,13 @@ public class MavenPluginLogMessageCollector implements MessageCollector {
             int lineContentLength = lineContent == null ? 0 : lineContent.length();
 
             return new CompilerMessage(
-                    location.getPath(),
-                    CompilerMessage.Kind.ERROR,
-                    fixLocation(location.getLine()),
-                    fixLocation(location.getColumn()),
-                    fixLocation(location.getLine()),
-                    Math.min(fixLocation(location.getColumn()), lineContentLength),
-                    message
+                location.getPath(),
+                CompilerMessage.Kind.ERROR,
+                fixLocation(location.getLine()),
+                fixLocation(location.getColumn()),
+                fixLocation(location.getLine()),
+                Math.min(fixLocation(location.getColumn()), lineContentLength),
+                message
             );
         }).collect(Collectors.toList()));
     }

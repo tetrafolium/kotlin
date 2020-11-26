@@ -41,12 +41,12 @@ public class EnumEntrySyntheticClassDescriptor extends ClassDescriptorBase {
      */
     @NotNull
     public static EnumEntrySyntheticClassDescriptor create(
-            @NotNull StorageManager storageManager,
-            @NotNull ClassDescriptor enumClass,
-            @NotNull Name name,
-            @NotNull NotNullLazyValue<Set<Name>> enumMemberNames,
-            @NotNull Annotations annotations,
-            @NotNull SourceElement source
+        @NotNull StorageManager storageManager,
+        @NotNull ClassDescriptor enumClass,
+        @NotNull Name name,
+        @NotNull NotNullLazyValue<Set<Name>> enumMemberNames,
+        @NotNull Annotations annotations,
+        @NotNull SourceElement source
     ) {
         KotlinType enumType = enumClass.getDefaultType();
 
@@ -54,20 +54,20 @@ public class EnumEntrySyntheticClassDescriptor extends ClassDescriptorBase {
     }
 
     private EnumEntrySyntheticClassDescriptor(
-            @NotNull StorageManager storageManager,
-            @NotNull ClassDescriptor containingClass,
-            @NotNull KotlinType supertype,
-            @NotNull Name name,
-            @NotNull NotNullLazyValue<Set<Name>> enumMemberNames,
-            @NotNull Annotations annotations,
-            @NotNull SourceElement source
+        @NotNull StorageManager storageManager,
+        @NotNull ClassDescriptor containingClass,
+        @NotNull KotlinType supertype,
+        @NotNull Name name,
+        @NotNull NotNullLazyValue<Set<Name>> enumMemberNames,
+        @NotNull Annotations annotations,
+        @NotNull SourceElement source
     ) {
         super(storageManager, containingClass, name, source, /* isExternal = */ false);
         assert containingClass.getKind() == ClassKind.ENUM_CLASS;
 
         this.annotations = annotations;
         this.typeConstructor = new ClassTypeConstructorImpl(
-                this, Collections.<TypeParameterDescriptor>emptyList(), Collections.singleton(supertype), storageManager
+            this, Collections.<TypeParameterDescriptor>emptyList(), Collections.singleton(supertype), storageManager
         );
 
         this.scope = new EnumEntryScope(storageManager);
@@ -239,26 +239,26 @@ public class EnumEntrySyntheticClassDescriptor extends ClassDescriptorBase {
 
         @NotNull
         private <D extends CallableMemberDescriptor> Collection<? extends D> resolveFakeOverrides(
-                @NotNull Name name,
-                @NotNull Collection<? extends D> fromSupertypes
+            @NotNull Name name,
+            @NotNull Collection<? extends D> fromSupertypes
         ) {
             final Set<D> result = new LinkedHashSet<D>();
 
             OverridingUtil.generateOverridesInFunctionGroup(
-                    name, fromSupertypes, Collections.<D>emptySet(), EnumEntrySyntheticClassDescriptor.this,
-                    new NonReportingOverrideStrategy() {
-                        @Override
-                        @SuppressWarnings("unchecked")
-                        public void addFakeOverride(@NotNull CallableMemberDescriptor fakeOverride) {
-                            OverridingUtil.resolveUnknownVisibilityForMember(fakeOverride, null);
-                            result.add((D) fakeOverride);
-                        }
+                name, fromSupertypes, Collections.<D>emptySet(), EnumEntrySyntheticClassDescriptor.this,
+            new NonReportingOverrideStrategy() {
+                @Override
+                @SuppressWarnings("unchecked")
+                public void addFakeOverride(@NotNull CallableMemberDescriptor fakeOverride) {
+                    OverridingUtil.resolveUnknownVisibilityForMember(fakeOverride, null);
+                    result.add((D) fakeOverride);
+                }
 
-                        @Override
-                        protected void conflict(@NotNull CallableMemberDescriptor fromSuper, @NotNull CallableMemberDescriptor fromCurrent) {
-                            // Do nothing
-                        }
-                    }
+                @Override
+                protected void conflict(@NotNull CallableMemberDescriptor fromSuper, @NotNull CallableMemberDescriptor fromCurrent) {
+                    // Do nothing
+                }
+            }
             );
 
             return result;
@@ -267,8 +267,8 @@ public class EnumEntrySyntheticClassDescriptor extends ClassDescriptorBase {
         @NotNull
         @Override
         public Collection<DeclarationDescriptor> getContributedDescriptors(
-                @NotNull DescriptorKindFilter kindFilter,
-                @NotNull Function1<? super Name, Boolean> nameFilter
+            @NotNull DescriptorKindFilter kindFilter,
+            @NotNull Function1<? super Name, Boolean> nameFilter
         ) {
             return allDescriptors.invoke();
         }

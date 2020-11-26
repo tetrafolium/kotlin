@@ -37,10 +37,10 @@ public interface PropertyAccessorDescriptor extends VariableAccessorDescriptor {
     @NotNull
     @Override
     PropertyAccessorDescriptor copy(
-            DeclarationDescriptor newOwner,
-            Modality modality,
-            Visibility visibility,
-            Kind kind,
-            boolean copyOverrides
+        DeclarationDescriptor newOwner,
+        Modality modality,
+        Visibility visibility,
+        Kind kind,
+        boolean copyOverrides
     );
 }

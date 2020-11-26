@@ -26,13 +26,13 @@ import org.jetbrains.kotlin.psi.KtNamedDeclaration;
 
 public class KotlinTypeParameterFindUsagesDialog<T extends KtNamedDeclaration> extends CommonFindUsagesDialog {
     public KotlinTypeParameterFindUsagesDialog(
-            T element,
-            Project project,
-            FindUsagesOptions findUsagesOptions,
-            boolean toShowInNewTab,
-            boolean mustOpenInNewTab,
-            boolean isSingleFile,
-            FindUsagesHandler handler
+        T element,
+        Project project,
+        FindUsagesOptions findUsagesOptions,
+        boolean toShowInNewTab,
+        boolean mustOpenInNewTab,
+        boolean isSingleFile,
+        FindUsagesHandler handler
     ) {
         super(element, project, findUsagesOptions, toShowInNewTab, mustOpenInNewTab, isSingleFile, handler);
     }

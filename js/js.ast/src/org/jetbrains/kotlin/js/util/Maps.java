@@ -19,23 +19,23 @@ public class Maps {
 
     public static <K, V> Map<K, V> put(Map<K, V> map, K key, V value) {
         switch (map.size()) {
-            case 0:
-                // Empty -> Singleton
+        case 0:
+            // Empty -> Singleton
+            return Collections.singletonMap(key, value);
+        case 1: {
+            if (map.containsKey(key)) {
                 return Collections.singletonMap(key, value);
-            case 1: {
-                if (map.containsKey(key)) {
-                    return Collections.singletonMap(key, value);
-                }
-                // Singleton -> HashMap
-                Map<K, V> result = new HashMap<K, V>();
-                result.put(map.keySet().iterator().next(), map.values().iterator().next());
-                result.put(key, value);
-                return result;
             }
-            default:
-                // HashMap
-                map.put(key, value);
-                return map;
+            // Singleton -> HashMap
+            Map<K, V> result = new HashMap<K, V>();
+            result.put(map.keySet().iterator().next(), map.values().iterator().next());
+            result.put(key, value);
+            return result;
+        }
+        default:
+            // HashMap
+            map.put(key, value);
+            return map;
         }
     }
 }

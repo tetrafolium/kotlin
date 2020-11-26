@@ -58,8 +58,8 @@ public class KotlinHighlighter extends SyntaxHighlighterBase {
         fillMap(keys1,
                 TokenSet.andNot(KtTokens.OPERATIONS,
                                 TokenSet.orSet(
-                                        TokenSet.create(KtTokens.IDENTIFIER, KtTokens.AT),
-                                        KtTokens.KEYWORDS)),
+                                    TokenSet.create(KtTokens.IDENTIFIER, KtTokens.AT),
+                                    KtTokens.KEYWORDS)),
                 KotlinHighlightingColors.OPERATOR_SIGN);
 
         keys1.put(KtTokens.LPAR, KotlinHighlightingColors.PARENTHESIS);

@@ -37,8 +37,8 @@ public class KotlinSurrounderUtils {
     }
 
     public static void addStatementsInBlock(
-            @NotNull KtBlockExpression block,
-            @NotNull PsiElement[] statements
+        @NotNull KtBlockExpression block,
+        @NotNull PsiElement[] statements
     ) {
         PsiElement lBrace = block.getFirstChild();
         block.addRangeAfter(statements[0], statements[statements.length - 1], lBrace);

@@ -32,9 +32,9 @@ public interface ExternalOverridabilityCondition {
 
     @NotNull
     Result isOverridable(
-            @NotNull CallableDescriptor superDescriptor,
-            @NotNull CallableDescriptor subDescriptor,
-            @Nullable ClassDescriptor subClassDescriptor
+        @NotNull CallableDescriptor superDescriptor,
+        @NotNull CallableDescriptor subDescriptor,
+        @Nullable ClassDescriptor subClassDescriptor
     );
 
     @NotNull

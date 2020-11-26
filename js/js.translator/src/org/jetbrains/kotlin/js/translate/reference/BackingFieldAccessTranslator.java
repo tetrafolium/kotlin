@@ -35,10 +35,10 @@ public final class BackingFieldAccessTranslator extends AbstractTranslator imple
 
     /*package*/
     public static BackingFieldAccessTranslator newInstance(@NotNull KtSimpleNameExpression expression,
-                                                    @NotNull TranslationContext context) {
+            @NotNull TranslationContext context) {
         PropertyDescriptor referencedProperty = SyntheticFieldDescriptorKt.getReferencedProperty(
                 getDescriptorForReferenceExpression(context.bindingContext(), expression)
-        );
+                                                );
         assert referencedProperty != null;
         return new BackingFieldAccessTranslator(referencedProperty, context);
     }

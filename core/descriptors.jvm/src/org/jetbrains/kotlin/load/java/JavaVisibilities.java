@@ -123,9 +123,9 @@ public class JavaVisibilities {
     };
 
     private static boolean isVisibleForProtectedAndPackage(
-            @Nullable ReceiverValue receiver,
-            @NotNull DeclarationDescriptorWithVisibility what,
-            @NotNull DeclarationDescriptor from
+        @Nullable ReceiverValue receiver,
+        @NotNull DeclarationDescriptorWithVisibility what,
+        @NotNull DeclarationDescriptor from
     ) {
         if (areInSamePackage(DescriptorUtils.unwrapFakeOverrideToAnyDeclaration(what), from)) {
             return true;

@@ -46,7 +46,7 @@ public class InOperationTranslator extends AbstractTranslator {
     private final boolean negated;
 
     public InOperationTranslator(@NotNull TranslationContext context, @NotNull JsExpression left, @NotNull KtExpression right,
-            @NotNull KtSimpleNameExpression operation, boolean negated) {
+                                 @NotNull KtSimpleNameExpression operation, boolean negated) {
         super(context);
         this.left = left;
         this.right = right;

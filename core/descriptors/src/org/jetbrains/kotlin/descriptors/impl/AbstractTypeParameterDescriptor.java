@@ -44,15 +44,15 @@ public abstract class AbstractTypeParameterDescriptor extends DeclarationDescrip
     private final NotNullLazyValue<SimpleType> defaultType;
 
     protected AbstractTypeParameterDescriptor(
-            @NotNull final StorageManager storageManager,
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull Annotations annotations,
-            @NotNull final Name name,
-            @NotNull Variance variance,
-            boolean isReified,
-            int index,
-            @NotNull SourceElement source,
-            @NotNull final SupertypeLoopChecker supertypeLoopChecker
+        @NotNull final StorageManager storageManager,
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull Annotations annotations,
+        @NotNull final Name name,
+        @NotNull Variance variance,
+        boolean isReified,
+        int index,
+        @NotNull SourceElement source,
+        @NotNull final SupertypeLoopChecker supertypeLoopChecker
     ) {
         super(containingDeclaration, annotations, name, source);
         this.variance = variance;
@@ -69,17 +69,17 @@ public abstract class AbstractTypeParameterDescriptor extends DeclarationDescrip
             @Override
             public SimpleType invoke() {
                 return KotlinTypeFactory.simpleTypeWithNonTrivialMemberScope(
-                        Annotations.Companion.getEMPTY(),
-                        getTypeConstructor(), Collections.<TypeProjection>emptyList(), false,
-                        new LazyScopeAdapter(storageManager.createLazyValue(
-                                new Function0<MemberScope>() {
-                                    @Override
-                                    public MemberScope invoke() {
-                                        return TypeIntersectionScope.create("Scope for type parameter " + name.asString(), getUpperBounds());
-                                    }
-                                }
-                        ))
-                );
+                           Annotations.Companion.getEMPTY(),
+                           getTypeConstructor(), Collections.<TypeProjection>emptyList(), false,
+                           new LazyScopeAdapter(storageManager.createLazyValue(
+                new Function0<MemberScope>() {
+                    @Override
+                    public MemberScope invoke() {
+                        return TypeIntersectionScope.create("Scope for type parameter " + name.asString(), getUpperBounds());
+                    }
+                }
+                                                ))
+                       );
             }
         });
     }

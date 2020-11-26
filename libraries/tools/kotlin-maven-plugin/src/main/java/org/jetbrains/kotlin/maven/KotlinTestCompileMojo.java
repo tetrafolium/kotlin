@@ -36,10 +36,10 @@ import java.util.List;
  * Compiles Kotlin test sources
  */
 @Mojo(name = "test-compile",
-        defaultPhase = LifecyclePhase.TEST_COMPILE,
-        requiresDependencyResolution = ResolutionScope.TEST,
-        threadSafe = true
-)
+      defaultPhase = LifecyclePhase.TEST_COMPILE,
+      requiresDependencyResolution = ResolutionScope.TEST,
+      threadSafe = true
+     )
 public class KotlinTestCompileMojo extends K2JVMCompileMojo {
     /**
      * Flag to allow test compilation to be skipped.

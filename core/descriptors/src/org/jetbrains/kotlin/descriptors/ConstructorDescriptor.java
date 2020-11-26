@@ -58,11 +58,11 @@ public interface ConstructorDescriptor extends FunctionDescriptor {
     @NotNull
     @Override
     ConstructorDescriptor copy(
-            DeclarationDescriptor newOwner,
-            Modality modality,
-            Visibility visibility,
-            Kind kind,
-            boolean copyOverrides
+        DeclarationDescriptor newOwner,
+        Modality modality,
+        Visibility visibility,
+        Kind kind,
+        boolean copyOverrides
     );
 
     boolean isPrimary();

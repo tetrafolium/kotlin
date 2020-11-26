@@ -42,13 +42,13 @@ public class KotlinFindFunctionUsagesDialog extends FindMethodUsagesDialog {
     private StateRestoringCheckBox expectedUsages;
 
     public KotlinFindFunctionUsagesDialog(
-            PsiMethod method,
-            Project project,
-            KotlinFunctionFindUsagesOptions findUsagesOptions,
-            boolean toShowInNewTab,
-            boolean mustOpenInNewTab,
-            boolean isSingleFile,
-            FindUsagesHandler handler
+        PsiMethod method,
+        Project project,
+        KotlinFunctionFindUsagesOptions findUsagesOptions,
+        boolean toShowInNewTab,
+        boolean mustOpenInNewTab,
+        boolean isSingleFile,
+        FindUsagesHandler handler
     ) {
         super(method, project, findUsagesOptions, toShowInNewTab, mustOpenInNewTab, isSingleFile, handler);
     }
@@ -70,14 +70,14 @@ public class KotlinFindFunctionUsagesDialog extends FindMethodUsagesDialog {
 
         if (findWhatPanel != null) {
             Utils.renameCheckbox(
-                    findWhatPanel,
-                    FindBundle.message("find.what.implementing.methods.checkbox"),
-                    KotlinBundle.message("find.what.implementing.methods.checkbox")
+                findWhatPanel,
+                FindBundle.message("find.what.implementing.methods.checkbox"),
+                KotlinBundle.message("find.what.implementing.methods.checkbox")
             );
             Utils.renameCheckbox(
-                    findWhatPanel,
-                    FindBundle.message("find.what.overriding.methods.checkbox"),
-                    KotlinBundle.message("find.what.overriding.methods.checkbox")
+                findWhatPanel,
+                FindBundle.message("find.what.overriding.methods.checkbox"),
+                KotlinBundle.message("find.what.overriding.methods.checkbox")
             );
         }
 
@@ -89,15 +89,15 @@ public class KotlinFindFunctionUsagesDialog extends FindMethodUsagesDialog {
         super.addUsagesOptions(optionsPanel);
 
         if (!Utils.renameCheckbox(
-                optionsPanel,
-                FindBundle.message("find.options.include.overloaded.methods.checkbox"),
-                KotlinBundle.message("find.options.include.overloaded.methods.checkbox")
-        )) {
-            addCheckboxToPanel(
-                    KotlinBundle.message("find.options.include.overloaded.methods.checkbox"),
-                    FindSettings.getInstance().isSearchOverloadedMethods(),
                     optionsPanel,
-                    false
+                    FindBundle.message("find.options.include.overloaded.methods.checkbox"),
+                    KotlinBundle.message("find.options.include.overloaded.methods.checkbox")
+                )) {
+            addCheckboxToPanel(
+                KotlinBundle.message("find.options.include.overloaded.methods.checkbox"),
+                FindSettings.getInstance().isSearchOverloadedMethods(),
+                optionsPanel,
+                false
             );
         }
         PsiElement element = LightClassUtilsKt.getUnwrapped(getPsiElement());
@@ -110,11 +110,11 @@ public class KotlinFindFunctionUsagesDialog extends FindMethodUsagesDialog {
         KotlinFunctionFindUsagesOptions options = getFindUsagesOptions();
         if (isActual) {
             expectedUsages = addCheckboxToPanel(
-                    "Expected functions",
-                    options.getSearchExpected(),
-                    optionsPanel,
-                    false
-            );
+                                 "Expected functions",
+                                 options.getSearchExpected(),
+                                 optionsPanel,
+                                 false
+                             );
         }
     }
 

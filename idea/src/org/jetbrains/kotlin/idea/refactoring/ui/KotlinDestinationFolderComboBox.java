@@ -59,9 +59,9 @@ public abstract class KotlinDestinationFolderComboBox extends ComboboxWithBrowse
     }
 
     public void setData(
-            Project project,
-            PsiDirectory initialTargetDirectory,
-            EditorComboBox editorComboBox
+        Project project,
+        PsiDirectory initialTargetDirectory,
+        EditorComboBox editorComboBox
     ) {
         setData(project, initialTargetDirectory, new Pass<String>() {
             @Override
@@ -71,9 +71,9 @@ public abstract class KotlinDestinationFolderComboBox extends ComboboxWithBrowse
     }
 
     public void setData(
-            Project project,
-            PsiDirectory initialTargetDirectory,
-            Pass<String> errorMessageUpdater, EditorComboBox editorComboBox
+        Project project,
+        PsiDirectory initialTargetDirectory,
+        Pass<String> errorMessageUpdater, EditorComboBox editorComboBox
     ) {
         myInitialTargetDirectory = initialTargetDirectory;
         mySourceRoots = getKotlinAwareDestinationSourceRoots(project);
@@ -95,11 +95,11 @@ public abstract class KotlinDestinationFolderComboBox extends ComboboxWithBrowse
         getComboBox().setRenderer(new ListCellRendererWrapper<DirectoryChooser.ItemWrapper>() {
             @Override
             public void customize(
-                    JList list,
-                    DirectoryChooser.ItemWrapper itemWrapper,
-                    int index,
-                    boolean selected,
-                    boolean hasFocus
+                JList list,
+                DirectoryChooser.ItemWrapper itemWrapper,
+                int index,
+                boolean selected,
+                boolean hasFocus
             ) {
                 if (itemWrapper != NULL_WRAPPER && itemWrapper != null) {
                     setIcon(itemWrapper.getIcon(fileIndex));
@@ -112,18 +112,18 @@ public abstract class KotlinDestinationFolderComboBox extends ComboboxWithBrowse
             }
         });
         VirtualFile initialSourceRoot =
-                initialTargetDirectory != null ? fileIndex.getSourceRootForFile(initialTargetDirectory.getVirtualFile()) : null;
+            initialTargetDirectory != null ? fileIndex.getSourceRootForFile(initialTargetDirectory.getVirtualFile()) : null;
         VirtualFile[] selection = new VirtualFile[] {initialSourceRoot};
         addActionListener(e -> {
             VirtualFile root = MoveClassesOrPackagesUtil
-                    .chooseSourceRoot(new PackageWrapper(PsiManager.getInstance(project), getTargetPackage()), mySourceRoots,
-                                      initialTargetDirectory);
+            .chooseSourceRoot(new PackageWrapper(PsiManager.getInstance(project), getTargetPackage()), mySourceRoots,
+                              initialTargetDirectory);
             if (root == null) return;
             ComboBoxModel model = getComboBox().getModel();
             for (int i = 0; i < model.getSize(); i++) {
                 DirectoryChooser.ItemWrapper item = (DirectoryChooser.ItemWrapper) model.getElementAt(i);
                 if (item != NULL_WRAPPER &&
-                    Comparing.equal(fileIndex.getSourceRootForFile(item.getDirectory().getVirtualFile()), root)) {
+                        Comparing.equal(fileIndex.getSourceRootForFile(item.getDirectory().getVirtualFile()), root)) {
                     getComboBox().setSelectedItem(item);
                     getComboBox().repaint();
                     return;
@@ -138,7 +138,7 @@ public abstract class KotlinDestinationFolderComboBox extends ComboboxWithBrowse
                 JComboBox comboBox = getComboBox();
                 DirectoryChooser.ItemWrapper selectedItem = (DirectoryChooser.ItemWrapper) comboBox.getSelectedItem();
                 setComboboxModel(comboBox, selectedItem != null && selectedItem != NULL_WRAPPER ? fileIndex
-                                         .getSourceRootForFile(selectedItem.getDirectory().getVirtualFile()) : initialSourceRoot, selection[0], fileIndex,
+                                 .getSourceRootForFile(selectedItem.getDirectory().getVirtualFile()) : initialSourceRoot, selection[0], fileIndex,
                                  mySourceRoots, project, false, errorMessageUpdater);
             }
         });
@@ -164,8 +164,8 @@ public abstract class KotlinDestinationFolderComboBox extends ComboboxWithBrowse
         PsiDirectory selectedPsiDirectory = selectedItem.getDirectory();
         VirtualFile selectedDestination = selectedPsiDirectory.getVirtualFile();
         if (showChooserWhenDefault &&
-            myInitialTargetDirectory != null && Comparing.equal(selectedDestination, myInitialTargetDirectory.getVirtualFile()) &&
-            mySourceRoots.size() > 1) {
+                myInitialTargetDirectory != null && Comparing.equal(selectedDestination, myInitialTargetDirectory.getVirtualFile()) &&
+                mySourceRoots.size() > 1) {
             selectedDestination = MoveClassesOrPackagesUtil.chooseSourceRoot(targetPackage, mySourceRoots, myInitialTargetDirectory);
         }
         if (selectedDestination == null) return null;
@@ -191,20 +191,20 @@ public abstract class KotlinDestinationFolderComboBox extends ComboboxWithBrowse
     }
 
     private void setComboboxModel(
-            JComboBox comboBox,
-            VirtualFile initialTargetDirectorySourceRoot,
-            VirtualFile oldSelection,
-            ProjectFileIndex fileIndex,
-            List<VirtualFile> sourceRoots,
-            Project project,
-            boolean forceIncludeAll,
-            Pass<String> updateErrorMessage
+        JComboBox comboBox,
+        VirtualFile initialTargetDirectorySourceRoot,
+        VirtualFile oldSelection,
+        ProjectFileIndex fileIndex,
+        List<VirtualFile> sourceRoots,
+        Project project,
+        boolean forceIncludeAll,
+        Pass<String> updateErrorMessage
     ) {
         LinkedHashSet<PsiDirectory> targetDirectories = new LinkedHashSet<>();
         HashMap<PsiDirectory, String> pathsToCreate = new HashMap<>();
         MoveClassesOrPackagesUtil
-                .buildDirectoryList(new PackageWrapper(PsiManager.getInstance(project), getTargetPackage()), sourceRoots, targetDirectories,
-                                    pathsToCreate);
+        .buildDirectoryList(new PackageWrapper(PsiManager.getInstance(project), getTargetPackage()), sourceRoots, targetDirectories,
+                            pathsToCreate);
         if (!forceIncludeAll && targetDirectories.size() > pathsToCreate.size()) {
             targetDirectories.removeAll(pathsToCreate.keySet());
         }
@@ -213,7 +213,7 @@ public abstract class KotlinDestinationFolderComboBox extends ComboboxWithBrowse
         DirectoryChooser.ItemWrapper oldOne = null;
         for (PsiDirectory targetDirectory : targetDirectories) {
             DirectoryChooser.ItemWrapper itemWrapper =
-                    new DirectoryChooser.ItemWrapper(targetDirectory, pathsToCreate.get(targetDirectory));
+                new DirectoryChooser.ItemWrapper(targetDirectory, pathsToCreate.get(targetDirectory));
             items.add(itemWrapper);
             VirtualFile sourceRootForFile = fileIndex.getSourceRootForFile(targetDirectory.getVirtualFile());
             if (Comparing.equal(sourceRootForFile, initialTargetDirectorySourceRoot)) {
@@ -265,15 +265,15 @@ public abstract class KotlinDestinationFolderComboBox extends ComboboxWithBrowse
 
     @Nullable
     private static DirectoryChooser.ItemWrapper chooseSelection(
-            VirtualFile initialTargetDirectorySourceRoot,
-            ProjectFileIndex fileIndex,
-            ArrayList<DirectoryChooser.ItemWrapper> items,
-            DirectoryChooser.ItemWrapper initial,
-            DirectoryChooser.ItemWrapper oldOne
+        VirtualFile initialTargetDirectorySourceRoot,
+        ProjectFileIndex fileIndex,
+        ArrayList<DirectoryChooser.ItemWrapper> items,
+        DirectoryChooser.ItemWrapper initial,
+        DirectoryChooser.ItemWrapper oldOne
     ) {
         if (initial != null ||
-            ((initialTargetDirectorySourceRoot == null || items.size() > 2) && items.contains(NULL_WRAPPER)) ||
-            items.isEmpty()) {
+                ((initialTargetDirectorySourceRoot == null || items.size() > 2) && items.contains(NULL_WRAPPER)) ||
+                items.isEmpty()) {
             return initial;
         }
         else {
@@ -312,15 +312,15 @@ public abstract class KotlinDestinationFolderComboBox extends ComboboxWithBrowse
     }
 
     public static boolean isAccessible(
-            Project project,
-            VirtualFile virtualFile,
-            VirtualFile targetVirtualFile
+        Project project,
+        VirtualFile virtualFile,
+        VirtualFile targetVirtualFile
     ) {
         boolean inTestSourceContent = ProjectRootManager.getInstance(project).getFileIndex().isInTestSourceContent(virtualFile);
         Module module = ModuleUtilCore.findModuleForFile(virtualFile, project);
         if (targetVirtualFile != null &&
-            module != null &&
-            !GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(module, inTestSourceContent).contains(targetVirtualFile)) {
+                module != null &&
+                !GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(module, inTestSourceContent).contains(targetVirtualFile)) {
             return false;
         }
         return true;

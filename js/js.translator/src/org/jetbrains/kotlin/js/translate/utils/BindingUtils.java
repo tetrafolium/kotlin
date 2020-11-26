@@ -52,12 +52,12 @@ public final class BindingUtils {
     @SuppressWarnings("unchecked")
     @NotNull
     private static <E extends PsiElement, D extends DeclarationDescriptor> D getDescriptorForExpression(
-            @NotNull BindingContext context, @NotNull E expression, Class<D> descriptorClass
+        @NotNull BindingContext context, @NotNull E expression, Class<D> descriptorClass
     ) {
         DeclarationDescriptor descriptor = context.get(BindingContext.DECLARATION_TO_DESCRIPTOR, expression);
         assert descriptor != null;
         assert descriptorClass.isInstance(descriptor)
-                : message(expression, expression.toString() + " expected to have of type" + descriptorClass.toString());
+        : message(expression, expression.toString() + " expected to have of type" + descriptorClass.toString());
         return (D) descriptor;
     }
 
@@ -145,17 +145,17 @@ public final class BindingUtils {
 
     @Nullable
     public static CallableDescriptor getCallableDescriptorForOperationExpression(
-            @NotNull BindingContext context,
-            @NotNull KtOperationExpression expression
+        @NotNull BindingContext context,
+        @NotNull KtOperationExpression expression
     ) {
         KtSimpleNameExpression operationReference = expression.getOperationReference();
         DeclarationDescriptor descriptorForReferenceExpression =
-                getNullableDescriptorForReferenceExpression(context, operationReference);
+            getNullableDescriptorForReferenceExpression(context, operationReference);
 
         if (descriptorForReferenceExpression == null) return null;
 
         assert descriptorForReferenceExpression instanceof CallableDescriptor :
-                message(operationReference, "Operation should resolve to callable descriptor");
+        message(operationReference, "Operation should resolve to callable descriptor");
         return (CallableDescriptor) descriptorForReferenceExpression;
     }
 

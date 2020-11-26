@@ -53,9 +53,9 @@ public enum PrimitiveBinaryOperationFIF implements FunctionIntrinsicFactory {
         @NotNull
         @Override
         public JsExpression apply(
-                @Nullable JsExpression receiver,
-                @NotNull List<? extends JsExpression> arguments,
-                @NotNull TranslationContext context) {
+            @Nullable JsExpression receiver,
+            @NotNull List<? extends JsExpression> arguments,
+            @NotNull TranslationContext context) {
             assert receiver != null;
             assert arguments.size() == 1;
             return doApply(receiver, arguments.get(0), context);
@@ -108,12 +108,12 @@ public enum PrimitiveBinaryOperationFIF implements FunctionIntrinsicFactory {
     private static final DescriptorPredicate SIMPLE_INT_MULTIPLICATION = pattern("Byte|Short.times(Byte|Short)");
     private static final DescriptorPredicate INT_DIVISION = pattern("Byte|Short|Int.div(Byte|Short|Int)");
     private static final DescriptorPredicate PRIMITIVE_NUMBERS_BINARY_OPERATIONS =
-            pattern(NamePredicate.PRIMITIVE_NUMBERS_MAPPED_TO_PRIMITIVE_JS, BINARY_OPERATIONS);
+        pattern(NamePredicate.PRIMITIVE_NUMBERS_MAPPED_TO_PRIMITIVE_JS, BINARY_OPERATIONS);
 
     private static final DescriptorPredicate PRIMITIVE_INTEGRAL_NUMBERS_COMPARE_TO_INTEGRAL_OPERATIONS =
-            pattern("Byte|Short|Int.compareTo(Byte|Short|Int)");
+        pattern("Byte|Short|Int.compareTo(Byte|Short|Int)");
     private static final DescriptorPredicate PRIMITIVE_NUMBERS_COMPARE_TO_OPERATIONS =
-            pattern(NamePredicate.PRIMITIVE_NUMBERS_MAPPED_TO_PRIMITIVE_JS, "compareTo");
+        pattern(NamePredicate.PRIMITIVE_NUMBERS_MAPPED_TO_PRIMITIVE_JS, "compareTo");
 
     private static final Predicate<FunctionDescriptor> INT_WITH_BIT_OPERATIONS = pattern("Int.or|and|xor|shl|shr|ushr")
             .or(pattern("Short|Byte.or|and|xor"));
@@ -197,14 +197,14 @@ public enum PrimitiveBinaryOperationFIF implements FunctionIntrinsicFactory {
         Name descriptorName = descriptor.getName().equals(OperatorNameConventions.MOD) ? OperatorNameConventions.REM : descriptor.getName();
 
         switch (descriptorName.asString()) {
-            case "or":
-                return JsBinaryOperator.BIT_OR;
-            case "and":
-                return JsBinaryOperator.BIT_AND;
-            case "xor":
-                return JsBinaryOperator.BIT_XOR;
-            default:
-                break;
+        case "or":
+            return JsBinaryOperator.BIT_OR;
+        case "and":
+            return JsBinaryOperator.BIT_AND;
+        case "xor":
+            return JsBinaryOperator.BIT_XOR;
+        default:
+            break;
         }
 
         KtToken token = OperatorConventions.BINARY_OPERATION_NAMES.inverse().get(descriptorName);
@@ -260,11 +260,11 @@ public enum PrimitiveBinaryOperationFIF implements FunctionIntrinsicFactory {
             if (!(toIntArgument instanceof JsBinaryOperation)) return expression;
             JsBinaryOperator operator = ((JsBinaryOperation) toIntArgument).getOperator();
             switch (operator) {
-                case ADD:
-                case SUB:
-                    return toIntArgument;
-                default:
-                    return expression;
+            case ADD:
+            case SUB:
+                return toIntArgument;
+            default:
+                return expression;
             }
         }
     }

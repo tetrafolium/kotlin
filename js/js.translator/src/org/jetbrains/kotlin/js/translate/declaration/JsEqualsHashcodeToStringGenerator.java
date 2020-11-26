@@ -77,8 +77,8 @@ abstract class JsEqualsHashcodeToStringGenerator extends DataClassMethodGenerato
             JsExpression component = new JsInvocation(context.namer().kotlin("hashCode"), new JsNameRef(name, new JsThisRef()));
             JsExpression newHashValue = JsAstUtils.sum(JsAstUtils.mul(new JsNameRef(varName), new JsIntLiteral(31)), component);
             JsExpression assignment = JsAstUtils.assignment(new JsNameRef(varName),
-                                                            new JsBinaryOperation(JsBinaryOperator.BIT_OR, newHashValue,
-                                                                                  new JsIntLiteral(0)));
+                                      new JsBinaryOperation(JsBinaryOperator.BIT_OR, newHashValue,
+                                              new JsIntLiteral(0)));
             statements.add(assignment.source(KotlinSourceElementKt.getPsi(prop.getSource())).makeStmt());
         }
 
@@ -100,8 +100,8 @@ abstract class JsEqualsHashcodeToStringGenerator extends DataClassMethodGenerato
         JsExpression isNotNull = JsAstUtils.inequality(new JsNameRef(paramName), new JsNullLiteral());
         JsExpression otherIsObject = JsAstUtils.typeOfIs(paramName.makeRef(), new JsStringLiteral("object"));
         JsExpression prototypeEqual =
-                JsAstUtils.equality(new JsInvocation(new JsNameRef("getPrototypeOf", new JsNameRef("Object")), new JsThisRef()),
-                                    new JsInvocation(new JsNameRef("getPrototypeOf", new JsNameRef("Object")), new JsNameRef(paramName)));
+            JsAstUtils.equality(new JsInvocation(new JsNameRef("getPrototypeOf", new JsNameRef("Object")), new JsThisRef()),
+                                new JsInvocation(new JsNameRef("getPrototypeOf", new JsNameRef("Object")), new JsNameRef(paramName)));
 
         JsExpression fieldChain = null;
         for (PropertyDescriptor prop : classProperties) {
@@ -127,14 +127,14 @@ abstract class JsEqualsHashcodeToStringGenerator extends DataClassMethodGenerato
 
     @Override
     protected void generateComponentFunction(
-            @NotNull FunctionDescriptor function, @NotNull ValueParameterDescriptor parameter
+        @NotNull FunctionDescriptor function, @NotNull ValueParameterDescriptor parameter
     ) {
         // Do nothing
     }
 
     @Override
     protected void generateCopyFunction(
-            @NotNull FunctionDescriptor function, @NotNull List<? extends KtParameter> constructorParameters
+        @NotNull FunctionDescriptor function, @NotNull List<? extends KtParameter> constructorParameters
     ) {
         // Do nothing
     }

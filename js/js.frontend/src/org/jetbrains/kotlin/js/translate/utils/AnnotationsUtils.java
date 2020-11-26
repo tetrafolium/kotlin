@@ -48,8 +48,8 @@ public final class AnnotationsUtils {
     }
 
     public static boolean hasAnnotation(
-            @NotNull DeclarationDescriptor descriptor,
-            @NotNull PredefinedAnnotation annotation
+        @NotNull DeclarationDescriptor descriptor,
+        @NotNull PredefinedAnnotation annotation
     ) {
         return getAnnotationByName(descriptor, annotation) != null;
     }
@@ -106,8 +106,8 @@ public final class AnnotationsUtils {
 
     @Nullable
     private static AnnotationDescriptor getAnnotationByName(
-            @NotNull DeclarationDescriptor descriptor,
-            @NotNull PredefinedAnnotation annotation
+        @NotNull DeclarationDescriptor descriptor,
+        @NotNull PredefinedAnnotation annotation
     ) {
         return descriptor.getAnnotations().findAnnotation(annotation.getFqName());
     }
@@ -168,8 +168,8 @@ public final class AnnotationsUtils {
     }
 
     private static boolean hasAnnotationOrInsideAnnotatedClass(
-            @NotNull DeclarationDescriptor descriptor,
-            @NotNull PredefinedAnnotation annotation
+        @NotNull DeclarationDescriptor descriptor,
+        @NotNull PredefinedAnnotation annotation
     ) {
         return hasAnnotationOrInsideAnnotatedClass(descriptor, annotation.getFqName());
     }
@@ -206,9 +206,9 @@ public final class AnnotationsUtils {
 
     @Nullable
     private static String getSingleStringAnnotationArgument(
-            @NotNull BindingContext bindingContext,
-            @NotNull DeclarationDescriptor declaration,
-            @NotNull FqName annotationFqName
+        @NotNull BindingContext bindingContext,
+        @NotNull DeclarationDescriptor declaration,
+        @NotNull FqName annotationFqName
     ) {
         for (AnnotationDescriptor annotation : getContainingFileAnnotations(bindingContext, declaration)) {
             if (annotationFqName.equals(annotation.getFqName())) {
@@ -224,8 +224,8 @@ public final class AnnotationsUtils {
 
     public static boolean isFromNonModuleFile(@NotNull BindingContext bindingContext, @NotNull DeclarationDescriptor declaration) {
         return CollectionsKt.any(getContainingFileAnnotations(bindingContext, declaration), annotation ->
-                JS_NON_MODULE_ANNOTATION.equals(annotation.getFqName())
-        );
+                                 JS_NON_MODULE_ANNOTATION.equals(annotation.getFqName())
+                                );
     }
 
     @Nullable
@@ -241,8 +241,8 @@ public final class AnnotationsUtils {
 
     @NotNull
     public static List<AnnotationDescriptor> getContainingFileAnnotations(
-            @NotNull BindingContext bindingContext,
-            @NotNull DeclarationDescriptor descriptor
+        @NotNull BindingContext bindingContext,
+        @NotNull DeclarationDescriptor descriptor
     ) {
         PackageFragmentDescriptor containingPackage = DescriptorUtils.getParentOfType(descriptor, PackageFragmentDescriptor.class, false);
         if (containingPackage instanceof KotlinJavascriptPackageFragment) {

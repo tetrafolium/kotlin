@@ -37,8 +37,8 @@ import static org.jetbrains.kotlin.js.translate.utils.PsiUtils.getOperationToken
 public final class CompareToTranslator extends AbstractTranslator {
 
     public static boolean isCompareToCall(
-            @NotNull KtToken operationToken,
-            @Nullable CallableDescriptor operationDescriptor
+        @NotNull KtToken operationToken,
+        @Nullable CallableDescriptor operationDescriptor
     ) {
         if (!OperatorConventions.COMPARISON_OPERATIONS.contains(operationToken) || operationDescriptor == null) return false;
 
@@ -47,7 +47,7 @@ public final class CompareToTranslator extends AbstractTranslator {
 
     @NotNull
     public static JsExpression translate(@NotNull KtBinaryExpression expression,
-            @NotNull TranslationContext context) {
+                                         @NotNull TranslationContext context) {
         return (new CompareToTranslator(expression, context)).translate();
     }
 
@@ -55,16 +55,16 @@ public final class CompareToTranslator extends AbstractTranslator {
     private final KtBinaryExpression expression;
 
     private CompareToTranslator(
-            @NotNull KtBinaryExpression expression,
-            @NotNull TranslationContext context
+        @NotNull KtBinaryExpression expression,
+        @NotNull TranslationContext context
     ) {
         super(context);
         this.expression = expression;
         CallableDescriptor descriptor = getCallableDescriptorForOperationExpression(context.bindingContext(), expression);
         assert descriptor != null : "CompareTo should always have a descriptor";
         assert (OperatorConventions.COMPARISON_OPERATIONS.contains(getOperationToken(expression))) :
-                message(expression, "CompareToTranslator supported only expressions with operation token from COMPARISON_OPERATIONS, " +
-                                    "expression: " + expression.getText());
+        message(expression, "CompareToTranslator supported only expressions with operation token from COMPARISON_OPERATIONS, " +
+                "expression: " + expression.getText());
     }
 
     @NotNull

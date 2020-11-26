@@ -103,7 +103,7 @@ public class BitEncoding {
         if (resultLength > 0) {
             assert bit != 0 : "The last chunk cannot start from the input byte since otherwise at least one bit will remain unprocessed";
             assert byteIndex == data.length - 1 : "The last 7-bit chunk should be encoded from the last input byte: " +
-                                                  byteIndex + " != " + (data.length - 1);
+            byteIndex + " != " + (data.length - 1);
             result[resultLength - 1] = (byte) ((data[byteIndex] & 0xff) >>> bit);
         }
 

@@ -17,10 +17,10 @@ public class KotlinCommonJpsModelSerializerExtension extends JpsModelSerializerE
     @Override
     public List<? extends JpsModuleSourceRootPropertiesSerializer<?>> getModuleSourceRootPropertiesSerializers() {
         return Arrays.asList(
-                KotlinSourceRootPropertiesSerializer.Source.INSTANCE,
-                KotlinSourceRootPropertiesSerializer.TestSource.INSTANCE,
-                KotlinResourceRootPropertiesSerializer.Resource.INSTANCE,
-                KotlinResourceRootPropertiesSerializer.TestResource.INSTANCE
-        );
+                   KotlinSourceRootPropertiesSerializer.Source.INSTANCE,
+                   KotlinSourceRootPropertiesSerializer.TestSource.INSTANCE,
+                   KotlinResourceRootPropertiesSerializer.Resource.INSTANCE,
+                   KotlinResourceRootPropertiesSerializer.TestResource.INSTANCE
+               );
     }
 }

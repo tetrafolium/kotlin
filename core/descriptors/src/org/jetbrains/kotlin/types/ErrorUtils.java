@@ -183,7 +183,7 @@ public class ErrorUtils {
         @Nullable
         @Override
         public DescriptorWithDeprecation<ClassifierDescriptor> getContributedClassifierIncludeDeprecated(
-                @NotNull Name name, @NotNull LookupLocation location
+            @NotNull Name name, @NotNull LookupLocation location
         ) {
             return null;
         }
@@ -226,7 +226,7 @@ public class ErrorUtils {
         @NotNull
         @Override
         public Collection<DeclarationDescriptor> getContributedDescriptors(
-                @NotNull DescriptorKindFilter kindFilter, @NotNull Function1<? super Name, Boolean> nameFilter
+            @NotNull DescriptorKindFilter kindFilter, @NotNull Function1<? super Name, Boolean> nameFilter
         ) {
             return Collections.emptyList();
         }
@@ -263,7 +263,7 @@ public class ErrorUtils {
         @Nullable
         @Override
         public DescriptorWithDeprecation<ClassifierDescriptor> getContributedClassifierIncludeDeprecated(
-                @NotNull Name name, @NotNull LookupLocation location
+            @NotNull Name name, @NotNull LookupLocation location
         ) {
             throw new IllegalStateException(debugMessage + ", required name: " + name);
         }
@@ -277,7 +277,7 @@ public class ErrorUtils {
         @NotNull
         @Override
         public Collection<? extends SimpleFunctionDescriptor> getContributedFunctions(
-                @NotNull Name name, @NotNull LookupLocation location
+            @NotNull Name name, @NotNull LookupLocation location
         ) {
             throw new IllegalStateException(debugMessage+", required name: " + name);
         }
@@ -285,7 +285,7 @@ public class ErrorUtils {
         @NotNull
         @Override
         public Collection<DeclarationDescriptor> getContributedDescriptors(
-                @NotNull DescriptorKindFilter kindFilter, @NotNull Function1<? super Name, Boolean> nameFilter
+            @NotNull DescriptorKindFilter kindFilter, @NotNull Function1<? super Name, Boolean> nameFilter
         ) {
             throw new IllegalStateException(debugMessage);
         }
@@ -335,18 +335,18 @@ public class ErrorUtils {
             super(getErrorModule(), name,
                   Modality.OPEN, ClassKind.CLASS, Collections.<KotlinType>emptyList(), SourceElement.NO_SOURCE,
                   /* isExternal = */ false, LockBasedStorageManager.NO_LOCKS
-            );
+                 );
 
             ClassConstructorDescriptorImpl
-                    errorConstructor = ClassConstructorDescriptorImpl.create(this, Annotations.Companion.getEMPTY(), true, SourceElement.NO_SOURCE);
+            errorConstructor = ClassConstructorDescriptorImpl.create(this, Annotations.Companion.getEMPTY(), true, SourceElement.NO_SOURCE);
             errorConstructor.initialize(Collections.<ValueParameterDescriptor>emptyList(),
                                         Visibilities.INTERNAL);
             MemberScope memberScope = createErrorScope(getName().asString());
             errorConstructor.setReturnType(
-                    new ErrorType(
-                            createErrorTypeConstructorWithCustomDebugName("<ERROR>", this),
-                            memberScope
-                    )
+                new ErrorType(
+                    createErrorTypeConstructorWithCustomDebugName("<ERROR>", this),
+                    memberScope
+                )
             );
 
             initialize(memberScope, Collections.<ClassConstructorDescriptor>singleton(errorConstructor), errorConstructor);
@@ -405,16 +405,16 @@ public class ErrorUtils {
     @NotNull
     private static PropertyDescriptorImpl createErrorProperty() {
         PropertyDescriptorImpl descriptor = PropertyDescriptorImpl.create(
-                ERROR_CLASS,
-                Annotations.Companion.getEMPTY(),
-                Modality.OPEN,
-                Visibilities.PUBLIC,
-                true,
-                Name.special("<ERROR PROPERTY>"),
-                CallableMemberDescriptor.Kind.DECLARATION,
-                SourceElement.NO_SOURCE,
-                false, false, false, false, false, false
-        );
+                                                ERROR_CLASS,
+                                                Annotations.Companion.getEMPTY(),
+                                                Modality.OPEN,
+                                                Visibilities.PUBLIC,
+                                                true,
+                                                Name.special("<ERROR PROPERTY>"),
+                                                CallableMemberDescriptor.Kind.DECLARATION,
+                                                SourceElement.NO_SOURCE,
+                                                false, false, false, false, false, false
+                                            );
         descriptor.setType(ERROR_PROPERTY_TYPE, Collections.<TypeParameterDescriptor>emptyList(), null, null);
 
         return descriptor;
@@ -424,13 +424,13 @@ public class ErrorUtils {
     private static SimpleFunctionDescriptor createErrorFunction(@NotNull ErrorScope ownerScope) {
         ErrorSimpleFunctionDescriptorImpl function = new ErrorSimpleFunctionDescriptorImpl(ERROR_CLASS, ownerScope);
         function.initialize(
-                null,
-                null,
-                Collections.<TypeParameterDescriptorImpl>emptyList(), // TODO
-                Collections.<ValueParameterDescriptor>emptyList(), // TODO
-                createErrorType("<ERROR FUNCTION RETURN TYPE>"),
-                Modality.OPEN,
-                Visibilities.PUBLIC
+            null,
+            null,
+            Collections.<TypeParameterDescriptorImpl>emptyList(), // TODO
+            Collections.<ValueParameterDescriptor>emptyList(), // TODO
+            createErrorType("<ERROR FUNCTION RETURN TYPE>"),
+            Modality.OPEN,
+            Visibilities.PUBLIC
         );
         return function;
     }
@@ -473,7 +473,7 @@ public class ErrorUtils {
 
     @NotNull
     private static TypeConstructor createErrorTypeConstructorWithCustomDebugName(
-            @NotNull final String debugName, @NotNull final ErrorClassDescriptor errorClass
+        @NotNull final String debugName, @NotNull final ErrorClassDescriptor errorClass
     ) {
         return new TypeConstructor() {
             @NotNull
@@ -556,7 +556,7 @@ public class ErrorUtils {
     @NotNull
     public static KotlinType createUninferredParameterType(@NotNull TypeParameterDescriptor typeParameterDescriptor) {
         return createErrorTypeWithCustomConstructor("Scope for error type for not inferred parameter: " + typeParameterDescriptor.getName(),
-                                                    new UninferredParameterTypeConstructor(typeParameterDescriptor));
+                new UninferredParameterTypeConstructor(typeParameterDescriptor));
     }
 
     public static class UninferredParameterTypeConstructor implements TypeConstructor {

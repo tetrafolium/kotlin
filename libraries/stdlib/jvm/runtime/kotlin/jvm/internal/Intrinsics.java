@@ -88,7 +88,7 @@ public class Intrinsics {
     public static void checkReturnedValueIsNotNull(Object value, String className, String methodName) {
         if (value == null) {
             throw sanitizeStackTrace(
-                    new IllegalStateException("Method specified as non-null returned null: " + className + "." + methodName)
+                new IllegalStateException("Method specified as non-null returned null: " + className + "." + methodName)
             );
         }
     }
@@ -135,9 +135,9 @@ public class Intrinsics {
         String methodName = caller.getMethodName();
 
         IllegalArgumentException exception =
-                new IllegalArgumentException("Parameter specified as non-null is null: " +
-                                             "method " + className + "." + methodName +
-                                             ", parameter " + paramName);
+            new IllegalArgumentException("Parameter specified as non-null is null: " +
+                                         "method " + className + "." + methodName +
+                                         ", parameter " + paramName);
         throw sanitizeStackTrace(exception);
     }
 
@@ -185,7 +185,7 @@ public class Intrinsics {
 
     public static void throwUndefinedForReified() {
         throwUndefinedForReified(
-                "This function has a reified type parameter and thus can only be inlined at compilation time, not called directly."
+            "This function has a reified type parameter and thus can only be inlined at compilation time, not called directly."
         );
     }
 
@@ -216,8 +216,8 @@ public class Intrinsics {
         }
         catch (ClassNotFoundException e) {
             throw sanitizeStackTrace(new ClassNotFoundException(
-                    "Class " + fqName + " is not found. Please update the Kotlin runtime to the latest version", e
-            ));
+                                         "Class " + fqName + " is not found. Please update the Kotlin runtime to the latest version", e
+                                     ));
         }
     }
 
@@ -228,8 +228,8 @@ public class Intrinsics {
         }
         catch (ClassNotFoundException e) {
             throw sanitizeStackTrace(new ClassNotFoundException(
-                    "Class " + fqName + " is not found: this code requires the Kotlin runtime of version at least " + requiredVersion, e
-            ));
+                                         "Class " + fqName + " is not found: this code requires the Kotlin runtime of version at least " + requiredVersion, e
+                                     ));
         }
     }
 

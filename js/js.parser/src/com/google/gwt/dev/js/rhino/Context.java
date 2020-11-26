@@ -148,7 +148,7 @@ public class Context {
                 // the current thread if it is already entered
                 if (cx != old) {
                     throw new RuntimeException
-                        ("Cannot enter Context active on another thread");
+                    ("Cannot enter Context active on another thread");
                 }
             } else {
                 if (old != null) {
@@ -162,7 +162,7 @@ public class Context {
         ++cx.enterCount;
 
         return cx;
-     }
+    }
 
     /**
      * Exit a block of code requiring a Context.
@@ -180,7 +180,7 @@ public class Context {
         Context cx = getCurrentContext();
         if (cx == null) {
             throw new RuntimeException
-                ("Calling Context.exit without previous Context.enter");
+            ("Calling Context.exit without previous Context.enter");
         }
         if (Context.check && cx.enterCount < 1) Context.codeBug();
         --cx.enterCount;
@@ -281,7 +281,7 @@ public class Context {
      * @return an integer that is one of VERSION_1_0, VERSION_1_1, etc.
      */
     public int getLanguageVersion() {
-       return version;
+        return version;
     }
 
     /**
@@ -390,30 +390,30 @@ public class Context {
      */
     public boolean hasFeature(int featureIndex) {
         switch (featureIndex) {
-            case FEATURE_NON_ECMA_GET_YEAR:
-               /*
-                * During the great date rewrite of 1.3, we tried to track the
-                * evolving ECMA standard, which then had a definition of
-                * getYear which always subtracted 1900.  Which we
-                * implemented, not realizing that it was incompatible with
-                * the old behavior...  now, rather than thrash the behavior
-                * yet again, we've decided to leave it with the - 1900
-                * behavior and point people to the getFullYear method.  But
-                * we try to protect existing scripts that have specified a
-                * version...
-                */
-                return (version == Context.VERSION_1_0
-                        || version == Context.VERSION_1_1
-                        || version == Context.VERSION_1_2);
+        case FEATURE_NON_ECMA_GET_YEAR:
+            /*
+             * During the great date rewrite of 1.3, we tried to track the
+             * evolving ECMA standard, which then had a definition of
+             * getYear which always subtracted 1900.  Which we
+             * implemented, not realizing that it was incompatible with
+             * the old behavior...  now, rather than thrash the behavior
+             * yet again, we've decided to leave it with the - 1900
+             * behavior and point people to the getFullYear method.  But
+             * we try to protect existing scripts that have specified a
+             * version...
+             */
+            return (version == Context.VERSION_1_0
+                    || version == Context.VERSION_1_1
+                    || version == Context.VERSION_1_2);
 
-            case FEATURE_MEMBER_EXPR_AS_FUNCTION_NAME:
-                return false;
+        case FEATURE_MEMBER_EXPR_AS_FUNCTION_NAME:
+            return false;
 
-            case FEATURE_RESERVED_KEYWORD_AS_IDENTIFIER:
-                return false;
+        case FEATURE_RESERVED_KEYWORD_AS_IDENTIFIER:
+            return false;
 
-            case FEATURE_TO_STRING_AS_SOURCE:
-                return version == VERSION_1_2;
+        case FEATURE_TO_STRING_AS_SOURCE:
+            return version == VERSION_1_2;
         }
         // It is a bug to call the method with unknown featureIndex
         throw new IllegalArgumentException();

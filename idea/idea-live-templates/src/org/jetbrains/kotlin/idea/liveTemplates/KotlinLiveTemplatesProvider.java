@@ -21,7 +21,7 @@ import com.intellij.codeInsight.template.impl.DefaultLiveTemplatesProvider;
 public class KotlinLiveTemplatesProvider implements DefaultLiveTemplatesProvider {
     @Override
     public String[] getDefaultLiveTemplateFiles() {
-        return new String[]{"liveTemplates/Kotlin"};
+        return new String[] {"liveTemplates/Kotlin"};
     }
 
     @Override

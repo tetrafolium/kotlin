@@ -63,9 +63,9 @@ public class KotlinIntroduceTypeAliasDialog extends DialogWrapper {
     private final Function1<KotlinIntroduceTypeAliasDialog, Unit> onAccept;
 
     public KotlinIntroduceTypeAliasDialog(
-            @NotNull Project project,
-            @NotNull IntroduceTypeAliasDescriptor originalDescriptor,
-            @NotNull Function1<KotlinIntroduceTypeAliasDialog, Unit> onAccept) {
+        @NotNull Project project,
+        @NotNull IntroduceTypeAliasDescriptor originalDescriptor,
+        @NotNull Function1<KotlinIntroduceTypeAliasDialog, Unit> onAccept) {
         super(project, true);
 
         this.project = project;
@@ -127,29 +127,29 @@ public class KotlinIntroduceTypeAliasDialog extends DialogWrapper {
         visibilityBox.setModel(new DefaultComboBoxModel(getApplicableVisibilities().toArray()));
         //noinspection unchecked
         visibilityBox.setRenderer(
-                new DefaultListCellRenderer() {
-                    @Override
-                    public Component getListCellRendererComponent(
-                            JList list,
-                            Object value,
-                            int index,
-                            boolean isSelected,
-                            boolean cellHasFocus
-                    ) {
-                        String tokenValue = value != null ? ((KtModifierKeywordToken) value).getValue() : null;
-                        return super.getListCellRendererComponent(list, tokenValue, index, isSelected, cellHasFocus);
-                    }
-                }
+        new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                JList list,
+                Object value,
+                int index,
+                boolean isSelected,
+                boolean cellHasFocus
+            ) {
+                String tokenValue = value != null ? ((KtModifierKeywordToken) value).getValue() : null;
+                return super.getListCellRendererComponent(list, tokenValue, index, isSelected, cellHasFocus);
+            }
+        }
         );
 
-        aliasNameField = new NameSuggestionsField(new String[]{originalDescriptor.getName()}, project, KotlinFileType.INSTANCE);
+        aliasNameField = new NameSuggestionsField(new String[] {originalDescriptor.getName()}, project, KotlinFileType.INSTANCE);
         aliasNameField.addDataChangedListener(
-                new NameSuggestionsField.DataChanged() {
-                    @Override
-                    public void dataChanged() {
-                        update();
-                    }
-                }
+        new NameSuggestionsField.DataChanged() {
+            @Override
+            public void dataChanged() {
+                update();
+            }
+        }
         );
         aliasNamePanel.add(aliasNameField, BorderLayout.CENTER);
         aliasNameLabel.setLabelFor(aliasNameField);
@@ -164,12 +164,12 @@ public class KotlinIntroduceTypeAliasDialog extends DialogWrapper {
             visibilityBox.setSelectedItem(defaultVisibility);
         }
         visibilityBox.addItemListener(
-                new ItemListener() {
-                    @Override
-                    public void itemStateChanged(@NotNull ItemEvent e) {
-                        update();
-                    }
-                }
+        new ItemListener() {
+            @Override
+            public void itemStateChanged(@NotNull ItemEvent e) {
+                update();
+            }
+        }
         );
 
         if (!originalDescriptor.getTypeParameters().isEmpty()) {
@@ -205,22 +205,22 @@ public class KotlinIntroduceTypeAliasDialog extends DialogWrapper {
     protected void doOKAction() {
         MultiMap<PsiElement, String> conflicts = IntroduceTypeAliasImplKt.validate(currentDescriptor).getConflicts();
         KotlinRefactoringUtilKt.checkConflictsInteractively(
-                project,
-                conflicts,
-                new Function0<Unit>() {
-                    @Override
-                    public Unit invoke() {
-                        close(OK_EXIT_CODE);
-                        return Unit.INSTANCE;
-                    }
-                },
-                new Function0<Unit>() {
-                    @Override
-                    public Unit invoke() {
-                        KotlinIntroduceTypeAliasDialog.super.doOKAction();
-                        return onAccept.invoke(KotlinIntroduceTypeAliasDialog.this);
-                    }
-                }
+            project,
+            conflicts,
+        new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+                close(OK_EXIT_CODE);
+                return Unit.INSTANCE;
+            }
+        },
+        new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+                KotlinIntroduceTypeAliasDialog.super.doOKAction();
+                return onAccept.invoke(KotlinIntroduceTypeAliasDialog.this);
+            }
+        }
         );
     }
 
@@ -243,11 +243,11 @@ public class KotlinIntroduceTypeAliasDialog extends DialogWrapper {
     @NotNull
     private IntroduceTypeAliasDescriptor createDescriptor() {
         return originalDescriptor.copy(
-                originalDescriptor.getOriginalData(),
-                getAliasName(),
-                getVisibility(),
-                parameterTablePanel != null ? parameterTablePanel.getSelectedTypeParameters() : Collections.<TypeParameter>emptyList()
-        );
+                   originalDescriptor.getOriginalData(),
+                   getAliasName(),
+                   getVisibility(),
+                   parameterTablePanel != null ? parameterTablePanel.getSelectedTypeParameters() : Collections.<TypeParameter>emptyList()
+               );
     }
 
     public IntroduceTypeAliasDescriptor getCurrentDescriptor() {

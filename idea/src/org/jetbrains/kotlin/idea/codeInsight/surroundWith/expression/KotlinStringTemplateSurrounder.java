@@ -40,8 +40,8 @@ public class KotlinStringTemplateSurrounder extends KotlinExpressionSurrounder {
     @Override
     public TextRange surroundExpression(@NotNull Project project, @NotNull Editor editor, @NotNull KtExpression expression) {
         KtStringTemplateExpression stringTemplateExpression = (KtStringTemplateExpression) KtPsiFactoryKt.KtPsiFactory(expression).createExpression(
-                getCodeTemplate(expression)
-        );
+                    getCodeTemplate(expression)
+                );
         KtStringTemplateEntry templateEntry = stringTemplateExpression.getEntries()[0];
         KtExpression innerExpression = templateEntry.getExpression();
         assert innerExpression != null : "JetExpression should exists for " + stringTemplateExpression.toString();
@@ -57,7 +57,7 @@ public class KotlinStringTemplateSurrounder extends KotlinExpressionSurrounder {
 
     private String getCodeTemplate(KtExpression expression) {
         if (expression.getChildren().length > 0 ||
-            expression instanceof KtConstantExpression) {
+                expression instanceof KtConstantExpression) {
             return "\"${a}\"";
         }
         return "\"$a\"";

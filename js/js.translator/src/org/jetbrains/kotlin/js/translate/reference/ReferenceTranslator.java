@@ -50,10 +50,10 @@ import static org.jetbrains.kotlin.js.translate.utils.PsiUtils.getSelectorAsSimp
 
 public final class ReferenceTranslator {
     private static final Set<FqNameUnsafe> DECLARATIONS_WITHOUT_SIDE_EFFECTS = new HashSet<>(Arrays.asList(
-            new FqNameUnsafe("kotlin.coroutines.experimental.intrinsics.COROUTINE_SUSPENDED"),
-            new FqNameUnsafe("kotlin.coroutines.intrinsics.COROUTINE_SUSPENDED"),
-            KotlinBuiltIns.FQ_NAMES.unit
-    ));
+                new FqNameUnsafe("kotlin.coroutines.experimental.intrinsics.COROUTINE_SUSPENDED"),
+                new FqNameUnsafe("kotlin.coroutines.intrinsics.COROUTINE_SUSPENDED"),
+                KotlinBuiltIns.FQ_NAMES.unit
+            ));
 
     private ReferenceTranslator() {
     }
@@ -99,8 +99,8 @@ public final class ReferenceTranslator {
 
     @NotNull
     private static JsExpression translateAsValueReferenceWithoutType(
-            @NotNull DeclarationDescriptor descriptor,
-            @NotNull TranslationContext context
+        @NotNull DeclarationDescriptor descriptor,
+        @NotNull TranslationContext context
     ) {
         if (AnnotationsUtils.isNativeObject(descriptor) || AnnotationsUtils.isLibraryObject(descriptor)) {
             return context.getInnerReference(descriptor);
@@ -174,7 +174,7 @@ public final class ReferenceTranslator {
 
     private static boolean isLocallyAvailableDeclaration(@NotNull TranslationContext context, @NotNull DeclarationDescriptor descriptor) {
         return context.isFromCurrentModule(descriptor) && !(context.isPublicInlineFunction() &&
-               DescriptorUtilsKt.shouldBeExported(descriptor, context.getConfig()));
+                DescriptorUtilsKt.shouldBeExported(descriptor, context.getConfig()));
     }
 
     @NotNull

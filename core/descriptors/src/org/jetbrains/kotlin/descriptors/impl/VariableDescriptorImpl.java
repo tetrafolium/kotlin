@@ -31,11 +31,11 @@ public abstract class VariableDescriptorImpl extends DeclarationDescriptorNonRoo
     protected KotlinType outType;
 
     public VariableDescriptorImpl(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull Annotations annotations,
-            @NotNull Name name,
-            @Nullable KotlinType outType,
-            @NotNull SourceElement source
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull Annotations annotations,
+        @NotNull Name name,
+        @Nullable KotlinType outType,
+        @NotNull SourceElement source
     ) {
         super(containingDeclaration, annotations, name, source);
 

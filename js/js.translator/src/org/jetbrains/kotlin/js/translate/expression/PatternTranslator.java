@@ -121,8 +121,8 @@ public final class PatternTranslator extends AbstractTranslator {
 
         boolean isReifiedType = isReifiedTypeParameter(targetType);
         if (!isReifiedType && isNullableType(targetType) ||
-            isReifiedType && findChildByType(targetTypeReference, KtNodeTypes.NULLABLE_TYPE) != null
-        ) {
+                isReifiedType && findChildByType(targetTypeReference, KtNodeTypes.NULLABLE_TYPE) != null
+           ) {
             checkFunReference = namer().orNull(checkFunReference);
         }
 
@@ -133,8 +133,8 @@ public final class PatternTranslator extends AbstractTranslator {
     public JsExpression getIsTypeCheckCallable(@NotNull KotlinType type) {
         JsExpression callable = doGetIsTypeCheckCallable(type);
         assert callable != null : "This method should be called only to translate reified type parameters. " +
-                                  "`callable` should never be null for reified type parameters. " +
-                                  "Actual type: " + type;
+        "`callable` should never be null for reified type parameters. " +
+        "Actual type: " + type;
 
         // If the type is reified, rely on the corresponding is type callable.
         // Otherwise make sure that passing null yields true
@@ -246,8 +246,8 @@ public final class PatternTranslator extends AbstractTranslator {
         assert typeParameter.isReified(): "Expected reified type, actual: " + typeParameter;
         DeclarationDescriptor containingDeclaration = typeParameter.getContainingDeclaration();
         assert containingDeclaration instanceof CallableDescriptor:
-                "Expected type parameter " + typeParameter +
-                " to be contained in CallableDescriptor, actual: " + containingDeclaration.getClass();
+        "Expected type parameter " + typeParameter +
+        " to be contained in CallableDescriptor, actual: " + containingDeclaration.getClass();
 
         JsExpression alias = context().getAliasForDescriptor(typeParameter);
         assert alias != null: "No alias found for reified type parameter: " + typeParameter;
@@ -256,9 +256,9 @@ public final class PatternTranslator extends AbstractTranslator {
 
     @NotNull
     public JsExpression translateExpressionPattern(
-            @NotNull KotlinType subjectType,
-            @NotNull JsExpression expressionToMatch,
-            @NotNull KtExpression patternExpression
+        @NotNull KotlinType subjectType,
+        @NotNull JsExpression expressionToMatch,
+        @NotNull KtExpression patternExpression
     ) {
         PrimitiveNumericComparisonInfo ieeeInfo = UtilsKt.getPrimitiveNumericComparisonInfo(context(), patternExpression);
 

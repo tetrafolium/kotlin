@@ -81,15 +81,15 @@ public final class InitializerVisitor extends TranslatorVisitor<Void> {
 
     @NotNull
     private static JsExpression generateDefaultValue(
-            @NotNull PropertyDescriptor property,
-            @NotNull JsExpression lateInitDefault
+        @NotNull PropertyDescriptor property,
+        @NotNull JsExpression lateInitDefault
     ) {
         if (property.isLateInit()) return lateInitDefault.deepCopy();
 
         KotlinType type = property.getType();
         if (KotlinBuiltIns.isInt(type) || KotlinBuiltIns.isFloat(type) || KotlinBuiltIns.isDouble(type) ||
-            KotlinBuiltIns.isByte(type) || KotlinBuiltIns.isShort(type)
-        ) {
+                KotlinBuiltIns.isByte(type) || KotlinBuiltIns.isShort(type)
+           ) {
             return new JsIntLiteral(0);
         }
         else if (KotlinBuiltIns.isBoolean(type)) {
@@ -105,7 +105,7 @@ public final class InitializerVisitor extends TranslatorVisitor<Void> {
         KtExpression initializerBody = initializer.getBody();
         if (initializerBody != null) {
             context.addStatementsToCurrentBlock(JsAstUtils.flattenStatement(
-                    translateAsStatementAndMergeInBlockIfNeeded(initializerBody, context)));
+                                                    translateAsStatementAndMergeInBlockIfNeeded(initializerBody, context)));
         }
         return null;
     }

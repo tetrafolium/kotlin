@@ -55,7 +55,7 @@ public class KtDeclarationTreeNode extends AbstractPsiBasedNode<KtDeclaration> {
             if (text == null) return;
 
             KotlinCodeStyleSettings settings = CodeStyleSettingsManager.getInstance(getProject()).getCurrentSettings()
-                    .getCustomSettings(KotlinCodeStyleSettings.class);
+                                               .getCustomSettings(KotlinCodeStyleSettings.class);
 
             if (declaration instanceof KtProperty) {
                 KtProperty property = (KtProperty) declaration;

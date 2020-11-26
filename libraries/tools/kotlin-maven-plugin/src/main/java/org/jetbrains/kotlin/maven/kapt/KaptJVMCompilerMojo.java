@@ -83,14 +83,14 @@ public class KaptJVMCompilerMojo extends K2JVMCompileMojo {
         }
 
         cachedAnnotationProcessingManager = new AnnotationProcessingManager(
-                artifactHandlerManager, session, project, system, resolutionErrorHandler);
+            artifactHandlerManager, session, project, system, resolutionErrorHandler);
         return cachedAnnotationProcessingManager;
     }
 
     @NotNull
     private List<KaptOption> getKaptOptions(
-            @NotNull K2JVMCompilerArguments arguments,
-            @NotNull AnnotationProcessingManager.ResolvedArtifacts resolvedArtifacts
+        @NotNull K2JVMCompilerArguments arguments,
+        @NotNull AnnotationProcessingManager.ResolvedArtifacts resolvedArtifacts
     ) {
         List<KaptOption> options = new ArrayList<>();
 
@@ -137,10 +137,10 @@ public class KaptJVMCompilerMojo extends K2JVMCompileMojo {
     @NotNull
     @Override
     protected ExitCode execCompiler(
-            CLICompiler<K2JVMCompilerArguments> compiler,
-            MessageCollector messageCollector,
-            K2JVMCompilerArguments arguments,
-            List<File> sourceRoots
+        CLICompiler<K2JVMCompilerArguments> compiler,
+        MessageCollector messageCollector,
+        K2JVMCompilerArguments arguments,
+        List<File> sourceRoots
     ) throws MojoExecutionException {
         // Annotation processing can't run incrementally so we need to clear the directory for our stubs and generated sources
         // TODO separate directories for the generated class files, and recreate the generated classfile dir also
@@ -158,13 +158,13 @@ public class KaptJVMCompilerMojo extends K2JVMCompileMojo {
         File generatedKotlinSourcesDirectory = getGeneratedKotlinSourcesDirectory(project, getSourceSetName());
 
         return super.getSourceFilePaths()
-                .stream()
-                .filter(path -> {
-                    File pathFile = new File(path);
-                    return !pathFile.equals(generatedSourcesDirectory)
-                            && !pathFile.equals(generatedKotlinSourcesDirectory);
-                })
-                .collect(Collectors.toList());
+               .stream()
+        .filter(path -> {
+            File pathFile = new File(path);
+            return !pathFile.equals(generatedSourcesDirectory)
+            && !pathFile.equals(generatedKotlinSourcesDirectory);
+        })
+        .collect(Collectors.toList());
     }
 
     @Override
@@ -174,9 +174,9 @@ public class KaptJVMCompilerMojo extends K2JVMCompileMojo {
         // TODO it seems for me that the target directory should not be in the compile classpath
         // We filter out it here, but it's definitely a work-around.
         return super.getClasspath()
-                .stream()
-                .filter(path -> !new File(path).equals(compileTargetDirectory))
-                .collect(Collectors.toList());
+               .stream()
+               .filter(path -> !new File(path).equals(compileTargetDirectory))
+               .collect(Collectors.toList());
     }
 
     protected void addKaptSourcesDirectory(@NotNull String path) {
@@ -201,12 +201,12 @@ public class KaptJVMCompilerMojo extends K2JVMCompileMojo {
 
         String jdkToolsJarPath = getJdkToolsJarPath();
         arguments.setPluginClasspaths(
-                joinArrays(
-                        arguments.getPluginClasspaths(),
-                        (jdkToolsJarPath == null)
-                                ? new String[]{resolvedArtifacts.kaptCompilerPluginArtifact}
-                                : new String[]{jdkToolsJarPath, resolvedArtifacts.kaptCompilerPluginArtifact}
-                )
+            joinArrays(
+                arguments.getPluginClasspaths(),
+                (jdkToolsJarPath == null)
+                ? new String[] {resolvedArtifacts.kaptCompilerPluginArtifact}
+                : new String[] {jdkToolsJarPath, resolvedArtifacts.kaptCompilerPluginArtifact}
+            )
         );
     }
 

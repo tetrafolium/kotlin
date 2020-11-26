@@ -42,9 +42,9 @@ public class KotlinFunctionIntrinsic extends FunctionIntrinsicWithReceiverComput
     @NotNull
     @Override
     public JsExpression apply(
-            @Nullable JsExpression receiver,
-            @NotNull List<? extends JsExpression> arguments,
-            @NotNull TranslationContext context
+        @Nullable JsExpression receiver,
+        @NotNull List<? extends JsExpression> arguments,
+        @NotNull TranslationContext context
     ) {
         JsExpression function = JsAstUtils.pureFqn(functionName, Namer.kotlinObject());
         if (additionalArguments.length > 0) {

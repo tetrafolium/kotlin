@@ -36,13 +36,13 @@ import javax.swing.*;
 
 public class KotlinFindPropertyUsagesDialog extends JavaFindUsagesDialog<KotlinPropertyFindUsagesOptions> {
     public KotlinFindPropertyUsagesDialog(
-            PsiElement element,
-            Project project,
-            KotlinPropertyFindUsagesOptions findUsagesOptions,
-            boolean toShowInNewTab,
-            boolean mustOpenInNewTab,
-            boolean isSingleFile,
-            FindUsagesHandler handler
+        PsiElement element,
+        Project project,
+        KotlinPropertyFindUsagesOptions findUsagesOptions,
+        boolean toShowInNewTab,
+        boolean mustOpenInNewTab,
+        boolean isSingleFile,
+        FindUsagesHandler handler
     ) {
         super(element, project, findUsagesOptions, toShowInNewTab, mustOpenInNewTab, isSingleFile, handler);
     }
@@ -84,17 +84,17 @@ public class KotlinFindPropertyUsagesDialog extends JavaFindUsagesDialog<KotlinP
         KotlinPropertyFindUsagesOptions options = getFindUsagesOptions();
 
         readAccesses = addCheckboxToPanel(
-                KotlinBundle.message("find.what.property.readers.checkbox"),
-                options.isReadAccess,
-                findWhatPanel,
-                true
-        );
+                           KotlinBundle.message("find.what.property.readers.checkbox"),
+                           options.isReadAccess,
+                           findWhatPanel,
+                           true
+                       );
         writeAccesses = addCheckboxToPanel(
-                KotlinBundle.message("find.what.property.writers.checkbox"),
-                options.isWriteAccess,
-                findWhatPanel,
-                true
-        );
+                            KotlinBundle.message("find.what.property.writers.checkbox"),
+                            options.isWriteAccess,
+                            findWhatPanel,
+                            true
+                        );
 
         return findWhatPanel;
     }
@@ -114,23 +114,23 @@ public class KotlinFindPropertyUsagesDialog extends JavaFindUsagesDialog<KotlinP
         boolean isOpen = property.hasModifier(KtTokens.OPEN_KEYWORD);
         if (isOpen || isAbstract) {
             overrideUsages = addCheckboxToPanel(
-                    isAbstract
-                    ? KotlinBundle.message("find.what.implementing.properties.checkbox")
-                    : KotlinBundle.message("find.what.overriding.properties.checkbox"),
-                    FindSettings.getInstance().isSearchOverloadedMethods(),
-                    optionsPanel,
-                    false
-            );
+                                 isAbstract
+                                 ? KotlinBundle.message("find.what.implementing.properties.checkbox")
+                                 : KotlinBundle.message("find.what.overriding.properties.checkbox"),
+                                 FindSettings.getInstance().isSearchOverloadedMethods(),
+                                 optionsPanel,
+                                 false
+                             );
         }
         boolean isActual = PsiUtilsKt.hasActualModifier(property);
         KotlinPropertyFindUsagesOptions options = getFindUsagesOptions();
         if (isActual) {
             expectedUsages = addCheckboxToPanel(
-                    "Expected properties",
-                    options.getSearchExpected(),
-                    optionsPanel,
-                    false
-            );
+                                 "Expected properties",
+                                 options.getSearchExpected(),
+                                 optionsPanel,
+                                 false
+                             );
         }
     }
 

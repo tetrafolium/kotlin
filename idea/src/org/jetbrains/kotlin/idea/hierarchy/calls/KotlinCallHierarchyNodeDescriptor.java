@@ -49,10 +49,10 @@ public class KotlinCallHierarchyNodeDescriptor extends HierarchyNodeDescriptor i
     private final CallHierarchyNodeDescriptor javaDelegate;
 
     public KotlinCallHierarchyNodeDescriptor(
-            @Nullable HierarchyNodeDescriptor parentDescriptor,
-            @NotNull KtElement element,
-            boolean isBase,
-            boolean navigateToReference) {
+        @Nullable HierarchyNodeDescriptor parentDescriptor,
+        @NotNull KtElement element,
+        boolean isBase,
+        boolean navigateToReference) {
         super(element.getProject(), parentDescriptor, element, isBase);
         this.javaDelegate = new CallHierarchyNodeDescriptor(myProject, null, element, isBase, navigateToReference);
     }
@@ -68,14 +68,14 @@ public class KotlinCallHierarchyNodeDescriptor extends HierarchyNodeDescriptor i
     }
 
     @Override
-    public final boolean isValid(){
+    public final boolean isValid() {
         //noinspection ConstantConditions
         PsiElement myElement = getPsiElement();
         return myElement != null && myElement.isValid();
     }
 
     @Override
-    public final boolean update(){
+    public final boolean update() {
         CompositeAppearance oldText = myHighlightedText;
         Icon oldIcon = getIcon();
 
@@ -118,8 +118,8 @@ public class KotlinCallHierarchyNodeDescriptor extends HierarchyNodeDescriptor i
 
         if (usageCount > 1) {
             myHighlightedText.getEnding().addText(
-                    IdeBundle.message("node.call.hierarchy.N.usages", usageCount),
-                    HierarchyNodeDescriptor.getUsageCountPrefixAttributes()
+                IdeBundle.message("node.call.hierarchy.N.usages", usageCount),
+                HierarchyNodeDescriptor.getUsageCountPrefixAttributes()
             );
         }
 
@@ -197,18 +197,18 @@ public class KotlinCallHierarchyNodeDescriptor extends HierarchyNodeDescriptor i
         }
 
         return containerText != null ? containerText + "." + elementText : elementText;
-}
+    }
 
     public static String renderNamedFunction(@NotNull FunctionDescriptor descriptor) {
         DeclarationDescriptor descriptorForName = descriptor instanceof ConstructorDescriptor
-                                                  ? descriptor.getContainingDeclaration()
-                                                  : descriptor;
+                ? descriptor.getContainingDeclaration()
+                : descriptor;
         String name = descriptorForName.getName().asString();
         String paramTypes = StringUtil.join(
-                descriptor.getValueParameters(),
-                descriptor1 -> DescriptorRenderer.SHORT_NAMES_IN_TYPES.renderType(descriptor1.getType()),
-                ", "
-        );
+                                descriptor.getValueParameters(),
+                                descriptor1 -> DescriptorRenderer.SHORT_NAMES_IN_TYPES.renderType(descriptor1.getType()),
+                                ", "
+                            );
         return name + "(" + paramTypes + ")";
     }
 

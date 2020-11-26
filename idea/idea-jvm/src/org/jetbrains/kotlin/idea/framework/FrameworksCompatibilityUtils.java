@@ -36,9 +36,9 @@ public class FrameworksCompatibilityUtils {
     }
 
     public static void suggestRemoveIncompatibleFramework(
-            @NotNull ModifiableRootModel rootModel,
-            @NotNull Set<? extends LibraryKind> frameworkLibraryKinds,
-            @NotNull String presentableName
+        @NotNull ModifiableRootModel rootModel,
+        @NotNull Set<? extends LibraryKind> frameworkLibraryKinds,
+        @NotNull String presentableName
     ) {
         List<OrderEntry> existingEntries = new ArrayList<OrderEntry>();
 

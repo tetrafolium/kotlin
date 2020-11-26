@@ -43,7 +43,7 @@ public class ArgumentUtils {
 
     @NotNull
     public static List<String> convertArgumentsToStringList(@NotNull CommonToolArguments arguments)
-            throws InstantiationException, IllegalAccessException, InvocationTargetException {
+    throws InstantiationException, IllegalAccessException, InvocationTargetException {
         List<String> result = new ArrayList<>();
         Class<? extends CommonToolArguments> argumentsClass = arguments.getClass();
         convertArgumentsToStringList(arguments, argumentsClass.newInstance(), JvmClassMappingKt.getKotlinClass(argumentsClass), result);
@@ -54,10 +54,10 @@ public class ArgumentUtils {
 
     @SuppressWarnings("unchecked")
     private static void convertArgumentsToStringList(
-            @NotNull CommonToolArguments arguments,
-            @NotNull CommonToolArguments defaultArguments,
-            @NotNull KClass<?> clazz,
-            @NotNull List<String> result
+        @NotNull CommonToolArguments arguments,
+        @NotNull CommonToolArguments defaultArguments,
+        @NotNull KClass<?> clazz,
+        @NotNull List<String> result
     ) throws IllegalAccessException, InstantiationException, InvocationTargetException {
         for (KProperty1 property : KClasses.getMemberProperties(clazz)) {
             Argument argument = ContainerUtil.findInstance(property.getAnnotations(), Argument.class);

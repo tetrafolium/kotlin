@@ -70,12 +70,12 @@ public class KotlinTestNgConfigurationProducer extends TestNGConfigurationProduc
         final PsiElement element = location.getPsiElement();
 
         RunnerAndConfigurationSettings template =
-                RunManager.getInstance(location.getProject()).getConfigurationTemplate(getConfigurationFactory());
+            RunManager.getInstance(location.getProject()).getConfigurationTemplate(getConfigurationFactory());
         final Module predefinedModule = ((TestNGConfiguration) template.getConfiguration()).getConfigurationModule().getModule();
         final String vmParameters =
-                predefinedConfiguration instanceof CommonJavaRunConfigurationParameters
-                ? ((CommonJavaRunConfigurationParameters) predefinedConfiguration).getVMParameters()
-                : null;
+            predefinedConfiguration instanceof CommonJavaRunConfigurationParameters
+            ? ((CommonJavaRunConfigurationParameters) predefinedConfiguration).getVMParameters()
+            : null;
         if (vmParameters != null && !Comparing.strEqual(vmParameters, configuration.getVMParameters())) return false;
         if (differentParamSet(configuration, contextLocation)) return false;
 
@@ -93,7 +93,7 @@ public class KotlinTestNgConfigurationProducer extends TestNGConfigurationProduc
 
     @Override
     protected boolean setupConfigurationFromContext(
-            TestNGConfiguration configuration, ConfigurationContext context, Ref<PsiElement> sourceElement
+        TestNGConfiguration configuration, ConfigurationContext context, Ref<PsiElement> sourceElement
     ) {
         // TODO: check TestNG Pattern running first, before method/class (see TestNGInClassConfigurationProducer for logic)
         // TODO: and PsiClassOwner not handled, which is in TestNGInClassConfigurationProducer
@@ -157,9 +157,9 @@ public class KotlinTestNgConfigurationProducer extends TestNGConfigurationProduc
 
                 @Override
                 protected void runForClass(PsiClass aClass,
-                        PsiMethod psiMethod,
-                        ConfigurationContext context,
-                        Runnable performRunnable) {
+                                           PsiMethod psiMethod,
+                                           ConfigurationContext context,
+                                           Runnable performRunnable) {
                     if (lightElement instanceof PsiMethod) {
                         Project project = psiMethod.getProject();
                         MethodLocation methodLocation = new MethodLocation(project, psiMethod, PsiLocation.fromPsiElement(aClass));
@@ -171,16 +171,16 @@ public class KotlinTestNgConfigurationProducer extends TestNGConfigurationProduc
                 }
             };
             if (inheritorChooser.runMethodInAbstractClass(context,
-                                                          startRunnable,
-                                                          psiMethod,
-                                                          containingClass,
-                                                          new Condition<PsiClass>() {
-                                                              @Override
-                                                              public boolean value(PsiClass aClass) {
-                                                                  return aClass.hasModifierProperty(PsiModifier.ABSTRACT) &&
-                                                                         TestNGUtil.hasTest(aClass);
-                                                              }
-                                                          })) return;
+                    startRunnable,
+                    psiMethod,
+                    containingClass,
+            new Condition<PsiClass>() {
+            @Override
+            public boolean value(PsiClass aClass) {
+                    return aClass.hasModifierProperty(PsiModifier.ABSTRACT) &&
+                           TestNGUtil.hasTest(aClass);
+                }
+            })) return;
         }
 
         super.onFirstRun(configuration, context, startRunnable);
@@ -201,8 +201,8 @@ public class KotlinTestNgConfigurationProducer extends TestNGConfigurationProduc
     }
 
     private boolean configure(
-            TestNGConfiguration configuration, Location location, ConfigurationContext context, Project project,
-            @Nullable PsiClass delegate, @Nullable PsiMethod method
+        TestNGConfiguration configuration, Location location, ConfigurationContext context, Project project,
+        @Nullable PsiClass delegate, @Nullable PsiMethod method
     ) {
         if (delegate == null) {
             return false;

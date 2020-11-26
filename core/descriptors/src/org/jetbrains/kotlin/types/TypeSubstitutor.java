@@ -99,7 +99,7 @@ public class TypeSubstitutor {
     @Nullable
     public KotlinType substitute(@NotNull KotlinType type, @NotNull Variance howThisTypeIsUsed) {
         TypeProjection projection =
-                substitute(new TypeProjectionImpl(howThisTypeIsUsed, getSubstitution().prepareTopLevelType(type, howThisTypeIsUsed)));
+            substitute(new TypeProjectionImpl(howThisTypeIsUsed, getSubstitution().prepareTopLevelType(type, howThisTypeIsUsed)));
         return projection == null ? null : projection.getType();
     }
 
@@ -110,7 +110,7 @@ public class TypeSubstitutor {
             return substitutedTypeProjection;
         }
         return CapturedTypeApproximationKt.approximateCapturedTypesIfNecessary(
-                substitutedTypeProjection, substitution.approximateContravariantCapturedTypes());
+                   substitutedTypeProjection, substitution.approximateContravariantCapturedTypes());
     }
 
     @Nullable
@@ -139,9 +139,9 @@ public class TypeSubstitutor {
             KotlinType enhancement = ((TypeWithEnhancement) type).getEnhancement();
 
             TypeProjection substitution = unsafeSubstitute(
-                    new TypeProjectionImpl(originalProjection.getProjectionKind(), origin),
-                    recursionDepth + 1
-            );
+                                              new TypeProjectionImpl(originalProjection.getProjectionKind(), origin),
+                                              recursionDepth + 1
+                                          );
 
             KotlinType substitutedEnhancement = substitute(enhancement, originalProjection.getProjectionKind());
             KotlinType resultingType = TypeWithEnhancementKt.wrapEnhancement(substitution.getType().unwrap(), substitutedEnhancement);
@@ -158,14 +158,14 @@ public class TypeSubstitutor {
         if (replacement == null && FlexibleTypesKt.isFlexible(type) && !TypeCapabilitiesKt.isCustomTypeVariable(type)) {
             FlexibleType flexibleType = FlexibleTypesKt.asFlexibleType(type);
             TypeProjection substitutedLower =
-                    unsafeSubstitute(new TypeProjectionImpl(originalProjectionKind, flexibleType.getLowerBound()), recursionDepth + 1);
+                unsafeSubstitute(new TypeProjectionImpl(originalProjectionKind, flexibleType.getLowerBound()), recursionDepth + 1);
             TypeProjection substitutedUpper =
-                    unsafeSubstitute(new TypeProjectionImpl(originalProjectionKind, flexibleType.getUpperBound()), recursionDepth + 1);
+                unsafeSubstitute(new TypeProjectionImpl(originalProjectionKind, flexibleType.getUpperBound()), recursionDepth + 1);
 
             Variance substitutedProjectionKind = substitutedLower.getProjectionKind();
             assert (substitutedProjectionKind == substitutedUpper.getProjectionKind()) &&
-                   originalProjectionKind == Variance.INVARIANT || originalProjectionKind == substitutedProjectionKind :
-                    "Unexpected substituted projection kind: " + substitutedProjectionKind + "; original: " + originalProjectionKind;
+            originalProjectionKind == Variance.INVARIANT || originalProjectionKind == substitutedProjectionKind :
+            "Unexpected substituted projection kind: " + substitutedProjectionKind + "; original: " + originalProjectionKind;
 
             if (substitutedLower.getType() == flexibleType.getLowerBound() && substitutedUpper.getType() == flexibleType.getUpperBound()) return originalProjection;
 
@@ -186,11 +186,11 @@ public class TypeSubstitutor {
             if (!allowVarianceConflict) {
                 //noinspection EnumSwitchStatementWhichMissesCases
                 switch (varianceConflict) {
-                    case OUT_IN_IN_POSITION:
-                        throw new SubstitutionException("Out-projection in in-position");
-                    case IN_IN_OUT_POSITION:
-                        // todo use the right type parameter variance and upper bound
-                        return new TypeProjectionImpl(Variance.OUT_VARIANCE, type.getConstructor().getBuiltIns().getNullableAnyType());
+                case OUT_IN_IN_POSITION:
+                    throw new SubstitutionException("Out-projection in in-position");
+                case IN_IN_OUT_POSITION:
+                    // todo use the right type parameter variance and upper bound
+                    return new TypeProjectionImpl(Variance.OUT_VARIANCE, type.getConstructor().getBuiltIns().getNullableAnyType());
                 }
             }
             KotlinType substitutedType;
@@ -210,9 +210,9 @@ public class TypeSubstitutor {
             if (!type.getAnnotations().isEmpty()) {
                 Annotations typeAnnotations = filterOutUnsafeVariance(substitution.filterAnnotations(type.getAnnotations()));
                 substitutedType = TypeUtilsKt.replaceAnnotations(
-                        substitutedType,
-                        new CompositeAnnotations(substitutedType.getAnnotations(), typeAnnotations)
-                );
+                                      substitutedType,
+                                      new CompositeAnnotations(substitutedType.getAnnotations(), typeAnnotations)
+                                  );
             }
 
             Variance resultingProjectionKind = varianceConflict == VarianceConflictType.NO_CONFLICT
@@ -236,8 +236,8 @@ public class TypeSubstitutor {
     }
 
     private TypeProjection substituteCompoundType(
-            TypeProjection originalProjection,
-            int recursionDepth
+        TypeProjection originalProjection,
+        int recursionDepth
     ) throws SubstitutionException {
         KotlinType type = originalProjection.getType();
         Variance projectionKind = originalProjection.getProjectionKind();
@@ -254,10 +254,10 @@ public class TypeSubstitutor {
         }
 
         List<TypeProjection> substitutedArguments = substituteTypeArguments(
-                type.getConstructor().getParameters(), type.getArguments(), recursionDepth);
+                    type.getConstructor().getParameters(), type.getArguments(), recursionDepth);
 
         KotlinType substitutedType =
-                TypeSubstitutionKt.replace(type, substitutedArguments, substitution.filterAnnotations(type.getAnnotations()));
+            TypeSubstitutionKt.replace(type, substitutedArguments, substitution.filterAnnotations(type.getAnnotations()));
         if (substitutedType instanceof SimpleType && substitutedAbbreviation instanceof SimpleType) {
             substitutedType = SpecialTypesKt.withAbbreviation((SimpleType) substitutedType, (SimpleType) substitutedAbbreviation);
         }
@@ -266,7 +266,7 @@ public class TypeSubstitutor {
     }
 
     private List<TypeProjection> substituteTypeArguments(
-            List<TypeParameterDescriptor> typeParameters, List<TypeProjection> typeArguments, int recursionDepth
+        List<TypeParameterDescriptor> typeParameters, List<TypeProjection> typeArguments, int recursionDepth
     ) throws SubstitutionException {
         List<TypeProjection> substitutedArguments = new ArrayList<TypeProjection>(typeParameters.size());
         boolean wereChanges = false;
@@ -277,16 +277,16 @@ public class TypeSubstitutor {
             TypeProjection substitutedTypeArgument = unsafeSubstitute(typeArgument, recursionDepth + 1);
 
             switch (conflictType(typeParameter.getVariance(), substitutedTypeArgument.getProjectionKind())) {
-                case NO_CONFLICT:
-                    // if the corresponding type parameter is already co/contra-variant, there's not need for an explicit projection
-                    if (typeParameter.getVariance() != Variance.INVARIANT && !substitutedTypeArgument.isStarProjection()) {
-                        substitutedTypeArgument = new TypeProjectionImpl(Variance.INVARIANT, substitutedTypeArgument.getType());
-                    }
-                    break;
-                case OUT_IN_IN_POSITION:
-                case IN_IN_OUT_POSITION:
-                    substitutedTypeArgument = TypeUtils.makeStarProjection(typeParameter);
-                    break;
+            case NO_CONFLICT:
+                // if the corresponding type parameter is already co/contra-variant, there's not need for an explicit projection
+                if (typeParameter.getVariance() != Variance.INVARIANT && !substitutedTypeArgument.isStarProjection()) {
+                    substitutedTypeArgument = new TypeProjectionImpl(Variance.INVARIANT, substitutedTypeArgument.getType());
+                }
+                break;
+            case OUT_IN_IN_POSITION:
+            case IN_IN_OUT_POSITION:
+                substitutedTypeArgument = TypeUtils.makeStarProjection(typeParameter);
+                break;
             }
 
             if (substitutedTypeArgument != typeArgument) {

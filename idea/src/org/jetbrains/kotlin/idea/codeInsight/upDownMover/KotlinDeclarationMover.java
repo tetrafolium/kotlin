@@ -87,52 +87,52 @@ public class KotlinDeclarationMover extends AbstractKotlinUpDownMover {
         }
 
         declaration.accept(
-                new KtVisitorVoid() {
-                    @Override
-                    public void visitClassInitializer(@NotNull KtClassInitializer initializer) {
-                        PsiElement brace = initializer.getOpenBraceNode();
-                        if (brace != null) {
-                            memberSuspects.add(brace);
-                        }
-                    }
-
-                    @Override
-                    public void visitNamedFunction(@NotNull KtNamedFunction function) {
-                        PsiElement equalsToken = function.getEqualsToken();
-                        if (equalsToken != null) memberSuspects.add(equalsToken);
-
-                        KtTypeParameterList typeParameterList = function.getTypeParameterList();
-                        if (typeParameterList != null) memberSuspects.add(typeParameterList);
-
-                        KtTypeReference receiverTypeRef = function.getReceiverTypeReference();
-                        if (receiverTypeRef != null) memberSuspects.add(receiverTypeRef);
-
-                        KtTypeReference returnTypeRef = function.getTypeReference();
-                        if (returnTypeRef != null) memberSuspects.add(returnTypeRef);
-                    }
-
-                    @Override
-                    public void visitProperty(@NotNull KtProperty property) {
-                        PsiElement valOrVarKeyword = property.getValOrVarKeyword();
-                        if (valOrVarKeyword != null) memberSuspects.add(valOrVarKeyword);
-
-                        KtTypeParameterList typeParameterList = property.getTypeParameterList();
-                        if (typeParameterList != null) memberSuspects.add(typeParameterList);
-
-                        KtTypeReference receiverTypeRef = property.getReceiverTypeReference();
-                        if (receiverTypeRef != null) memberSuspects.add(receiverTypeRef);
-
-                        KtTypeReference returnTypeRef = property.getTypeReference();
-                        if (returnTypeRef != null) memberSuspects.add(returnTypeRef);
-                    }
+        new KtVisitorVoid() {
+            @Override
+            public void visitClassInitializer(@NotNull KtClassInitializer initializer) {
+                PsiElement brace = initializer.getOpenBraceNode();
+                if (brace != null) {
+                    memberSuspects.add(brace);
                 }
+            }
+
+            @Override
+            public void visitNamedFunction(@NotNull KtNamedFunction function) {
+                PsiElement equalsToken = function.getEqualsToken();
+                if (equalsToken != null) memberSuspects.add(equalsToken);
+
+                KtTypeParameterList typeParameterList = function.getTypeParameterList();
+                if (typeParameterList != null) memberSuspects.add(typeParameterList);
+
+                KtTypeReference receiverTypeRef = function.getReceiverTypeReference();
+                if (receiverTypeRef != null) memberSuspects.add(receiverTypeRef);
+
+                KtTypeReference returnTypeRef = function.getTypeReference();
+                if (returnTypeRef != null) memberSuspects.add(returnTypeRef);
+            }
+
+            @Override
+            public void visitProperty(@NotNull KtProperty property) {
+                PsiElement valOrVarKeyword = property.getValOrVarKeyword();
+                if (valOrVarKeyword != null) memberSuspects.add(valOrVarKeyword);
+
+                KtTypeParameterList typeParameterList = property.getTypeParameterList();
+                if (typeParameterList != null) memberSuspects.add(typeParameterList);
+
+                KtTypeReference receiverTypeRef = property.getReceiverTypeReference();
+                if (receiverTypeRef != null) memberSuspects.add(receiverTypeRef);
+
+                KtTypeReference returnTypeRef = property.getTypeReference();
+                if (returnTypeRef != null) memberSuspects.add(returnTypeRef);
+            }
+        }
         );
 
         return memberSuspects;
     }
 
     private static final Class[] DECLARATION_CONTAINER_CLASSES =
-            {KtClassBody.class, KtAnonymousInitializer.class, KtFunction.class, KtPropertyAccessor.class, KtFile.class};
+    {KtClassBody.class, KtAnonymousInitializer.class, KtFunction.class, KtPropertyAccessor.class, KtFile.class};
 
     private static final Class[] CLASSBODYLIKE_DECLARATION_CONTAINER_CLASSES = {KtClassBody.class, KtFile.class};
 
@@ -147,7 +147,7 @@ public class KotlinDeclarationMover extends AbstractKotlinUpDownMover {
         }
 
         return PsiTreeUtil.instanceOf(PsiTreeUtil.getParentOfType(declaration,
-                                                                  DECLARATION_CONTAINER_CLASSES),
+                                      DECLARATION_CONTAINER_CLASSES),
                                       CLASSBODYLIKE_DECLARATION_CONTAINER_CLASSES) ? declaration : null;
     }
 
@@ -183,8 +183,8 @@ public class KotlinDeclarationMover extends AbstractKotlinUpDownMover {
         int endLine = editor.offsetToLogicalPosition(textRange2.getEndOffset()).line + 1;
 
         if (element instanceof PsiComment
-            || startLine == oldRange.startLine || startLine == oldRange.endLine
-            || endLine == oldRange.startLine || endLine == oldRange.endLine) {
+                || startLine == oldRange.startLine || startLine == oldRange.endLine
+                || endLine == oldRange.startLine || endLine == oldRange.endLine) {
             return new LineRange(startLine, endLine);
         }
 
@@ -202,10 +202,10 @@ public class KotlinDeclarationMover extends AbstractKotlinUpDownMover {
 
     @Nullable
     private static LineRange getTargetRange(
-            @NotNull Editor editor,
-            @NotNull PsiElement sibling,
-            boolean down,
-            @NotNull PsiElement target
+        @NotNull Editor editor,
+        @NotNull PsiElement sibling,
+        boolean down,
+        @NotNull PsiElement target
     ) {
         PsiElement start = sibling;
         PsiElement end = sibling;

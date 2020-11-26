@@ -87,15 +87,15 @@ public class Flags {
     }
 
     public static int getClassFlags(
-            boolean hasAnnotations,
-            @NotNull ProtoBuf.Visibility visibility,
-            @NotNull ProtoBuf.Modality modality,
-            @NotNull ProtoBuf.Class.Kind kind,
-            boolean inner,
-            boolean isData,
-            boolean isExternal,
-            boolean isExpect,
-            boolean isInline
+        boolean hasAnnotations,
+        @NotNull ProtoBuf.Visibility visibility,
+        @NotNull ProtoBuf.Modality modality,
+        @NotNull ProtoBuf.Class.Kind kind,
+        boolean inner,
+        boolean isData,
+        boolean isExternal,
+        boolean isExpect,
+        boolean isInline
     ) {
         return HAS_ANNOTATIONS.toFlags(hasAnnotations)
                | MODALITY.toFlags(modality)
@@ -106,32 +106,32 @@ public class Flags {
                | IS_EXTERNAL_CLASS.toFlags(isExternal)
                | IS_EXPECT_CLASS.toFlags(isExpect)
                | IS_INLINE_CLASS.toFlags(isInline)
-                ;
+               ;
     }
 
     public static int getConstructorFlags(
-            boolean hasAnnotations,
-            @NotNull ProtoBuf.Visibility visibility,
-            boolean isSecondary
+        boolean hasAnnotations,
+        @NotNull ProtoBuf.Visibility visibility,
+        boolean isSecondary
     ) {
         return HAS_ANNOTATIONS.toFlags(hasAnnotations)
                | VISIBILITY.toFlags(visibility)
                | IS_SECONDARY.toFlags(isSecondary)
-                ;
+               ;
     }
 
     public static int getFunctionFlags(
-            boolean hasAnnotations,
-            @NotNull ProtoBuf.Visibility visibility,
-            @NotNull ProtoBuf.Modality modality,
-            @NotNull ProtoBuf.MemberKind memberKind,
-            boolean isOperator,
-            boolean isInfix,
-            boolean isInline,
-            boolean isTailrec,
-            boolean isExternal,
-            boolean isSuspend,
-            boolean isExpect
+        boolean hasAnnotations,
+        @NotNull ProtoBuf.Visibility visibility,
+        @NotNull ProtoBuf.Modality modality,
+        @NotNull ProtoBuf.MemberKind memberKind,
+        boolean isOperator,
+        boolean isInfix,
+        boolean isInline,
+        boolean isTailrec,
+        boolean isExternal,
+        boolean isSuspend,
+        boolean isExpect
     ) {
         return HAS_ANNOTATIONS.toFlags(hasAnnotations)
                | VISIBILITY.toFlags(visibility)
@@ -144,23 +144,23 @@ public class Flags {
                | IS_EXTERNAL_FUNCTION.toFlags(isExternal)
                | IS_SUSPEND.toFlags(isSuspend)
                | IS_EXPECT_FUNCTION.toFlags(isExpect)
-                ;
+               ;
     }
 
     public static int getPropertyFlags(
-            boolean hasAnnotations,
-            @NotNull ProtoBuf.Visibility visibility,
-            @NotNull ProtoBuf.Modality modality,
-            @NotNull ProtoBuf.MemberKind memberKind,
-            boolean isVar,
-            boolean hasGetter,
-            boolean hasSetter,
-            boolean hasConstant,
-            boolean isConst,
-            boolean lateInit,
-            boolean isExternal,
-            boolean isDelegated,
-            boolean isExpect
+        boolean hasAnnotations,
+        @NotNull ProtoBuf.Visibility visibility,
+        @NotNull ProtoBuf.Modality modality,
+        @NotNull ProtoBuf.MemberKind memberKind,
+        boolean isVar,
+        boolean hasGetter,
+        boolean hasSetter,
+        boolean hasConstant,
+        boolean isConst,
+        boolean lateInit,
+        boolean isExternal,
+        boolean isDelegated,
+        boolean isExpect
     ) {
         return HAS_ANNOTATIONS.toFlags(hasAnnotations)
                | VISIBILITY.toFlags(visibility)
@@ -175,16 +175,16 @@ public class Flags {
                | IS_EXTERNAL_PROPERTY.toFlags(isExternal)
                | IS_DELEGATED.toFlags(isDelegated)
                | IS_EXPECT_PROPERTY.toFlags(isExpect)
-                ;
+               ;
     }
 
     public static int getAccessorFlags(
-            boolean hasAnnotations,
-            @NotNull ProtoBuf.Visibility visibility,
-            @NotNull ProtoBuf.Modality modality,
-            boolean isNotDefault,
-            boolean isExternal,
-            boolean isInlineAccessor
+        boolean hasAnnotations,
+        @NotNull ProtoBuf.Visibility visibility,
+        @NotNull ProtoBuf.Modality modality,
+        boolean isNotDefault,
+        boolean isExternal,
+        boolean isInlineAccessor
     ) {
         return HAS_ANNOTATIONS.toFlags(hasAnnotations)
                | MODALITY.toFlags(modality)
@@ -192,31 +192,31 @@ public class Flags {
                | IS_NOT_DEFAULT.toFlags(isNotDefault)
                | IS_EXTERNAL_ACCESSOR.toFlags(isExternal)
                | IS_INLINE_ACCESSOR.toFlags(isInlineAccessor)
-                ;
+               ;
     }
 
     public static int getContractExpressionFlags(boolean isNegated, boolean isNullCheckPredicate) {
         return IS_NEGATED.toFlags(isNegated)
-                | IS_NULL_CHECK_PREDICATE.toFlags(isNullCheckPredicate);
+               | IS_NULL_CHECK_PREDICATE.toFlags(isNullCheckPredicate);
     }
 
     public static int getValueParameterFlags(
-            boolean hasAnnotations,
-            boolean declaresDefaultValue,
-            boolean isCrossinline,
-            boolean isNoinline
+        boolean hasAnnotations,
+        boolean declaresDefaultValue,
+        boolean isCrossinline,
+        boolean isNoinline
     ) {
         return HAS_ANNOTATIONS.toFlags(hasAnnotations)
                | DECLARES_DEFAULT_VALUE.toFlags(declaresDefaultValue)
                | IS_CROSSINLINE.toFlags(isCrossinline)
                | IS_NOINLINE.toFlags(isNoinline)
-                ;
+               ;
     }
 
     public static int getTypeAliasFlags(boolean hasAnnotations, ProtoBuf.Visibility visibility) {
         return HAS_ANNOTATIONS.toFlags(hasAnnotations)
                | VISIBILITY.toFlags(visibility)
-                ;
+               ;
     }
 
     // Infrastructure
@@ -270,7 +270,9 @@ public class Flags {
             return value ? 1 << offset : 0;
         }
 
-        public int invert(int flags) { return (flags ^ (1 << offset)); }
+        public int invert(int flags) {
+            return (flags ^ (1 << offset));
+        }
     }
 
     private static class EnumLiteFlagField<E extends Internal.EnumLite> extends FlagField<E> {

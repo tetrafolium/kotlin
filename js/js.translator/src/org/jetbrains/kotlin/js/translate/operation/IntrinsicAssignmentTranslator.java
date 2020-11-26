@@ -108,7 +108,7 @@ public final class IntrinsicAssignmentTranslator extends AssignmentTranslator {
         assert OperatorConventions.ASSIGNMENT_OPERATIONS.containsKey(assignmentOperationToken);
         KtToken counterpartToken = OperatorConventions.ASSIGNMENT_OPERATION_COUNTERPARTS.get(assignmentOperationToken);
         assert OperatorTable.hasCorrespondingBinaryOperator(counterpartToken) :
-                "Unsupported token encountered: " + counterpartToken.toString();
+        "Unsupported token encountered: " + counterpartToken.toString();
         return OperatorTable.getBinaryOperator(counterpartToken);
     }
 
@@ -125,7 +125,7 @@ public final class IntrinsicAssignmentTranslator extends AssignmentTranslator {
         assert token instanceof KtSingleValueToken;
         assert OperatorConventions.ASSIGNMENT_OPERATIONS.containsKey(token);
         assert OperatorTable.hasCorrespondingBinaryOperator(token) :
-                "Unsupported token encountered: " + token.toString();
+        "Unsupported token encountered: " + token.toString();
         return OperatorTable.getBinaryOperator(token);
     }
 

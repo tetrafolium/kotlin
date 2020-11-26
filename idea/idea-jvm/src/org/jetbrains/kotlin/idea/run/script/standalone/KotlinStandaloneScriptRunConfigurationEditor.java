@@ -41,13 +41,13 @@ public class KotlinStandaloneScriptRunConfigurationEditor extends SettingsEditor
 
     void initChooseFileField(Project project) {
         FileChooserDescriptor descriptor = FileChooserDescriptorFactory.createSingleFileNoJarsDescriptor()
-                .withFileFilter(new Condition<VirtualFile>() {
-                    @Override
-                    public boolean value(VirtualFile file) {
-                        return file.isDirectory() || KotlinParserDefinition.STD_SCRIPT_SUFFIX.equals(file.getExtension());
-                    }
-                })
-                .withTreeRootVisible(true);
+        .withFileFilter(new Condition<VirtualFile>() {
+            @Override
+            public boolean value(VirtualFile file) {
+                return file.isDirectory() || KotlinParserDefinition.STD_SCRIPT_SUFFIX.equals(file.getExtension());
+            }
+        })
+        .withTreeRootVisible(true);
 
         chooseScriptFileTextField.addBrowseFolderListener("Choose script file", null, project, descriptor, TextComponentAccessor.TEXT_FIELD_WHOLE_TEXT);
     }

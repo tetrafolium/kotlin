@@ -25,9 +25,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class DebugProcessImplHelper {
     public static DebugProcessImpl.StepOverCommand createStepOverCommandWithCustomFilter(
-            SuspendContextImpl suspendContext,
-            boolean ignoreBreakpoints,
-            KotlinSuspendCallStepOverFilter methodFilter
+        SuspendContextImpl suspendContext,
+        boolean ignoreBreakpoints,
+        KotlinSuspendCallStepOverFilter methodFilter
     ) {
         DebugProcessImpl debugProcess = suspendContext.getDebugProcess();
         return debugProcess.new StepOverCommand(suspendContext, ignoreBreakpoints, StepRequest.STEP_LINE) {

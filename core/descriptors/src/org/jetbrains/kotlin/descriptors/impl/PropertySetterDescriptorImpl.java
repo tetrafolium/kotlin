@@ -36,16 +36,16 @@ public class PropertySetterDescriptorImpl extends PropertyAccessorDescriptorImpl
     private final PropertySetterDescriptor original;
 
     public PropertySetterDescriptorImpl(
-            @NotNull PropertyDescriptor correspondingProperty,
-            @NotNull Annotations annotations,
-            @NotNull Modality modality,
-            @NotNull Visibility visibility,
-            boolean isDefault,
-            boolean isExternal,
-            boolean isInline,
-            @NotNull Kind kind,
-            @Nullable PropertySetterDescriptor original,
-            @NotNull SourceElement source
+        @NotNull PropertyDescriptor correspondingProperty,
+        @NotNull Annotations annotations,
+        @NotNull Modality modality,
+        @NotNull Visibility visibility,
+        boolean isDefault,
+        boolean isExternal,
+        boolean isInline,
+        @NotNull Kind kind,
+        @Nullable PropertySetterDescriptor original,
+        @NotNull SourceElement source
     ) {
         super(modality, visibility, correspondingProperty, annotations, Name.special("<set-" + correspondingProperty.getName() + ">"),
               isDefault, isExternal, isInline, kind, source);
@@ -62,17 +62,17 @@ public class PropertySetterDescriptorImpl extends PropertyAccessorDescriptorImpl
     }
 
     public static ValueParameterDescriptorImpl createSetterParameter(
-            @NotNull PropertySetterDescriptor setterDescriptor,
-            @NotNull KotlinType type,
-            @NotNull Annotations annotations
+        @NotNull PropertySetterDescriptor setterDescriptor,
+        @NotNull KotlinType type,
+        @NotNull Annotations annotations
     ) {
         return new ValueParameterDescriptorImpl(
-                setterDescriptor, null, 0, annotations, Name.special("<set-?>"), type,
-                /* declaresDefaultValue = */ false,
-                /* isCrossinline = */ false,
-                /* isNoinline = */ false,
-                null, SourceElement.NO_SOURCE
-        );
+                   setterDescriptor, null, 0, annotations, Name.special("<set-?>"), type,
+                   /* declaresDefaultValue = */ false,
+                   /* isCrossinline = */ false,
+                   /* isNoinline = */ false,
+                   null, SourceElement.NO_SOURCE
+               );
     }
 
     @NotNull

@@ -15,24 +15,24 @@ import java.util.List;
  */
 public abstract class JsContext<T extends JsNode> {
 
-  public <R extends T> void addPrevious(R node) {
-    throw new UnsupportedOperationException();
-  }
-
-  public <R extends T> void addPrevious(List<R> nodes) {
-    for (R node : nodes) {
-      addPrevious(node);
+    public <R extends T> void addPrevious(R node) {
+        throw new UnsupportedOperationException();
     }
-  }
 
-  public <R extends T> void addNext(R node) {
-    throw new UnsupportedOperationException();
-  }
+    public <R extends T> void addPrevious(List<R> nodes) {
+        for (R node : nodes) {
+            addPrevious(node);
+        }
+    }
 
-  public abstract void removeMe();
+    public <R extends T> void addNext(R node) {
+        throw new UnsupportedOperationException();
+    }
 
-  public abstract <R extends T> void replaceMe(R node);
+    public abstract void removeMe();
 
-  @Nullable
-  public abstract T getCurrentNode();
+    public abstract <R extends T> void replaceMe(R node);
+
+    @Nullable
+    public abstract T getCurrentNode();
 }

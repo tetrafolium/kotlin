@@ -33,9 +33,9 @@ public class AnnotationDescriptorImpl implements AnnotationDescriptor {
     private final SourceElement source;
 
     public AnnotationDescriptorImpl(
-            @NotNull KotlinType annotationType,
-            @NotNull Map<Name, ConstantValue<?>> valueArguments,
-            @NotNull SourceElement source
+        @NotNull KotlinType annotationType,
+        @NotNull Map<Name, ConstantValue<?>> valueArguments,
+        @NotNull SourceElement source
     ) {
         this.annotationType = annotationType;
         this.valueArguments = valueArguments;

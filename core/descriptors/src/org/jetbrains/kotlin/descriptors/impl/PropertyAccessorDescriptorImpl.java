@@ -40,16 +40,16 @@ public abstract class PropertyAccessorDescriptorImpl extends DeclarationDescript
     private FunctionDescriptor initialSignatureDescriptor = null;
 
     public PropertyAccessorDescriptorImpl(
-            @NotNull Modality modality,
-            @NotNull Visibility visibility,
-            @NotNull PropertyDescriptor correspondingProperty,
-            @NotNull Annotations annotations,
-            @NotNull Name name,
-            boolean isDefault,
-            boolean isExternal,
-            boolean isInline,
-            Kind kind,
-            @NotNull SourceElement source
+        @NotNull Modality modality,
+        @NotNull Visibility visibility,
+        @NotNull PropertyDescriptor correspondingProperty,
+        @NotNull Annotations annotations,
+        @NotNull Name name,
+        boolean isDefault,
+        boolean isExternal,
+        boolean isInline,
+        Kind kind,
+        @NotNull SourceElement source
     ) {
         super(correspondingProperty.getContainingDeclaration(), annotations, name, source);
         this.modality = modality;
@@ -187,11 +187,11 @@ public abstract class PropertyAccessorDescriptorImpl extends DeclarationDescript
     @NotNull
     @Override
     public PropertyAccessorDescriptor copy(
-            DeclarationDescriptor newOwner,
-            Modality modality,
-            Visibility visibility,
-            Kind kind,
-            boolean copyOverrides
+        DeclarationDescriptor newOwner,
+        Modality modality,
+        Visibility visibility,
+        Kind kind,
+        boolean copyOverrides
     ) {
         throw new UnsupportedOperationException("Accessors must be copied by the corresponding property");
     }

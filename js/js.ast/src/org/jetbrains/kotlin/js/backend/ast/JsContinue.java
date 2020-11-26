@@ -31,7 +31,7 @@ public class JsContinue extends SourceInfoAwareJsNode implements JsStatement {
 
     @Override
     public void acceptChildren(JsVisitor v) {
-        if (label != null){
+        if (label != null) {
             v.accept(label);
         }
     }
@@ -39,7 +39,7 @@ public class JsContinue extends SourceInfoAwareJsNode implements JsStatement {
     @Override
     public void traverse(JsVisitorWithContext v, JsContext ctx) {
         if (v.visit(this, ctx)) {
-            if (label != null){
+            if (label != null) {
                 label = v.accept(label);
             }
         }

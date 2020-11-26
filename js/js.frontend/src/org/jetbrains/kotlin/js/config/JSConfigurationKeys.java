@@ -26,44 +26,44 @@ import java.util.List;
 
 public class JSConfigurationKeys {
     public static final CompilerConfigurationKey<List<String>> LIBRARIES =
-            CompilerConfigurationKey.create("library file paths");
+        CompilerConfigurationKey.create("library file paths");
 
     public static final CompilerConfigurationKey<Boolean> SOURCE_MAP =
-            CompilerConfigurationKey.create("generate source map");
+        CompilerConfigurationKey.create("generate source map");
 
     public static final CompilerConfigurationKey<File> OUTPUT_DIR =
-            CompilerConfigurationKey.create("output directory");
+        CompilerConfigurationKey.create("output directory");
 
     public static final CompilerConfigurationKey<String> SOURCE_MAP_PREFIX =
-            CompilerConfigurationKey.create("prefix to add to paths in source map");
+        CompilerConfigurationKey.create("prefix to add to paths in source map");
 
     public static final CompilerConfigurationKey<List<String>> SOURCE_MAP_SOURCE_ROOTS =
-            CompilerConfigurationKey.create("base directories used to calculate relative paths for source map");
+        CompilerConfigurationKey.create("base directories used to calculate relative paths for source map");
 
     public static final CompilerConfigurationKey<SourceMapSourceEmbedding> SOURCE_MAP_EMBED_SOURCES =
-            CompilerConfigurationKey.create("embed source files into source map");
+        CompilerConfigurationKey.create("embed source files into source map");
 
     public static final CompilerConfigurationKey<Boolean> META_INFO =
-            CompilerConfigurationKey.create("generate .meta.js and .kjsm files");
+        CompilerConfigurationKey.create("generate .meta.js and .kjsm files");
 
     public static final CompilerConfigurationKey<EcmaVersion> TARGET =
-            CompilerConfigurationKey.create("ECMA version target");
+        CompilerConfigurationKey.create("ECMA version target");
 
     public static final CompilerConfigurationKey<ModuleKind> MODULE_KIND =
-            CompilerConfigurationKey.create("module kind");
+        CompilerConfigurationKey.create("module kind");
 
     public static final CompilerConfigurationKey<Boolean> TYPED_ARRAYS_ENABLED =
-            CompilerConfigurationKey.create("TypedArrays enabled");
+        CompilerConfigurationKey.create("TypedArrays enabled");
 
     public static final CompilerConfigurationKey<IncrementalDataProvider> INCREMENTAL_DATA_PROVIDER =
-            CompilerConfigurationKey.create("incremental data provider");
+        CompilerConfigurationKey.create("incremental data provider");
 
     public static final CompilerConfigurationKey<IncrementalResultsConsumer> INCREMENTAL_RESULTS_CONSUMER =
-            CompilerConfigurationKey.create("incremental results consumer");
+        CompilerConfigurationKey.create("incremental results consumer");
 
     public static final CompilerConfigurationKey<Boolean> FRIEND_PATHS_DISABLED =
-            CompilerConfigurationKey.create("disable support for friend paths");
+        CompilerConfigurationKey.create("disable support for friend paths");
 
     public static final CompilerConfigurationKey<List<String>> FRIEND_PATHS =
-            CompilerConfigurationKey.create("friend module paths");
+        CompilerConfigurationKey.create("friend module paths");
 }

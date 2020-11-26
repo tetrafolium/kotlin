@@ -24,11 +24,12 @@ import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.Nullable;
 
 @State(
-        name = "JetEditorOptions",
-        storages = {
-                @Storage(
-                        file = "$APP_CONFIG$/editor.xml"
-                )}
+    name = "JetEditorOptions",
+storages = {
+    @Storage(
+        file = "$APP_CONFIG$/editor.xml"
+    )
+}
 )
 public class KotlinEditorOptions implements PersistentStateComponent<KotlinEditorOptions> {
     private boolean donTShowConversionDialog = false;

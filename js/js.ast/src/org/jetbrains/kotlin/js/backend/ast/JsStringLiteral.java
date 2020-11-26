@@ -14,13 +14,13 @@ public final class JsStringLiteral extends JsLiteral.JsValueLiteral {
     }
 
     public String getValue() {
-    return value;
-  }
+        return value;
+    }
 
     @Override
     public void accept(JsVisitor v) {
-    v.visitString(this);
-  }
+        v.visitString(this);
+    }
 
     @Override
     public void traverse(JsVisitorWithContext v, JsContext ctx) {

@@ -65,7 +65,7 @@ public class AddToIncompatibleApiDialog extends DialogWrapper {
                 ToolsImpl toolImpl = inspectionProfileModifiableModel.getToolsOrNull(IncompatibleAPIInspection.SHORT_NAME, project);
                 if (toolImpl != null) {
                     IncompatibleAPIInspection incompatibleAPIInspection =
-                            (IncompatibleAPIInspection) toolImpl.getDefaultState().getTool().getTool();
+                    (IncompatibleAPIInspection) toolImpl.getDefaultState().getTool().getTool();
                     incompatibleAPIInspection.addProblem(finalReference, finalReason);
                 }
             });

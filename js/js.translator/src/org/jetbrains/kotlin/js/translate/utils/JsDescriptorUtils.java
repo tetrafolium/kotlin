@@ -41,8 +41,8 @@ import static org.jetbrains.kotlin.resolve.DescriptorUtils.*;
 public final class JsDescriptorUtils {
     // TODO: maybe we should use external annotations or something else.
     private static final Set<String> FAKE_CLASSES = ContainerUtil.immutableSet(
-            KotlinBuiltIns.FQ_NAMES.any.asString()
-    );
+                KotlinBuiltIns.FQ_NAMES.any.asString()
+            );
 
     private JsDescriptorUtils() {
     }
@@ -81,7 +81,7 @@ public final class JsDescriptorUtils {
             ClassDescriptor classDescriptor = getClassDescriptorForType(type);
 
             return !FAKE_CLASSES.contains(getFqNameSafe(classDescriptor).asString()) &&
-                   !(classDescriptor.getKind() == ClassKind.INTERFACE && isNativeObject(classDescriptor));
+            !(classDescriptor.getKind() == ClassKind.INTERFACE && isNativeObject(classDescriptor));
         });
     }
 

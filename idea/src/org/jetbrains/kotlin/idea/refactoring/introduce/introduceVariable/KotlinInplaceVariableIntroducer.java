@@ -50,7 +50,7 @@ public class KotlinInplaceVariableIntroducer<D extends KtCallableDeclaration> ex
 
     public static final String TYPE_REFERENCE_VARIABLE_NAME = "TypeReferenceVariable";
     public static final String PRIMARY_VARIABLE_NAME = "PrimaryVariable";
-    
+
     private static final Function0<Boolean> TRUE = new Function0<Boolean>() {
         @Override
         public Boolean invoke() {
@@ -75,9 +75,9 @@ public class KotlinInplaceVariableIntroducer<D extends KtCallableDeclaration> ex
         private JComponent component;
 
         public ControlWrapper(
-                @NotNull Function0<JComponent> factory,
-                @NotNull Function0<Boolean> condition,
-                @NotNull Pass<JComponent> initializer) {
+            @NotNull Function0<JComponent> factory,
+            @NotNull Function0<Boolean> condition,
+            @NotNull Pass<JComponent> initializer) {
             this.factory = factory;
             this.condition = condition;
             this.initializer = initializer;
@@ -114,11 +114,11 @@ public class KotlinInplaceVariableIntroducer<D extends KtCallableDeclaration> ex
     private JPanel contentPanel;
 
     public KotlinInplaceVariableIntroducer(
-            PsiNamedElement elementToRename, Editor editor, Project project,
-            String title, KtExpression[] occurrences,
-            @Nullable KtExpression expr, boolean replaceOccurrence,
-            D declaration, boolean isVar, boolean doNotChangeVar,
-            @Nullable KotlinType exprType, boolean noTypeInference
+        PsiNamedElement elementToRename, Editor editor, Project project,
+        String title, KtExpression[] occurrences,
+        @Nullable KtExpression expr, boolean replaceOccurrence,
+        D declaration, boolean isVar, boolean doNotChangeVar,
+        @Nullable KotlinType exprType, boolean noTypeInference
     ) {
         super(elementToRename, editor, project, title, occurrences, expr);
         this.myReplaceOccurrence = replaceOccurrence;
@@ -174,13 +174,13 @@ public class KotlinInplaceVariableIntroducer<D extends KtCallableDeclaration> ex
             if (!panelControl.isAvailable()) continue;
             panelControl.initialize();
             panel.add(panelControl.getComponent(), new GridBagConstraints(0, count, 1, 1, 1, 0, GridBagConstraints.NORTHWEST,
-                                                                          GridBagConstraints.HORIZONTAL,
-                                                                          new Insets(0, 5, 0, 5), 0, 0));
+                      GridBagConstraints.HORIZONTAL,
+                      new Insets(0, 5, 0, 5), 0, 0));
             ++count;
         }
         panel.add(Box.createVerticalBox(), new GridBagConstraints(0, count, 1, 1, 1, 1, GridBagConstraints.NORTHWEST,
-                                                                  GridBagConstraints.BOTH,
-                                                                  new Insets(0, 0, 0, 0), 0, 0));
+                  GridBagConstraints.BOTH,
+                  new Insets(0, 0, 0, 0), 0, 0));
     }
 
     @Override
@@ -208,19 +208,19 @@ public class KotlinInplaceVariableIntroducer<D extends KtCallableDeclaration> ex
                     @Override
                     public void actionPerformed(@NotNull ActionEvent e) {
                         runWriteActionAndRestartRefactoring(
-                                new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (exprTypeCheckbox.isSelected()) {
-                                            String renderedType =
-                                                    IdeDescriptorRenderers.SOURCE_CODE_SHORT_NAMES_NO_ANNOTATIONS.renderType(myExprType);
-                                            myDeclaration.setTypeReference(new KtPsiFactory(myProject).createType(renderedType));
-                                        }
-                                        else {
-                                            myDeclaration.setTypeReference(null);
-                                        }
-                                    }
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                if (exprTypeCheckbox.isSelected()) {
+                                    String renderedType =
+                                        IdeDescriptorRenderers.SOURCE_CODE_SHORT_NAMES_NO_ANNOTATIONS.renderType(myExprType);
+                                    myDeclaration.setTypeReference(new KtPsiFactory(myProject).createType(renderedType));
                                 }
+                                else {
+                                    myDeclaration.setTypeReference(null);
+                                }
+                            }
+                        }
                         );
                     }
                 });
@@ -252,11 +252,11 @@ public class KotlinInplaceVariableIntroducer<D extends KtCallableDeclaration> ex
                                 PsiElement keyword = varCheckbox.isSelected() ? psiFactory.createVarKeyword() : psiFactory.createValKeyword();
 
                                 PsiElement valOrVar = myDeclaration instanceof KtProperty
-                                                       ? ((KtProperty) myDeclaration).getValOrVarKeyword()
-                                                       : ((KtParameter) myDeclaration).getValOrVarKeyword();
+                                                      ? ((KtProperty) myDeclaration).getValOrVarKeyword()
+                                                      : ((KtParameter) myDeclaration).getValOrVarKeyword();
                                 valOrVar.replace(keyword);
                             }
-                        }.execute();
+                        } .execute();
                     }
                 });
 
@@ -289,13 +289,13 @@ public class KotlinInplaceVariableIntroducer<D extends KtCallableDeclaration> ex
                 runnable.run();
 
                 TemplateState templateState =
-                        TemplateManagerImpl.getTemplateState(InjectedLanguageUtil.getTopLevelEditor(myEditor));
+                    TemplateManagerImpl.getTemplateState(InjectedLanguageUtil.getTopLevelEditor(myEditor));
                 if (templateState != null) {
                     myEditor.putUserData(INTRODUCE_RESTART, true);
                     templateState.gotoEnd(true);
                 }
             }
-        }.execute();
+        } .execute();
         ApplicationManager.getApplication().runReadAction(new Runnable() {
             @Override
             public void run() {
@@ -356,10 +356,10 @@ public class KotlinInplaceVariableIntroducer<D extends KtCallableDeclaration> ex
 
     @Override
     protected boolean buildTemplateAndStart(
-            Collection<PsiReference> refs,
-            Collection<Pair<PsiElement, TextRange>> stringUsages,
-            PsiElement scope,
-            PsiFile containingFile
+        Collection<PsiReference> refs,
+        Collection<Pair<PsiElement, TextRange>> stringUsages,
+        PsiElement scope,
+        PsiFile containingFile
     ) {
         myEditor.putUserData(INTRODUCE_RESTART, false);
         //noinspection ConstantConditions
@@ -367,7 +367,7 @@ public class KotlinInplaceVariableIntroducer<D extends KtCallableDeclaration> ex
         boolean result = super.buildTemplateAndStart(refs, stringUsages, scope, containingFile);
 
         TemplateState templateState =
-                TemplateManagerImpl.getTemplateState(InjectedLanguageUtil.getTopLevelEditor(myEditor));
+            TemplateManagerImpl.getTemplateState(InjectedLanguageUtil.getTopLevelEditor(myEditor));
         if (templateState != null && myDeclaration.getTypeReference() != null) {
             templateState.addTemplateStateListener(SpecifyTypeExplicitlyIntention.Companion.createTypeReferencePostprocessor(myDeclaration));
         }
@@ -378,14 +378,14 @@ public class KotlinInplaceVariableIntroducer<D extends KtCallableDeclaration> ex
     @Override
     protected Collection<PsiReference> collectRefs(SearchScope referencesSearchScope) {
         return kotlin.collections.CollectionsKt.map(
-                kotlin.collections.ArraysKt.filterIsInstance(getOccurrences(), KtSimpleNameExpression.class),
-                new Function1<KtSimpleNameExpression, PsiReference>() {
-                    @Override
-                    public PsiReference invoke(KtSimpleNameExpression expression) {
-                        return ReferenceUtilKt.getMainReference(expression);
-                    }
-                }
-        );
+                   kotlin.collections.ArraysKt.filterIsInstance(getOccurrences(), KtSimpleNameExpression.class),
+        new Function1<KtSimpleNameExpression, PsiReference>() {
+            @Override
+            public PsiReference invoke(KtSimpleNameExpression expression) {
+                return ReferenceUtilKt.getMainReference(expression);
+            }
+        }
+               );
     }
 
     @Override

@@ -67,7 +67,7 @@ public class JsTry extends SourceInfoAwareJsNode implements JsStatement {
         visitor.accept(tryBlock);
         visitor.acceptWithInsertRemove(catches);
         if (finallyBlock != null) {
-           visitor.accept(finallyBlock);
+            visitor.accept(finallyBlock);
         }
     }
 

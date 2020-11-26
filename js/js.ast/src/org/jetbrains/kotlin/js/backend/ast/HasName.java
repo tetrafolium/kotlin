@@ -10,7 +10,7 @@ import org.jetbrains.kotlin.js.common.HasSymbol;
  * Implemented by JavaScript objects that have a name.
  */
 public interface HasName extends HasSymbol {
-  JsName getName();
+    JsName getName();
 
-  void setName(JsName name);
+    void setName(JsName name);
 }

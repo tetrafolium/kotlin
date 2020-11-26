@@ -141,8 +141,8 @@ public class IRFactory {
      */
     public Node createReturn(Node expr, CodePosition location) {
         return expr == null
-            ? new Node(TokenStream.RETURN, location)
-            : new Node(TokenStream.RETURN, expr, location);
+               ? new Node(TokenStream.RETURN, location)
+               : new Node(TokenStream.RETURN, expr, location);
     }
 
     /**
@@ -311,12 +311,12 @@ public class IRFactory {
     public Node createBinary(int nodeType, Node left, Node right, CodePosition location) {
         switch (nodeType) {
 
-          case TokenStream.DOT:
+        case TokenStream.DOT:
             nodeType = TokenStream.GETPROP;
-              right.setType(TokenStream.STRING);
+            right.setType(TokenStream.STRING);
             break;
 
-          case TokenStream.LB:
+        case TokenStream.LB:
             // OPT: could optimize to GETPROP iff string can't be a number
             nodeType = TokenStream.GETELEM;
             break;
@@ -334,16 +334,16 @@ public class IRFactory {
     public Node createAssignment(int nodeOp, Node left, Node right, CodePosition location) {
         int nodeType = left.getType();
         switch (nodeType) {
-            case TokenStream.NAME:
-            case TokenStream.GETPROP:
-            case TokenStream.GETELEM:
-                break;
-            default:
-                // TODO: This should be a ReferenceError--but that's a runtime 
-                //  exception. Should we compile an exception into the code?
-                ts.reportSyntaxError("msg.bad.lhs.assign", null);
+        case TokenStream.NAME:
+        case TokenStream.GETPROP:
+        case TokenStream.GETELEM:
+            break;
+        default:
+            // TODO: This should be a ReferenceError--but that's a runtime
+            //  exception. Should we compile an exception into the code?
+            ts.reportSyntaxError("msg.bad.lhs.assign", null);
         }
-        
+
         return new Node(TokenStream.ASSIGN, left, right, nodeOp, location);
     }
 

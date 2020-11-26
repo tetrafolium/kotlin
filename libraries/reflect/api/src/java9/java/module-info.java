@@ -12,7 +12,7 @@ module kotlin.reflect {
 
     provides org.jetbrains.kotlin.builtins.BuiltInsLoader with org.jetbrains.kotlin.serialization.deserialization.builtins.BuiltInsLoaderImpl;
     provides org.jetbrains.kotlin.resolve.ExternalOverridabilityCondition with
-            org.jetbrains.kotlin.load.java.FieldOverridabilityCondition,
-            org.jetbrains.kotlin.load.java.ErasedOverridabilityCondition,
-            org.jetbrains.kotlin.load.java.JavaIncompatibilityRulesOverridabilityCondition;
+    org.jetbrains.kotlin.load.java.FieldOverridabilityCondition,
+    org.jetbrains.kotlin.load.java.ErasedOverridabilityCondition,
+    org.jetbrains.kotlin.load.java.JavaIncompatibilityRulesOverridabilityCondition;
 }

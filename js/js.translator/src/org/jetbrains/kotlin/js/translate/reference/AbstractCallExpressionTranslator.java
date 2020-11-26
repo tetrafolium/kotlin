@@ -36,9 +36,9 @@ public abstract class AbstractCallExpressionTranslator extends AbstractTranslato
     protected final JsExpression receiver;
 
     protected AbstractCallExpressionTranslator(
-            @NotNull KtCallExpression expression,
-            @Nullable JsExpression receiver,
-            @NotNull TranslationContext context
+        @NotNull KtCallExpression expression,
+        @Nullable JsExpression receiver,
+        @NotNull TranslationContext context
     ) {
         super(context);
         this.expression = expression;

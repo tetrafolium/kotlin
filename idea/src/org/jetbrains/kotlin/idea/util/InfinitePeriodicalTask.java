@@ -28,8 +28,8 @@ public class InfinitePeriodicalTask {
     private LongRunningReadTask currentTask;
 
     public InfinitePeriodicalTask(
-            long delay, @NotNull Alarm.ThreadToUse threadToUse, Disposable parentDisposable,
-            Computable<? extends LongRunningReadTask> taskProvider
+        long delay, @NotNull Alarm.ThreadToUse threadToUse, Disposable parentDisposable,
+        Computable<? extends LongRunningReadTask> taskProvider
     ) {
         myUpdateAlarm = new Alarm(threadToUse, parentDisposable);
         this.delay = delay;

@@ -93,7 +93,7 @@ public abstract class IncrementTranslator extends AbstractTranslator {
         // generate: expr(a = a.inc(), a)
         JsExpression getExpression = accessTranslator.translateAsGet().source(expression);
         JsExpression reassignment = variableReassignment(context().innerBlock(accessBlock), getExpression)
-                .source(expression);
+                                    .source(expression);
         accessBlock.getStatements().add(JsAstUtils.asSyntheticStatement(reassignment));
         JsExpression getNewValue = accessTranslator.translateAsGet().source(expression);
 
@@ -117,7 +117,7 @@ public abstract class IncrementTranslator extends AbstractTranslator {
         TemporaryVariable t1 = context().declareTemporary(accessTranslator.translateAsGet().source(expression), expression);
         accessBlock.getStatements().add(t1.assignmentStatement());
         JsExpression variableReassignment = variableReassignment(context().innerBlock(accessBlock), t1.reference())
-                .source(expression);
+                                            .source(expression);
         accessBlock.getStatements().add(JsAstUtils.asSyntheticStatement(variableReassignment.source(expression)));
 
         JsExpression result;

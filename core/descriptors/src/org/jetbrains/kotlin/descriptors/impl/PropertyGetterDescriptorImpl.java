@@ -34,22 +34,22 @@ public class PropertyGetterDescriptorImpl extends PropertyAccessorDescriptorImpl
     private final PropertyGetterDescriptor original;
 
     public PropertyGetterDescriptorImpl(
-            @NotNull PropertyDescriptor correspondingProperty,
-            @NotNull Annotations annotations,
-            @NotNull Modality modality,
-            @NotNull Visibility visibility,
-            boolean isDefault,
-            boolean isExternal,
-            boolean isInline,
-            @NotNull Kind kind,
-            @Nullable PropertyGetterDescriptor original,
-            @NotNull SourceElement source
+        @NotNull PropertyDescriptor correspondingProperty,
+        @NotNull Annotations annotations,
+        @NotNull Modality modality,
+        @NotNull Visibility visibility,
+        boolean isDefault,
+        boolean isExternal,
+        boolean isInline,
+        @NotNull Kind kind,
+        @Nullable PropertyGetterDescriptor original,
+        @NotNull SourceElement source
     ) {
         super(modality, visibility, correspondingProperty, annotations, Name.special("<get-" + correspondingProperty.getName() + ">"),
               isDefault, isExternal, isInline, kind, source);
         this.original = original != null ? original : this;
     }
-    
+
     public void initialize(KotlinType returnType) {
         this.returnType = returnType == null ? getCorrespondingProperty().getType() : returnType;
     }

@@ -42,43 +42,43 @@ public class TypeParameterDescriptorImpl extends AbstractTypeParameterDescriptor
 
     @NotNull
     public static TypeParameterDescriptor createWithDefaultBound(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull Annotations annotations,
-            boolean reified,
-            @NotNull Variance variance,
-            @NotNull Name name,
-            int index
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull Annotations annotations,
+        boolean reified,
+        @NotNull Variance variance,
+        @NotNull Name name,
+        int index
     ) {
         TypeParameterDescriptorImpl typeParameterDescriptor =
-                createForFurtherModification(containingDeclaration, annotations, reified, variance, name, index, SourceElement.NO_SOURCE);
+            createForFurtherModification(containingDeclaration, annotations, reified, variance, name, index, SourceElement.NO_SOURCE);
         typeParameterDescriptor.addUpperBound(getBuiltIns(containingDeclaration).getDefaultBound());
         typeParameterDescriptor.setInitialized();
         return typeParameterDescriptor;
     }
 
     public static TypeParameterDescriptorImpl createForFurtherModification(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull Annotations annotations,
-            boolean reified,
-            @NotNull Variance variance,
-            @NotNull Name name,
-            int index,
-            @NotNull SourceElement source
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull Annotations annotations,
+        boolean reified,
+        @NotNull Variance variance,
+        @NotNull Name name,
+        int index,
+        @NotNull SourceElement source
     ) {
         return createForFurtherModification(containingDeclaration, annotations, reified, variance, name, index, source,
                                             /* reportSupertypeLoopError = */ null, SupertypeLoopChecker.EMPTY.INSTANCE);
     }
 
     public static TypeParameterDescriptorImpl createForFurtherModification(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull Annotations annotations,
-            boolean reified,
-            @NotNull Variance variance,
-            @NotNull Name name,
-            int index,
-            @NotNull SourceElement source,
-            @Nullable Function1<KotlinType, Void> reportCycleError,
-            @NotNull SupertypeLoopChecker supertypeLoopsResolver
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull Annotations annotations,
+        boolean reified,
+        @NotNull Variance variance,
+        @NotNull Name name,
+        int index,
+        @NotNull SourceElement source,
+        @Nullable Function1<KotlinType, Void> reportCycleError,
+        @NotNull SupertypeLoopChecker supertypeLoopsResolver
     ) {
         return new TypeParameterDescriptorImpl(containingDeclaration, annotations, reified, variance, name, index, source, reportCycleError,
                                                supertypeLoopsResolver);
@@ -88,15 +88,15 @@ public class TypeParameterDescriptorImpl extends AbstractTypeParameterDescriptor
     private boolean initialized = false;
 
     private TypeParameterDescriptorImpl(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull Annotations annotations,
-            boolean reified,
-            @NotNull Variance variance,
-            @NotNull Name name,
-            int index,
-            @NotNull SourceElement source,
-            @Nullable Function1<KotlinType, Void> reportCycleError,
-            @NotNull SupertypeLoopChecker supertypeLoopsChecker
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull Annotations annotations,
+        boolean reified,
+        @NotNull Variance variance,
+        @NotNull Name name,
+        int index,
+        @NotNull SourceElement source,
+        @Nullable Function1<KotlinType, Void> reportCycleError,
+        @NotNull SupertypeLoopChecker supertypeLoopsChecker
     ) {
         super(LockBasedStorageManager.NO_LOCKS, containingDeclaration, annotations, name, variance, reified, index, source,
               supertypeLoopsChecker);

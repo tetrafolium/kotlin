@@ -52,7 +52,7 @@ public class Node implements Cloneable {
 
         @Override
         public double getDouble() {
-          return this.number;
+            return this.number;
         }
 
         private double number;
@@ -244,28 +244,28 @@ public class Node implements Cloneable {
     }
 
     public static final int
-        TARGET_PROP       =  1,
-        BREAK_PROP        =  2,
-        CONTINUE_PROP     =  3,
-        ENUM_PROP         =  4,
-        FUNCTION_PROP     =  5,
-        TEMP_PROP         =  6,
-        LOCAL_PROP        =  7,
-        CODEOFFSET_PROP   =  8,
-        FIXUPS_PROP       =  9,
-        VARS_PROP         = 10,
-        USES_PROP         = 11,
-        REGEXP_PROP       = 12,
-        CASES_PROP        = 13,
-        DEFAULT_PROP      = 14,
-        CASEARRAY_PROP    = 15,
-        SOURCENAME_PROP   = 16,
-        SOURCE_PROP       = 17,
-        TYPE_PROP         = 18,
-        SPECIAL_PROP_PROP = 19,
-        LABEL_PROP        = 20,
-        FINALLY_PROP      = 21,
-        LOCALCOUNT_PROP   = 22,
+    TARGET_PROP       =  1,
+    BREAK_PROP        =  2,
+    CONTINUE_PROP     =  3,
+    ENUM_PROP         =  4,
+    FUNCTION_PROP     =  5,
+    TEMP_PROP         =  6,
+    LOCAL_PROP        =  7,
+    CODEOFFSET_PROP   =  8,
+    FIXUPS_PROP       =  9,
+    VARS_PROP         = 10,
+    USES_PROP         = 11,
+    REGEXP_PROP       = 12,
+    CASES_PROP        = 13,
+    DEFAULT_PROP      = 14,
+    CASEARRAY_PROP    = 15,
+    SOURCENAME_PROP   = 16,
+    SOURCE_PROP       = 17,
+    TYPE_PROP         = 18,
+    SPECIAL_PROP_PROP = 19,
+    LABEL_PROP        = 20,
+    FINALLY_PROP      = 21,
+    LOCALCOUNT_PROP   = 22,
     /*
         the following properties are defined and manipulated by the
         optimizer -
@@ -280,59 +280,91 @@ public class Node implements Cloneable {
                           matches.
     */
 
-        TARGETBLOCK_PROP  = 23,
-        VARIABLE_PROP     = 24,
-        LASTUSE_PROP      = 25,
-        ISNUMBER_PROP     = 26,
-        DIRECTCALL_PROP   = 27,
+    TARGETBLOCK_PROP  = 23,
+    VARIABLE_PROP     = 24,
+    LASTUSE_PROP      = 25,
+    ISNUMBER_PROP     = 26,
+    DIRECTCALL_PROP   = 27,
 
-        BASE_LINENO_PROP  = 28,
-        END_LINENO_PROP   = 29,
-        SPECIALCALL_PROP  = 30,
-        DEBUGSOURCE_PROP  = 31;
+    BASE_LINENO_PROP  = 28,
+    END_LINENO_PROP   = 29,
+    SPECIALCALL_PROP  = 30,
+    DEBUGSOURCE_PROP  = 31;
 
     public static final int    // this value of the ISNUMBER_PROP specifies
-        BOTH = 0,               // which of the children are Number types
-        LEFT = 1,
-        RIGHT = 2;
+    BOTH = 0,               // which of the children are Number types
+    LEFT = 1,
+    RIGHT = 2;
 
     private static final String propToString(int propType) {
         switch (propType) {
-            case TARGET_PROP:        return "target";
-            case BREAK_PROP:         return "break";
-            case CONTINUE_PROP:      return "continue";
-            case ENUM_PROP:          return "enum";
-            case FUNCTION_PROP:      return "function";
-            case TEMP_PROP:          return "temp";
-            case LOCAL_PROP:         return "local";
-            case CODEOFFSET_PROP:    return "codeoffset";
-            case FIXUPS_PROP:        return "fixups";
-            case VARS_PROP:          return "vars";
-            case USES_PROP:          return "uses";
-            case REGEXP_PROP:        return "regexp";
-            case CASES_PROP:         return "cases";
-            case DEFAULT_PROP:       return "default";
-            case CASEARRAY_PROP:     return "casearray";
-            case SOURCENAME_PROP:    return "sourcename";
-            case SOURCE_PROP:        return "source";
-            case TYPE_PROP:          return "type";
-            case SPECIAL_PROP_PROP:  return "special_prop";
-            case LABEL_PROP:         return "label";
-            case FINALLY_PROP:       return "finally";
-            case LOCALCOUNT_PROP:    return "localcount";
+        case TARGET_PROP:
+            return "target";
+        case BREAK_PROP:
+            return "break";
+        case CONTINUE_PROP:
+            return "continue";
+        case ENUM_PROP:
+            return "enum";
+        case FUNCTION_PROP:
+            return "function";
+        case TEMP_PROP:
+            return "temp";
+        case LOCAL_PROP:
+            return "local";
+        case CODEOFFSET_PROP:
+            return "codeoffset";
+        case FIXUPS_PROP:
+            return "fixups";
+        case VARS_PROP:
+            return "vars";
+        case USES_PROP:
+            return "uses";
+        case REGEXP_PROP:
+            return "regexp";
+        case CASES_PROP:
+            return "cases";
+        case DEFAULT_PROP:
+            return "default";
+        case CASEARRAY_PROP:
+            return "casearray";
+        case SOURCENAME_PROP:
+            return "sourcename";
+        case SOURCE_PROP:
+            return "source";
+        case TYPE_PROP:
+            return "type";
+        case SPECIAL_PROP_PROP:
+            return "special_prop";
+        case LABEL_PROP:
+            return "label";
+        case FINALLY_PROP:
+            return "finally";
+        case LOCALCOUNT_PROP:
+            return "localcount";
 
-            case TARGETBLOCK_PROP:   return "targetblock";
-            case VARIABLE_PROP:      return "variable";
-            case LASTUSE_PROP:       return "lastuse";
-            case ISNUMBER_PROP:      return "isnumber";
-            case DIRECTCALL_PROP:    return "directcall";
+        case TARGETBLOCK_PROP:
+            return "targetblock";
+        case VARIABLE_PROP:
+            return "variable";
+        case LASTUSE_PROP:
+            return "lastuse";
+        case ISNUMBER_PROP:
+            return "isnumber";
+        case DIRECTCALL_PROP:
+            return "directcall";
 
-            case BASE_LINENO_PROP:   return "base_lineno";
-            case END_LINENO_PROP:    return "end_lineno";
-            case SPECIALCALL_PROP:   return "specialcall";
-            case DEBUGSOURCE_PROP:   return "debugsource";
+        case BASE_LINENO_PROP:
+            return "base_lineno";
+        case END_LINENO_PROP:
+            return "end_lineno";
+        case SPECIALCALL_PROP:
+            return "specialcall";
+        case DEBUGSOURCE_PROP:
+            return "debugsource";
 
-            default: Context.codeBug();
+        default:
+            Context.codeBug();
 
         }
         return null;
@@ -370,22 +402,22 @@ public class Node implements Cloneable {
                 sb.append(getString());
             } else {
                 switch (type) {
-                    case TokenStream.TARGET:
-                        sb.append(' ');
-                        sb.append(hashCode());
-                        break;
-                    case TokenStream.NUMBER_INT:
-                        sb.append(' ');
-                        sb.append((int) getDouble());
-                        break;
-                    case TokenStream.NUMBER:
-                        sb.append(' ');
-                        sb.append(getDouble());
-                        break;
-                    case TokenStream.FUNCTION:
-                        sb.append(' ');
-                        sb.append(first.getString());
-                        break;
+                case TokenStream.TARGET:
+                    sb.append(' ');
+                    sb.append(hashCode());
+                    break;
+                case TokenStream.NUMBER_INT:
+                    sb.append(' ');
+                    sb.append((int) getDouble());
+                    break;
+                case TokenStream.NUMBER:
+                    sb.append(' ');
+                    sb.append(getDouble());
+                    break;
+                case TokenStream.FUNCTION:
+                    sb.append(' ');
+                    sb.append(first.getString());
+                    break;
                 }
             }
             if (operation != -1) {

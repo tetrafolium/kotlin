@@ -43,10 +43,10 @@ public class KotlinScriptingSettingsConfigurable implements SearchableConfigurab
 
         panelScriptDefinitionsChooser.setLayout(new BorderLayout());
         panelScriptDefinitionsChooser.add(
-                ToolbarDecorator.createDecorator(new TableView<>(model))
-                        .disableAddAction()
-                        .disableRemoveAction()
-                        .createPanel()
+            ToolbarDecorator.createDecorator(new TableView<>(model))
+            .disableAddAction()
+            .disableRemoveAction()
+            .createPanel()
         );
 
         return root;

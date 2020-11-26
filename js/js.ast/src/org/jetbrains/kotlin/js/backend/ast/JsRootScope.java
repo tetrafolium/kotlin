@@ -13,31 +13,31 @@ import org.jetbrains.annotations.NotNull;
  * JavaScript symbols.
  */
 public final class JsRootScope extends JsScope {
-  private final JsProgram program;
+    private final JsProgram program;
 
-  public JsRootScope(JsProgram program) {
-    super("Root");
-    this.program = program;
-  }
-
-  @Override
-  public JsProgram getProgram() {
-    return program;
-  }
-
-  @Override
-  protected JsName findOwnName(@NotNull String ident) {
-    JsName name = super.findOwnName(ident);
-    if (name == null) {
-        if (JsReservedIdentifiers.reservedGlobalSymbols.contains(ident)) {
-        /*
-         * Lazily add JsNames for reserved identifiers.  Since a JsName for a reserved global symbol
-         * must report a legitimate enclosing scope, we can't simply have a shared set of symbol
-         * names.
-         */
-        name = doCreateName(ident);
-      }
+    public JsRootScope(JsProgram program) {
+        super("Root");
+        this.program = program;
     }
-    return name;
-  }
+
+    @Override
+    public JsProgram getProgram() {
+        return program;
+    }
+
+    @Override
+    protected JsName findOwnName(@NotNull String ident) {
+        JsName name = super.findOwnName(ident);
+        if (name == null) {
+            if (JsReservedIdentifiers.reservedGlobalSymbols.contains(ident)) {
+                /*
+                 * Lazily add JsNames for reserved identifiers.  Since a JsName for a reserved global symbol
+                 * must report a legitimate enclosing scope, we can't simply have a shared set of symbol
+                 * names.
+                 */
+                name = doCreateName(ident);
+            }
+        }
+        return name;
+    }
 }

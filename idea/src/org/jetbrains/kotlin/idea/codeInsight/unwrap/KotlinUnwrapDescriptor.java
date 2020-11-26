@@ -23,18 +23,18 @@ public class KotlinUnwrapDescriptor extends UnwrapDescriptorBase {
     @Override
     protected Unwrapper[] createUnwrappers() {
         return new Unwrapper[] {
-                new KotlinUnwrappers.KotlinExpressionRemover("remove.expression"),
-                new KotlinUnwrappers.KotlinThenUnwrapper("unwrap.expression"),
-                new KotlinUnwrappers.KotlinElseRemover("remove.else"),
-                new KotlinUnwrappers.KotlinElseUnwrapper("unwrap.else"),
-                new KotlinUnwrappers.KotlinLoopUnwrapper("unwrap.expression"),
-                new KotlinUnwrappers.KotlinTryUnwrapper("unwrap.expression"),
-                new KotlinUnwrappers.KotlinCatchUnwrapper("unwrap.expression"),
-                new KotlinUnwrappers.KotlinCatchRemover("remove.expression"),
-                new KotlinUnwrappers.KotlinFinallyUnwrapper("unwrap.expression"),
-                new KotlinUnwrappers.KotlinFinallyRemover("remove.expression"),
-                new KotlinLambdaUnwrapper("unwrap.expression"),
-                new KotlinFunctionParameterUnwrapper("unwrap.expression")
-        };
+                   new KotlinUnwrappers.KotlinExpressionRemover("remove.expression"),
+                   new KotlinUnwrappers.KotlinThenUnwrapper("unwrap.expression"),
+                   new KotlinUnwrappers.KotlinElseRemover("remove.else"),
+                   new KotlinUnwrappers.KotlinElseUnwrapper("unwrap.else"),
+                   new KotlinUnwrappers.KotlinLoopUnwrapper("unwrap.expression"),
+                   new KotlinUnwrappers.KotlinTryUnwrapper("unwrap.expression"),
+                   new KotlinUnwrappers.KotlinCatchUnwrapper("unwrap.expression"),
+                   new KotlinUnwrappers.KotlinCatchRemover("remove.expression"),
+                   new KotlinUnwrappers.KotlinFinallyUnwrapper("unwrap.expression"),
+                   new KotlinUnwrappers.KotlinFinallyRemover("remove.expression"),
+                   new KotlinLambdaUnwrapper("unwrap.expression"),
+                   new KotlinFunctionParameterUnwrapper("unwrap.expression")
+               };
     }
 }

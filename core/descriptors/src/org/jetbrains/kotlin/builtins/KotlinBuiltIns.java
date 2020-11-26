@@ -49,14 +49,14 @@ public abstract class KotlinBuiltIns {
     public static final FqName TEXT_PACKAGE_FQ_NAME = BUILT_INS_PACKAGE_FQ_NAME.child(Name.identifier("text"));
 
     public static final Set<FqName> BUILT_INS_PACKAGE_FQ_NAMES = setOf(
-            BUILT_INS_PACKAGE_FQ_NAME,
-            COLLECTIONS_PACKAGE_FQ_NAME,
-            RANGES_PACKAGE_FQ_NAME,
-            ANNOTATION_PACKAGE_FQ_NAME,
-            ReflectionTypesKt.getKOTLIN_REFLECT_FQ_NAME(),
-            BUILT_INS_PACKAGE_FQ_NAME.child(Name.identifier("internal")),
-            COROUTINES_PACKAGE_FQ_NAME_RELEASE
-    );
+                BUILT_INS_PACKAGE_FQ_NAME,
+                COLLECTIONS_PACKAGE_FQ_NAME,
+                RANGES_PACKAGE_FQ_NAME,
+                ANNOTATION_PACKAGE_FQ_NAME,
+                ReflectionTypesKt.getKOTLIN_REFLECT_FQ_NAME(),
+                BUILT_INS_PACKAGE_FQ_NAME.child(Name.identifier("internal")),
+                COROUTINES_PACKAGE_FQ_NAME_RELEASE
+            );
 
     private ModuleDescriptorImpl builtInsModule;
 
@@ -77,11 +77,11 @@ public abstract class KotlinBuiltIns {
             @Override
             public Collection<PackageViewDescriptor> invoke() {
                 return Arrays.asList(
-                    builtInsModule.getPackage(BUILT_INS_PACKAGE_FQ_NAME),
-                    builtInsModule.getPackage(COLLECTIONS_PACKAGE_FQ_NAME),
-                    builtInsModule.getPackage(RANGES_PACKAGE_FQ_NAME),
-                    builtInsModule.getPackage(ANNOTATION_PACKAGE_FQ_NAME)
-                );
+                           builtInsModule.getPackage(BUILT_INS_PACKAGE_FQ_NAME),
+                           builtInsModule.getPackage(COLLECTIONS_PACKAGE_FQ_NAME),
+                           builtInsModule.getPackage(RANGES_PACKAGE_FQ_NAME),
+                           builtInsModule.getPackage(ANNOTATION_PACKAGE_FQ_NAME)
+                       );
             }
         });
 
@@ -100,8 +100,8 @@ public abstract class KotlinBuiltIns {
                     kotlinArrayTypeToPrimitiveKotlinType.put(arrayType, type);
                 }
                 return new Primitives(
-                        primitiveTypeToArrayKotlinType, primitiveKotlinTypeToKotlinArrayType, kotlinArrayTypeToPrimitiveKotlinType
-                );
+                           primitiveTypeToArrayKotlinType, primitiveKotlinTypeToKotlinArrayType, kotlinArrayTypeToPrimitiveKotlinType
+                       );
             }
         });
 
@@ -123,9 +123,9 @@ public abstract class KotlinBuiltIns {
     protected void createBuiltInsModule() {
         builtInsModule = new ModuleDescriptorImpl(BUILTINS_MODULE_NAME, storageManager, this, null);
         builtInsModule.initialize(BuiltInsLoader.Companion.getInstance().createPackageFragmentProvider(
-                storageManager, builtInsModule,
-                getClassDescriptorFactories(), getPlatformDependentDeclarationFilter(), getAdditionalClassPartsProvider()
-        ));
+                                      storageManager, builtInsModule,
+                                      getClassDescriptorFactories(), getPlatformDependentDeclarationFilter(), getAdditionalClassPartsProvider()
+                                  ));
         builtInsModule.setDependencies(builtInsModule);
     }
 
@@ -135,7 +135,7 @@ public abstract class KotlinBuiltIns {
             public Void invoke() {
                 if (builtInsModule != null) {
                     throw new AssertionError(
-                            "Built-ins module is already set: " + builtInsModule + " (attempting to reset to " + module + ")"
+                        "Built-ins module is already set: " + builtInsModule + " (attempting to reset to " + module + ")"
                     );
                 }
                 builtInsModule = module;
@@ -170,9 +170,9 @@ public abstract class KotlinBuiltIns {
         public final Map<SimpleType, SimpleType> kotlinArrayTypeToPrimitiveKotlinType;
 
         private Primitives(
-                @NotNull Map<PrimitiveType, SimpleType> primitiveTypeToArrayKotlinType,
-                @NotNull Map<KotlinType, SimpleType> primitiveKotlinTypeToKotlinArrayType,
-                @NotNull Map<SimpleType, SimpleType> kotlinArrayTypeToPrimitiveKotlinType
+            @NotNull Map<PrimitiveType, SimpleType> primitiveTypeToArrayKotlinType,
+            @NotNull Map<KotlinType, SimpleType> primitiveKotlinTypeToKotlinArrayType,
+            @NotNull Map<SimpleType, SimpleType> kotlinArrayTypeToPrimitiveKotlinType
         ) {
             this.primitiveTypeToArrayKotlinType = primitiveTypeToArrayKotlinType;
             this.primitiveKotlinTypeToKotlinArrayType = primitiveKotlinTypeToKotlinArrayType;

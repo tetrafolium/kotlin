@@ -34,9 +34,9 @@ public final class InitializerUtils {
 
     @NotNull
     public static JsStatement generateInitializerForProperty(
-            @NotNull TranslationContext context,
-            @NotNull PropertyDescriptor descriptor,
-            @NotNull JsExpression value
+        @NotNull TranslationContext context,
+        @NotNull PropertyDescriptor descriptor,
+        @NotNull JsExpression value
     ) {
         JsExpression assignment = assignmentToBackingField(context, descriptor, value);
         assignment.setSource(KotlinSourceElementKt.getPsi(descriptor.getSource()));
@@ -45,9 +45,9 @@ public final class InitializerUtils {
 
     @NotNull
     public static JsStatement generateInitializerForDelegate(
-            @NotNull TranslationContext context,
-            @NotNull PropertyDescriptor descriptor,
-            @NotNull JsExpression value
+        @NotNull TranslationContext context,
+        @NotNull PropertyDescriptor descriptor,
+        @NotNull JsExpression value
     ) {
         return JsAstUtils.defineSimpleProperty(context.getNameForBackingField(descriptor), value, descriptor.getSource());
     }

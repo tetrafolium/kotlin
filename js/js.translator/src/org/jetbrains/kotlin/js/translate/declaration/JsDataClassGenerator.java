@@ -62,7 +62,7 @@ class JsDataClassGenerator extends JsEqualsHashcodeToStringGenerator {
             KtParameter constructorParam = constructorParameters.get(i);
 
             ValueParameterDescriptor parameterDescriptor = (ValueParameterDescriptor) BindingContextUtils.getNotNull(
-                    context.bindingContext(), BindingContext.VALUE_PARAMETER, constructorParam);
+                        context.bindingContext(), BindingContext.VALUE_PARAMETER, constructorParam);
 
             PropertyDescriptor propertyDescriptor = BindingContextUtils.getNotNull(
                     context.bindingContext(), BindingContext.VALUE_PARAMETER_AS_PROPERTY, parameterDescriptor);

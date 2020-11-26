@@ -94,9 +94,9 @@ public class MoveKotlinNestedClassesToUpperLevelDialog extends MoveDialogBase {
     private JPanel openInEditorPanel;
 
     public MoveKotlinNestedClassesToUpperLevelDialog(
-            @NotNull Project project,
-            @NotNull KtClassOrObject innerClass,
-            @NotNull PsiElement targetContainer
+        @NotNull Project project,
+        @NotNull KtClassOrObject innerClass,
+        @NotNull PsiElement targetContainer
     ) {
         super(project, true);
         this.project = project;
@@ -124,7 +124,7 @@ public class MoveKotlinNestedClassesToUpperLevelDialog extends MoveDialogBase {
     private void createUIComponents() {
         parameterField = new NameSuggestionsField(project);
         packageNameField = new PackageNameReferenceEditorCombo("", project, RECENTS_KEY,
-                                                               RefactoringBundle.message("choose.destination.package"));
+                RefactoringBundle.message("choose.destination.package"));
     }
 
     @Override
@@ -215,11 +215,11 @@ public class MoveKotlinNestedClassesToUpperLevelDialog extends MoveDialogBase {
         if (innerClass instanceof KtClass && ((KtClass) innerClass).isInner()) {
             KtClassBody innerClassBody = innerClass.getBody();
             Function1<String, Boolean> validator =
-                    innerClassBody != null
-                    ? new NewDeclarationNameValidator(innerClassBody, (PsiElement) null,
-                                                      NewDeclarationNameValidator.Target.VARIABLES,
-                                                      Collections.<KtDeclaration>emptyList())
-                    : new CollectingNameValidator();
+                innerClassBody != null
+                ? new NewDeclarationNameValidator(innerClassBody, (PsiElement) null,
+                                                  NewDeclarationNameValidator.Target.VARIABLES,
+                                                  Collections.<KtDeclaration>emptyList())
+                : new CollectingNameValidator();
             List<String> suggestions = KotlinNameSuggester.INSTANCE.suggestNamesByType(getOuterInstanceType(), validator, "outer");
             parameterField.setSuggestions(ArrayUtil.toStringArray(suggestions));
         }
@@ -346,10 +346,10 @@ public class MoveKotlinNestedClassesToUpperLevelDialog extends MoveDialogBase {
 
             //noinspection ConstantConditions
             ClassifierDescriptor existingClass = DescriptorUtils
-                    .getContainingModule(innerClassDescriptor)
-                    .getPackage(targetPackageFqName)
-                    .getMemberScope()
-                    .getContributedClassifier(Name.identifier(className), NoLookupLocation.FROM_IDE);
+                                                 .getContainingModule(innerClassDescriptor)
+                                                 .getPackage(targetPackageFqName)
+                                                 .getMemberScope()
+                                                 .getContributedClassifier(Name.identifier(className), NoLookupLocation.FROM_IDE);
             if (existingClass != null) throw new ConfigurationException("Class " + className + " already exists in package " +  targetPackageFqName);
 
             PsiDirectory targetDir = targetContainer instanceof PsiDirectory
@@ -388,24 +388,24 @@ public class MoveKotlinNestedClassesToUpperLevelDialog extends MoveDialogBase {
             if (targetPackageFqName == null) return;
 
             final String targetFileName = KotlinNameSuggester.INSTANCE.suggestNameByName(
-                    newClassName,
-                    new Function1<String, Boolean>() {
-                        @Override
-                        public Boolean invoke(String s) {
-                            return targetDir.findFile(s + "." + KotlinFileType.EXTENSION) == null;
-                        }
-                    }
-            ) + "." + KotlinFileType.EXTENSION;
+                                              newClassName,
+            new Function1<String, Boolean>() {
+                @Override
+                public Boolean invoke(String s) {
+                    return targetDir.findFile(s + "." + KotlinFileType.EXTENSION) == null;
+                }
+            }
+                                          ) + "." + KotlinFileType.EXTENSION;
             moveTarget = new KotlinMoveTargetForDeferredFile(
-                    targetPackageFqName,
-                    targetDir,
-                    null,
-                    new Function1<KtFile, KtFile>() {
-                        @Override
-                        public KtFile invoke(@NotNull KtFile originalFile) {
-                            return KotlinRefactoringUtilKt.createKotlinFile(targetFileName, targetDir, targetPackageFqName.asString());
-                        }
-                    }
+                targetPackageFqName,
+                targetDir,
+                null,
+            new Function1<KtFile, KtFile>() {
+                @Override
+                public KtFile invoke(@NotNull KtFile originalFile) {
+                    return KotlinRefactoringUtilKt.createKotlinFile(targetFileName, targetDir, targetPackageFqName.asString());
+                }
+            }
             );
         }
         else {
@@ -416,15 +416,15 @@ public class MoveKotlinNestedClassesToUpperLevelDialog extends MoveDialogBase {
         String outerInstanceParameterName = passOuterClassCheckBox.isSelected() ? getParameterName() : null;
         MoveDeclarationsDelegate delegate = new MoveDeclarationsDelegate.NestedClass(newClassName, outerInstanceParameterName);
         MoveDeclarationsDescriptor moveDescriptor = new MoveDeclarationsDescriptor(
-                project,
-                MoveSource(innerClass),
-                moveTarget,
-                delegate,
-                isSearchInComments(),
-                isSearchInNonJavaFiles(),
-                false,
-                null,
-                isOpenInEditor()
+            project,
+            MoveSource(innerClass),
+            moveTarget,
+            delegate,
+            isSearchInComments(),
+            isSearchInNonJavaFiles(),
+            false,
+            null,
+            isOpenInEditor()
         );
         saveOpenInEditorOption();
 

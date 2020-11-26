@@ -217,8 +217,8 @@ public final class Namer {
     @NotNull
     private static String getStableMangledNameForDescriptor(@NotNull ClassDescriptor descriptor, @NotNull String functionName) {
         Collection<? extends SimpleFunctionDescriptor> functions = descriptor.getDefaultType().getMemberScope().getContributedFunctions(
-                Name.identifier(functionName), NoLookupLocation.FROM_BACKEND
-        );
+                    Name.identifier(functionName), NoLookupLocation.FROM_BACKEND
+                );
         assert functions.size() == 1 : "Can't select a single function: " + functionName + " in " + descriptor;
         SuggestedName suggested = new NameSuggestion().suggest(functions.iterator().next());
         assert suggested != null : "Suggested name for class members is always non-null: " + functions.iterator().next();
@@ -282,9 +282,9 @@ public final class Namer {
 
     @NotNull
     private JsExpression invokeFunctionAndSetTypeCheckMetadata(
-            @NotNull String functionName,
-            @Nullable JsExpression argument,
-            @NotNull TypeCheck metadata
+        @NotNull String functionName,
+        @Nullable JsExpression argument,
+        @NotNull TypeCheck metadata
     ) {
         List<JsExpression> arguments = argument != null ? Collections.singletonList(argument) : Collections.emptyList();
         return invokeFunctionAndSetTypeCheckMetadata(functionName, arguments, metadata);
@@ -292,9 +292,9 @@ public final class Namer {
 
     @NotNull
     private JsExpression invokeFunctionAndSetTypeCheckMetadata(
-            @NotNull String functionName,
-            @NotNull List<JsExpression> arguments,
-            @NotNull TypeCheck metadata
+        @NotNull String functionName,
+        @NotNull List<JsExpression> arguments,
+        @NotNull TypeCheck metadata
     ) {
         JsInvocation invocation = new JsInvocation(kotlin(functionName));
         invocation.getArguments().addAll(arguments);

@@ -27,14 +27,14 @@ import org.jetbrains.kotlin.types.Variance;
 
 public abstract class AbstractLazyTypeParameterDescriptor extends AbstractTypeParameterDescriptor {
     public AbstractLazyTypeParameterDescriptor(
-            @NotNull StorageManager storageManager,
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull Name name,
-            @NotNull Variance variance,
-            boolean isReified,
-            int index,
-            @NotNull SourceElement source,
-            @NotNull SupertypeLoopChecker supertypeLoopChecker
+        @NotNull StorageManager storageManager,
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull Name name,
+        @NotNull Variance variance,
+        boolean isReified,
+        int index,
+        @NotNull SourceElement source,
+        @NotNull SupertypeLoopChecker supertypeLoopChecker
     ) {
         super(storageManager, containingDeclaration, Annotations.Companion.getEMPTY() /* TODO */, name, variance, isReified, index, source,
               supertypeLoopChecker);
@@ -44,10 +44,10 @@ public abstract class AbstractLazyTypeParameterDescriptor extends AbstractTypePa
     public String toString() {
         // Not using descriptor renderer to preserve laziness
         return String.format(
-                "%s%s%s",
-                isReified() ? "reified " : "",
-                getVariance() == Variance.INVARIANT ? "" : getVariance() + " ",
-                getName()
-        );
+                   "%s%s%s",
+                   isReified() ? "reified " : "",
+                   getVariance() == Variance.INVARIANT ? "" : getVariance() + " ",
+                   getName()
+               );
     }
 }

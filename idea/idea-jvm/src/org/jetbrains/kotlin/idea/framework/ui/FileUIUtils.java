@@ -40,9 +40,9 @@ public class FileUIUtils {
 
     @Nullable
     public static File copyWithOverwriteDialog(
-            @NotNull String messagesTitle,
-            @NotNull String destinationFolder,
-            @NotNull File file
+        @NotNull String messagesTitle,
+        @NotNull String destinationFolder,
+        @NotNull File file
     ) {
         Map<File, File> copiedFiles = copyWithOverwriteDialog(messagesTitle, ImmutableMap.of(file, destinationFolder));
         if (copiedFiles == null) {
@@ -57,8 +57,8 @@ public class FileUIUtils {
 
     @Nullable
     public static Map<File, File> copyWithOverwriteDialog(
-            @NotNull String messagesTitle,
-            @NotNull Map<File, String> filesWithDestinations
+        @NotNull String messagesTitle,
+        @NotNull Map<File, String> filesWithDestinations
     ) {
         Set<String> fileNames = new HashSet<String>();
         Map<File, File> targetFiles = new LinkedHashMap<File, File>(filesWithDestinations.size());
@@ -76,7 +76,7 @@ public class FileUIUtils {
         }
 
         Collection<Map.Entry<File, File>> existentFiles =
-                CollectionsKt.filter(targetFiles.entrySet(), sourceToTarget -> sourceToTarget.getValue().exists());
+            CollectionsKt.filter(targetFiles.entrySet(), sourceToTarget -> sourceToTarget.getValue().exists());
 
         if (!existentFiles.isEmpty()) {
             String message;
@@ -92,12 +92,12 @@ public class FileUIUtils {
             }
 
             int replaceIfExist = Messages.showYesNoDialog(
-                    null,
-                    message,
-                    messagesTitle + ". Replace File",
-                    "Overwrite",
-                    "Cancel",
-                    Messages.getWarningIcon());
+                                     null,
+                                     message,
+                                     messagesTitle + ". Replace File",
+                                     "Overwrite",
+                                     "Cancel",
+                                     Messages.getWarningIcon());
 
             if (replaceIfExist != JOptionPane.YES_OPTION) {
                 return null;

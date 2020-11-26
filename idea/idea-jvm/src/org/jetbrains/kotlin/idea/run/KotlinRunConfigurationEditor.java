@@ -56,8 +56,8 @@ public class KotlinRunConfigurationEditor extends SettingsEditor<KotlinRunConfig
     private final Project project;
 
     private static ClassBrowser createApplicationClassBrowser(
-            Project project,
-            ConfigurationModuleSelector moduleSelector
+        Project project,
+        ConfigurationModuleSelector moduleSelector
     ) {
         ClassFilter applicationClass = new ClassFilter() {
             @Override
@@ -126,8 +126,8 @@ public class KotlinRunConfigurationEditor extends SettingsEditor<KotlinRunConfig
             if (declaration instanceof KtLightClass) {
                 KtLightClass aClass = (KtLightClass)declaration;
                 if (ConfigurationUtil.MAIN_CLASS.value(aClass)
-                    && (PsiMethodUtil.findMainMethod(aClass) != null || place.getParent() != null)
-                    && moduleSelector.findClass(((PsiClass)declaration).getQualifiedName()) != null) {
+                        && (PsiMethodUtil.findMainMethod(aClass) != null || place.getParent() != null)
+                        && moduleSelector.findClass(((PsiClass)declaration).getQualifiedName()) != null) {
                     return JavaCodeFragment.VisibilityChecker.Visibility.VISIBLE;
                 }
             }

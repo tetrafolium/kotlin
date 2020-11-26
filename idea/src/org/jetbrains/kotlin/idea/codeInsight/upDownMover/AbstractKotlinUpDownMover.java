@@ -40,17 +40,17 @@ public abstract class AbstractKotlinUpDownMover extends LineMover {
     protected abstract boolean checkSourceElement(@NotNull PsiElement element);
 
     protected abstract LineRange getElementSourceLineRange(
-            @NotNull PsiElement element,
-            @NotNull Editor editor,
-            @NotNull LineRange oldRange
+        @NotNull PsiElement element,
+        @NotNull Editor editor,
+        @NotNull LineRange oldRange
     );
 
     @Nullable
     protected LineRange getSourceRange(
-            @NotNull PsiElement firstElement,
-            @NotNull PsiElement lastElement,
-            @NotNull Editor editor,
-            LineRange oldRange
+        @NotNull PsiElement firstElement,
+        @NotNull PsiElement lastElement,
+        @NotNull Editor editor,
+        LineRange oldRange
     ) {
         PsiElement parent = PsiTreeUtil.findCommonParent(firstElement, lastElement);
 
@@ -105,9 +105,9 @@ public abstract class AbstractKotlinUpDownMover extends LineMover {
         LineRange sourceRange = new LineRange(lineRange1.startLine - topExtension, lineRange2.endLine + bottomExtension);
 
         if (parentLineRange != null
-            && sourceRange.startLine == parentLineRange.startLine
-            && sourceRange.endLine == parentLineRange.endLine
-        ) {
+                && sourceRange.startLine == parentLineRange.startLine
+                && sourceRange.endLine == parentLineRange.endLine
+           ) {
             sourceRange.firstElement = sourceRange.lastElement = parent;
         }
         else {

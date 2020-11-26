@@ -78,8 +78,8 @@ public abstract class AssignmentTranslator extends AbstractTranslator {
     }
 
     private static boolean isValProperty(
-            @NotNull KtExpression expression,
-            @NotNull TranslationContext context
+        @NotNull KtExpression expression,
+        @NotNull TranslationContext context
     ) {
         KtSimpleNameExpression simpleNameExpression = getSimpleName(expression);
 

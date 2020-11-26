@@ -80,22 +80,24 @@ final class LineBuffer {
 
             if ((c & EOL_HINT_MASK) == 0) {
                 switch (c) {
-                    case '\r':
-                        // if the next character is a newline, skip past it.
-                        if (offset != end) {
-                            if (buffer[offset] == '\n')
-                                ++offset;
-                        } else {
-                            // set a flag for fill(), in case the first char
-                            // of the next fill is a newline.
-                            lastWasCR = true;
-                        }
-                        // NO break here!
-                    case '\n': case '\u2028': case '\u2029':
-                        prevStart = lineStart;
-                        lineStart = offset;
-                        lineno++;
-                        return '\n';
+                case '\r':
+                    // if the next character is a newline, skip past it.
+                    if (offset != end) {
+                        if (buffer[offset] == '\n')
+                            ++offset;
+                    } else {
+                        // set a flag for fill(), in case the first char
+                        // of the next fill is a newline.
+                        lastWasCR = true;
+                    }
+                // NO break here!
+                case '\n':
+                case '\u2028':
+                case '\u2029':
+                    prevStart = lineStart;
+                    lineStart = offset;
+                    lineno++;
+                    return '\n';
                 }
             }
 
@@ -292,9 +294,9 @@ final class LineBuffer {
         // likely get to EOF for real) by doing yet another fill().
         if (lastWasCR) {
             if (buffer[0] == '\n') {
-              offset++;
-              if (end == 1)
-                  return fill();
+                offset++;
+                if (end == 1)
+                    return fill();
             }
             lineStart = offset;
             lastWasCR = false;
@@ -302,8 +304,12 @@ final class LineBuffer {
         return true;
     }
 
-    int getLineno() { return lineno; }
-    boolean eof() { return hitEOF; }
+    int getLineno() {
+        return lineno;
+    }
+    boolean eof() {
+        return hitEOF;
+    }
 
     private static boolean formatChar(int c) {
         return Character.getType((char)c) == Character.FORMAT;

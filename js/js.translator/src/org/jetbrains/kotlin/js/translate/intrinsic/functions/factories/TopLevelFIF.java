@@ -59,8 +59,8 @@ public final class TopLevelFIF extends CompositeFIF {
         @NotNull
         @Override
         public JsExpression apply(
-                @NotNull CallInfo callInfo,
-                @NotNull List<? extends JsExpression> arguments, @NotNull TranslationContext context
+            @NotNull CallInfo callInfo,
+            @NotNull List<? extends JsExpression> arguments, @NotNull TranslationContext context
         ) {
             if (CallInfoExtensionsKt.isSuperInvocation(callInfo)) {
                 JsExpression dispatchReceiver = callInfo.getDispatchReceiver();
@@ -88,9 +88,9 @@ public final class TopLevelFIF extends CompositeFIF {
         @NotNull
         @Override
         public JsExpression apply(
-                @Nullable JsExpression receiver,
-                @NotNull List<? extends JsExpression> arguments,
-                @NotNull TranslationContext context
+            @Nullable JsExpression receiver,
+            @NotNull List<? extends JsExpression> arguments,
+            @NotNull TranslationContext context
         ) {
             assert receiver != null;
             return receiver;
@@ -99,7 +99,7 @@ public final class TopLevelFIF extends CompositeFIF {
 
 
     private static JsExpression getReferenceToOnlyTypeParameter(
-            @NotNull CallInfo callInfo, @NotNull TranslationContext context
+        @NotNull CallInfo callInfo, @NotNull TranslationContext context
     ) {
         ResolvedCall<? extends CallableDescriptor> resolvedCall = callInfo.getResolvedCall();
         Map<TypeParameterDescriptor, KotlinType> typeArguments = resolvedCall.getTypeArguments();
@@ -114,9 +114,9 @@ public final class TopLevelFIF extends CompositeFIF {
         @NotNull
         @Override
         public JsExpression apply(
-                @NotNull CallInfo callInfo,
-                @NotNull List<? extends JsExpression> arguments,
-                @NotNull TranslationContext context
+            @NotNull CallInfo callInfo,
+            @NotNull List<? extends JsExpression> arguments,
+            @NotNull TranslationContext context
         ) {
             return getReferenceToOnlyTypeParameter(callInfo, context);
         }
@@ -127,9 +127,9 @@ public final class TopLevelFIF extends CompositeFIF {
         @NotNull
         @Override
         public JsExpression apply(
-                @NotNull CallInfo callInfo,
-                @NotNull List<? extends JsExpression> arguments,
-                @NotNull TranslationContext context
+            @NotNull CallInfo callInfo,
+            @NotNull List<? extends JsExpression> arguments,
+            @NotNull TranslationContext context
         ) {
             JsExpression enumClassRef = getReferenceToOnlyTypeParameter(callInfo, context);
 
@@ -144,9 +144,9 @@ public final class TopLevelFIF extends CompositeFIF {
         @NotNull
         @Override
         public JsExpression apply(
-                @NotNull CallInfo callInfo,
-                @NotNull List<? extends JsExpression> arguments,
-                @NotNull TranslationContext context
+            @NotNull CallInfo callInfo,
+            @NotNull List<? extends JsExpression> arguments,
+            @NotNull TranslationContext context
         ) {
             JsExpression arg = arguments.get(2); // The first two are reified parameters
 
@@ -162,23 +162,23 @@ public final class TopLevelFIF extends CompositeFIF {
         @NotNull
         @Override
         public JsExpression apply(
-                @NotNull CallInfo callInfo,
-                @NotNull List<? extends JsExpression> arguments,
-                @NotNull TranslationContext context
+            @NotNull CallInfo callInfo,
+            @NotNull List<? extends JsExpression> arguments,
+            @NotNull TranslationContext context
         ) {
             ResolvedCall<? extends CallableDescriptor> call = callInfo.getResolvedCall();
             ExpressionReceiver receiver = (ExpressionReceiver) call.getExtensionReceiver();
 
             KtCallableReferenceExpression expression =
-                    (KtCallableReferenceExpression) KtPsiUtil.safeDeparenthesize(receiver.getExpression());
+                (KtCallableReferenceExpression) KtPsiUtil.safeDeparenthesize(receiver.getExpression());
             ResolvedCall<? extends CallableDescriptor> referencedProperty =
-                    CallUtilKt.getResolvedCall(expression.getCallableReference(), context.bindingContext());
+                CallUtilKt.getResolvedCall(expression.getCallableReference(), context.bindingContext());
             PropertyDescriptor propertyDescriptor = (PropertyDescriptor) referencedProperty.getResultingDescriptor();
 
             JsExpression receiverExpression =
-                    MetadataProperties.getCallableReferenceReceiver((JsInvocation) callInfo.getExtensionReceiver());
+                MetadataProperties.getCallableReferenceReceiver((JsInvocation) callInfo.getExtensionReceiver());
             JsName backingFieldName = TranslationUtils.getNameForBackingField(
-                    context, (PropertyDescriptor) JsDescriptorUtils.findRealDeclaration(propertyDescriptor));
+                                          context, (PropertyDescriptor) JsDescriptorUtils.findRealDeclaration(propertyDescriptor));
             JsNameRef backingFieldRef = new JsNameRef(backingFieldName, receiverExpression);
             return TranslationUtils.nullCheck(backingFieldRef, true);
         }
@@ -188,9 +188,9 @@ public final class TopLevelFIF extends CompositeFIF {
         @NotNull
         @Override
         public JsExpression apply(
-                @Nullable JsExpression receiver,
-                @NotNull List<? extends JsExpression> arguments,
-                @NotNull TranslationContext context
+            @Nullable JsExpression receiver,
+            @NotNull List<? extends JsExpression> arguments,
+            @NotNull TranslationContext context
         ) {
             return new JsInvocation(new JsNameRef("substring", receiver), arguments);
         }
@@ -205,7 +205,7 @@ public final class TopLevelFIF extends CompositeFIF {
         @NotNull
         @Override
         public JsExpression apply(
-                @Nullable JsExpression receiver, @NotNull List<? extends JsExpression> arguments, @NotNull TranslationContext context
+            @Nullable JsExpression receiver, @NotNull List<? extends JsExpression> arguments, @NotNull TranslationContext context
         ) {
             assert receiver != null;
             receiver = TranslationUtils.coerce(context, receiver, context.getCurrentModule().getBuiltIns().getCharType());

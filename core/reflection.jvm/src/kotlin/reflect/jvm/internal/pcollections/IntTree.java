@@ -224,37 +224,37 @@ final class IntTree<V> {
                 IntTree<V> ll = left.left, lr = left.right;
                 if (lr.size < ALPHA * ll.size) // single rotation
                     return new IntTree<V>(left.key + key, left.value,
-                            ll,
-                            new IntTree<V>(-left.key, value,
-                                    lr.withKey(lr.key + left.key),
-                                    right));
+                                          ll,
+                                          new IntTree<V>(-left.key, value,
+                                                         lr.withKey(lr.key + left.key),
+                                                         right));
                 else { // double rotation:
                     IntTree<V> lrl = lr.left, lrr = lr.right;
                     return new IntTree<V>(lr.key + left.key + key, lr.value,
-                            new IntTree<V>(-lr.key, left.value,
-                                    ll,
-                                    lrl.withKey(lrl.key + lr.key)),
-                            new IntTree<V>(-left.key - lr.key, value,
-                                    lrr.withKey(lrr.key + lr.key + left.key),
-                                    right));
+                                          new IntTree<V>(-lr.key, left.value,
+                                                         ll,
+                                                         lrl.withKey(lrl.key + lr.key)),
+                                          new IntTree<V>(-left.key - lr.key, value,
+                                                         lrr.withKey(lrr.key + lr.key + left.key),
+                                                         right));
                 }
             } else if (right.size >= OMEGA * left.size) { // rotate to the left
                 IntTree<V> rl = right.left, rr = right.right;
                 if (rl.size < ALPHA * rr.size) // single rotation
                     return new IntTree<V>(right.key + key, right.value,
-                            new IntTree<V>(-right.key, value,
-                                    left,
-                                    rl.withKey(rl.key + right.key)),
-                                    rr);
+                                          new IntTree<V>(-right.key, value,
+                                                         left,
+                                                         rl.withKey(rl.key + right.key)),
+                                          rr);
                 else { // double rotation:
                     IntTree<V> rll = rl.left, rlr = rl.right;
                     return new IntTree<V>(rl.key + right.key + key, rl.value,
-                            new IntTree<V>(-right.key - rl.key, value,
-                                    left,
-                                    rll.withKey(rll.key + rl.key + right.key)),
-                            new IntTree<V>(-rl.key, right.value,
-                                    rlr.withKey(rlr.key + rl.key),
-                                    rr));
+                                          new IntTree<V>(-right.key - rl.key, value,
+                                                         left,
+                                                         rll.withKey(rll.key + rl.key + right.key)),
+                                          new IntTree<V>(-rl.key, right.value,
+                                                         rlr.withKey(rlr.key + rl.key),
+                                                         rr));
                 }
             }
         }

@@ -46,10 +46,10 @@ public enum PrimitiveUnaryOperationFIF implements FunctionIntrinsicFactory {
     private static final NamePredicate UNARY_OPERATIONS = new NamePredicate(OperatorNameConventions.UNARY_OPERATION_NAMES);
     @NotNull
     private static final DescriptorPredicate UNARY_OPERATION_FOR_PRIMITIVE_NUMBER =
-            pattern(NamePredicate.PRIMITIVE_NUMBERS_MAPPED_TO_PRIMITIVE_JS, UNARY_OPERATIONS);
+    pattern(NamePredicate.PRIMITIVE_NUMBERS_MAPPED_TO_PRIMITIVE_JS, UNARY_OPERATIONS);
     @NotNull
     private static final Predicate<FunctionDescriptor> PRIMITIVE_UNARY_OPERATION_NAMES =
-            UNARY_OPERATION_FOR_PRIMITIVE_NUMBER.or(pattern("Boolean.not")).or(pattern("Int|Short|Byte.inv"));
+    UNARY_OPERATION_FOR_PRIMITIVE_NUMBER.or(pattern("Boolean.not")).or(pattern("Int|Short|Byte.inv"));
     @NotNull
     private static final DescriptorPredicate NO_PARAMETERS = descriptor -> !JsDescriptorUtils.hasParameters(descriptor);
     @NotNull
@@ -79,9 +79,9 @@ public enum PrimitiveUnaryOperationFIF implements FunctionIntrinsicFactory {
         @NotNull
         @Override
         public JsExpression apply(
-                @Nullable JsExpression receiver,
-                @NotNull List<? extends JsExpression> arguments,
-                @NotNull TranslationContext context
+            @Nullable JsExpression receiver,
+            @NotNull List<? extends JsExpression> arguments,
+            @NotNull TranslationContext context
         ) {
             return JsAstUtils.toInt32(underlyingIntrinsic.apply(receiver, arguments, context));
         }
@@ -97,9 +97,9 @@ public enum PrimitiveUnaryOperationFIF implements FunctionIntrinsicFactory {
         @NotNull
         @Override
         public JsExpression apply(
-                @Nullable JsExpression receiver,
-                @NotNull List<? extends JsExpression> arguments,
-                @NotNull TranslationContext context
+            @Nullable JsExpression receiver,
+            @NotNull List<? extends JsExpression> arguments,
+            @NotNull TranslationContext context
         ) {
             return AstUtilsKt.toShort(context, underlyingIntrinsic.apply(receiver, arguments, context));
         }
@@ -115,9 +115,9 @@ public enum PrimitiveUnaryOperationFIF implements FunctionIntrinsicFactory {
         @NotNull
         @Override
         public JsExpression apply(
-                @Nullable JsExpression receiver,
-                @NotNull List<? extends JsExpression> arguments,
-                @NotNull TranslationContext context
+            @Nullable JsExpression receiver,
+            @NotNull List<? extends JsExpression> arguments,
+            @NotNull TranslationContext context
         ) {
             return AstUtilsKt.toByte(context, underlyingIntrinsic.apply(receiver, arguments, context));
         }
@@ -128,9 +128,9 @@ public enum PrimitiveUnaryOperationFIF implements FunctionIntrinsicFactory {
         @NotNull
         @Override
         public JsExpression apply(
-                @Nullable JsExpression receiver,
-                @NotNull List<? extends JsExpression> arguments,
-                @NotNull TranslationContext context
+            @Nullable JsExpression receiver,
+            @NotNull List<? extends JsExpression> arguments,
+            @NotNull TranslationContext context
         ) {
             assert receiver != null;
             assert arguments.size() == 0;
@@ -143,9 +143,9 @@ public enum PrimitiveUnaryOperationFIF implements FunctionIntrinsicFactory {
         @NotNull
         @Override
         public JsExpression apply(
-                @Nullable JsExpression receiver,
-                @NotNull List<? extends JsExpression> arguments,
-                @NotNull TranslationContext context
+            @Nullable JsExpression receiver,
+            @NotNull List<? extends JsExpression> arguments,
+            @NotNull TranslationContext context
         ) {
             assert receiver != null;
             assert arguments.size() == 0;
@@ -157,9 +157,9 @@ public enum PrimitiveUnaryOperationFIF implements FunctionIntrinsicFactory {
         @NotNull
         @Override
         public JsExpression apply(
-                @Nullable JsExpression receiver,
-                @NotNull List<? extends JsExpression> arguments,
-                @NotNull TranslationContext context
+            @Nullable JsExpression receiver,
+            @NotNull List<? extends JsExpression> arguments,
+            @NotNull TranslationContext context
         ) {
             assert receiver != null;
             assert arguments.size() == 0;
@@ -174,9 +174,9 @@ public enum PrimitiveUnaryOperationFIF implements FunctionIntrinsicFactory {
         @NotNull
         @Override
         public JsExpression apply(
-                @Nullable JsExpression receiver,
-                @NotNull List<? extends JsExpression> arguments,
-                @NotNull TranslationContext context
+            @Nullable JsExpression receiver,
+            @NotNull List<? extends JsExpression> arguments,
+            @NotNull TranslationContext context
         ) {
             assert receiver != null;
             assert arguments.size() == 0;
@@ -189,7 +189,7 @@ public enum PrimitiveUnaryOperationFIF implements FunctionIntrinsicFactory {
         @NotNull
         @Override
         public JsExpression doApply(
-                @NotNull JsExpression receiver, @NotNull TranslationContext context
+            @NotNull JsExpression receiver, @NotNull TranslationContext context
         ) {
             return JsAstUtils.charToInt(receiver);
         }
@@ -200,7 +200,7 @@ public enum PrimitiveUnaryOperationFIF implements FunctionIntrinsicFactory {
         @NotNull
         @Override
         public JsExpression doApply(
-                @NotNull JsExpression receiver, @NotNull TranslationContext context
+            @NotNull JsExpression receiver, @NotNull TranslationContext context
         ) {
             return new JsPrefixOperation(JsUnaryOperator.NEG, JsAstUtils.charToInt(receiver));
         }
@@ -211,7 +211,7 @@ public enum PrimitiveUnaryOperationFIF implements FunctionIntrinsicFactory {
         @NotNull
         @Override
         public JsExpression doApply(
-                @NotNull JsExpression receiver, @NotNull TranslationContext context
+            @NotNull JsExpression receiver, @NotNull TranslationContext context
         ) {
             return JsAstUtils.invokeKotlinFunction("charInc", receiver);
         }
@@ -222,7 +222,7 @@ public enum PrimitiveUnaryOperationFIF implements FunctionIntrinsicFactory {
         @NotNull
         @Override
         public JsExpression doApply(
-                @NotNull JsExpression receiver, @NotNull TranslationContext context
+            @NotNull JsExpression receiver, @NotNull TranslationContext context
         ) {
             return JsAstUtils.invokeKotlinFunction("charDec", receiver);
         }
@@ -300,8 +300,8 @@ public enum PrimitiveUnaryOperationFIF implements FunctionIntrinsicFactory {
             @NotNull
             @Override
             public JsExpression apply(@Nullable JsExpression receiver,
-                    @NotNull List<? extends JsExpression> arguments,
-                    @NotNull TranslationContext context) {
+                                      @NotNull List<? extends JsExpression> arguments,
+                                      @NotNull TranslationContext context) {
                 assert receiver != null;
                 assert arguments.size() == 0 : "Unary operator should not have arguments.";
                 //NOTE: cannot use this for increment/decrement

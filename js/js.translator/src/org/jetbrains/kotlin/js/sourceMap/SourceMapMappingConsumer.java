@@ -27,8 +27,8 @@ public interface SourceMapMappingConsumer {
     void newLine();
 
     void addMapping(
-            @NotNull String source, @Nullable Object sourceIdentity, @NotNull Supplier<Reader> sourceSupplier,
-            int sourceLine, int sourceColumn
+        @NotNull String source, @Nullable Object sourceIdentity, @NotNull Supplier<Reader> sourceSupplier,
+        int sourceLine, int sourceColumn
     );
 
     void addEmptyMapping();

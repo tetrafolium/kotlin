@@ -48,20 +48,24 @@ public class CodeInsightUtils {
 
     @Nullable
     public static PsiElement findElement(
-            @NotNull PsiFile file,
-            int startOffset,
-            int endOffset,
-            @NotNull CodeInsightUtils.ElementKind elementKind
+        @NotNull PsiFile file,
+        int startOffset,
+        int endOffset,
+        @NotNull CodeInsightUtils.ElementKind elementKind
     ) {
         Class<? extends KtElement> elementClass;
         switch (elementKind) {
-            case EXPRESSION: elementClass = KtExpression.class;
-                break;
-            case TYPE_ELEMENT: elementClass = KtTypeElement.class;
-                break;
-            case TYPE_CONSTRUCTOR: elementClass = KtSimpleNameExpression.class;
-                break;
-            default: throw new IllegalArgumentException(elementKind.name());
+        case EXPRESSION:
+            elementClass = KtExpression.class;
+            break;
+        case TYPE_ELEMENT:
+            elementClass = KtTypeElement.class;
+            break;
+        case TYPE_CONSTRUCTOR:
+            elementClass = KtSimpleNameExpression.class;
+            break;
+        default:
+            throw new IllegalArgumentException(elementKind.name());
         }
         PsiElement element = findElementOfClassAtRange(file, startOffset, endOffset, elementClass);
 
@@ -79,8 +83,8 @@ public class CodeInsightUtils {
 
         // TODO: Support binary operations in "Introduce..." refactorings
         if (element instanceof KtOperationReferenceExpression
-            && ((KtOperationReferenceExpression) element).getReferencedNameElementType() != KtTokens.IDENTIFIER
-            && element.getParent() instanceof KtBinaryExpression) {
+                && ((KtOperationReferenceExpression) element).getReferencedNameElementType() != KtTokens.IDENTIFIER
+                && element.getParent() instanceof KtBinaryExpression) {
             return null;
         }
 
@@ -157,9 +161,9 @@ public class CodeInsightUtils {
                                   || kind == ElementKind.TYPE_ELEMENT && element instanceof KtTypeElement
                                   || kind == ElementKind.TYPE_CONSTRUCTOR && KtPsiUtilKt.isTypeConstructorReference(element);
             if (!(correctType
-                  || element.getNode().getElementType() == KtTokens.SEMICOLON
-                  || element instanceof PsiWhiteSpace
-                  || element instanceof PsiComment)) {
+                    || element.getNode().getElementType() == KtTokens.SEMICOLON
+                    || element instanceof PsiWhiteSpace
+                    || element instanceof PsiComment)) {
                 return PsiElement.EMPTY_ARRAY;
             }
         }
@@ -183,8 +187,8 @@ public class CodeInsightUtils {
 
         T newElement = PsiTreeUtil.findElementOfClassAtRange(file, startOffset, endOffset, aClass);
         if (newElement == null ||
-            newElement.getTextRange().getStartOffset() != startOffset ||
-            newElement.getTextRange().getEndOffset() != endOffset) {
+                newElement.getTextRange().getStartOffset() != startOffset ||
+                newElement.getTextRange().getEndOffset() != endOffset) {
             return null;
         }
         return newElement;
@@ -289,9 +293,9 @@ public class CodeInsightUtils {
     }
 
     public static void showErrorHint(
-            @NotNull Project project, @NotNull Editor editor,
-            @NotNull String message, @NotNull String title,
-            @Nullable String helpId
+        @NotNull Project project, @NotNull Editor editor,
+        @NotNull String message, @NotNull String title,
+        @Nullable String helpId
     ) {
         if (ApplicationManager.getApplication().isUnitTestMode()) throw new CommonRefactoringUtil.RefactoringErrorHintException(message);
         CommonRefactoringUtil.showErrorHint(project, editor, message, title, helpId);

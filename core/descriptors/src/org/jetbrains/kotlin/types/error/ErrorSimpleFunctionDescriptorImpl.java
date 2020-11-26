@@ -32,12 +32,12 @@ public class ErrorSimpleFunctionDescriptorImpl extends SimpleFunctionDescriptorI
     @NotNull
     @Override
     protected FunctionDescriptorImpl createSubstitutedCopy(
-            @NotNull DeclarationDescriptor newOwner,
-            @Nullable FunctionDescriptor original,
-            @NotNull Kind kind,
-            @Nullable Name newName,
-            @NotNull Annotations annotations,
-            @NotNull SourceElement source
+        @NotNull DeclarationDescriptor newOwner,
+        @Nullable FunctionDescriptor original,
+        @NotNull Kind kind,
+        @Nullable Name newName,
+        @NotNull Annotations annotations,
+        @NotNull SourceElement source
     ) {
         return this;
     }
@@ -103,8 +103,8 @@ public class ErrorSimpleFunctionDescriptorImpl extends SimpleFunctionDescriptorI
             @NotNull
             @Override
             public <V> CopyBuilder<SimpleFunctionDescriptor> putUserData(
-                    @NotNull UserDataKey<V> userDataKey,
-                    V value
+                @NotNull UserDataKey<V> userDataKey,
+                V value
             ) {
                 return this;
             }

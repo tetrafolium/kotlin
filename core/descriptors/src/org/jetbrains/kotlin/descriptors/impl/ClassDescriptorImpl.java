@@ -32,14 +32,14 @@ public class ClassDescriptorImpl extends ClassDescriptorBase {
     private ClassConstructorDescriptor primaryConstructor;
 
     public ClassDescriptorImpl(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull Name name,
-            @NotNull Modality modality,
-            @NotNull ClassKind kind,
-            @NotNull Collection<KotlinType> supertypes,
-            @NotNull SourceElement source,
-            boolean isExternal,
-            @NotNull StorageManager storageManager
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull Name name,
+        @NotNull Modality modality,
+        @NotNull ClassKind kind,
+        @NotNull Collection<KotlinType> supertypes,
+        @NotNull SourceElement source,
+        boolean isExternal,
+        @NotNull StorageManager storageManager
     ) {
         super(storageManager, containingDeclaration, name, source, isExternal);
         assert modality != Modality.SEALED : "Implement getSealedSubclasses() for this class: " + getClass();
@@ -50,9 +50,9 @@ public class ClassDescriptorImpl extends ClassDescriptorBase {
     }
 
     public final void initialize(
-            @NotNull MemberScope unsubstitutedMemberScope,
-            @NotNull Set<ClassConstructorDescriptor> constructors,
-            @Nullable ClassConstructorDescriptor primaryConstructor
+        @NotNull MemberScope unsubstitutedMemberScope,
+        @NotNull Set<ClassConstructorDescriptor> constructors,
+        @Nullable ClassConstructorDescriptor primaryConstructor
     ) {
         this.unsubstitutedMemberScope = unsubstitutedMemberScope;
         this.constructors = constructors;

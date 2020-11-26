@@ -23,7 +23,7 @@ import org.jetbrains.kotlin.idea.codeInsight.surroundWith.expression.KotlinExpre
 public class KotlinDebuggerExpressionSurroundDescriptor extends KotlinExpressionSurroundDescriptor {
 
     private static final Surrounder[] SURROUNDERS = {
-            new KotlinRuntimeTypeCastSurrounder()
+        new KotlinRuntimeTypeCastSurrounder()
     };
 
     @Override

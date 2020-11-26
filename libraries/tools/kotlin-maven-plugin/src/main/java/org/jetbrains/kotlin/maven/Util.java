@@ -26,8 +26,8 @@ import java.util.stream.Collectors;
 public class Util {
     static List<String> filterClassPath(final File basedir, List<String> classpath) {
         return classpath.stream().filter(s ->
-                new File(s).exists() || new File(basedir, s).exists()
-        ).collect(Collectors.toList());
+                                         new File(s).exists() || new File(basedir, s).exists()
+                                        ).collect(Collectors.toList());
     }
 
     @NotNull

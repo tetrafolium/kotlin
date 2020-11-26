@@ -34,8 +34,8 @@ public final class JsBooleanLiteral extends JsLiteral.JsValueLiteral {
     }
 
     public boolean getValue() {
-    return value;
-  }
+        return value;
+    }
 
     @Override
     public void accept(JsVisitor v) {

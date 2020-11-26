@@ -34,12 +34,12 @@ public class ClassConstructorDescriptorImpl extends FunctionDescriptorImpl imple
     private static final Name NAME = Name.special("<init>");
 
     protected ClassConstructorDescriptorImpl(
-            @NotNull ClassDescriptor containingDeclaration,
-            @Nullable ConstructorDescriptor original,
-            @NotNull Annotations annotations,
-            boolean isPrimary,
-            @NotNull Kind kind,
-            @NotNull SourceElement source
+        @NotNull ClassDescriptor containingDeclaration,
+        @Nullable ConstructorDescriptor original,
+        @NotNull Annotations annotations,
+        boolean isPrimary,
+        @NotNull Kind kind,
+        @NotNull SourceElement source
     ) {
         super(containingDeclaration, original, annotations, NAME, kind, source);
         this.isPrimary = isPrimary;
@@ -47,40 +47,40 @@ public class ClassConstructorDescriptorImpl extends FunctionDescriptorImpl imple
 
     @NotNull
     public static ClassConstructorDescriptorImpl create(
-            @NotNull ClassDescriptor containingDeclaration,
-            @NotNull Annotations annotations,
-            boolean isPrimary,
-            @NotNull SourceElement source
+        @NotNull ClassDescriptor containingDeclaration,
+        @NotNull Annotations annotations,
+        boolean isPrimary,
+        @NotNull SourceElement source
     ) {
         return new ClassConstructorDescriptorImpl(containingDeclaration, null, annotations, isPrimary, Kind.DECLARATION, source);
     }
 
     @NotNull
     public static ClassConstructorDescriptorImpl createSynthesized(
-            @NotNull ClassDescriptor containingDeclaration,
-            @NotNull Annotations annotations,
-            boolean isPrimary,
-            @NotNull SourceElement source
+        @NotNull ClassDescriptor containingDeclaration,
+        @NotNull Annotations annotations,
+        boolean isPrimary,
+        @NotNull SourceElement source
     ) {
         return new ClassConstructorDescriptorImpl(containingDeclaration, null, annotations, isPrimary, Kind.SYNTHESIZED, source);
     }
 
     public ClassConstructorDescriptorImpl initialize(
-            @NotNull List<ValueParameterDescriptor> unsubstitutedValueParameters,
-            @NotNull Visibility visibility,
-            @NotNull List<TypeParameterDescriptor> typeParameterDescriptors
+        @NotNull List<ValueParameterDescriptor> unsubstitutedValueParameters,
+        @NotNull Visibility visibility,
+        @NotNull List<TypeParameterDescriptor> typeParameterDescriptors
     ) {
         super.initialize(
-                null, calculateDispatchReceiverParameter(),
-                typeParameterDescriptors,
-                unsubstitutedValueParameters, null,
-                Modality.FINAL, visibility);
+            null, calculateDispatchReceiverParameter(),
+            typeParameterDescriptors,
+            unsubstitutedValueParameters, null,
+            Modality.FINAL, visibility);
         return this;
     }
 
     public ClassConstructorDescriptorImpl initialize(
-            @NotNull List<ValueParameterDescriptor> unsubstitutedValueParameters,
-            @NotNull Visibility visibility
+        @NotNull List<ValueParameterDescriptor> unsubstitutedValueParameters,
+        @NotNull Visibility visibility
     ) {
         initialize(unsubstitutedValueParameters, visibility, getContainingDeclaration().getDeclaredTypeParameters());
         return this;
@@ -146,12 +146,12 @@ public class ClassConstructorDescriptorImpl extends FunctionDescriptorImpl imple
     @NotNull
     @Override
     protected ClassConstructorDescriptorImpl createSubstitutedCopy(
-            @NotNull DeclarationDescriptor newOwner,
-            @Nullable FunctionDescriptor original,
-            @NotNull Kind kind,
-            @Nullable Name newName,
-            @NotNull Annotations annotations,
-            @NotNull SourceElement source
+        @NotNull DeclarationDescriptor newOwner,
+        @Nullable FunctionDescriptor original,
+        @NotNull Kind kind,
+        @Nullable Name newName,
+        @NotNull Annotations annotations,
+        @NotNull SourceElement source
     ) {
         if (kind != Kind.DECLARATION && kind != Kind.SYNTHESIZED) {
             throw new IllegalStateException("Attempt at creating a constructor that is not a declaration: \n" +
@@ -161,23 +161,23 @@ public class ClassConstructorDescriptorImpl extends FunctionDescriptorImpl imple
         }
         assert newName == null : "Attempt to rename constructor: " + this;
         return new ClassConstructorDescriptorImpl(
-                (ClassDescriptor) newOwner,
-                this,
-                annotations,
-                isPrimary,
-                Kind.DECLARATION,
-                source
-        );
+                   (ClassDescriptor) newOwner,
+                   this,
+                   annotations,
+                   isPrimary,
+                   Kind.DECLARATION,
+                   source
+               );
     }
 
     @NotNull
     @Override
     public ClassConstructorDescriptor copy(
-            DeclarationDescriptor newOwner,
-            Modality modality,
-            Visibility visibility,
-            Kind kind,
-            boolean copyOverrides
+        DeclarationDescriptor newOwner,
+        Modality modality,
+        Visibility visibility,
+        Kind kind,
+        boolean copyOverrides
     ) {
         return (ClassConstructorDescriptor) super.copy(newOwner, modality, visibility, kind, copyOverrides);
     }

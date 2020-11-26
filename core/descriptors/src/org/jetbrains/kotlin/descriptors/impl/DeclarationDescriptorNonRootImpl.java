@@ -25,8 +25,8 @@ import org.jetbrains.kotlin.descriptors.annotations.Annotations;
 import org.jetbrains.kotlin.name.Name;
 
 public abstract class DeclarationDescriptorNonRootImpl
-        extends DeclarationDescriptorImpl
-        implements DeclarationDescriptorNonRoot {
+    extends DeclarationDescriptorImpl
+    implements DeclarationDescriptorNonRoot {
 
     @NotNull
     private final DeclarationDescriptor containingDeclaration;
@@ -35,10 +35,10 @@ public abstract class DeclarationDescriptorNonRootImpl
     private final SourceElement source;
 
     protected DeclarationDescriptorNonRootImpl(
-            @NotNull DeclarationDescriptor containingDeclaration,
-            @NotNull Annotations annotations,
-            @NotNull Name name,
-            @NotNull SourceElement source
+        @NotNull DeclarationDescriptor containingDeclaration,
+        @NotNull Annotations annotations,
+        @NotNull Name name,
+        @NotNull SourceElement source
     ) {
         super(annotations, name);
 

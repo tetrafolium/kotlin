@@ -172,8 +172,12 @@ class UintMap implements Serializable {
             --keyCount;
             // Allow to GC value and make sure that new key with the deleted
             // slot shall get proper default values
-            if (values != null) { values[index] = null; }
-            if (ivaluesShift != 0) { keys[ivaluesShift + index] = 0; }
+            if (values != null) {
+                values[index] = null;
+            }
+            if (ivaluesShift != 0) {
+                keys[ivaluesShift + index] = 0;
+            }
         }
     }
 
@@ -224,7 +228,9 @@ class UintMap implements Serializable {
             int fraction = key * A;
             int index = fraction >>> (32 - power);
             int entry = keys[index];
-            if (entry == key) { return index; }
+            if (entry == key) {
+                return index;
+            }
             if (entry != EMPTY) {
                 // Search in table after first failed attempt
                 int mask = (1 << power) - 1;
@@ -237,7 +243,9 @@ class UintMap implements Serializable {
                     }
                     index = (index + step) & mask;
                     entry = keys[index];
-                    if (entry == key) { return index; }
+                    if (entry == key) {
+                        return index;
+                    }
                 } while (entry != EMPTY);
             }
         }
@@ -283,12 +291,17 @@ class UintMap implements Serializable {
             keys = new int[N];
         }
         else {
-            ivaluesShift = N; keys = new int[N * 2];
+            ivaluesShift = N;
+            keys = new int[N * 2];
         }
-        for (int i = 0; i != N; ++i) { keys[i] = EMPTY; }
+        for (int i = 0; i != N; ++i) {
+            keys[i] = EMPTY;
+        }
 
         Object[] oldValues = values;
-        if (oldValues != null) { values = new Object[N]; }
+        if (oldValues != null) {
+            values = new Object[N];
+        }
 
         int oldCount = keyCount;
         occupiedCount = 0;
@@ -319,9 +332,13 @@ class UintMap implements Serializable {
             int fraction = key * A;
             index = fraction >>> (32 - power);
             int entry = keys[index];
-            if (entry == key) { return index; }
+            if (entry == key) {
+                return index;
+            }
             if (entry != EMPTY) {
-                if (entry == DELETED) { firstDeleted = index; }
+                if (entry == DELETED) {
+                    firstDeleted = index;
+                }
                 // Search in table after first failed attempt
                 int mask = (1 << power) - 1;
                 int step = tableLookupStep(fraction, mask, power);
@@ -333,7 +350,9 @@ class UintMap implements Serializable {
                     }
                     index = (index + step) & mask;
                     entry = keys[index];
-                    if (entry == key) { return index; }
+                    if (entry == key) {
+                        return index;
+                    }
                     if (entry == DELETED && firstDeleted < 0) {
                         firstDeleted = index;
                     }
@@ -361,7 +380,7 @@ class UintMap implements Serializable {
     }
 
     private void writeObject(ObjectOutputStream out)
-        throws IOException
+    throws IOException
     {
         out.defaultWriteObject();
 
@@ -389,7 +408,7 @@ class UintMap implements Serializable {
     }
 
     private void readObject(ObjectInputStream in)
-        throws IOException, ClassNotFoundException
+    throws IOException, ClassNotFoundException
     {
         in.defaultReadObject();
 
@@ -403,7 +422,7 @@ class UintMap implements Serializable {
             if (hasIntValues) {
                 keys = new int[2 * N];
                 ivaluesShift = N;
-            }else {
+            } else {
                 keys = new int[N];
             }
             for (int i = 0; i != N; ++i) {

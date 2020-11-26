@@ -125,11 +125,11 @@ public class HtmlTabledDescriptorRenderer extends TabledDescriptorRenderer {
     }
 
     private void renderFunctionArguments(
-            @Nullable KotlinType receiverType,
-            @NotNull List<KotlinType> argumentTypes,
-            Predicate<ConstraintPosition> isErrorPosition,
-            StringBuilder result,
-            @NotNull RenderingContext context
+        @Nullable KotlinType receiverType,
+        @NotNull List<KotlinType> argumentTypes,
+        Predicate<ConstraintPosition> isErrorPosition,
+        StringBuilder result,
+        @NotNull RenderingContext context
     ) {
         boolean hasReceiver = receiverType != null;
         tdSpace(result);
@@ -175,14 +175,14 @@ public class HtmlTabledDescriptorRenderer extends TabledDescriptorRenderer {
     private static final DescriptorRenderer.ValueParametersHandler VALUE_PARAMETERS_HANDLER = new DescriptorRenderer.ValueParametersHandler() {
         @Override
         public void appendBeforeValueParameter(
-                @NotNull ValueParameterDescriptor parameter, int parameterIndex, int parameterCount, @NotNull StringBuilder builder
+            @NotNull ValueParameterDescriptor parameter, int parameterIndex, int parameterCount, @NotNull StringBuilder builder
         ) {
             builder.append("<td align=\"right\" style=\"white-space:nowrap;font-weight:bold;\">");
         }
 
         @Override
         public void appendAfterValueParameter(
-                @NotNull ValueParameterDescriptor parameter, int parameterIndex, int parameterCount, @NotNull StringBuilder builder
+            @NotNull ValueParameterDescriptor parameter, int parameterIndex, int parameterCount, @NotNull StringBuilder builder
         ) {
             boolean last = parameterIndex == parameterCount - 1;
             if (!last) {
@@ -212,17 +212,17 @@ public class HtmlTabledDescriptorRenderer extends TabledDescriptorRenderer {
     };
 
     private static final DiagnosticParameterRenderer<DeclarationDescriptor>
-            DESCRIPTOR_IN_TABLE = new SmartDescriptorRenderer(DescriptorRenderer.Companion.withOptions(
-            new Function1<DescriptorRendererOptions, Unit>() {
-                @Override
-                public Unit invoke(DescriptorRendererOptions options) {
-                    options.setWithDefinedIn(false);
-                    options.setModifiers(Collections.<DescriptorRendererModifier>emptySet());
-                    options.setValueParametersHandler(VALUE_PARAMETERS_HANDLER);
-                    options.setTextFormat(RenderingFormat.HTML);
-                    return Unit.INSTANCE;
-                }
-            }));
+    DESCRIPTOR_IN_TABLE = new SmartDescriptorRenderer(DescriptorRenderer.Companion.withOptions(
+    new Function1<DescriptorRendererOptions, Unit>() {
+        @Override
+        public Unit invoke(DescriptorRendererOptions options) {
+            options.setWithDefinedIn(false);
+            options.setModifiers(Collections.<DescriptorRendererModifier>emptySet());
+            options.setValueParametersHandler(VALUE_PARAMETERS_HANDLER);
+            options.setTextFormat(RenderingFormat.HTML);
+            return Unit.INSTANCE;
+        }
+    }));
 
     private static void td(StringBuilder builder, String text) {
         builder.append("<td style=\"white-space:nowrap;\">").append(text).append("</td>");

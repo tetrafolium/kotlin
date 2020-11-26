@@ -70,16 +70,16 @@ class KotlinMPPGradleProjectTaskRunner extends ProjectTaskRunner
 
     @Language("Groovy")
     private static final String FORCE_COMPILE_TASKS_INIT_SCRIPT_TEMPLATE = "projectsEvaluated { \n" +
-                                                                           "  rootProject.findProject('%s')?.tasks?.withType(AbstractCompile) {  \n" +
-                                                                           "    outputs.upToDateWhen { false } \n" +
-                                                                           "  } \n" +
-                                                                           "}\n";
+            "  rootProject.findProject('%s')?.tasks?.withType(AbstractCompile) {  \n" +
+            "    outputs.upToDateWhen { false } \n" +
+            "  } \n" +
+            "}\n";
 
     @Override
     public void run(@NotNull Project project,
-            @NotNull ProjectTaskContext context,
-            @Nullable ProjectTaskNotification callback,
-            @NotNull Collection<? extends ProjectTask> tasks) {
+                    @NotNull ProjectTaskContext context,
+                    @Nullable ProjectTaskNotification callback,
+                    @NotNull Collection<? extends ProjectTask> tasks) {
         MultiMap<String, String> buildTasksMap = MultiMap.createLinkedSet();
         MultiMap<String, String> cleanTasksMap = MultiMap.createLinkedSet();
         MultiMap<String, String> initScripts = MultiMap.createLinkedSet();
@@ -115,7 +115,7 @@ class KotlinMPPGradleProjectTaskRunner extends ProjectTaskRunner
                         final List<Module> affectedModules = ContainerUtil.concat(modules, modulesOfFiles);
                         // have to refresh in case of errors too, because run configuration may be set to ignore errors
                         Collection<String> affectedRoots = ContainerUtil.newHashSet(
-                                CompilerPathsEx.getOutputPaths(affectedModules.toArray(Module.EMPTY_ARRAY)));
+                                                               CompilerPathsEx.getOutputPaths(affectedModules.toArray(Module.EMPTY_ARRAY)));
                         if (!affectedRoots.isEmpty()) {
                             CompilerUtil.refreshOutputRoots(affectedRoots);
                         }
@@ -226,8 +226,8 @@ class KotlinMPPGradleProjectTaskRunner extends ProjectTaskRunner
             String taskPrefix = endsWithChar(gradlePath, ':') ? gradlePath : (gradlePath + ':');
 
             List<String> gradleTasks = ContainerUtil.mapNotNull(
-                    findAll(moduleDataNode, ProjectKeys.TASK), node ->
-                            node.getData().isInherited() ? null : trimStart(node.getData().getName(), taskPrefix));
+                                           findAll(moduleDataNode, ProjectKeys.TASK), node ->
+                                           node.getData().isInherited() ? null : trimStart(node.getData().getName(), taskPrefix));
 
             Collection<String> projectInitScripts = initScripts.getModifiable(rootProjectPath);
             Collection<String> buildRootTasks = buildTasksMap.getModifiable(rootProjectPath);
@@ -279,13 +279,13 @@ class KotlinMPPGradleProjectTaskRunner extends ProjectTaskRunner
     // ---------------------------------------- //
     private static boolean isProjectWithNativeSourceOrCommonProductionSourceModules(Project project) {
         return CachedValuesManager.getManager(project).getCachedValue(
-                project,
-                () -> new CachedValueProvider.Result<>(
-                        Arrays.stream(ModuleManager.getInstance(project).getModules()).anyMatch(
-                                module -> isNativeSourceModule(module) || isCommonProductionSourceModule(module)
-                        ),
-                        ProjectRootModificationTracker.getInstance(project)
-                ));
+                   project,
+                   () -> new CachedValueProvider.Result<>(
+                       Arrays.stream(ModuleManager.getInstance(project).getModules()).anyMatch(
+                           module -> isNativeSourceModule(module) || isCommonProductionSourceModule(module)
+                       ),
+                       ProjectRootModificationTracker.getInstance(project)
+                   ));
     }
 
     private static boolean isNativeSourceModule(Module module) {
@@ -335,11 +335,11 @@ class KotlinMPPGradleProjectTaskRunner extends ProjectTaskRunner
         }
 
         return linkPrefixes.stream()
-                // get base task name (without disambiguation classifier)
-                .map(linkPrefix -> linkPrefix + capitalize(targetName))
-                // find all Gradle tasks that start with base task name
-                .flatMap(nativeTaskName -> gradleTasks.stream().filter(taskName -> taskName.startsWith(nativeTaskName)))
-                .collect(Collectors.toList());
+               // get base task name (without disambiguation classifier)
+               .map(linkPrefix -> linkPrefix + capitalize(targetName))
+               // find all Gradle tasks that start with base task name
+               .flatMap(nativeTaskName -> gradleTasks.stream().filter(taskName -> taskName.startsWith(nativeTaskName)))
+               .collect(Collectors.toList());
     }
 
     private static Collection<String> findMetadataBuildTasks(Collection<String> gradleTasks, String sourceSetName) {

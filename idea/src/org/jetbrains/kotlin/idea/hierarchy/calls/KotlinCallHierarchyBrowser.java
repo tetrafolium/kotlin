@@ -49,14 +49,14 @@ public class KotlinCallHierarchyBrowser extends CallHierarchyBrowserBase {
         PopupHandler.installPopupHandler(tree1, group, ActionPlaces.CALL_HIERARCHY_VIEW_POPUP, ActionManager.getInstance());
         BaseOnThisMethodAction baseOnThisMethodAction = new BaseOnThisMethodAction();
         baseOnThisMethodAction.registerCustomShortcutSet(
-                ActionManager.getInstance().getAction(IdeActions.ACTION_CALL_HIERARCHY).getShortcutSet(), tree1
+            ActionManager.getInstance().getAction(IdeActions.ACTION_CALL_HIERARCHY).getShortcutSet(), tree1
         );
         type2TreeMap.put(CALLEE_TYPE, tree1);
 
         JTree tree2 = createTree(false);
         PopupHandler.installPopupHandler(tree2, group, ActionPlaces.CALL_HIERARCHY_VIEW_POPUP, ActionManager.getInstance());
         baseOnThisMethodAction.registerCustomShortcutSet(
-                ActionManager.getInstance().getAction(IdeActions.ACTION_CALL_HIERARCHY).getShortcutSet(), tree2
+            ActionManager.getInstance().getAction(IdeActions.ACTION_CALL_HIERARCHY).getShortcutSet(), tree2
         );
         type2TreeMap.put(CALLER_TYPE, tree2);
     }

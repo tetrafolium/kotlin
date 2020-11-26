@@ -18,7 +18,7 @@
  * Copyright (C) 1997-1999 Netscape Communications Corporation. All
  * Rights Reserved.
  *
- * Contributor(s): 
+ * Contributor(s):
  * Mike Ang
  * Mike McCabe
  *
@@ -344,7 +344,7 @@ public class Parser {
                 t = ts.getToken();
             }
             while (t != TokenStream.SEMI && t != TokenStream.EOL
-                   && t != TokenStream.EOF && t != TokenStream.ERROR);
+                    && t != TokenStream.EOF && t != TokenStream.ERROR);
             return nf.createExprStatement(nf.createName("error", position), position);
         }
     }
@@ -365,334 +365,334 @@ public class Parser {
         CodePosition position = ts.tokenPosition;
 
         switch (tt) {
-            case TokenStream.IF: {
-                Node cond = condition(ts);
-                Node ifTrue = statement(ts);
-                Node ifFalse = null;
-                if (ts.matchToken(TokenStream.ELSE)) {
-                    ifFalse = statement(ts);
+        case TokenStream.IF: {
+            Node cond = condition(ts);
+            Node ifTrue = statement(ts);
+            Node ifFalse = null;
+            if (ts.matchToken(TokenStream.ELSE)) {
+                ifFalse = statement(ts);
+            }
+            pn = nf.createIf(cond, ifTrue, ifFalse, position);
+            break;
+        }
+
+        case TokenStream.SWITCH: {
+            pn = nf.createSwitch(position);
+
+            Node curCase = null; // to kill warning
+            Node caseStatements;
+
+            mustMatchToken(ts, TokenStream.LP, "msg.no.paren.switch");
+            pn.addChildToBack(expr(ts, false));
+            mustMatchToken(ts, TokenStream.GWT, "msg.no.paren.after.switch");
+            mustMatchToken(ts, TokenStream.LC, "msg.no.brace.switch");
+
+            while ((tt = ts.getToken()) != TokenStream.RC && tt != TokenStream.EOF) {
+                switch (tt) {
+                case TokenStream.CASE:
+                    curCase = nf.createUnary(TokenStream.CASE, expr(ts, false), ts.tokenPosition);
+                    break;
+
+                case TokenStream.DEFAULT:
+                    curCase = nf.createLeaf(TokenStream.DEFAULT, ts.tokenPosition);
+                    // XXX check that there isn't more than one default
+                    break;
+
+                default:
+                    reportError(ts, "msg.bad.switch");
+                    break;
                 }
-                pn = nf.createIf(cond, ifTrue, ifFalse, position);
-                break;
-            }
+                mustMatchToken(ts, TokenStream.COLON, "msg.no.colon.case");
 
-            case TokenStream.SWITCH: {
-                pn = nf.createSwitch(position);
+                caseStatements = nf.createLeaf(TokenStream.BLOCK, null);
 
-                Node curCase = null; // to kill warning
-                Node caseStatements;
-
-                mustMatchToken(ts, TokenStream.LP, "msg.no.paren.switch");
-                pn.addChildToBack(expr(ts, false));
-                mustMatchToken(ts, TokenStream.GWT, "msg.no.paren.after.switch");
-                mustMatchToken(ts, TokenStream.LC, "msg.no.brace.switch");
-
-                while ((tt = ts.getToken()) != TokenStream.RC && tt != TokenStream.EOF) {
-                    switch (tt) {
-                        case TokenStream.CASE:
-                            curCase = nf.createUnary(TokenStream.CASE, expr(ts, false), ts.tokenPosition);
-                            break;
-
-                        case TokenStream.DEFAULT:
-                            curCase = nf.createLeaf(TokenStream.DEFAULT, ts.tokenPosition);
-                            // XXX check that there isn't more than one default
-                            break;
-
-                        default:
-                            reportError(ts, "msg.bad.switch");
-                            break;
-                    }
-                    mustMatchToken(ts, TokenStream.COLON, "msg.no.colon.case");
-
-                    caseStatements = nf.createLeaf(TokenStream.BLOCK, null);
-
-                    while ((tt = ts.peekToken()) != TokenStream.RC && tt != TokenStream.CASE
-                           && tt != TokenStream.DEFAULT && tt != TokenStream.EOF) {
-                        caseStatements.addChildToBack(statement(ts));
-                    }
-                    // assert cur_case
-                    if (curCase != null) {
-                        curCase.addChildToBack(caseStatements);
-                    }
-
-                    pn.addChildToBack(curCase);
+                while ((tt = ts.peekToken()) != TokenStream.RC && tt != TokenStream.CASE
+                        && tt != TokenStream.DEFAULT && tt != TokenStream.EOF) {
+                    caseStatements.addChildToBack(statement(ts));
                 }
-                break;
+                // assert cur_case
+                if (curCase != null) {
+                    curCase.addChildToBack(caseStatements);
+                }
+
+                pn.addChildToBack(curCase);
             }
+            break;
+        }
 
-            case TokenStream.WHILE: {
-                Node cond = condition(ts);
-                Node body = statement(ts);
+        case TokenStream.WHILE: {
+            Node cond = condition(ts);
+            Node body = statement(ts);
 
-                pn = nf.createWhile(cond, body, position);
-                break;
+            pn = nf.createWhile(cond, body, position);
+            break;
+        }
+
+        case TokenStream.DO: {
+            Node body = statement(ts);
+
+            mustMatchToken(ts, TokenStream.WHILE, "msg.no.while.do");
+            Node cond = condition(ts);
+
+            pn = nf.createDoWhile(body, cond, position);
+            break;
+        }
+
+        case TokenStream.FOR: {
+            Node init; // Node init is also foo in 'foo in Object'
+            Node cond; // Node cond is also object in 'foo in Object'
+            Node incr = null; // to kill warning
+            Node body;
+
+            mustMatchToken(ts, TokenStream.LP, "msg.no.paren.for");
+            tt = ts.peekToken();
+            if (tt == TokenStream.SEMI) {
+                init = nf.createLeaf(TokenStream.VOID, null);
             }
-
-            case TokenStream.DO: {
-                Node body = statement(ts);
-
-                mustMatchToken(ts, TokenStream.WHILE, "msg.no.while.do");
-                Node cond = condition(ts);
-
-                pn = nf.createDoWhile(body, cond, position);
-                break;
-            }
-
-            case TokenStream.FOR: {
-                Node init; // Node init is also foo in 'foo in Object'
-                Node cond; // Node cond is also object in 'foo in Object'
-                Node incr = null; // to kill warning
-                Node body;
-
-                mustMatchToken(ts, TokenStream.LP, "msg.no.paren.for");
-                tt = ts.peekToken();
-                if (tt == TokenStream.SEMI) {
-                    init = nf.createLeaf(TokenStream.VOID, null);
+            else {
+                if (tt == TokenStream.VAR) {
+                    // set init to a var list or initial
+                    ts.getToken(); // throw away the 'var' token
+                    init = variables(ts, true, ts.tokenPosition);
                 }
                 else {
-                    if (tt == TokenStream.VAR) {
-                        // set init to a var list or initial
-                        ts.getToken(); // throw away the 'var' token
-                        init = variables(ts, true, ts.tokenPosition);
-                    }
-                    else {
-                        init = expr(ts, true);
-                    }
+                    init = expr(ts, true);
                 }
+            }
 
-                tt = ts.peekToken();
-                if (tt == TokenStream.RELOP && ts.getOp() == TokenStream.IN) {
-                    ts.matchToken(TokenStream.RELOP);
-                    // 'cond' is the object over which we're iterating
+            tt = ts.peekToken();
+            if (tt == TokenStream.RELOP && ts.getOp() == TokenStream.IN) {
+                ts.matchToken(TokenStream.RELOP);
+                // 'cond' is the object over which we're iterating
+                cond = expr(ts, false);
+            }
+            else { // ordinary for loop
+                mustMatchToken(ts, TokenStream.SEMI, "msg.no.semi.for");
+                if (ts.peekToken() == TokenStream.SEMI) {
+                    // no loop condition
+                    cond = nf.createLeaf(TokenStream.VOID, null);
+                }
+                else {
                     cond = expr(ts, false);
                 }
-                else { // ordinary for loop
-                    mustMatchToken(ts, TokenStream.SEMI, "msg.no.semi.for");
-                    if (ts.peekToken() == TokenStream.SEMI) {
-                        // no loop condition
-                        cond = nf.createLeaf(TokenStream.VOID, null);
-                    }
-                    else {
-                        cond = expr(ts, false);
-                    }
 
-                    mustMatchToken(ts, TokenStream.SEMI, "msg.no.semi.for.cond");
-                    if (ts.peekToken() == TokenStream.GWT) {
-                        incr = nf.createLeaf(TokenStream.VOID, null);
-                    }
-                    else {
-                        incr = expr(ts, false);
-                    }
-                }
-
-                mustMatchToken(ts, TokenStream.GWT, "msg.no.paren.for.ctrl");
-                body = statement(ts);
-
-                if (incr == null) {
-                    // cond could be null if 'in obj' got eaten by the init node.
-                    pn = nf.createForIn(init, cond, body, position);
+                mustMatchToken(ts, TokenStream.SEMI, "msg.no.semi.for.cond");
+                if (ts.peekToken() == TokenStream.GWT) {
+                    incr = nf.createLeaf(TokenStream.VOID, null);
                 }
                 else {
-                    pn = nf.createFor(init, cond, incr, body, position);
+                    incr = expr(ts, false);
                 }
-                break;
             }
 
-            case TokenStream.TRY: {
-                Node tryblock;
-                Node catchblocks;
-                Node finallyblock = null;
+            mustMatchToken(ts, TokenStream.GWT, "msg.no.paren.for.ctrl");
+            body = statement(ts);
 
-                tryblock = statement(ts);
+            if (incr == null) {
+                // cond could be null if 'in obj' got eaten by the init node.
+                pn = nf.createForIn(init, cond, body, position);
+            }
+            else {
+                pn = nf.createFor(init, cond, incr, body, position);
+            }
+            break;
+        }
 
-                catchblocks = nf.createLeaf(TokenStream.BLOCK, null);
+        case TokenStream.TRY: {
+            Node tryblock;
+            Node catchblocks;
+            Node finallyblock = null;
 
-                boolean sawDefaultCatch = false;
-                int peek = ts.peekToken();
-                if (peek == TokenStream.CATCH) {
-                    while (ts.matchToken(TokenStream.CATCH)) {
-                        if (sawDefaultCatch) {
-                            reportError(ts, "msg.catch.unreachable");
-                        }
-                        CodePosition catchPosition = ts.tokenPosition;
-                        mustMatchToken(ts, TokenStream.LP, "msg.no.paren.catch");
+            tryblock = statement(ts);
 
-                        mustMatchToken(ts, TokenStream.NAME, "msg.bad.catchcond");
-                        Node varName = nf.createName(ts.getString(), ts.tokenPosition);
+            catchblocks = nf.createLeaf(TokenStream.BLOCK, null);
 
-                        Node catchCond = null;
-                        if (ts.matchToken(TokenStream.IF)) {
-                            catchCond = expr(ts, false);
-                        }
-                        else {
-                            sawDefaultCatch = true;
-                        }
-
-                        mustMatchToken(ts, TokenStream.GWT, "msg.bad.catchcond");
-                        mustMatchToken(ts, TokenStream.LC, "msg.no.brace.catchblock");
-
-                        catchblocks.addChildToBack(nf.createCatch(varName, catchCond, statements(ts), catchPosition));
-
-                        mustMatchToken(ts, TokenStream.RC, "msg.no.brace.after.body");
+            boolean sawDefaultCatch = false;
+            int peek = ts.peekToken();
+            if (peek == TokenStream.CATCH) {
+                while (ts.matchToken(TokenStream.CATCH)) {
+                    if (sawDefaultCatch) {
+                        reportError(ts, "msg.catch.unreachable");
                     }
+                    CodePosition catchPosition = ts.tokenPosition;
+                    mustMatchToken(ts, TokenStream.LP, "msg.no.paren.catch");
+
+                    mustMatchToken(ts, TokenStream.NAME, "msg.bad.catchcond");
+                    Node varName = nf.createName(ts.getString(), ts.tokenPosition);
+
+                    Node catchCond = null;
+                    if (ts.matchToken(TokenStream.IF)) {
+                        catchCond = expr(ts, false);
+                    }
+                    else {
+                        sawDefaultCatch = true;
+                    }
+
+                    mustMatchToken(ts, TokenStream.GWT, "msg.bad.catchcond");
+                    mustMatchToken(ts, TokenStream.LC, "msg.no.brace.catchblock");
+
+                    catchblocks.addChildToBack(nf.createCatch(varName, catchCond, statements(ts), catchPosition));
+
+                    mustMatchToken(ts, TokenStream.RC, "msg.no.brace.after.body");
                 }
-                else if (peek != TokenStream.FINALLY) {
-                    mustMatchToken(ts, TokenStream.FINALLY, "msg.try.no.catchfinally");
-                }
+            }
+            else if (peek != TokenStream.FINALLY) {
+                mustMatchToken(ts, TokenStream.FINALLY, "msg.try.no.catchfinally");
+            }
 
-                if (ts.matchToken(TokenStream.FINALLY)) {
-                    finallyblock = statement(ts);
-                }
+            if (ts.matchToken(TokenStream.FINALLY)) {
+                finallyblock = statement(ts);
+            }
 
-                pn = nf.createTryCatchFinally(tryblock, catchblocks, finallyblock, position);
+            pn = nf.createTryCatchFinally(tryblock, catchblocks, finallyblock, position);
 
-                break;
+            break;
+        }
+        case TokenStream.THROW: {
+            int lineno = ts.getLineno();
+            pn = nf.createThrow(expr(ts, false), position);
+            if (lineno == ts.getLineno()) {
+                wellTerminated(ts, TokenStream.ERROR);
             }
-            case TokenStream.THROW: {
-                int lineno = ts.getLineno();
-                pn = nf.createThrow(expr(ts, false), position);
-                if (lineno == ts.getLineno()) {
-                    wellTerminated(ts, TokenStream.ERROR);
-                }
-                break;
-            }
-            case TokenStream.BREAK: {
-                // matchLabel only matches if there is one
-                Node label = matchLabel(ts);
-                pn = nf.createBreak(label, position);
-                break;
-            }
-            case TokenStream.CONTINUE: {
-                // matchLabel only matches if there is one
-                Node label = matchLabel(ts);
-                pn = nf.createContinue(label, position);
-                break;
-            }
-            case TokenStream.DEBUGGER: {
-                pn = nf.createDebugger(position);
-                break;
-            }
-            case TokenStream.WITH: {
-                // bruce: we don't support this is JSNI code because it's impossible
-                // to identify bindings even passably well
-                //
+            break;
+        }
+        case TokenStream.BREAK: {
+            // matchLabel only matches if there is one
+            Node label = matchLabel(ts);
+            pn = nf.createBreak(label, position);
+            break;
+        }
+        case TokenStream.CONTINUE: {
+            // matchLabel only matches if there is one
+            Node label = matchLabel(ts);
+            pn = nf.createContinue(label, position);
+            break;
+        }
+        case TokenStream.DEBUGGER: {
+            pn = nf.createDebugger(position);
+            break;
+        }
+        case TokenStream.WITH: {
+            // bruce: we don't support this is JSNI code because it's impossible
+            // to identify bindings even passably well
+            //
 
-                reportError(ts, "msg.jsni.unsupported.with");
+            reportError(ts, "msg.jsni.unsupported.with");
 
-                mustMatchToken(ts, TokenStream.LP, "msg.no.paren.with");
-                Node obj = expr(ts, false);
-                mustMatchToken(ts, TokenStream.GWT, "msg.no.paren.after.with");
-                Node body = statement(ts);
-                pn = nf.createWith(obj, body, position);
-                break;
+            mustMatchToken(ts, TokenStream.LP, "msg.no.paren.with");
+            Node obj = expr(ts, false);
+            mustMatchToken(ts, TokenStream.GWT, "msg.no.paren.after.with");
+            Node body = statement(ts);
+            pn = nf.createWith(obj, body, position);
+            break;
+        }
+        case TokenStream.VAR: {
+            int lineno = ts.getLineno();
+            pn = variables(ts, false, position);
+            if (ts.getLineno() == lineno) {
+                wellTerminated(ts, TokenStream.ERROR);
             }
-            case TokenStream.VAR: {
-                int lineno = ts.getLineno();
-                pn = variables(ts, false, position);
+            break;
+        }
+        case TokenStream.RETURN: {
+            Node retExpr = null;
+            int lineno;
+            // bail if we're not in a (toplevel) function
+            if ((!insideFunction) && ((ts.flags & TokenStream.TSF_FUNCTION) == 0)) {
+                reportError(ts, "msg.bad.return");
+            }
+
+            /* This is ugly, but we don't want to require a semicolon. */
+            ts.flags |= TokenStream.TSF_REGEXP;
+            tt = ts.peekTokenSameLine();
+            ts.flags &= ~TokenStream.TSF_REGEXP;
+
+            if (tt != TokenStream.EOF && tt != TokenStream.EOL && tt != TokenStream.SEMI && tt != TokenStream.RC) {
+                lineno = ts.getLineno();
+                retExpr = expr(ts, false);
                 if (ts.getLineno() == lineno) {
                     wellTerminated(ts, TokenStream.ERROR);
                 }
-                break;
+                ts.flags |= TokenStream.TSF_RETURN_EXPR;
             }
-            case TokenStream.RETURN: {
-                Node retExpr = null;
-                int lineno;
-                // bail if we're not in a (toplevel) function
-                if ((!insideFunction) && ((ts.flags & TokenStream.TSF_FUNCTION) == 0)) {
-                    reportError(ts, "msg.bad.return");
-                }
-
-                /* This is ugly, but we don't want to require a semicolon. */
-                ts.flags |= TokenStream.TSF_REGEXP;
-                tt = ts.peekTokenSameLine();
-                ts.flags &= ~TokenStream.TSF_REGEXP;
-
-                if (tt != TokenStream.EOF && tt != TokenStream.EOL && tt != TokenStream.SEMI && tt != TokenStream.RC) {
-                    lineno = ts.getLineno();
-                    retExpr = expr(ts, false);
-                    if (ts.getLineno() == lineno) {
-                        wellTerminated(ts, TokenStream.ERROR);
-                    }
-                    ts.flags |= TokenStream.TSF_RETURN_EXPR;
-                }
-                else {
-                    ts.flags |= TokenStream.TSF_RETURN_VOID;
-                }
-
-                // XXX ASSERT pn
-                pn = nf.createReturn(retExpr, position);
-                break;
+            else {
+                ts.flags |= TokenStream.TSF_RETURN_VOID;
             }
-            case TokenStream.LC:
-                pn = statements(ts);
-                mustMatchToken(ts, TokenStream.RC, "msg.no.brace.block");
-                break;
 
-            case TokenStream.ERROR:
-                // Fall thru, to have a node for error recovery to work on
-            case TokenStream.EOL:
-            case TokenStream.SEMI:
-                pn = nf.createLeaf(TokenStream.VOID, ts.tokenPosition);
-                break;
+            // XXX ASSERT pn
+            pn = nf.createReturn(retExpr, position);
+            break;
+        }
+        case TokenStream.LC:
+            pn = statements(ts);
+            mustMatchToken(ts, TokenStream.RC, "msg.no.brace.block");
+            break;
 
-            default: {
-                lastExprType = tt;
-                int tokenno = ts.getTokenno();
-                ts.ungetToken(tt);
-                int lineno = ts.getLineno();
+        case TokenStream.ERROR:
+        // Fall thru, to have a node for error recovery to work on
+        case TokenStream.EOL:
+        case TokenStream.SEMI:
+            pn = nf.createLeaf(TokenStream.VOID, ts.tokenPosition);
+            break;
 
-                pn = expr(ts, false);
+        default: {
+            lastExprType = tt;
+            int tokenno = ts.getTokenno();
+            ts.ungetToken(tt);
+            int lineno = ts.getLineno();
 
-                if (ts.peekToken() == TokenStream.COLON) {
-                    /*
-                     * check that the last thing the tokenizer returned was a NAME and
-                     * that only one token was consumed.
-                     */
-                    if (lastExprType != TokenStream.NAME || (ts.getTokenno() != tokenno)) {
-                        reportError(ts, "msg.bad.label");
-                    }
+            pn = expr(ts, false);
 
-                    ts.getToken(); // eat the COLON
-
-                    /*
-                     * in the C source, the label is associated with the statement that
-                     * follows: nf.addChildToBack(pn, statement(ts));
-                     */
-                    String name = ts.getString();
-                    pn = nf.createLabel(nf.createString(name, position), position);
-
-                    // bruce: added to make it easier to bind labels to the
-                    // statements they modify
-                    //
-                    pn.addChildToBack(statement(ts));
-
-                    // depend on decompiling lookahead to guess that that
-                    // last name was a label.
-                    return pn;
+            if (ts.peekToken() == TokenStream.COLON) {
+                /*
+                 * check that the last thing the tokenizer returned was a NAME and
+                 * that only one token was consumed.
+                 */
+                if (lastExprType != TokenStream.NAME || (ts.getTokenno() != tokenno)) {
+                    reportError(ts, "msg.bad.label");
                 }
 
-                if (lastExprType == TokenStream.FUNCTION) {
-                    if (nf.getLeafType(pn) != TokenStream.FUNCTION) {
-                        reportError(ts, "msg.syntax");
-                    }
-                }
-
-                pn = nf.createExprStatement(pn, position);
+                ts.getToken(); // eat the COLON
 
                 /*
-                 * Check explicitly against (multi-line) function statement.
-                 *
-                 * lastExprEndLine is a hack to fix an automatic semicolon insertion
-                 * problem with function expressions; the ts.getLineno() == lineno check
-                 * was firing after a function definition even though the next statement
-                 * was on a new line, because speculative getToken calls advanced the
-                 * line number even when they didn't succeed.
+                 * in the C source, the label is associated with the statement that
+                 * follows: nf.addChildToBack(pn, statement(ts));
                  */
-                if (ts.getLineno() == lineno || (lastExprType == TokenStream.FUNCTION && ts.getLineno() == lastExprEndLine)) {
-                    wellTerminated(ts, lastExprType);
-                }
-                break;
+                String name = ts.getString();
+                pn = nf.createLabel(nf.createString(name, position), position);
+
+                // bruce: added to make it easier to bind labels to the
+                // statements they modify
+                //
+                pn.addChildToBack(statement(ts));
+
+                // depend on decompiling lookahead to guess that that
+                // last name was a label.
+                return pn;
             }
+
+            if (lastExprType == TokenStream.FUNCTION) {
+                if (nf.getLeafType(pn) != TokenStream.FUNCTION) {
+                    reportError(ts, "msg.syntax");
+                }
+            }
+
+            pn = nf.createExprStatement(pn, position);
+
+            /*
+             * Check explicitly against (multi-line) function statement.
+             *
+             * lastExprEndLine is a hack to fix an automatic semicolon insertion
+             * problem with function expressions; the ts.getLineno() == lineno check
+             * was firing after a function definition even though the next statement
+             * was on a new line, because speculative getToken calls advanced the
+             * line number even when they didn't succeed.
+             */
+            if (ts.getLineno() == lineno || (lastExprType == TokenStream.FUNCTION && ts.getLineno() == lastExprEndLine)) {
+                wellTerminated(ts, lastExprType);
+            }
+            break;
+        }
         }
         ts.matchToken(TokenStream.SEMI);
 
@@ -881,50 +881,50 @@ public class Parser {
         CodePosition position = ts.tokenPosition;
 
         switch (tt) {
-            case TokenStream.UNARYOP:
-                return nf.createUnary(TokenStream.UNARYOP, ts.getOp(), unaryExpr(ts), position);
+        case TokenStream.UNARYOP:
+            return nf.createUnary(TokenStream.UNARYOP, ts.getOp(), unaryExpr(ts), position);
 
-            case TokenStream.ADD:
-            case TokenStream.SUB:
-                return nf.createUnary(TokenStream.UNARYOP, tt, unaryExpr(ts), position);
+        case TokenStream.ADD:
+        case TokenStream.SUB:
+            return nf.createUnary(TokenStream.UNARYOP, tt, unaryExpr(ts), position);
 
-            case TokenStream.INC:
-            case TokenStream.DEC:
-                return nf.createUnary(tt, TokenStream.PRE, memberExpr(ts, true), position);
+        case TokenStream.INC:
+        case TokenStream.DEC:
+            return nf.createUnary(tt, TokenStream.PRE, memberExpr(ts, true), position);
 
-            case TokenStream.DELPROP: {
-                Node argument = unaryExpr(ts);
-                if (!isValidDeleteArgument(argument)) {
-                    Context.reportError("msg.wrong.delete argument", argument.getPosition(), ts.lastPosition);
-                }
-                return nf.createUnary(TokenStream.DELPROP, argument, position);
+        case TokenStream.DELPROP: {
+            Node argument = unaryExpr(ts);
+            if (!isValidDeleteArgument(argument)) {
+                Context.reportError("msg.wrong.delete argument", argument.getPosition(), ts.lastPosition);
             }
+            return nf.createUnary(TokenStream.DELPROP, argument, position);
+        }
 
-            case TokenStream.ERROR:
-                break;
+        case TokenStream.ERROR:
+            break;
 
-            default:
-                ts.ungetToken(tt);
+        default:
+            ts.ungetToken(tt);
 
-                int lineno = ts.getLineno();
+            int lineno = ts.getLineno();
 
-                Node pn = memberExpr(ts, true);
+            Node pn = memberExpr(ts, true);
 
-                /*
-                 * don't look across a newline boundary for a postfix incop.
-                 *
-                 * the rhino scanner seems to work differently than the js scanner here;
-                 * in js, it works to have the line number check precede the peekToken
-                 * calls. It'd be better if they had similar behavior...
-                 */
-                int peeked;
-                if (((peeked = ts.peekToken()) == TokenStream.INC || peeked == TokenStream.DEC)
+            /*
+             * don't look across a newline boundary for a postfix incop.
+             *
+             * the rhino scanner seems to work differently than the js scanner here;
+             * in js, it works to have the line number check precede the peekToken
+             * calls. It'd be better if they had similar behavior...
+             */
+            int peeked;
+            if (((peeked = ts.peekToken()) == TokenStream.INC || peeked == TokenStream.DEC)
                     && ts.getLineno() == lineno) {
-                    int pf = ts.getToken();
-                    position = ts.tokenPosition;
-                    return nf.createUnary(pf, TokenStream.POST, pn, position);
-                }
-                return pn;
+                int pf = ts.getToken();
+                position = ts.tokenPosition;
+                return nf.createUnary(pf, TokenStream.POST, pn, position);
+            }
+            return pn;
         }
         return nf.createName("err", position); // Only reached on error. Try to continue.
     }
@@ -996,8 +996,8 @@ public class Parser {
     }
 
     private Node memberExprTail(
-            TokenStream ts, boolean allowCallSyntax,
-            Node pn
+        TokenStream ts, boolean allowCallSyntax,
+        Node pn
     ) throws IOException, JavaScriptException {
         lastExprEndLine = ts.getLineno();
         int tt;
@@ -1050,129 +1050,129 @@ public class Parser {
 
         switch (tt) {
 
-            case TokenStream.FUNCTION:
-                return function(ts, true);
+        case TokenStream.FUNCTION:
+            return function(ts, true);
 
-            case TokenStream.LB: {
-                pn = nf.createLeaf(TokenStream.ARRAYLIT, position);
+        case TokenStream.LB: {
+            pn = nf.createLeaf(TokenStream.ARRAYLIT, position);
 
-                ts.flags |= TokenStream.TSF_REGEXP;
-                boolean matched = ts.matchToken(TokenStream.RB);
-                ts.flags &= ~TokenStream.TSF_REGEXP;
+            ts.flags |= TokenStream.TSF_REGEXP;
+            boolean matched = ts.matchToken(TokenStream.RB);
+            ts.flags &= ~TokenStream.TSF_REGEXP;
 
-                if (!matched) {
-                    do {
-                        ts.flags |= TokenStream.TSF_REGEXP;
-                        tt = ts.peekToken();
-                        ts.flags &= ~TokenStream.TSF_REGEXP;
+            if (!matched) {
+                do {
+                    ts.flags |= TokenStream.TSF_REGEXP;
+                    tt = ts.peekToken();
+                    ts.flags &= ~TokenStream.TSF_REGEXP;
 
-                        if (tt == TokenStream.RB) { // to fix [,,,].length behavior...
-                            break;
-                        }
-
-                        if (tt == TokenStream.COMMA) {
-                            pn.addChildToBack(nf.createLeaf(TokenStream.PRIMARY, TokenStream.UNDEFINED, position));
-                        }
-                        else {
-                            pn.addChildToBack(assignExpr(ts, false));
-                        }
+                    if (tt == TokenStream.RB) { // to fix [,,,].length behavior...
+                        break;
                     }
-                    while (ts.matchToken(TokenStream.COMMA));
-                    mustMatchToken(ts, TokenStream.RB, "msg.no.bracket.arg");
-                }
 
-                return nf.createArrayLiteral(pn);
-            }
-
-            case TokenStream.LC: {
-                pn = nf.createLeaf(TokenStream.OBJLIT, position);
-
-                if (!ts.matchToken(TokenStream.RC)) {
-
-                    commaloop:
-                    do {
-                        Node property;
-
-                        tt = ts.getToken();
-                        switch (tt) {
-                            // map NAMEs to STRINGs in object literal context.
-                            case TokenStream.NAME:
-                            case TokenStream.STRING:
-                                property = nf.createString(ts.getString(), ts.tokenPosition);
-                                break;
-                            case TokenStream.NUMBER_INT:
-                                property = nf.createIntNumber(ts.getNumber(), ts.tokenPosition);
-                                break;
-                            case TokenStream.NUMBER:
-                                double d = ts.getNumber();
-                                property = nf.createNumber(d, ts.tokenPosition);
-                                break;
-                            case TokenStream.RC:
-                                // trailing comma is OK.
-                                ts.ungetToken(tt);
-                                break commaloop;
-                            default:
-                                reportError(ts, "msg.bad.prop");
-                                break commaloop;
-                        }
-                        mustMatchToken(ts, TokenStream.COLON, "msg.no.colon.prop");
-
-                        // OBJLIT is used as ':' in object literal for
-                        // decompilation to solve spacing ambiguity.
-                        pn.addChildToBack(property);
+                    if (tt == TokenStream.COMMA) {
+                        pn.addChildToBack(nf.createLeaf(TokenStream.PRIMARY, TokenStream.UNDEFINED, position));
+                    }
+                    else {
                         pn.addChildToBack(assignExpr(ts, false));
                     }
-                    while (ts.matchToken(TokenStream.COMMA));
-
-                    mustMatchToken(ts, TokenStream.RC, "msg.no.brace.prop");
                 }
-                return nf.createObjectLiteral(pn);
+                while (ts.matchToken(TokenStream.COMMA));
+                mustMatchToken(ts, TokenStream.RB, "msg.no.bracket.arg");
             }
 
-            case TokenStream.LP:
+            return nf.createArrayLiteral(pn);
+        }
 
-                /*
-                 * Brendan's IR-jsparse.c makes a new node tagged with TOK_LP here...
-                 * I'm not sure I understand why. Isn't the grouping already implicit in
-                 * the structure of the parse tree? also TOK_LP is already overloaded (I
-                 * think) in the C IR as 'function call.'
-                 */
-                pn = expr(ts, false);
-                mustMatchToken(ts, TokenStream.GWT, "msg.no.paren");
-                return pn;
+        case TokenStream.LC: {
+            pn = nf.createLeaf(TokenStream.OBJLIT, position);
 
-            case TokenStream.NAME:
-                String name = ts.getString();
-                return nf.createName(name, position);
+            if (!ts.matchToken(TokenStream.RC)) {
 
-            case TokenStream.NUMBER_INT:
-                return nf.createIntNumber(ts.getNumber(), position);
+                commaloop:
+                do {
+                    Node property;
 
-            case TokenStream.NUMBER:
-                double d = ts.getNumber();
-                return nf.createNumber(d, position);
+                    tt = ts.getToken();
+                    switch (tt) {
+                    // map NAMEs to STRINGs in object literal context.
+                    case TokenStream.NAME:
+                    case TokenStream.STRING:
+                        property = nf.createString(ts.getString(), ts.tokenPosition);
+                        break;
+                    case TokenStream.NUMBER_INT:
+                        property = nf.createIntNumber(ts.getNumber(), ts.tokenPosition);
+                        break;
+                    case TokenStream.NUMBER:
+                        double d = ts.getNumber();
+                        property = nf.createNumber(d, ts.tokenPosition);
+                        break;
+                    case TokenStream.RC:
+                        // trailing comma is OK.
+                        ts.ungetToken(tt);
+                        break commaloop;
+                    default:
+                        reportError(ts, "msg.bad.prop");
+                        break commaloop;
+                    }
+                    mustMatchToken(ts, TokenStream.COLON, "msg.no.colon.prop");
 
-            case TokenStream.STRING:
-                String s = ts.getString();
-                return nf.createString(s, position);
+                    // OBJLIT is used as ':' in object literal for
+                    // decompilation to solve spacing ambiguity.
+                    pn.addChildToBack(property);
+                    pn.addChildToBack(assignExpr(ts, false));
+                }
+                while (ts.matchToken(TokenStream.COMMA));
 
-            case TokenStream.REGEXP: {
-                String flags = ts.regExpFlags;
-                ts.regExpFlags = null;
-                String re = ts.getString();
-                return nf.createRegExp(re, flags, position);
+                mustMatchToken(ts, TokenStream.RC, "msg.no.brace.prop");
             }
+            return nf.createObjectLiteral(pn);
+        }
 
-            case TokenStream.PRIMARY:
-                return nf.createLeaf(TokenStream.PRIMARY, ts.getOp(), position);
+        case TokenStream.LP:
 
-            case TokenStream.ERROR:
-                /* the scanner or one of its subroutines reported the error. */
-                break;
+            /*
+             * Brendan's IR-jsparse.c makes a new node tagged with TOK_LP here...
+             * I'm not sure I understand why. Isn't the grouping already implicit in
+             * the structure of the parse tree? also TOK_LP is already overloaded (I
+             * think) in the C IR as 'function call.'
+             */
+            pn = expr(ts, false);
+            mustMatchToken(ts, TokenStream.GWT, "msg.no.paren");
+            return pn;
 
-            default:
-                reportError(ts, "msg.syntax");
-                break;
+        case TokenStream.NAME:
+            String name = ts.getString();
+            return nf.createName(name, position);
+
+        case TokenStream.NUMBER_INT:
+            return nf.createIntNumber(ts.getNumber(), position);
+
+        case TokenStream.NUMBER:
+            double d = ts.getNumber();
+            return nf.createNumber(d, position);
+
+        case TokenStream.STRING:
+            String s = ts.getString();
+            return nf.createString(s, position);
+
+        case TokenStream.REGEXP: {
+            String flags = ts.regExpFlags;
+            ts.regExpFlags = null;
+            String re = ts.getString();
+            return nf.createRegExp(re, flags, position);
+        }
+
+        case TokenStream.PRIMARY:
+            return nf.createLeaf(TokenStream.PRIMARY, ts.getOp(), position);
+
+        case TokenStream.ERROR:
+            /* the scanner or one of its subroutines reported the error. */
+            break;
+
+        default:
+            reportError(ts, "msg.syntax");
+            break;
         }
         return null; // should never reach here
     }

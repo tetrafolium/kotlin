@@ -15,10 +15,10 @@ import java.io.Serializable;
 @Deprecated
 @kotlin.Deprecated(message = "This class is no longer supported, do not use it.", level = DeprecationLevel.ERROR)
 public abstract class FunctionImpl
-        implements Function, Serializable,
-                   Function0, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9,
-                   Function10, Function11, Function12, Function13, Function14, Function15, Function16, Function17, Function18, Function19,
-                   Function20, Function21, Function22 {
+    implements Function, Serializable,
+    Function0, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9,
+    Function10, Function11, Function12, Function13, Function14, Function15, Function16, Function17, Function18, Function19,
+    Function20, Function21, Function22 {
 
     public abstract int getArity();
 

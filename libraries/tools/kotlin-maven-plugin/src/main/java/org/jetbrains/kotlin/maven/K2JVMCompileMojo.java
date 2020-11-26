@@ -201,11 +201,11 @@ public class K2JVMCompileMojo extends KotlinCompileMojoBase<K2JVMCompilerArgumen
     private boolean isJava9Module(@NotNull List<File> sourceRoots) {
         //noinspection ConstantConditions
         return sourceRoots.stream().anyMatch(file ->
-                file.getName().equals(PsiJavaModule.MODULE_INFO_FILE) ||
-                file.isDirectory() && Arrays.stream(file.listFiles()).anyMatch(child ->
-                        child.getName().equals(PsiJavaModule.MODULE_INFO_FILE)
-                )
-        );
+                                             file.getName().equals(PsiJavaModule.MODULE_INFO_FILE) ||
+                                             file.isDirectory() && Arrays.stream(file.listFiles()).anyMatch(child ->
+                                                     child.getName().equals(PsiJavaModule.MODULE_INFO_FILE)
+                                                                                                           )
+                                            );
     }
 
     @Override
@@ -225,10 +225,10 @@ public class K2JVMCompileMojo extends KotlinCompileMojoBase<K2JVMCompilerArgumen
     @Override
     @NotNull
     protected ExitCode execCompiler(
-            CLICompiler<K2JVMCompilerArguments> compiler,
-            MessageCollector messageCollector,
-            K2JVMCompilerArguments arguments,
-            List<File> sourceRoots
+        CLICompiler<K2JVMCompilerArguments> compiler,
+        MessageCollector messageCollector,
+        K2JVMCompilerArguments arguments,
+        List<File> sourceRoots
     ) throws MojoExecutionException {
         if (isIncremental()) {
             return runIncrementalCompiler(messageCollector, arguments, sourceRoots);
@@ -239,9 +239,9 @@ public class K2JVMCompileMojo extends KotlinCompileMojoBase<K2JVMCompilerArgumen
 
     @NotNull
     private ExitCode runIncrementalCompiler(
-            MessageCollector messageCollector,
-            K2JVMCompilerArguments arguments,
-            List<File> sourceRoots
+        MessageCollector messageCollector,
+        K2JVMCompilerArguments arguments,
+        List<File> sourceRoots
     ) throws MojoExecutionException {
         getLog().warn("Using experimental Kotlin incremental compilation");
         File cachesDir = getCachesDir();

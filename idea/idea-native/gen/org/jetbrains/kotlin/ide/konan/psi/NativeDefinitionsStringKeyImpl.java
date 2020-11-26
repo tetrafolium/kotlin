@@ -12,17 +12,17 @@ import com.intellij.extapi.psi.ASTWrapperPsiElement;
 
 public class NativeDefinitionsStringKeyImpl extends ASTWrapperPsiElement implements NativeDefinitionsStringKey {
 
-  public NativeDefinitionsStringKeyImpl(@NotNull ASTNode node) {
-    super(node);
-  }
+    public NativeDefinitionsStringKeyImpl(@NotNull ASTNode node) {
+        super(node);
+    }
 
-  public void accept(@NotNull NativeDefinitionsVisitor visitor) {
-    visitor.visitStringKey(this);
-  }
+    public void accept(@NotNull NativeDefinitionsVisitor visitor) {
+        visitor.visitStringKey(this);
+    }
 
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof NativeDefinitionsVisitor) accept((NativeDefinitionsVisitor)visitor);
-    else super.accept(visitor);
-  }
+    public void accept(@NotNull PsiElementVisitor visitor) {
+        if (visitor instanceof NativeDefinitionsVisitor) accept((NativeDefinitionsVisitor)visitor);
+        else super.accept(visitor);
+    }
 
 }

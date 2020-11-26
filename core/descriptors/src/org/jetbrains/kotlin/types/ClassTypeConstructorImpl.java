@@ -35,10 +35,10 @@ public class ClassTypeConstructorImpl extends AbstractClassTypeConstructor imple
     private final Collection<KotlinType> supertypes;
 
     public ClassTypeConstructorImpl(
-            @NotNull ClassDescriptor classDescriptor,
-            @NotNull List<? extends TypeParameterDescriptor> parameters,
-            @NotNull Collection<KotlinType> supertypes,
-            @NotNull StorageManager storageManager
+        @NotNull ClassDescriptor classDescriptor,
+        @NotNull List<? extends TypeParameterDescriptor> parameters,
+        @NotNull Collection<KotlinType> supertypes,
+        @NotNull StorageManager storageManager
     ) {
         super(storageManager);
         this.classDescriptor = classDescriptor;

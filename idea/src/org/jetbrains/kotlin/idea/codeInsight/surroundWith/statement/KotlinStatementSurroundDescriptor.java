@@ -26,12 +26,12 @@ import org.jetbrains.kotlin.idea.codeInsight.CodeInsightUtils;
 public class KotlinStatementSurroundDescriptor implements SurroundDescriptor {
 
     private static final Surrounder[] SURROUNDERS = {
-            new KotlinIfSurrounder(),
-            new KotlinIfElseSurrounder(),
-            new KotlinFunctionLiteralSurrounder(),
-            new KotlinTryFinallySurrounder(),
-            new KotlinTryCatchFinallySurrounder(),
-            new KotlinTryCatchSurrounder()
+        new KotlinIfSurrounder(),
+        new KotlinIfElseSurrounder(),
+        new KotlinFunctionLiteralSurrounder(),
+        new KotlinTryFinallySurrounder(),
+        new KotlinTryCatchFinallySurrounder(),
+        new KotlinTryCatchSurrounder()
     };
 
     @Override
