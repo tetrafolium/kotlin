@@ -1,6 +1,6 @@
 inspecode:
 
-  experimental:
+  global:
     ignore:             # to avoid `Matrics` task timed-out
     - "/**/testData/"
     - "/**/test/"
@@ -19,20 +19,20 @@ inspecode:
     thresholds: { num-issues: 397 }
 
   #### too many issues detected by checkstyle.
-  #checkstyle:   # supports: Java
-  #- ignore:
-  #  - "/compiler/"
-  #  - "/idea/"
-  #  thresholds:
-  #    num-issues: 1000
-  #- input:
-  #  - "/compiler/"
-  #  thresholds:
-  #    num-issues: 1000
-  #- input:
-  #  - "/idea/"
-  #  thresholds:
-  #    num-issues: 1000
+  checkstyle:   # supports: Java
+  - ignore:
+    - "/compiler/"
+    - "/idea/"
+    thresholds:
+      num-issues: 1000
+  - input:
+    - "/compiler/"
+    thresholds:
+      num-issues: 1000
+  - input:
+    - "/idea/"
+    thresholds:
+      num-issues: 1000
 
   cpd:          # supports: C C++ C# Go Java JavaScript Objective-C PHP Python Ruby Scala Swift
     thresholds: { num-issues: 219 }
